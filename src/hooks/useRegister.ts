@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 interface User {
   email: string;
+  first_name: string;
+  last_name: string;
   password: string;
   passwordConfirm: string;
 }
@@ -19,8 +21,8 @@ const useRegister = () => {
           user
         )
         .then((res) => res.data),
-    onSuccess: () => {
-      console.log("signed up");
+    onSuccess: (data) => {
+      console.log(data);
 
       navigate("/signup/otp-verification");
     },

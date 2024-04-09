@@ -11,7 +11,7 @@ import Header from "../../components/Heading/Header";
 import HeaderTwo from "../../components/Heading/HeaderTwo";
 import useRegister from "../../hooks/useRegister";
 import { MdError } from "react-icons/md";
-// import { PulseLoader } from "react-spinners";
+// import { ThreeDots } from "react-loader-spinner";
 
 interface Password {
   password: boolean;
@@ -53,7 +53,7 @@ const Register = () => {
         <form
           onSubmit={handleSubmit((data) => {
             const { email, password, passwordConfirm } = data;
-            mutate({ email, password, passwordConfirm });
+            mutate({ first_name: "dire", last_name: "owoeye", email, password, passwordConfirm });
           })}
         >
           <div className=" mb-10">

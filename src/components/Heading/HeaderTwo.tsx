@@ -4,7 +4,7 @@ interface HeaderTwoProps {
 
 const HeaderTwo: React.FC<HeaderTwoProps> = ({ children }) => {
   return (
-    <p className="mb-2 text-[#718096] font-medium lg:text-[18px]">{children}</p>
+    <p className="mb-2 text-[#718096] font-azo lg:text-[18px]">{children}</p>
   );
 };
 

@@ -79,7 +79,7 @@ const LoginWithNumber = () => {
               </div>
               <div
                 className="text-[#61BD74] underline underline-offset-[3px] cursor-pointer "
-                onClick={() => navigate("/verifyemail")}
+                onClick={() => navigate("/password-reset/email-entry")}
               >
                 Forget Password?
               </div>

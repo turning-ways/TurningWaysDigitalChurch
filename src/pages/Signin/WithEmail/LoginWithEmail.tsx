@@ -9,7 +9,6 @@ import { HiEyeSlash } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import Header from "../../../components/Heading/Header";
 import HeaderTwo from "../../../components/Heading/HeaderTwo";
-import useRegister from "../../../hooks/useRegister";
 import { FiPhone } from "react-icons/fi";
 
 interface Password {
@@ -32,7 +31,7 @@ const LoginWithEmail = () => {
 
   const {
     register,
-    handleSubmit,
+    // handleSubmit,
     // formState: { errors, isValid },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -42,7 +41,7 @@ const LoginWithEmail = () => {
     reEnterPassword: true,
   });
   const navigate = useNavigate();
-  const { mutate } = useRegister();
+  // const { mutate } = useRegister();
   const iconStyle = {
     color: "#718096",
   };
@@ -50,10 +49,10 @@ const LoginWithEmail = () => {
     <>
       <AuthContainer center="sm:items-center">
         <form
-          onSubmit={handleSubmit((data) => {
-            const { email, password, passwordConfirm } = data;
-            mutate({ email, password, passwordConfirm });
-          })}
+          // onSubmit={handleSubmit((data) => {
+          //   const { email, password, passwordConfirm } = data;
+          //   // mutate({ email, password, passwordConfirm });
+          // })}
         >
           <div className=" mb-10">
             <Header>Sign In</Header>
@@ -105,7 +104,7 @@ const LoginWithEmail = () => {
             </div>
             <div
               className="text-[#61BD74] underline underline-offset-[3px] cursor-pointer "
-              onClick={() => navigate("/forgotpassword")}
+              onClick={() => navigate("/password-reset/email-entry")}
             >
               Forget Password?
             </div>

@@ -12,7 +12,8 @@ export default {
     },
     fontFamily: {
       azeret: ["Azeret Mono", "sans-serif"],
-      azo: ["azosansBold", "sans-serif"],
+      azoBold: ["azosansBold", "sans-serif"],
+      azo: ["azosans", "sans-serif"],
     },
     // screens: {
     //   sm: "500px",

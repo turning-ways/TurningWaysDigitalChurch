@@ -2,40 +2,37 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useNavigate } from "react-router-dom";
 import AuthContainer from "../../../components/Container/AuthContainer";
 import Header from "../../../components/Heading/Header";
 import HeaderTwo from "../../../components/Heading/HeaderTwo";
+import useForgotPassword from "../../../hooks/useForgotPassword";
 
 const EmailForPasswordReset = () => {
   const schema = z.object({
     email: z.string().email({ message: "Please enter a valid email" }),
-    password: z
-      .string()
-      .min(5, { message: "Password should be atleast 5 characters long" }),
   });
 
   type FormData = z.infer<typeof schema>;
 
   const {
     register,
-    // handleSubmit,
+    handleSubmit,
     // formState: { errors, isValid },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
 
-  const navigate = useNavigate();
+  const { mutate } = useForgotPassword();
+
   return (
     <>
-      <AuthContainer center="items-center ">
-        <form>
-          {/* <div
-            className="bg-[#F4F8F3] rounded-lg p-2 w-fit mb-4 cursor-pointer"
-            onClick={() => navigate("/login")}
-          >
-            <IoIosArrowBack className=" text-2xl w-auto" />
-          </div> */}
+      <AuthContainer center="sm:items-center ">
+        <form
+          onSubmit={handleSubmit((data) => {
+            const { email } = data;
+            mutate({email});
+          })}
+        >
           <div className="space-y-2 mb-10">
             <p>
               <span className="text-[#446DE3] text-2xl">1</span> of 3
@@ -57,7 +54,6 @@ const EmailForPasswordReset = () => {
           </div>
           <button
             className="w-full py-3 text-center bg-[#446DE3] mt-10 rounded-[20px] text-white font-medium text-xl"
-            onClick={() => navigate("/password-reset/otp-verification")}
           >
             Next
           </button>

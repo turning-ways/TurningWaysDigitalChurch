@@ -3,7 +3,6 @@
 // import { zodResolver } from "@hookform/resolvers/zod";
 
 import AuthContainer from "../../../components/Container/AuthContainer";
-import useRegister from "../../../hooks/useRegister";
 import Header from "../../../components/Heading/Header";
 import HeaderTwo from "../../../components/Heading/HeaderTwo";
 import { TiArrowSortedDown } from "react-icons/ti";

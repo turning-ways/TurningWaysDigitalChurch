@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PersonalInfo from "./pages/Signup/ChurchAccountSetup/PersonalInfo";
-import PasswordReset from "./pages/PasswordReset/PasswordReset";
+import PasswordReset from "./pages/PasswordReset/PasswordEntry/PasswordReset";
 import OtpVerification from "./pages/PasswordReset/Otp/Signup/OtpVerification";
 import Register from "./pages/Signup/Register";
 import OrganizationInfo from "./pages/Signup/ChurchAccountSetup/OrganizationInfo";

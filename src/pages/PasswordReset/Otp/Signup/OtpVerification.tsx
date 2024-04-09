@@ -1,5 +1,5 @@
 import AuthContainer from "../../../../components/Container/AuthContainer";
-import OtpInput from "../../../../components/OtpInput";
+import OtpInput from "../../../../components/Otp/OtpInput";
 import Header from "../../../../components/Heading/Header";
 import { useNavigate } from "react-router-dom";
 
