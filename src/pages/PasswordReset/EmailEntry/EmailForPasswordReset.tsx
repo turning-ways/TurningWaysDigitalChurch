@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import AuthContainer from "../../../components/Container/AuthContainer";
 import Header from "../../../components/Heading/Header";
 import HeaderTwo from "../../../components/Heading/HeaderTwo";
-import useForgotPassword from "../../../hooks/useForgotPassword";
+import useForgotPassword from "../../../hooks/ForgotPassword/useForgotPassword";
 
 const EmailForPasswordReset = () => {
   const schema = z.object({

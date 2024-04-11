@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useUserDetailsStore } from "../../stores/user";
+import useVerifyEmail from "./useVerifyEmail";
 
 interface User {
   email: string;
@@ -11,7 +12,8 @@ interface User {
 }
 
 const useRegister = () => {
-  const navigate = useNavigate();
+  const { email } = useUserDetailsStore();
+  const { mutate } = useVerifyEmail();
 
   return useMutation({
     mutationFn: (user: User) =>
@@ -21,10 +23,8 @@ const useRegister = () => {
           user
         )
         .then((res) => res.data),
-    onSuccess: (data) => {
-      console.log(data);
-
-      navigate("/signup/otp-verification");
+    onSuccess: () => {
+      mutate({ email });
     },
   });
 };

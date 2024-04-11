@@ -2,11 +2,14 @@ import AuthContainer from "../../../../components/Container/AuthContainer";
 import Header from "../../../../components/Heading/Header";
 
 import React, { useEffect, useRef, useState } from "react";
-import useVerifyOtp from "../../../../hooks/useVerifyOtp";
+import useVerifyOtp from "../../../../hooks/ForgotPassword/useVerifyOtp";
+import { useUserIdStore } from "../../../../stores/user";
 
 let currentOtpIndex: number = 0;
 
 const OtpVerification = () => {
+  const { userId } = useUserIdStore();
+
   const [value, setValue] = useState<boolean>(false);
 
   //
@@ -87,7 +90,12 @@ const OtpVerification = () => {
           </button>
           <p>
             Didn't get a code?{" "}
-            <span className="text-[#CCE9D1] cursor-pointer">Resend Code</span>
+            <span
+              className="text-[#CCE9D1] cursor-pointer"
+              onClick={() => console.log(userId)}
+            >
+              Resend Code
+            </span>
           </p>
         </form>
       </AuthContainer>
