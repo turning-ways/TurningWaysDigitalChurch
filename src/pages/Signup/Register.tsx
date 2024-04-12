@@ -13,6 +13,7 @@ import { MdError } from "react-icons/md";
 import { useUserDetailsStore } from "../../stores/user";
 import useRegister from "../../hooks/Signup/useRegister";
 import { ThreeDots } from "react-loader-spinner";
+import GoogleButton from "../../components/Button/GoogleButton";
 
 interface Password {
   password: boolean;
@@ -101,9 +102,7 @@ const Register = () => {
             </div>
 
             {errors.first_name && (
-              <p className="text-[#FF0000]">
-                An account with this first name already exists!
-              </p>
+              <p className="text-[#FF0000]">{errors.first_name.message}</p>
             )}
           </div>
           <div className={`${errors.last_name ? "mb-4" : "mb-6"}`}>
@@ -127,9 +126,7 @@ const Register = () => {
             </div>
 
             {errors.last_name && (
-              <p className="text-[#FF0000]">
-                An account with this last name already exists!
-              </p>
+              <p className="text-[#FF0000]">{errors.last_name.message}</p>
             )}
           </div>
           <div className={`${errors.email || error ? "mb-4" : "mb-6"}`}>
@@ -152,10 +149,13 @@ const Register = () => {
               )}
             </div>
 
-            {(errors.email || error) && (
+            {error && (
               <p className="text-[#FF0000]">
                 An account with this email already exists!
               </p>
+            )}
+            {errors.email && (
+              <p className="text-[#FF0000]">Please enter a valid email</p>
             )}
           </div>
           <div className="mb-6">
@@ -224,13 +224,7 @@ const Register = () => {
             <h2 className="mx-5 text-[#718096] text-xs">OR</h2>
             <div className="w-full h-[1px] bg-[#A0AEC0]" />
           </div>
-
-          <div className="border border-[#CBD5E0] rounded-[10px] py-3 flex justify-center space-x-3 items-center w-full lg:max-w-[550px] cursor-pointer">
-            <img src="../../../public/assets/images/Rectangle.svg" alt="" />
-            <p className=" text-center text-[#67728A] text-md lg:text-xl font-medium">
-              Continue with google
-            </p>
-          </div>
+          <GoogleButton />
         </form>
       </AuthContainer>
     </>

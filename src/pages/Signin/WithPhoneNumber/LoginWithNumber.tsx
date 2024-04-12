@@ -7,8 +7,8 @@ import useLogin from "../../../hooks/useLogin";
 import Header from "../../../components/Heading/Header";
 import HeaderTwo from "../../../components/Heading/HeaderTwo";
 import { TiArrowSortedDown } from "react-icons/ti";
-import googleLogo from "/assets/images/Rectangle.svg";
-import { FaRegEnvelope } from "react-icons/fa6";
+import EmailButton from "../../../components/Button/EmailButton";
+import GoogleButton from "../../../components/Button/GoogleButton";
 
 const LoginWithNumber = () => {
   const schema = z.object({
@@ -94,28 +94,9 @@ const LoginWithNumber = () => {
               <h2 className="mx-5 text-[#718096] text-xs">OR</h2>
               <div className="w-full h-[1px] bg-[#A0AEC0]" />
             </div>
-            <div
-              className="border mb-5 border-[#CBD5E0] rounded-[10px] py-2 lg:py-3 flex px-5 justify-center space-x-3 items-center w-full lg:max-w-[550px] cursor-pointer"
-              onClick={() =>
-                navigate(
-                  "https://digital-church.onrender.com/api/v1/users/auth/google/admin"
-                )
-              }
-            >
-              <img src={googleLogo} alt="" />
-              <p className=" text-center text-[#67728A] text-sm lg:text-xl font-medium">
-                Continue with google
-              </p>
-            </div>
-            <div
-              className="border border-[#CBD5E0] rounded-[10px] py-2 lg:py-3 flex px-5 justify-center space-x-3 items-center w-full lg:max-w-[550px] cursor-pointer"
-              onClick={() => navigate("/login-with-email")}
-            >
-              <FaRegEnvelope style={{ fontSize: "20px" }} />
-              <p className=" text-center text-[#67728A] text-sm lg:text-xl font-medium">
-                Continue with email
-              </p>
-            </div>
+            
+            <GoogleButton />
+            <EmailButton />
           </div>
         </form>
       </AuthContainer>
