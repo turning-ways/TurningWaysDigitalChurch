@@ -17,7 +17,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login-with-number" element={<LoginWithNumber />} />
-          <Route path="/login-with-email" element={<LoginWithEmail />} />
+          <Route path="/" element={<LoginWithEmail />} />
           <Route path="/register" element={<Register />} />
           <Route path="/request" element={<Request />} />
           <Route path="/personalinfo" element={<PersonalInfo />} />
