@@ -74,7 +74,7 @@ const Register = () => {
               Already have an account?{" "}
               <span
                 className="text-secondary underline underline-offset-[3px] cursor-pointer"
-                onClick={() => navigate("/register")}
+                onClick={() => navigate("/login-with-email")}
               >
                 Sign in
               </span>
