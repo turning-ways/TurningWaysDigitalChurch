@@ -3,6 +3,7 @@ import Header from "../../../../components/Heading/Header";
 
 import React, { useEffect, useRef, useState } from "react";
 import { useUserIdStore } from "../../../../stores/user";
+import useVerifyOtp from "../../../../hooks/Signup/useVerifyOtp";
 
 let currentOtpIndex: number = 0;
 
@@ -46,13 +47,15 @@ const OtpVerification = () => {
     inputRef.current?.focus();
   }, [activeOTPIndex]);
 
+  const { mutate } = useVerifyOtp();
+
   return (
     <>
       <AuthContainer center="sm:items-center">
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log("dire");
+            mutate({ token: otp.join("") });
           }}
         >
           <div className="space-y-2 mb-10">

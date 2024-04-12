@@ -1,16 +1,23 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+interface Token {
+  token: string;
+}
 
 const useVerifyOtp = () => {
+  const navigate = useNavigate();
   return useMutation({
-    mutationFn: () =>
+    mutationFn: (token: Token) =>
       axios
-        .get(
-          "https://digital-church.onrender.com/api/v1/users/verify-email"
+        .patch<Token>(
+          "https//digital-church.onrender.com/api/v1/users/verify-email",
+          token
         )
         .then((res) => res.data),
-    onSuccess: (res) => {
-      console.log(res.data);
+    onSuccess: () => {
+      navigate("/personalinfo");
     },
   });
 };
