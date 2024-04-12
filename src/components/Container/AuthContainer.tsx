@@ -5,8 +5,8 @@ interface AuthContainerProps {
 
 const AuthContainer: React.FC<AuthContainerProps> = ({ children, center }) => {
   return (
-    <div className={`h-screen px-8 lg:px-0 flex ${center}`}>
-      <div className="flex flex-col pt-10 sm:pt-0 w-full overflow-y-scroll max-w-[550px] mx-auto">
+    <div className={`px-8 lg:px-0 flex ${center}`}>
+      <div className="flex flex-col py-10 w-full overflow-y-scroll max-w-[550px] mx-auto">
         {children}{" "}
       </div>
       {/* <footer className=" justify-between text-[#888888] w-full pb-3 flex text-sm items-center absolute bottom-0 px-8">
