@@ -56,7 +56,8 @@ const ChurchInfo = () => {
               Kindly fill in the admin details below
             </p>
           </div>
-          <div className="space-y-8 sm:h-[440px] overflow-y-scroll">
+          {/* < div className="space-y-8 sm:h-[440px] overflow-y-scroll"> */}
+          <div className="space-y-8">
             <div className="mb-2">
               <HeaderTwo>
                 Select parent church <span className="text-secondary">*</span>
