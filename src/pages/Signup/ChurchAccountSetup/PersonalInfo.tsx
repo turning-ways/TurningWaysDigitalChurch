@@ -1,54 +1,48 @@
-// import { z } from "zod";
-// import { useForm } from "react-hook-form";
-// import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import AuthContainer from "../../../components/Container/AuthContainer";
 import Header from "../../../components/Heading/Header";
 import HeaderTwo from "../../../components/Heading/HeaderTwo";
 import { TiArrowSortedDown } from "react-icons/ti";
-import { useNavigate } from "react-router-dom";
+import Input from "../../../components/Input/Input";
 
 const PersonalInfo = () => {
-//   const schema = z.object({
-//     firstName: z.string().email({ message: "Please enter a valid email" }),
-//     lastName: z
-//       .string()
-//       .min(5, { message: "Password should be atleast 5 characters long" }),
-//     phoneNumber: z
-//       .number()
-//       .min(10, { message: "Number should only contain 10 digits" }),
-//   });
+  const schema = z.object({
+    firstName: z
+      .string()
+      .min(5, { message: "Please name should contain atleast 4 characters" }),
+    lastName: z.string().min(5, {
+      message: "Please last name should contain atleast 4 characters",
+    }),
+    // phoneNumber: z
+    //   .number()
+    //   .min(10, { message: "Number should only contain 10 digits" }),
+  });
 
-//   type FormData = z.infer<typeof schema>;
+  type FormData = z.infer<typeof schema>;
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   // formState: { errors, isValid },
-  // } = useForm<FormData>({
-  //   resolver: zodResolver(schema),
-  // });
-
-  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
 
   return (
     <>
-      <AuthContainer center={'sm:items-center'}>
+      <AuthContainer center={"sm:items-center"}>
         <form
           className=""
-          // onSubmit={handleSubmit(() => {
-          //   // if (isValid) {
-          //   //   mutate(data);
-          //   // }
-          //   // const { firstName, lastName, phoneNumber } = data;
-          //   // navigate("organizationinfo");
-          //   console.log("dire");
-
-          //   // console.log(data);
-          // })}
-          onSubmit={() => {
-            navigate("/organizationinfo");
-          }}
+          onSubmit={handleSubmit((data) => {
+            const { firstName, lastName } = data;
+            console.log(firstName, lastName);
+          })}
+          // onSubmit={() => {
+          //   navigate("/organizationinfo");
+          // }}
         >
           <div className="mb-5 max-w-[550px] mx-auto">
             <p>
@@ -59,26 +53,21 @@ const PersonalInfo = () => {
               Kindly fill in the admin details below
             </p>
           </div>
-          <div className="space-y-8 sm:h-[440px] overflow-y-scroll">
-            <div className="">
-              <HeaderTwo>First Name</HeaderTwo>
-              <input
-                // {...register("firstName")}
-                type="text"
-                className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
-                placeholder="Temidire"
-              />
-            </div>
-
-            <div className="mb-2">
-              <HeaderTwo>Last Name</HeaderTwo>
-              <input
-                // {...register("lastName")}
-                type="text"
-                className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
-                placeholder="Owoeye"
-              />
-            </div>
+          <div className="space-y-8">
+            <Input
+              heading="First Name"
+              name="firstName"
+              register={register}
+              placeholder="Temidire"
+              formError={errors.firstName?.message}
+            />
+            <Input
+              heading="Last Name"
+              name="lastName"
+              register={register}
+              placeholder="Owoeye"
+              formError={errors.lastName?.message}
+            />
 
             <div className="mb-2">
               <HeaderTwo>Phone Number</HeaderTwo>

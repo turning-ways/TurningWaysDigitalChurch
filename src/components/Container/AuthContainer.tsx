@@ -5,7 +5,7 @@ interface AuthContainerProps {
 
 const AuthContainer: React.FC<AuthContainerProps> = ({ children, center }) => {
   return (
-    <div className={`px-8 lg:px-0 flex ${center}`}>
+    <div className={`h-full overflow-y-scroll px-8 lg:px-0 flex ${center}`}>
       <div className="flex flex-col py-10 w-full overflow-y-scroll max-w-[550px] mx-auto">
         {children}{" "}
       </div>

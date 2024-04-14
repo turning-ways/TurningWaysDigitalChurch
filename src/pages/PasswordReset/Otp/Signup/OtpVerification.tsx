@@ -61,8 +61,7 @@ const OtpVerification = () => {
           <div className="space-y-2 mb-10">
             <Header>Check your email</Header>
             <p className="text-[#949995]">
-              Kindly enter the verification code (OTP) sent to your email
-              address
+              Kindly enter the verification cde (OTP) sent to your email address
             </p>
           </div>
           <div className="mb-6 flex justify-between max-w-[550px] space-x-4">
@@ -72,7 +71,7 @@ const OtpVerification = () => {
                   <input
                     ref={index === activeOTPIndex ? inputRef : null}
                     type="number"
-                    className="w-full h-12 lg:w-5 border-b-2  bg-transparent outline-none text-center font-semibold border-b-[#CCE9D1]  focus:border-b-[#61BD74] focus:text-[#5E9942] text-[#CCE9D1] transition spin-button-none placeholder-[#CCE9D1]"
+                    className="w-full h-12  border-b-2  bg-transparent outline-none text-center font-semibold border-b-[#CCE9D1]  focus:border-b-[#61BD74] focus:text-[#5E9942] text-[#CCE9D1] transition spin-button-none placeholder-[#CCE9D1]"
                     onChange={handleChange}
                     value={otp[index]}
                     onKeyDown={(e) => handleOnKeyDown(e, index)}
