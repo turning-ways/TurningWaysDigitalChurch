@@ -10,6 +10,7 @@ import LoginWithEmail from "./pages/Signin/WithEmail/LoginWithEmail";
 import LoginWithNumber from "./pages/Signin/WithPhoneNumber/LoginWithNumber";
 import EmailForPasswordReset from "./pages/PasswordReset/EmailEntry/EmailForPasswordReset";
 import PasswordResetOtp from "./pages/PasswordReset/Otp/ForgotPassword/OtpVerification";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/login-with-number" element={<LoginWithNumber />} />
           <Route path="/" element={<LoginWithEmail />} />
+          <Route path="/nav" element={<Navbar />} />
           <Route path="/register" element={<Register />} />
           <Route path="/request" element={<Request />} />
           <Route path="/personalinfo" element={<PersonalInfo />} />

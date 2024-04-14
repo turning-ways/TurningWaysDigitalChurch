@@ -1,25 +1,15 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import { useState } from "react";
 import AuthContainer from "../../components/Container/AuthContainer";
-import { HiMiniEye } from "react-icons/hi2";
-import { HiEyeSlash } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Heading/Header";
-import HeaderTwo from "../../components/Heading/HeaderTwo";
-import { MdError } from "react-icons/md";
 import { useUserDetailsStore } from "../../stores/user";
 import useRegister from "../../hooks/Signup/useRegister";
 import { ThreeDots } from "react-loader-spinner";
 import GoogleButton from "../../components/Button/GoogleButton";
-
-interface Password {
-  password: boolean;
-  reEnterPassword: boolean;
-}
-
+import PasswordInput from "../../components/Input/PasswordInput";
+import Input from "../../components/Input/Input";
 const Register = () => {
   const schema = z.object({
     first_name: z
@@ -34,7 +24,7 @@ const Register = () => {
       .min(5, { message: "Password should be atleast 5 characters long" }),
     passwordConfirm: z
       .string()
-      .min(5, { message: "Password should be atleast 5 characters long" }),
+      .min(8, { message: "Password should be atleast 8 characters long" }),
   });
 
   type FormData = z.infer<typeof schema>;
@@ -46,14 +36,7 @@ const Register = () => {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
-  const [show, setShow] = useState<Password>({
-    password: true,
-    reEnterPassword: true,
-  });
   const navigate = useNavigate();
-  const iconStyle = {
-    color: "#718096",
-  };
 
   const { mutate, error, isPending } = useRegister();
 
@@ -67,6 +50,13 @@ const Register = () => {
               data;
             setEmail(email);
             mutate({ first_name, last_name, email, password, passwordConfirm });
+            console.log(
+              first_name,
+              last_name,
+              email,
+              password,
+              passwordConfirm
+            );
           })}
         >
           <div className=" mb-10">
@@ -81,129 +71,43 @@ const Register = () => {
               </span>
             </p>
           </div>
-          <div className={`${errors.first_name ? "mb-4" : "mb-6"}`}>
-            <HeaderTwo>First Name</HeaderTwo>
-            <div
-              className={`border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center ${
-                errors.first_name
-                  ? "border-[#FF0000] border-2"
-                  : "border-[#EBEFF9] border"
-              }`}
-            >
-              <input
-                {...register("first_name")}
-                type="text"
-                className="outline-none w-full bg-inherit placeholder-[#4A5568] h-10"
-                placeholder="Temidire"
-              />
-              {errors.first_name && (
-                <MdError style={{ color: "#FF0000", fontSize: 30 }} />
-              )}
-            </div>
+          <Input
+            heading={"First Name"}
+            name={"first_name"}
+            register={register}
+            placeholder={"Temidire"}
+            formError={errors.first_name?.message}
+          />
+          <Input
+            heading={"Last Name"}
+            name={"last_name"}
+            register={register}
+            placeholder={"Owoeye"}
+            formError={errors.last_name?.message}
+          />
 
-            {errors.first_name && (
-              <p className="text-[#FF0000]">{errors.first_name.message}</p>
-            )}
-          </div>
-          <div className={`${errors.last_name ? "mb-4" : "mb-6"}`}>
-            <HeaderTwo>Last Name</HeaderTwo>
-            <div
-              className={`border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center ${
-                errors.last_name
-                  ? "border-[#FF0000] border-2"
-                  : "border-[#EBEFF9] border"
-              }`}
-            >
-              <input
-                {...register("last_name")}
-                type="text"
-                className="outline-none w-full bg-inherit placeholder-[#4A5568] h-10"
-                placeholder="Owoeye"
-              />
-              {errors.last_name && (
-                <MdError style={{ color: "#FF0000", fontSize: 30 }} />
-              )}
-            </div>
-
-            {errors.last_name && (
-              <p className="text-[#FF0000]">{errors.last_name.message}</p>
-            )}
-          </div>
-          <div className={`${errors.email || error ? "mb-4" : "mb-6"}`}>
-            <HeaderTwo>Email</HeaderTwo>
-            <div
-              className={`border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center ${
-                errors.email || error
-                  ? "border-[#FF0000] border-2"
-                  : "border-[#EBEFF9] border"
-              }`}
-            >
-              <input
-                {...register("email")}
-                type="email"
-                className="outline-none w-full bg-inherit placeholder-[#4A5568] h-10"
-                placeholder="temidireowoeye@gmail.com"
-              />
-              {(errors.email || error) && (
-                <MdError style={{ color: "#FF0000", fontSize: 30 }} />
-              )}
-            </div>
-
-            {error && (
-              <p className="text-[#FF0000]">
-                An account with this email already exists!
-              </p>
-            )}
-            {errors.email && (
-              <p className="text-[#FF0000]">Please enter a valid email</p>
-            )}
-          </div>
-          <div className="mb-6">
-            <HeaderTwo>Password</HeaderTwo>
-            <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center ">
-              <input
-                {...register("password")}
-                type={!show.password ? "text" : "password"}
-                className="outline-none w-full h-auto bg-inherit placeholder-[#4A5568] "
-                placeholder="*****"
-              />
-              <div className="border-l border-l-[#CFD9E0] h-10 mx-3" />
-              <div
-                onClick={() => setShow({ ...show, password: !show.password })}
-                className="mx-2"
-              >
-                {!show.password ? (
-                  <HiMiniEye className="cursor-pointer" style={iconStyle} />
-                ) : (
-                  <HiEyeSlash style={iconStyle} />
-                )}
-              </div>
-            </div>
-          </div>
-          <div>
-            <HeaderTwo>Re-Enter Password</HeaderTwo>
-            <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center ">
-              <input
-                {...register("passwordConfirm")}
-                type={!show.reEnterPassword ? "text" : "password"}
-                className="outline-none w-full h-auto bg-inherit placeholder-[#4A5568] "
-                placeholder="*****"
-              />
-              <div className="border-l border-l-[#CFD9E0] h-10 mx-3" />
-              <div
-                onClick={() =>
-                  setShow({ ...show, reEnterPassword: !show.reEnterPassword })
-                }
-                className="mx-2"
-              >
-                {!show.reEnterPassword ? (
-                  <HiMiniEye className="cursor-pointer" style={iconStyle} />
-                ) : (
-                  <HiEyeSlash style={iconStyle} />
-                )}
-              </div>
-            </div>
-          </div>
+          <Input
+            heading={"Email"}
+            name={"email"}
+            register={register}
+            placeholder={"temidireowoeye@gmail.com"}
+            formError={errors.email?.message}
+            mutateError={error?.message}
+          />
+          <PasswordInput
+            heading={"Password"}
+            name={"password"}
+            register={register}
+            placeholder="********"
+            formError={errors.passwordConfirm?.message}
+          />
+          <PasswordInput
+            heading={"Re-Enter Password"}
+            name={"passwordConfirm"}
+            register={register}
+            placeholder="*********"
+            formError={errors.passwordConfirm?.message}
+          />
           <div className="text-[#718096] flex items-center space-x-2 my-8">
             <input type="checkbox" />
             <p>

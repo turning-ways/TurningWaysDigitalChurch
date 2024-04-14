@@ -8,6 +8,8 @@ export default {
         primaryDark: "#3A62E1",
         secondary: "#A0D7AB",
         secondaryDark: "#5E9942",
+        DarkBlue: "#17275B",
+        DarkBlueHover: "#2A3260"
       },
     },
     fontFamily: {
