@@ -9,7 +9,7 @@ const useVerifyEmail = () => {
   return useMutation({
     mutationFn: (email: Email) =>
       axios
-        .patch<Email>(
+        .post<Email>(
           "https://digital-church.onrender.com/api/v1/users/verify-email",
           email
         )

@@ -36,7 +36,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className="px-4 pt-10 inline-flex flex-col items-center bg-DarkBlue text-[#99A0B7] text-[18px] h-screen font-azo font-medium
+      className="px-5 pt-10 inline-flex flex-col items-center bg-DarkBlue text-[#99A0B7] text-[18px] h-screen font-azo font-medium
     "
     >
       <img
@@ -47,7 +47,7 @@ const Navbar = () => {
       <ul className="gap-y-4 flex flex-col">
         {navList.map((item) => (
           <li
-            className={`flex items-center gap-x-4 hover:bg-DarkBlueHover hover:text-white py-2 px-5 rounded-[10px] cursor-pointer ${
+            className={`flex gap-x-4 hover:bg-DarkBlueHover hover:text-white py-2 px-4 rounded-[10px] cursor-pointer ${
               active === item.title && "bg-DarkBlueHover text-white"
             }`}
             onClick={() => setActive(item.title)}

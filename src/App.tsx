@@ -11,6 +11,7 @@ import LoginWithNumber from "./pages/Signin/WithPhoneNumber/LoginWithNumber";
 import EmailForPasswordReset from "./pages/PasswordReset/EmailEntry/EmailForPasswordReset";
 import PasswordResetOtp from "./pages/PasswordReset/Otp/ForgotPassword/OtpVerification";
 import Navbar from "./components/Navbar/Navbar";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
             path="/password-reset/email-entry"
             element={<EmailForPasswordReset />}
           />
+          <Route path="/overview/dashboard" element={<Dashboard />} />
         </Routes>
       </Router>
     </>
