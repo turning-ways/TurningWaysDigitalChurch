@@ -4,6 +4,7 @@ import Header from "../../../../components/Heading/Header";
 import React, { useEffect, useRef, useState } from "react";
 import useVerifyOtp from "../../../../hooks/ForgotPassword/useVerifyOtp";
 import { useUserIdStore } from "../../../../stores/user";
+import NextButton from "../../../../components/Button/NextButton";
 
 let currentOtpIndex: number = 0;
 
@@ -47,7 +48,7 @@ const OtpVerification = () => {
     inputRef.current?.focus();
   }, [activeOTPIndex]);
 
-  const { mutate } = useVerifyOtp();
+  const { mutate, isPending } = useVerifyOtp();
   return (
     <>
       <AuthContainer center="sm:items-center">
@@ -85,9 +86,7 @@ const OtpVerification = () => {
               );
             })}
           </div>
-          <button className="w-full py-3 text-center bg-[#446DE3] text-xl font-medium mt-10 rounded-[20px] text-white mb-3 max-w-[500px]">
-            Verify
-          </button>
+          <NextButton isPending={isPending} text="Verify" />
           <p>
             Didn't get a code?{" "}
             <span

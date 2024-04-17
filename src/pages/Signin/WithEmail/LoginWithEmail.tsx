@@ -9,7 +9,7 @@ import PhoneButton from "../../../components/Button/PhoneButton";
 import Input from "../../../components/Input/Input";
 import PasswordInput from "../../../components/Input/PasswordInput";
 import useLogin from "../../../hooks/useLogin";
-import { ThreeDots } from "react-loader-spinner";
+import NextButton from "../../../components/Button/NextButton";
 const LoginWithEmail = () => {
   const schema = z.object({
     email: z.string().email({ message: "Please enter a valid email" }),
@@ -28,7 +28,8 @@ const LoginWithEmail = () => {
     resolver: zodResolver(schema),
   });
   const navigate = useNavigate();
-  const { mutate, error, isPending } = useLogin();
+  const { mutate, isPending } = useLogin();
+
   return (
     <>
       <AuthContainer center="sm:items-center">
@@ -57,7 +58,6 @@ const LoginWithEmail = () => {
             placeholder="temidireowoeye@gmail.com"
             register={register}
             formError={errors.email?.message}
-            mutateError={error?.message}
           />
           <PasswordInput
             name="password"
@@ -78,13 +78,7 @@ const LoginWithEmail = () => {
               Forget Password?
             </div>
           </div>
-          <button className="w-full py-3 bg-primaryDark hover:bg-primary text-md lg:text-xl font-medium rounded-[10px] lg:rounded-[20px] text-white flex justify-center">
-            {!isPending ? (
-              <p>Next</p>
-            ) : (
-              <ThreeDots height="25" width="50" color="#fff" />
-            )}
-          </button>
+          <NextButton isPending={isPending} />
           <div className="flex items-center my-5 text-[#718096] w-full lg:max-w-[550px]">
             <div className="w-full h-[1px] bg-[#A0AEC0]" />
             <h2 className="mx-5 text-[#718096] text-xs">OR</h2>

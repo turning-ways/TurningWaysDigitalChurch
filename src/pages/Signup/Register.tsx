@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/Heading/Header";
 import { useUserDetailsStore } from "../../stores/user";
 import useRegister from "../../hooks/Signup/useRegister";
-import { ThreeDots } from "react-loader-spinner";
 import GoogleButton from "../../components/Button/GoogleButton";
 import PasswordInput from "../../components/Input/PasswordInput";
 import Input from "../../components/Input/Input";
+import NextButton from "../../components/Button/NextButton";
 const Register = () => {
   const schema = z.object({
     first_name: z
@@ -38,7 +38,7 @@ const Register = () => {
   });
   const navigate = useNavigate();
 
-  const { mutate, error, isPending } = useRegister();
+  const { mutate, isPending } = useRegister();
 
   const { setEmail } = useUserDetailsStore();
   return (
@@ -92,7 +92,6 @@ const Register = () => {
             register={register}
             placeholder={"temidireowoeye@gmail.com"}
             formError={errors.email?.message}
-            mutateError={error?.message}
           />
           <PasswordInput
             heading={"Password"}
@@ -116,13 +115,7 @@ const Register = () => {
               <span className="text-secondary">Privacy Policy</span>
             </p>
           </div>
-          <button className="w-full py-3 bg-primaryDark hover:bg-primary text-md lg:text-xl font-medium rounded-[10px] lg:rounded-[20px] text-white flex justify-center">
-            {!isPending ? (
-              <p>Next</p>
-            ) : (
-              <ThreeDots height="25" width="50" color="#fff" />
-            )}
-          </button>
+          <NextButton isPending={isPending} />
           <div className="flex items-center my-5 text-[#718096] w-full lg:max-w-[550px]">
             <div className="w-full h-[1px] bg-[#A0AEC0]" />
             <h2 className="mx-5 text-[#718096] text-xs">OR</h2>

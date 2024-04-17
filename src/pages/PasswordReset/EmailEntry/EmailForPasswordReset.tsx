@@ -6,6 +6,7 @@ import AuthContainer from "../../../components/Container/AuthContainer";
 import Header from "../../../components/Heading/Header";
 import HeaderTwo from "../../../components/Heading/HeaderTwo";
 import useForgotPassword from "../../../hooks/ForgotPassword/useForgotPassword";
+import NextButton from "../../../components/Button/NextButton";
 
 const EmailForPasswordReset = () => {
   const schema = z.object({
@@ -22,7 +23,7 @@ const EmailForPasswordReset = () => {
     resolver: zodResolver(schema),
   });
 
-  const { mutate } = useForgotPassword();
+  const { mutate, isPending } = useForgotPassword();
 
   return (
     <>
@@ -30,7 +31,7 @@ const EmailForPasswordReset = () => {
         <form
           onSubmit={handleSubmit((data) => {
             const { email } = data;
-            mutate({email});
+            mutate({ email });
           })}
         >
           <div className="space-y-2 mb-10">
@@ -52,11 +53,7 @@ const EmailForPasswordReset = () => {
               placeholder="example@gmail.com"
             />
           </div>
-          <button
-            className="w-full py-3 text-center bg-[#446DE3] mt-10 rounded-[20px] text-white font-medium text-xl"
-          >
-            Next
-          </button>
+          <NextButton isPending={isPending} />
         </form>
       </AuthContainer>
     </>

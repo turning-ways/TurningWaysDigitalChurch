@@ -3,7 +3,8 @@ import Header from "../../../../components/Heading/Header";
 
 import React, { useEffect, useRef, useState } from "react";
 import { useUserIdStore } from "../../../../stores/user";
-import useVerifyOtp from "../../../../hooks/Signup/useVerifyOtp";
+import NextButton from "../../../../components/Button/NextButton";
+import useVerifySignUpOtp from "../../../../hooks/Signup/useVerifySignUpOtp";
 
 let currentOtpIndex: number = 0;
 
@@ -47,21 +48,25 @@ const OtpVerification = () => {
     inputRef.current?.focus();
   }, [activeOTPIndex]);
 
-  const { mutate } = useVerifyOtp();
-
+  const { mutate, isPending } = useVerifySignUpOtp();
   return (
     <>
       <AuthContainer center="sm:items-center">
         <form
           onSubmit={(e) => {
             e.preventDefault();
+            console.log("dire");
             mutate({ token: otp.join("") });
           }}
         >
           <div className="space-y-2 mb-10">
+            <p>
+              <span className="text-[#446DE3] text-2xl">2</span> of 3
+            </p>
             <Header>Check your email</Header>
             <p className="text-[#949995]">
-              Kindly enter the verification cde (OTP) sent to your email address
+              Kindly enter the verification code (OTP) sent to your email
+              address
             </p>
           </div>
           <div className="mb-6 flex justify-between max-w-[550px] space-x-4">
@@ -70,8 +75,8 @@ const OtpVerification = () => {
                 <React.Fragment key={index}>
                   <input
                     ref={index === activeOTPIndex ? inputRef : null}
-                    type="number"
-                    className="w-full h-12  border-b-2  bg-transparent outline-none text-center font-semibold border-b-[#CCE9D1]  focus:border-b-[#61BD74] focus:text-[#5E9942] text-[#CCE9D1] transition spin-button-none placeholder-[#CCE9D1]"
+                    type="text"
+                    className="w-full h-12 border-b-2  bg-transparent outline-none text-center font-semibold border-b-[#CCE9D1]  focus:border-b-[#61BD74] focus:text-[#5E9942] text-[#CCE9D1] transition spin-button-none placeholder-[#CCE9D1]"
                     onChange={handleChange}
                     value={otp[index]}
                     onKeyDown={(e) => handleOnKeyDown(e, index)}
@@ -81,9 +86,7 @@ const OtpVerification = () => {
               );
             })}
           </div>
-          <button className="w-full py-3 text-center bg-[#446DE3] text-xl font-medium mt-10 rounded-[20px] text-white mb-3 max-w-[500px]">
-            Verify
-          </button>
+          <NextButton isPending={isPending} text="Verify" />
           <p>
             Didn't get a code?{" "}
             <span
