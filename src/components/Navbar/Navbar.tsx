@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 
 import { navList } from "./navlist";
 
+import { TbVector } from "react-icons/tb";
+
 interface NavBarProps {
   active?: string;
 }
@@ -10,12 +12,8 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
   // const location = useLocation();
 
   return (
-    <nav className="px-5 pt-10 inline-flex flex-col items-center bg-DarkBlue text-[#99A0B7] text-[18px] h-screen font-azo font-medium sticky top-0">
-      <img
-        src="../../../public/assets/images/Navbar/HeaderIcon.svg"
-        alt="Logo"
-        className=" w-5 h-5 mb-10"
-      />
+    <nav className="px-5 pt-16 inline-flex flex-col items-center bg-DarkBlue text-[#99A0B7] text-[18px] h-screen font-azo font-medium sticky top-0">
+      <TbVector className="text-3xl mb-6" />
       <ul className="gap-y-4 flex flex-col">
         {navList.map((item) => (
           <Link
@@ -26,7 +24,7 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
             }`}
           >
             <li className="flex gap-x-4">
-              <img src={item.source} alt="" />
+              {item.icon}
               <div>{item.title}</div>
             </li>
           </Link>
