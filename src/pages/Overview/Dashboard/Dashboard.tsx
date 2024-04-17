@@ -15,27 +15,27 @@ const Dashboard = () => {
 
           {/* component 2 */}
           <ul className="mt-10 flex">
-            <li className="px-6 border-b-4 border-b-[#446DE3] text-[#446DE3] flex items-center space-x-2">
+            <li className="px-6 border-b-4 border-b-[#446DE3] text-[#446DE3] flex items-center space-x-2 cursor-pointer">
               <MdCalendarToday />
               <p>Today</p>
             </li>
-            <li className="px-6 border-b-4 flex items-center space-x-2">
+            <li className="px-6 border-b-4 flex items-center space-x-2 cursor-pointer">
               <MdOutlineNextWeek />
               <p>Next week</p>
             </li>
-            <li className="px-6 border-b-4 flex items-center space-x-2">
+            <li className="px-6 border-b-4 flex items-center space-x-2 cursor-pointer">
               <IoCalendarOutline />
               <p>Last Month</p>
             </li>
-            <li className="px-6 border-b-4 flex items-center space-x-2">
+            <li className="px-6 border-b-4 flex items-center space-x-2 cursor-pointer">
               <TbCloudSearch />
               <p>Last Quarter</p>
             </li>
-            <li className="px-6 border-b-4 flex items-center space-x-2">
+            <li className="px-6 border-b-4 flex items-center space-x-2 cursor-pointer">
               <LuCalendarDays />
               <p>YTD</p>
             </li>
-            <li className="px-6 border-b-4 flex items-center space-x-2">
+            <li className="px-6 border-b-4 flex items-center space-x-2 cursor-pointer">
               <IoFilter />
               <p>Filter</p>
             </li>
