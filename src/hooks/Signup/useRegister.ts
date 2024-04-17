@@ -3,6 +3,7 @@ import axios from "axios";
 import { useUserDetailsStore } from "../../stores/user";
 import useVerifyEmail from "./useVerifyEmail";
 import { useNavigate } from "react-router-dom";
+import { notify } from "../useLogin";
 
 interface User {
   email: string;
@@ -28,6 +29,18 @@ const useRegister = () => {
     onSuccess: () => {
       mutate({ email });
       navigate("/signup/otp-verification");
+    },
+    onError: (err: { response: { data: { message: string } } }) => {
+
+      const message = err.response.data.message;
+      if (
+        message ===
+        "User validation failed: passwordConfirm: The passwords do not match!!"
+      ) {
+        notify(`Passwords don't match`);
+      } else if (message.includes("duplicate")) {
+        notify(`An account with this email already exists`);
+      }
     },
   });
 };

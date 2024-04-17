@@ -1,15 +1,29 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useUserIdStore } from "../stores/user";
+import { Bounce, toast } from "react-toastify";
 
 interface Password {
   password: string;
   passwordConfirm: string;
 }
 
-const useUpdatePassword = () => {
+export const success = (success: string) => {
+  toast.error(success, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Bounce,
+  });
+};
 
-    const {userId} = useUserIdStore();
+const useUpdatePassword = () => {
+  const { userId } = useUserIdStore();
 
   return useMutation({
     mutationFn: (password: Password) =>
@@ -19,7 +33,10 @@ const useUpdatePassword = () => {
           password
         )
         .then((res) => res.data),
-    onSuccess: () => console.log("password has been changed"),
+    onSuccess: () => {
+      console.log("password has been changed");
+      success("Password has been changed");
+    },
   });
 };
 
