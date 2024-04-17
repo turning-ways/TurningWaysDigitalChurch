@@ -25,9 +25,7 @@ const Input: React.FC<InputProps> = ({
       <HeaderTwo>{heading}</HeaderTwo>
       <div
         className={`border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center ${
-          formError || mutateError
-            ? "border-[#FF0000] border-2"
-            : "border-[#EBEFF9] border"
+          formError ? "border-[#FF0000] border-2" : "border-[#EBEFF9] border"
         }`}
       >
         <input
@@ -36,16 +34,9 @@ const Input: React.FC<InputProps> = ({
           className="outline-none w-full bg-inherit placeholder-[#4A5568] h-10"
           placeholder={placeholder}
         />
-        {(formError || mutateError) && (
-          <MdError style={{ color: "#FF0000", fontSize: 30 }} />
-        )}
+        {formError && <MdError style={{ color: "#FF0000", fontSize: 30 }} />}
       </div>
       {formError && <p className="text-[#FF0000]">{formError}</p>}
-      {mutateError === "Request failed with status code 500" && (
-        <p className="text-[#FF0000]">
-          An account with this email already exists!
-        </p>
-      )}
       {mutateError === "Request failed with status code 401" && (
         <p className="text-[#FF0000]">No such email exists!</p>
       )}
