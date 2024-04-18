@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 
 interface User {
@@ -23,7 +22,6 @@ export const notify = (err: string) => {
 };
 
 const useLogin = () => {
-  const navigate = useNavigate();
   return useMutation({
     mutationFn: (user: User) => {
       return axios
@@ -35,7 +33,7 @@ const useLogin = () => {
     },
     onSuccess: () => {
       console.log("It works");
-      navigate("/personalinfo");
+      // navigate("/personalinfo");
     },
     onError: () => {
       notify("Incorrect Username or Password");
