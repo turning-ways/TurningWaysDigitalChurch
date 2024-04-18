@@ -13,7 +13,7 @@ const ProfileEdit = () => {
   return (
     <OverviewContainer active="Membership">
       <Header text="Membership" />
-      <SubHeader />
+      <SubHeader btnText="Add Profile" />
       <InformationHeader route={routes} />
       <Outlet />
     </OverviewContainer>

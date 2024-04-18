@@ -35,7 +35,7 @@ const useLogin = () => {
     },
     onSuccess: () => {
       console.log("It works");
-      navigate("/overview/dashboard");
+      navigate("/personalinfo");
     },
     onError: () => {
       notify("Incorrect Username or Password");
