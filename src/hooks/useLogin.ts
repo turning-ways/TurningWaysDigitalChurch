@@ -27,7 +27,10 @@ const useLogin = () => {
       return axios
         .post<User>(
           "https://digital-church.onrender.com/api/v1/users/login",
-          user
+          user,
+          {
+            withCredentials: true,
+          }
         )
         .then((res) => res.data);
     },
