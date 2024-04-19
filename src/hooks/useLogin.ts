@@ -33,7 +33,8 @@ const useLogin = () => {
     },
     onSuccess: () => {
       console.log("It works");
-      // navigate("/personalinfo");
+      window.location.href =
+        "https://digital-church-web.vercel.app/personalinfo";
     },
     onError: () => {
       notify("Incorrect Username or Password");

@@ -1,30 +1,26 @@
 import InformationInput from "./InformationInput";
 import { usePersonalInformationStore } from "../../../../stores/personalinformation";
 import { useState } from "react";
+import { DropDownInput } from "../../../../components/DropDownMenu/DropDownInput";
 
 const EditProfilePersonalInfo = () => {
-  const {
-    setPrefix,
-    setFirstName,
-    setMiddleName,
-    setLastName,
-    setSuffix,
-  } = usePersonalInformationStore();
+  const { setFirstName, setMiddleName, setLastName, setSuffix } =
+    usePersonalInformationStore();
 
   // Define individual state for each input field
-  const [prefixValue, setPrefixValue] = useState<string>("");
+  // const [prefixValue, setPrefixValue] = useState<string>("");
   const [firstNameValue, setFirstNameValue] = useState<string>("");
   const [middleNameValue, setMiddleNameValue] = useState<string>("");
   const [lastNameValue, setLastNameValue] = useState<string>("");
   const [suffixValue, setSuffixValue] = useState<string>("");
 
   const information = [
-    {
-      name: "Prefix",
-      set: setPrefix,
-      value: prefixValue,
-      onChange: setPrefixValue,
-    },
+    // {
+    //   name: "Prefix",
+    //   set: setPrefix,
+    //   value: prefixValue,
+    //   onChange: setPrefixValue,
+    // },
     {
       name: "First Name",
       set: setFirstName,
@@ -53,6 +49,7 @@ const EditProfilePersonalInfo = () => {
 
   return (
     <div className="mt-5">
+      <DropDownInput text="Prefix" items={["Mr", "Mrs"]} placeholder="Mr/Mrs" />
       {information.map((item, index) => (
         <div key={index}>
           <InformationInput
