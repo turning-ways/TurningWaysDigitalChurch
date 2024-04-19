@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { success } from "../useUpdatePassword";
+import { notify } from "../useLogin";
 
 interface Member {
   role: string;
@@ -20,6 +21,7 @@ const useAddMember = () => {
         )
         .then((res) => res.data),
     onSuccess: () => success("Member has been added successfully"),
+    onError: () => notify("Did not work boss"),
   });
 };
 
