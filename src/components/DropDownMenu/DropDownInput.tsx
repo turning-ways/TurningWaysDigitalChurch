@@ -6,12 +6,14 @@ interface DropDownInputProps {
   text: string;
   items: string[];
   placeholder?: string;
+  onSelect: (selectedItem: string) => void;
 }
 
 export const DropDownInput: React.FC<DropDownInputProps> = ({
   text,
   items,
   placeholder,
+  onSelect,
 }) => {
   const [value, setValue] = useState<string>("");
   const [showDropDownList, setShowDropDownList] = useState<boolean>(false);
@@ -19,6 +21,7 @@ export const DropDownInput: React.FC<DropDownInputProps> = ({
   const handleSelectList = (selectedItem: string) => {
     setValue(selectedItem);
     setShowDropDownList(false);
+    onSelect(selectedItem); 
   };
 
   return (
@@ -41,7 +44,7 @@ export const DropDownInput: React.FC<DropDownInputProps> = ({
         />
       </div>
       {showDropDownList && (
-          <DropDownMenu onSelect={handleSelectList} dropdownItems={items} />
+        <DropDownMenu onSelect={handleSelectList} dropdownItems={items} />
       )}
     </div>
   );

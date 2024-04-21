@@ -5,6 +5,7 @@ import { notify } from "../useLogin";
 import useAddMember from "../AddMember/useAddMember";
 import { useMemberStore } from "../../stores/member";
 
+
 interface Church {
   name: string;
   phone: string;
@@ -33,15 +34,19 @@ const useAddChurch = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: (res: any) => {
       success("Church has been added successfully");
+
+      console.log(res.data.church.id);
+
       mutate({
         role,
         howDidYouHear,
         phone: phoneNumber,
-        churchId: res.data.church.id,
+        churchId: "66256fb84ed22b1e46b9a771",
       });
     },
     onError: () => {
       notify("Couldn't add church");
+     
     },
   });
 };

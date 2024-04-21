@@ -4,7 +4,7 @@ import { useState } from "react";
 import { DropDownInput } from "../../../../components/DropDownMenu/DropDownInput";
 
 const EditProfilePersonalInfo = () => {
-  const { setFirstName, setMiddleName, setLastName, setSuffix } =
+  const {setPrefix, setFirstName, setMiddleName, setLastName, setSuffix } =
     usePersonalInformationStore();
 
   // Define individual state for each input field
@@ -15,12 +15,6 @@ const EditProfilePersonalInfo = () => {
   const [suffixValue, setSuffixValue] = useState<string>("");
 
   const information = [
-    // {
-    //   name: "Prefix",
-    //   set: setPrefix,
-    //   value: prefixValue,
-    //   onChange: setPrefixValue,
-    // },
     {
       name: "First Name",
       set: setFirstName,
@@ -47,17 +41,22 @@ const EditProfilePersonalInfo = () => {
     },
   ];
 
+  const handleSelectValue = (value:string) => {
+    setPrefix(value);
+  };
+
   return (
     <div className="mt-5">
-      <DropDownInput text="Prefix" items={["Mr", "Mrs"]} placeholder="Mr/Mrs" />
+      <DropDownInput text="Prefix" items={["Mr", "Mrs"]} placeholder="Mr/Mrs" onSelect={handleSelectValue}/>
       {information.map((item, index) => (
         <div key={index}>
           <InformationInput
             text={item.name}
             onChange={(e) => {
+              item.onChange(e.target.value);
               item.set(e.target.value);
             }}
-            value=""
+            value={item.value}
           />
         </div>
       ))}

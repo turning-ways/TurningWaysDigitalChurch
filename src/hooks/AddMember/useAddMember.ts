@@ -11,6 +11,13 @@ interface Member {
     MainPhone: string;
   };
   churchId: string;
+  prefix?: string;
+  suffix?: string;
+  first_name?: string;
+  middle_name?: string;
+  last_name?: string;
+  email?: string;
+  address?: { HomeAddress: string };
 }
 
 const useAddMember = () => {
