@@ -6,7 +6,10 @@ import AuthContainer from "../../../components/Container/AuthContainer";
 import Header from "../../../components/Heading/Header";
 import HeaderTwo from "../../../components/Heading/HeaderTwo";
 import { TiArrowSortedDown } from "react-icons/ti";
-import { useNavigate } from "react-router-dom";
+import { useMemberStore } from "../../../stores/member";
+import useAddChurch from "../../../hooks/AddChurch/useAddChurch";
+import { useState } from "react";
+import DropDownMenu from "../../../components/DropDownMenu/DropDownMenu";
 
 const ChurchInfo = () => {
   // const schema = z.object({
@@ -31,21 +34,47 @@ const ChurchInfo = () => {
 
   // const { mutate } = useRegister();
 
-  const navigate = useNavigate();
+  const [postalCode, setPostalCode] = useState<string>("");
+  const [country, setCountry] = useState<string>("");
+  const [state, setState] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
+  const [parentChurch, setParentChurch] = useState<string>("");
+  const [showParentChurch, setShowParentChurch] = useState<boolean>(false);
+  const [churchLevel, setChurchLevel] = useState<string>("");
+  const [showChurchLevels, setShowChurchLevels] = useState<boolean>(false);
+
+
+  const { phoneNumber, churchName } = useMemberStore();
+
+  const { mutate } = useAddChurch();
+
+  const handleSelectedParentChurch = (selectedItem: string) => {
+    setParentChurch(selectedItem);
+    setShowParentChurch(false);
+  };
+  const handleChurchLevel = (selectedItem: string) => {
+    setChurchLevel(selectedItem);
+    setShowChurchLevels(false);
+  };
 
   return (
     <>
       <AuthContainer center="sm:items-center">
         <form
-          className=""
-          // onSubmit={handleSubmit((data) => {
-          //   if (isValid) {
-          //     mutate(data);
-          //   }
-          //   const { email, password, passwordConfirm } = data;
-          //   mutate({ email, password, passwordConfirm });
-          //   console.log(data);
-          // })}
+          onSubmit={(e) => {
+            e.preventDefault();
+            mutate({
+              phone: phoneNumber.MainPhone,
+              name: churchName,
+              country,
+              state,
+              address,
+              postalCode,
+              city,
+            });
+            console.log(churchName);
+          }}
         >
           <div className="mb-5 max-w-[550px] mx-auto">
             <p>
@@ -58,34 +87,58 @@ const ChurchInfo = () => {
           </div>
           {/* < div className="space-y-8 sm:h-[440px] overflow-y-scroll"> */}
           <div className="space-y-8">
-            <div className="mb-2">
+            <div className="relative">
               <HeaderTwo>
+                {" "}
                 Select parent church <span className="text-secondary">*</span>
               </HeaderTwo>
-              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center ">
+              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center">
                 <input
-                  className="outline-none w-full h-auto bg-inherit  "
-                  placeholder="Winners Chapel"
+                  className="outline-none w-full h-auto bg-inherit"
+                  placeholder="Winners"
+                  value={parentChurch}
+                  readOnly={true}
+                  onChange={(e) => setParentChurch(e.target.value)}
                 />
                 <div className="border-l border-l-[#CFD9E0] h-10 mx-3" />
-
-                <TiArrowSortedDown className="cursor-pointer text-3xl" />
+                <TiArrowSortedDown
+                  className="cursor-pointer text-3xl"
+                  onClick={() => setShowParentChurch(!showParentChurch)}
+                />
               </div>
+              {showParentChurch && (
+                <DropDownMenu
+                  onSelect={handleSelectedParentChurch}
+                  dropdownItems={["Winners", "Redeem"]}
+                />
+              )}
             </div>
-            <div className="mb-2">
-              <HeaderTwo>
+
+            <div className="relative">
+            <HeaderTwo>
                 Select church level within parent church{" "}
                 <span className="text-secondary">*</span>
               </HeaderTwo>
-              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center ">
+              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center">
                 <input
-                  className="outline-none w-full h-auto bg-inherit  "
-                  placeholder="Winners Chapel"
+                  className="outline-none w-full h-auto bg-inherit"
+                  placeholder="Winners"
+                  value={churchLevel}
+                  readOnly={true}
+                  onChange={(e) => setChurchLevel(e.target.value)}
                 />
                 <div className="border-l border-l-[#CFD9E0] h-10 mx-3" />
-
-                <TiArrowSortedDown className="cursor-pointer text-3xl" />
+                <TiArrowSortedDown
+                  className="cursor-pointer text-3xl"
+                  onClick={() => setShowChurchLevels(!showChurchLevels)}
+                />
               </div>
+              {showChurchLevels && (
+                <DropDownMenu
+                  onSelect={handleChurchLevel}
+                  dropdownItems={["Level 1", "Level 2", "Level 3"]}
+                />
+              )}
             </div>
 
             <div className="mb-2">
@@ -97,6 +150,8 @@ const ChurchInfo = () => {
                 type="text"
                 className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
                 placeholder="Magodo"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
               />
             </div>
 
@@ -108,6 +163,8 @@ const ChurchInfo = () => {
                 type="text"
                 className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
                 placeholder="Magodo"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
               />
             </div>
 
@@ -119,6 +176,8 @@ const ChurchInfo = () => {
                 type="text"
                 className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
                 placeholder="Lagos"
+                value={state}
+                onChange={(e) => setState(e.target.value)}
               />
             </div>
 
@@ -130,6 +189,8 @@ const ChurchInfo = () => {
                 type="text"
                 className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
                 placeholder="123456"
+                value={postalCode}
+                onChange={(e) => setPostalCode(e.target.value)}
               />
             </div>
 
@@ -141,12 +202,14 @@ const ChurchInfo = () => {
                 type="text"
                 className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
                 placeholder="123456"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
               />
             </div>
           </div>
           <button
             className="w-full py-3 mb-3 text-center bg-blue-600 my-10 rounded-[20px] text-white font-medium text-xl"
-            onClick={() => navigate("/request")}
+            // onClick={() => navigate("/request")}
           >
             Next
           </button>

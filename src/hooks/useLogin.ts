@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
+import { success } from "./useUpdatePassword";
 
 interface User {
   email: string;
@@ -37,8 +38,8 @@ const useLogin = () => {
         .then((res) => res.data);
     },
     onSuccess: () => {
-      console.log("It works");
-      navigate("/personalinfo");
+      success("Sign In was Successfull");
+      navigate("/overview/dashboard");
     },
     onError: () => {
       notify("Incorrect Username or Password");

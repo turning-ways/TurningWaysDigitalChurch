@@ -7,28 +7,40 @@ import { useState } from "react";
 import NextButton from "../../../components/Button/NextButton";
 import DropDownMenu from "../../../components/DropDownMenu/DropDownMenu";
 import { roles, hearAboutUs } from "../../../constants/constants";
-import useAddMember from "../../../hooks/AddMember/useAddMember";
+import { useMemberStore } from "../../../stores/member";
+import { useNavigate } from "react-router-dom";
+import { notify } from "../../../hooks/useLogin";
+// import useAddMember from "../../../hooks/AddMember/useAddMember";
 
 const PersonalInfo = () => {
-  const [phone, setPhone] = useState<string>("");
-  const [showRoles, setShowRoles] = useState<boolean>(true);
-  const [showHearAbout, setShowHearAbout] = useState<boolean>(true);
+  const [phone, setPhone] = useState("");
+  const [showRoles, setShowRoles] = useState<boolean>(false);
+  const [showHearAbout, setShowHearAbout] = useState<boolean>(false);
 
   // const { mutate, isPending } = useAddMember();
-  const [howDidYouHear, setHowDidYouHear] = useState("");
-  const [role, setRole] = useState("");
+  const [hear, setHear] = useState("");
+  const [roleValue, setRoleValue] = useState("");
 
   const handleSelectHearAbout = (selectedItem: string) => {
-    setHowDidYouHear(selectedItem);
+    setHear(selectedItem);
     setShowHearAbout(false);
   };
 
   const handleSelectRoles = (selectedItem: string) => {
-    setRole(selectedItem);
+    setRoleValue(selectedItem);
     setShowRoles(false);
   };
 
-  const { mutate, isPending } = useAddMember();
+  // const { mutate, isPending } = useAddMember();
+
+  const { setPhoneNumber, setHowDidYouHear, setRole } = useMemberStore();
+
+  //navigation
+  const navigate = useNavigate();
+
+  const isNumeric = (value: string) => {
+    return /^0\d{10}$/.test(value);
+  };
 
   return (
     <>
@@ -37,12 +49,19 @@ const PersonalInfo = () => {
           className=""
           onSubmit={(e) => {
             e.preventDefault();
-            console.log("works");
-            mutate({
-              role,
-              howDidYouHear: howDidYouHear,
-              phone: { MainPhone: phone },
-            });
+            setPhoneNumber({ MainPhone: phone });
+            setHowDidYouHear(hear);
+            setRole(roleValue);
+
+            if (phone !== "" && hear !== "" && roleValue !== "") {
+              if (isNumeric(phone)) {
+                navigate("/organizationinfo");
+              } else {
+                notify("Please enter a valid phone number");
+              }
+            } else {
+              notify("Please fill in all details");
+            }
           }}
         >
           <div className="mb-5 max-w-[550px] mx-auto">
@@ -59,22 +78,14 @@ const PersonalInfo = () => {
               <HeaderTwo>Phone Number</HeaderTwo>
 
               <div className="flex">
-                <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-l-xl px-2 sm:px-3 py-1 mr-3 min-w-[80px] w-[80px] sm:w-[130px] flex items-center ">
-                  <input
-                    className="outline-none w-full bg-inherit placeholder-[#4A5568]"
-                    placeholder="+234"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                  <div className="border-l border-l-[#CFD9E0] h-8 mx-1 lg:mx-2" />
-                  <div className="">
-                    <TiArrowSortedDown className="cursor-pointer sm:text-xl" />
-                  </div>
-                </div>
                 <input
                   type="text"
                   className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-r-xl w-full p-3 outline-none "
                   placeholder="7043210987"
+                  value={phone}
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                  }}
                 />
               </div>
             </div>
@@ -84,10 +95,10 @@ const PersonalInfo = () => {
               <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center">
                 <input
                   className="outline-none w-full h-auto bg-inherit"
-                  placeholder="Social Media"
-                  value={role}
+                  placeholder="Admin"
+                  value={roleValue}
                   readOnly={true}
-                  onChange={(e) => setRole(e.target.value)}
+                  onChange={(e) => setRoleValue(e.target.value)}
                 />
                 <div className="border-l border-l-[#CFD9E0] h-10 mx-3" />
                 <TiArrowSortedDown
@@ -108,9 +119,9 @@ const PersonalInfo = () => {
                 <input
                   className="outline-none w-full h-auto bg-inherit"
                   placeholder="Social Media"
-                  value={howDidYouHear}
+                  value={hear}
                   readOnly={true}
-                  onChange={(e) => setHowDidYouHear(e.target.value)}
+                  onChange={(e) => setHear(e.target.value)}
                 />
                 <div className="border-l border-l-[#CFD9E0] h-10 mx-3" />
                 <TiArrowSortedDown
@@ -126,7 +137,7 @@ const PersonalInfo = () => {
               )}
             </div>
           </div>
-          <NextButton isPending={isPending} />
+          <NextButton />
         </form>
       </AuthContainer>
     </>

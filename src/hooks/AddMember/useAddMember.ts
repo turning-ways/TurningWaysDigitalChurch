@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { success } from "../useUpdatePassword";
 import { notify } from "../useLogin";
+import { useNavigate } from "react-router-dom";
 
 interface Member {
   role: string;
@@ -9,19 +10,27 @@ interface Member {
   phone: {
     MainPhone: string;
   };
+  churchId: string;
 }
 
 const useAddMember = () => {
+  const navigate = useNavigate();
   return useMutation({
     mutationFn: (memberDetails: Member) =>
       axios
         .post<Member>(
           "https://digital-church.onrender.com/api/v1/members",
-          memberDetails
+          memberDetails,
+          {
+            withCredentials: true,
+          }
         )
         .then((res) => res.data),
-    onSuccess: () => success("Member has been added successfully"),
-    onError: () => notify("Did not work boss"),
+    onSuccess: () => {
+      success("Member has been added successfully");
+      navigate("/overview/dashboard");
+    },
+    onError: () => notify("Couldn't add member"),
   });
 };
 

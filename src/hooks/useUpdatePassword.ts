@@ -9,7 +9,7 @@ interface Password {
 }
 
 export const success = (success: string) => {
-  toast.error(success, {
+  toast.success(success, {
     position: "top-right",
     autoClose: 5000,
     hideProgressBar: false,
