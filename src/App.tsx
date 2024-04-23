@@ -37,7 +37,7 @@ import { useChurchIdStore } from "./stores/churchId";
 
 function App() {
   const { churchId } = useChurchIdStore();
-  const isAuthenticated = churchId !== null;
+  const isAuthenticated = churchId !== (null || undefined);
   return (
     <>
       <Router>
