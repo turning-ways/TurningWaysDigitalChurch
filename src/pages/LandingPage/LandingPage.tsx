@@ -6,7 +6,6 @@ import PasswordInput from "../../components/Input/PasswordInput";
 import { useNavigate } from "react-router-dom";
 import NextButton from "../../components/Button/NextButton";
 import GoogleButton from "../../components/Button/GoogleButton";
-import PhoneButton from "../../components/Button/PhoneButton";
 import useLogin from "../../hooks/useLogin";
 
 const LandingPage = () => {
@@ -29,9 +28,9 @@ const LandingPage = () => {
   const navigate = useNavigate();
   const { mutate, isPending } = useLogin();
   return (
-    <div className="px-20 h-screen pt-6">
+    <div className="px-20 h-screen pt-6 max-w-[1440px]">
       <nav className="flex justify-between items-center">
-        <p>Turning Ways</p>
+        <img src="/assets/images/turningwayslogo.svg" alt="" />
         <ul className="flex text-[#6181E7] space-x-16 items-center font-azo text-xl">
           <li>
             <button onClick={() => navigate("/register")}>
@@ -45,7 +44,7 @@ const LandingPage = () => {
           </li>
         </ul>
       </nav>
-      <main className="grid grid-cols-[500px,1fr] mt-5  gap-x-10">
+      <main className="grid grid-cols-[550px,1fr] mt-5  gap-x-10">
         <form
           onSubmit={handleSubmit((data) => {
             const { email, password } = data;
@@ -95,10 +94,18 @@ const LandingPage = () => {
 
           <div className="flex space-x-3">
             <GoogleButton />
-            <PhoneButton />
+            <div
+              className="border border-[#CBD5E0] rounded-[20px] px-1 space-x-1 flex justify-center  items-center w-full lg:max-w-[550px] cursor-pointer mt-5"
+              onClick={() => navigate("/login-with-number")}
+            >
+              <img src="/assets/images/twsymbol.svg" alt="" />
+              <p className=" text-center text-[#67728A] text-sm lg:text-md font-medium">
+                New to TurningWays, Join Now
+              </p>
+            </div>
           </div>
         </form>
-        <div className="place-self-center pr-10 relative">
+        <div className="place-self-center justify-self-center pr-10 relative">
           {/* <img src="../../../public/assets/images/DashboardLaptop.png" alt="" /> */}
           <img src="/assets/images/Dashboard.svg" alt="" />
           <img
