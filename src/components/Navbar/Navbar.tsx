@@ -6,7 +6,7 @@ import { FaWpforms } from "react-icons/fa6";
 import { GoWorkflow } from "react-icons/go";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoIosLogOut, IoMdHelpCircleOutline } from "react-icons/io";
-import { useChurchIdStore } from "../../stores/churchId";
+// import { useChurchIdStore } from "../../stores/churchId";
 
 interface NavBarProps {
   active?: string;
@@ -15,19 +15,21 @@ interface NavBarProps {
 const Navbar: React.FC<NavBarProps> = ({ active }) => {
   // const location = useLocation();
 
-  const { churchId } = useChurchIdStore();
+  // const { churchId } = useChurchIdStore();
 
   const navList = [
     {
       source: "../../../public/assets/images/Navbar/MembershipIcon.svg",
       title: "Dashboard",
       icon: <RxDashboard className="text-3xl" />,
-      route: `/admin/overview/dashboard/${churchId}`,
+      // route: `/admin/overview/dashboard/${churchId}`,
+      route: `/admin/overview/dashboard/`,
     },
     {
       source: "../../../public/assets/images/Navbar/MembershipIcon.svg",
       title: "Membership",
-      route: `/admin/church/${churchId}/members`,
+      route: `/admin/church/members`,
+      // route: `/admin/church/${churchId}/members`,
       icon: <BsPeople className="text-3xl" />,
     },
     {
