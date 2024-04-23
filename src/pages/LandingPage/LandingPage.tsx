@@ -100,9 +100,9 @@ const LandingPage = () => {
         </form>
         <div className="place-self-center pr-10 relative">
           {/* <img src="../../../public/assets/images/DashboardLaptop.png" alt="" /> */}
-          <img src="../../../public/assets/images/Dashboard.svg" alt="" />
+          <img src="/assets/images/Dashboard.svg" alt="" />
           <img
-            src="../../../public/assets/images/DashboardMobile.svg"
+            src="/assets/images/DashboardMobile.svg"
             className="absolute top-48 right-[-30px] "
           />
         </div>
