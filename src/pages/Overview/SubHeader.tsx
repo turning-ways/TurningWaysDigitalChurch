@@ -13,7 +13,7 @@ const SubHeader = () => {
       <div className="bg-[#F1F0F3] rounded-lg p-2 w-fit cursor-pointer h-fit absolute top-1/3 left-0">
         <IoIosArrowBack
           className=" text-2xl w-auto text-[#6C6C6D]"
-          onClick={() => navigate("/members")}
+          onClick={() => navigate("/admin/church/members")}
         />
       </div>
       <div className="flex space-x-5 items-center ml-20">

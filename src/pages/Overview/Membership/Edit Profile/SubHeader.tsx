@@ -38,7 +38,7 @@ const SubHeader: React.FC<SubHeaderProps> = ({ btnText }) => {
     <div className="flex justify-center flex-col mt-10 items-center relative">
       <div
         className="bg-[#F1F0F3] rounded-lg p-2 w-fit cursor-pointer h-fit absolute top-0 left-0"
-        onClick={() => navigate(`/admin/church/${churchId}/members`)}
+        onClick={() => navigate(`/admin/church/members`)}
       >
         <IoIosArrowBack className=" text-2xl w-auto text-[#6C6C6D]" />
       </div>

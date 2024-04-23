@@ -6,12 +6,16 @@ import InformationHeader from "../InformationHeader";
 import OverviewContainer from "../../OverviewContainer";
 
 const MembershipProfile = () => {
+  const queryParams = new URLSearchParams(location.search);
+
+  const memberId = queryParams.get("id");
+
   const routes = {
-    personalInfo: "/overview/membership/personal-information",
+    personalInfo: `/overview/membership/personal-information?id=${memberId}`,
 
-    contactInfo: "/overview/membership/contact-information",
+    contactInfo: `/overview/membership/contact-information?id=${memberId}`,
 
-    churchInfo: "/overview/membership/church-information",
+    churchInfo: `/overview/membership/church-information?id=${memberId}`,
   };
 
   return (

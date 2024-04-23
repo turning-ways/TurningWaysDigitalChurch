@@ -31,7 +31,7 @@ const LandingPage = () => {
     <div className="px-20 h-screen pt-6 max-w-[1440px]">
       <nav className="flex justify-between items-center">
         <img src="/assets/images/turningwayslogo.svg" alt="" />
-        <ul className="flex text-[#6181E7] space-x-16 items-center font-azo text-xl">
+        <ul className="flex text-[#6181E7] space-x-10 items-center font-azo text-xl">
           <li>
             <button onClick={() => navigate("/register")}>
               Sign Up for free

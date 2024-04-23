@@ -47,7 +47,8 @@ const useLogin = () => {
       success("Sign In was Successfull");
       const url = new URL(res.redirectUrl);
       navigate(url.pathname);
-      setChurchId(res.churchId);
+      if (url.pathname === "/admin/overview/dashboard")
+        setChurchId(res.churchId);
     },
     onError: () => {
       notify("Incorrect Username or Password");

@@ -35,7 +35,7 @@ const AllMembers = () => {
         <div className="">Gender</div>
       </div>
 
-      {churchId &&
+      {churchId && member && member.data && member.data.members && 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         member.data.members.map((item: any) => (
           <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] border-b py-4  text-[#636363] gap-4">

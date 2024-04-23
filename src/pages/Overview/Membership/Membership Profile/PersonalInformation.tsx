@@ -1,7 +1,7 @@
 import { IoIosArrowForward } from "react-icons/io";
-// import { useQuery } from "@tanstack/react-query";
-// import { useChurchIdStore } from "../../../../stores/churchId";
-// import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { useChurchIdStore } from "../../../../stores/churchId";
+import axios from "axios";
 
 const PersonalInformation = () => {
   // const information = [
@@ -27,41 +27,46 @@ const PersonalInformation = () => {
   //   },
   // ];
 
-  // const queryParams = new URLSearchParams(location.search);
+  const queryParams = new URLSearchParams(location.search);
 
-  // const memberId = queryParams.get("id");
+  const memberId = queryParams.get("id");
 
-  // const { churchId } = useChurchIdStore();
+  const { churchId } = useChurchIdStore();
 
-  // const { data } = useQuery({
-  //   queryKey: ["church", churchId, "member", memberId],
-  //   queryFn: () =>
-  //     axios
-  //       .get(`https://digital-church.onrender.com/api/v1/members/${memberId}`, {
-  //         withCredentials: true,
-  //       })
-  //       .then((res) => res.data),
-  // });
+  const { data } = useQuery({
+    queryKey: ["church", churchId, "member", memberId],
+    queryFn: () =>
+      axios
+        .get(`https://digital-church.onrender.com/api/v1/members/${memberId}`, {
+          withCredentials: true,
+        })
+        .then((res) => res.data),
+  });
 
   return (
     <div className="mt-10">
-      {/* <button onClick={() => console.log(memberId, data)}>click</button> */}
-      <div className="flex p-5 bg-[#F3F1F1] justify-between items-center ">
-        <p className="font-medium text-[#414040]">Household</p>
-        <IoIosArrowForward className="text-[28px]" />
-      </div>
-      
+      {data && <div>
+        <div className="flex p-5 bg-[#F3F1F1] justify-between items-center ">
+          <p className="font-medium text-[#414040]">Household</p>
+          <IoIosArrowForward className="text-[28px]" />
+        </div>
         <div className="px-5 pt-6 pb-2 border-b space-y-2">
           <p className="text-[#727272]">First Name</p>
-          <p className="outline-none text-[#434343] text-lg w-full">{'Temidire'}</p>
+          <p className="outline-none text-[#434343] text-lg w-full">
+            {data.member.first_name}
+          </p>
         </div>
         <div className="px-5 pt-6 pb-2 border-b space-y-2">
           <p className="text-[#727272]">Last Name</p>
-          <p className="outline-none text-[#434343] text-lg w-full">{}</p>
+          <p className="outline-none text-[#434343] text-lg w-full">
+            {data.member.last_name}
+          </p>
         </div>
         <div className="px-5 pt-6 pb-2 border-b space-y-2">
           <p className="text-[#727272]">Middle Name</p>
-          <p className="outline-none text-[#434343] text-lg w-full">{}</p>
+          <p className="outline-none text-[#434343] text-lg w-full">
+            {data.member.middle_name}
+          </p>
         </div>
         <div className="px-5 pt-6 pb-2 border-b space-y-2">
           <p className="text-[#727272]">Prefix</p>
@@ -71,7 +76,7 @@ const PersonalInformation = () => {
           <p className="text-[#727272]">Suffix</p>
           <p className="outline-none text-[#434343] text-lg w-full">{}</p>
         </div>
-      
+      </div>}
     </div>
   );
 };
