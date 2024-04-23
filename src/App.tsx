@@ -15,7 +15,6 @@ import LoginWithEmail from "./pages/Signin/WithEmail/LoginWithEmail";
 // import LoginWithNumber from "./pages/Signin/WithPhoneNumber/LoginWithNumber";
 import EmailForPasswordReset from "./pages/PasswordReset/EmailEntry/EmailForPasswordReset";
 import PasswordResetOtp from "./pages/PasswordReset/Otp/ForgotPassword/OtpVerification";
-import Navbar from "./components/Navbar/Navbar";
 import Dashboard from "./pages/Overview/Dashboard/Dashboard";
 import PersonalInformation from "./pages/Overview/Membership/Membership Profile/PersonalInformation";
 import ContactInformation from "./pages/Overview/Membership/Membership Profile/ContactInformation";
@@ -33,6 +32,7 @@ import Workflow from "./pages/Overview/Workflow/Workflow";
 import Settings from "./pages/Overview/Settings/Settings";
 import Help from "./pages/Overview/Help/Help";
 import Logout from "./pages/Overview/Logout/Logout";
+import LandingPage from "./pages/LandingPage/LandingPage";
 // import { useChurchIdStore } from "./stores/churchId";
 
 function App() {
@@ -43,17 +43,17 @@ function App() {
       <Router>
         <Routes>
           {/* <Route path="/login-with-number" element={<LoginWithNumber />} /> */}
+          <Route path="/" element={<LandingPage />} />
           <Route
-            path="/"
+            path="/login-with-email"
             element={
               // isAuthenticated ? (
               //   <Navigate to={`/admin/overview/dashboard/${churchId}`} />
               // ) : (
-                <LoginWithEmail />
+              <LoginWithEmail />
               // )
             }
           />
-          <Route path="/nav" element={<Navbar />} />
           <Route path="/register" element={<Register />} />
           <Route path="/request" element={<Request />} />
           <Route path="/personalinfo" element={<PersonalInfo />} />

@@ -9,7 +9,7 @@ const PhoneButton = () => {
       onClick={() => navigate("/login-with-number")}
     >
       <FiPhone style={{ fontSize: "20px" }} />
-      <p className=" text-center text-[#67728A] text-sm lg:text-xl font-medium">
+      <p className=" text-center text-[#67728A] text-sm lg:text-md font-medium">
         Continue with phone
       </p>
     </div>

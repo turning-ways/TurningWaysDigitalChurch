@@ -98,7 +98,7 @@ const Register = () => {
             name={"password"}
             register={register}
             placeholder="********"
-            formError={errors.passwordConfirm?.message}
+            formError={errors.password?.message}
           />
           <PasswordInput
             heading={"Re-Enter Password"}

@@ -76,7 +76,7 @@ const LoginWithEmail = () => {
               className="text-[#61BD74] underline underline-offset-[3px] cursor-pointer "
               onClick={() => navigate("/password-reset/email-entry")}
             >
-              Forget Password?
+              Forgot Password?
             </div>
           </div>
           <NextButton isPending={isPending} />
