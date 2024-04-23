@@ -76,7 +76,7 @@ function App() {
             path="/password-reset/email-entry"
             element={<EmailForPasswordReset />}
           />
-          <Route path={`/admin/overview/dashboard/`} element={<Dashboard />} />
+          <Route path={`/admin/overview/dashboard`} element={<Dashboard />} />
           {/* <Route path={`/admin/overview/dashboard/${churchId}`} element={<Dashboard />} /> */}
           <Route path="/overview/membership" element={<MembershipProfile />}>
             <Route

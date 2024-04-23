@@ -12,8 +12,9 @@ interface SubHeaderProps {
 const SubHeader: React.FC<SubHeaderProps> = ({ btnText }) => {
   const navigate = useNavigate();
   const { mutate } = useAddRegularMember();
-  const { first_name, last_name, middle_name, suffix } =
+  const { first_name, last_name, middle_name, suffix, gender } =
     usePersonalInformationStore();
+  const {contact_email} = useContactInformationStore();
   const { contact_address, contact_phone } = useContactInformationStore();
   // const {access_permission, member_status, service_unit, work_type} = useChurchInformationSore();
   const { churchId } = useChurchIdStore();
@@ -23,12 +24,14 @@ const SubHeader: React.FC<SubHeaderProps> = ({ btnText }) => {
       first_name,
       last_name,
       middle_name,
+      email: contact_email,
       suffix,
       address: { HomeAddress: contact_address },
       phone: { MainPhone: contact_phone },
       churchId: churchId ? churchId : "",
+      gender,
     });
-    console.log(first_name, last_name, middle_name, suffix);
+    console.log(first_name, last_name, middle_name, suffix, gender);
   };
 
   return (

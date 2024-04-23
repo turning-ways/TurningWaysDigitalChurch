@@ -3,7 +3,7 @@ import { usePersonalInformationStore } from "../../../../stores/personalinformat
 import { DropDownInput } from "../../../../components/DropDownMenu/DropDownInput";
 
 const EditProfilePersonalInfo = () => {
-  const {setPrefix, setFirstName, setMiddleName, setLastName, setSuffix, first_name, middle_name, last_name, suffix } =
+  const {setPrefix, setFirstName, setMiddleName, setLastName, setSuffix,setGender, first_name, middle_name, last_name, suffix, gender } =
     usePersonalInformationStore();
 
   const information = [
@@ -26,6 +26,11 @@ const EditProfilePersonalInfo = () => {
       name: "Suffix",
       set: setSuffix,
       value: suffix,
+    },
+    {
+      name: "Gender",
+      set: setGender,
+      value: gender,
     },
   ];
 

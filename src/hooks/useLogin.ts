@@ -4,6 +4,7 @@ import { Bounce, toast } from "react-toastify";
 import { success } from "./useUpdatePassword";
 // import { useChurchIdStore } from "../stores/churchId";
 import { useNavigate } from "react-router-dom";
+import { useChurchIdStore } from "../stores/churchId";
 
 interface User {
   email: string;
@@ -27,6 +28,8 @@ export const notify = (err: string) => {
 const useLogin = () => {
   const navigate = useNavigate();
   // const { setChurchId } = useChurchIdStore();
+
+  const { setChurchId } = useChurchIdStore();
   return useMutation({
     mutationFn: (user: User) => {
       return axios
@@ -40,10 +43,11 @@ const useLogin = () => {
         .then((res) => res.data);
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-    onSuccess: () => {
+    onSuccess: (res: any) => {
       success("Sign In was Successfull");
-      navigate("/admin/overview/dashboard/");
-      // setChurchId("1234567890");
+      const url = new URL(res.redirectUrl);
+      navigate(url.pathname);
+      setChurchId(res.churchId);
     },
     onError: () => {
       notify("Incorrect Username or Password");

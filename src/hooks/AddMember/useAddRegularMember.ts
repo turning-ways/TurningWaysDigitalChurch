@@ -8,6 +8,7 @@ interface Member {
   first_name: string;
   middle_name: string;
   suffix: string;
+  email: string;
   last_name: string;
   churchId: string;
   gender?: string;
@@ -31,7 +32,7 @@ const useAddRegularMember = () => {
     mutationFn: (memberDetails: Member) =>
       axios
         .post<Member>(
-          "https://digital-church.onrender.com/api/v1/members",
+          "https://digital-church.onrender.com/api/v1/members/member",
           memberDetails,
           {
             withCredentials: true,
@@ -40,7 +41,7 @@ const useAddRegularMember = () => {
         .then((res) => res.data),
     onSuccess: () => {
       success("Member has been added successfully");
-      navigate("/overview/dashboard");
+      navigate("/admin/overview/dashboard");
     },
     onError: () => notify("Couldn't add member"),
   });

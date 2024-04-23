@@ -44,8 +44,7 @@ const ChurchInfo = () => {
   const [churchLevel, setChurchLevel] = useState<string>("");
   const [showChurchLevels, setShowChurchLevels] = useState<boolean>(false);
 
-
-  const { phoneNumber, churchName } = useMemberStore();
+  const { phoneNumber, churchName, isParentChurch } = useMemberStore();
 
   const { mutate } = useAddChurch();
 
@@ -87,7 +86,7 @@ const ChurchInfo = () => {
           </div>
           {/* < div className="space-y-8 sm:h-[440px] overflow-y-scroll"> */}
           <div className="space-y-8">
-            <div className="relative">
+           { isParentChurch !== "Yes" && <div className="relative">
               <HeaderTwo>
                 {" "}
                 Select parent church <span className="text-secondary">*</span>
@@ -113,8 +112,8 @@ const ChurchInfo = () => {
                 />
               )}
             </div>
-
-            <div className="relative">
+}
+            {isParentChurch !== "Yes" && <div className="relative">
             <HeaderTwo>
                 Select church level within parent church{" "}
                 <span className="text-secondary">*</span>
@@ -139,8 +138,7 @@ const ChurchInfo = () => {
                   dropdownItems={["Level 1", "Level 2", "Level 3"]}
                 />
               )}
-            </div>
-
+            </div>}
             <div className="mb-2">
               <HeaderTwo>
                 Enter your church's street address{" "}

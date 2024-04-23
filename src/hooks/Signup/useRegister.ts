@@ -29,7 +29,7 @@ const useRegister = () => {
         .then((res) => res.data),
     onSuccess: () => {
       mutate({ email });
-      navigate("/password-reset/otp-verification");
+      navigate("/signup/otp-verification");
       success("Please enter the otp that was sent");
     },
     onError: (err: { response: { data: { message: string } } }) => {
