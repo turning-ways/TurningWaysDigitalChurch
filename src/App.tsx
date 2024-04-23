@@ -33,6 +33,10 @@ import Settings from "./pages/Overview/Settings/Settings";
 import Help from "./pages/Overview/Help/Help";
 import Logout from "./pages/Overview/Logout/Logout";
 import LandingPage from "./pages/LandingPage/LandingPage";
+import UpdateProfile from "./pages/Overview/Membership/Update Profile/UpdateProfile";
+import UpdatePersonalInfo from "./pages/Overview/Membership/Update Profile/UpdatePersonalInfo";
+import UpdateContactInfo from "./pages/Overview/Membership/Update Profile/UpdateContactInfo";
+import UpdateChurchInfo from "./pages/Overview/Membership/Update Profile/UpdateChurchInfo";
 // import { useChurchIdStore } from "./stores/churchId";
 
 function App() {
@@ -93,9 +97,18 @@ function App() {
             path="/overview/membership/profile-edit"
             element={<ProfileEdit />}
           >
-            <Route path="personal-info" element={<EditProfilePersonalInfo />} />
-            <Route path="contact-info" element={<EditProfileContactInfo />} />
-            <Route path="church-info" element={<EditProfileChurchInfo />} />
+            <Route
+              path="personal-information"
+              element={<EditProfilePersonalInfo />}
+            />
+            <Route
+              path="contact-information"
+              element={<EditProfileContactInfo />}
+            />
+            <Route
+              path="church-information"
+              element={<EditProfileChurchInfo />}
+            />
           </Route>
           {/* <Route path={`/admin/church/${churchId}/members`} element={<Membership />} /> */}
           <Route path={`/admin/church/members`} element={<Membership />} />
@@ -114,6 +127,19 @@ function App() {
 
           {/* Logout Route */}
           <Route path="/overview/logout" element={<Logout />} />
+
+          {/**UPDATE PROFILE */}
+          <Route
+            path="/overview/member/updateprofile"
+            element={<UpdateProfile />}
+          >
+            <Route
+              path="personal-information"
+              element={<UpdatePersonalInfo />}
+            />
+            <Route path="contact-information" element={<UpdateContactInfo />} />
+            <Route path="church-information" element={<UpdateChurchInfo />} />
+          </Route>
         </Routes>
         {/* <Route path="/checkout">
         </Route> */}

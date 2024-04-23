@@ -1,7 +1,7 @@
 import { DropDownInput } from "../../../../components/DropDownMenu/DropDownInput";
 import { useChurchInformationSore } from "../../../../stores/Add Member/churchInformation";
 
-const EditProfileChurchInfo = () => {
+const UpdateChurchInfo = () => {
 
   const {setAccessPermission, setMemberStatus, setWorkType, setServiceUnit} = useChurchInformationSore();
 
@@ -15,9 +15,6 @@ const EditProfileChurchInfo = () => {
 
   return (
     <div className="mt-5">
-      {/* {information.map((item) => (
-        <InformationInput text={item.name} />
-      ))} */}
       {dropDown.map((item) => (
         <DropDownInput text={item.text} items={item.items} onSelect={item.onSelect}/>
       ))}
@@ -25,4 +22,4 @@ const EditProfileChurchInfo = () => {
   );
 };
 
-export default EditProfileChurchInfo;
+export default UpdateChurchInfo;

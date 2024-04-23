@@ -1,4 +1,3 @@
-import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import AddMemberBtn from "../AddMemberBtn";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -26,7 +25,7 @@ const AllMembers = () => {
     <div>
       <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] gap-4 border-b py-2  ">
         <div className="flex space-x-1 items-center">
-          <MdOutlineCheckBoxOutlineBlank className="text-xl" />
+          <input type="checkbox" />
           <p>Profile</p>
         </div>
         <div className="">Name</div>
@@ -35,12 +34,16 @@ const AllMembers = () => {
         <div className="">Gender</div>
       </div>
 
-      {churchId && member && member.data && member.data.members && 
+      {churchId &&
+        member &&
+        member.data &&
+        member.data.members &&
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         member.data.members.map((item: any) => (
           <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] border-b py-4  text-[#636363] gap-4">
             <div className="flex space-x-2 items-center">
-              <MdOutlineCheckBoxOutlineBlank className="text-xl" />
+              {/* <MdOutlineCheckBoxOutlineBlank className="text-xl" /> */}
+              <input type="checkbox" />
               <p>pic</p>
             </div>
             <div className="">{item.first_name}</div>

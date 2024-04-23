@@ -6,12 +6,12 @@ import SubHeader from "./SubHeader";
 
 const ProfileEdit = () => {
   const routes = {
-    personalInfo: "/overview/membership/profile-edit/personal-info",
-    contactInfo: "/overview/membership/profile-edit/contact-info",
-    churchInfo: "/overview/membership/profile-edit/church-info",
+    personalInfo: "/overview/membership/profile-edit/personal-information",
+    contactInfo: "/overview/membership/profile-edit/contact-information",
+    churchInfo: "/overview/membership/profile-edit/church-information",
   };
   return (
-    <OverviewContainer active="Membership">
+    <OverviewContainer active="Directory">
       <Header text="Membership" />
       <SubHeader btnText="Add Profile" />
       <InformationHeader route={routes} />

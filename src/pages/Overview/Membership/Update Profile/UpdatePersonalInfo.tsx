@@ -1,8 +1,10 @@
-import InformationInput from "./InformationInput";
-import { usePersonalInformationStore } from "../../../../stores/Add Member/personalinformation";
+import InformationInput from "../Edit Profile/InformationInput";
 import { DropDownInput } from "../../../../components/DropDownMenu/DropDownInput";
+import { useEditPersonalInformationStore } from "../../../../stores/Edit Member/personalinfo";
+import { useEffect } from "react";
+import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
 
-const EditProfilePersonalInfo = () => {
+const UpdatePersonalInfo = () => {
   const {
     setPrefix,
     setFirstName,
@@ -15,7 +17,7 @@ const EditProfilePersonalInfo = () => {
     last_name,
     suffix,
     gender,
-  } = usePersonalInformationStore();
+  } = useEditPersonalInformationStore();
 
   const information = [
     {
@@ -49,6 +51,15 @@ const EditProfilePersonalInfo = () => {
     setPrefix(value);
   };
 
+  const { data } = useGetMemberDetails();
+
+  useEffect(() => {
+    setFirstName(data ? data.member.first_name : "");
+    setMiddleName(data ? data.member.middle_name : "");
+    setLastName(data ? data.member.last_name : "");
+    setSuffix(data ? data.member.suffix : "")
+  }, [data]);
+
   return (
     <div className="mt-5">
       <DropDownInput
@@ -72,4 +83,4 @@ const EditProfilePersonalInfo = () => {
   );
 };
 
-export default EditProfilePersonalInfo;
+export default UpdatePersonalInfo;

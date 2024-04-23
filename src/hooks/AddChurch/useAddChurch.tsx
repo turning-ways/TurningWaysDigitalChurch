@@ -2,10 +2,9 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { success } from "../useUpdatePassword";
 import { notify } from "../useLogin";
-import useAddMember from "../AddMember/useAddMember";
+import useAddMember from "../Member/useAddMember";
 import { useMemberStore } from "../../stores/member";
 import { useNavigate } from "react-router-dom";
-
 
 interface Church {
   name: string;
@@ -46,11 +45,10 @@ const useAddChurch = () => {
         churchId: res.data.church.id,
       });
 
-      navigate('/')
+      navigate("/");
     },
     onError: () => {
       notify("Couldn't add church");
-     
     },
   });
 };

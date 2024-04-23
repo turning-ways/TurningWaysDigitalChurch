@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaChurch } from "react-icons/fa6";
 import { IoPersonSharp } from "react-icons/io5";
 import { MdContactPage } from "react-icons/md";
@@ -37,6 +37,21 @@ const InformationHeader: React.FC<InformationHeaderProps> = ({ route }) => {
       id: "ChurchInformation",
     },
   ];
+
+  useEffect(() => {
+    const regexPersonal = /personal-information/;
+    if (regexPersonal.test(window.location.href)) {
+      setActive("PersonalInformation");
+    }
+    const regexContact = /contact-information/;
+    if (regexContact.test(window.location.href)) {
+      setActive("ContactInformation");
+    }
+    const regexChurch = /church-information/;
+    if (regexChurch.test(window.location.href)) {
+      setActive("ChurchInformation");
+    }
+  }, [window.location.href]);
   return (
     <ul className="mt-10 flex text-[#8A8989]">
       {information.map((item) => (

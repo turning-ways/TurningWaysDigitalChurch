@@ -1,23 +1,29 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { usePersonalInformationStore } from "../../../../stores/Add Member/personalinformation";
 import { useChurchIdStore } from "../../../../stores/churchId";
-import useAddRegularMember from "../../../../hooks/Member/useAddRegularMember";
-import { useContactInformationStore } from "../../../../stores/Add Member/contactInformation";
+import { useEditPersonalInformationStore } from "../../../../stores/Edit Member/personalinfo";
+import { useEditContactInformationStore } from "../../../../stores/Edit Member/contactinfo";
+import useUpdateMember from "../../../../hooks/Member/useUpdateMember";
 
 interface SubHeaderProps {
   btnText: string;
 }
 
 const SubHeader: React.FC<SubHeaderProps> = ({ btnText }) => {
+
+  const queryParams = new URLSearchParams(location.search);
+
+  const memberId = queryParams.get("id");
+
   const navigate = useNavigate();
-  const { mutate } = useAddRegularMember();
+  const { mutate } = useUpdateMember(memberId ? memberId : "");
   const { first_name, last_name, middle_name, suffix, gender } =
-    usePersonalInformationStore();
-  const { contact_email } = useContactInformationStore();
-  const { contact_address, contact_phone } = useContactInformationStore();
+    useEditPersonalInformationStore();
+  const { contact_address, contact_phone, contact_email } = useEditContactInformationStore();
   // const {access_permission, member_status, service_unit, work_type} = useChurchInformationSore();
   const { churchId } = useChurchIdStore();
+
+  
 
   const handleAddingMember = () => {
     mutate({
