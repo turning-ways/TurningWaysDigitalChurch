@@ -4,6 +4,7 @@ import { useUserDetailsStore } from "../../stores/user";
 import useVerifyEmail from "./useVerifyEmail";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../useLogin";
+import { success } from "../useUpdatePassword";
 
 interface User {
   email: string;
@@ -28,10 +29,10 @@ const useRegister = () => {
         .then((res) => res.data),
     onSuccess: () => {
       mutate({ email });
-      navigate("/signup/otp-verification");
+      navigate("/password-reset/otp-verification");
+      success("Please enter the otp that was sent");
     },
     onError: (err: { response: { data: { message: string } } }) => {
-
       const message = err.response.data.message;
       if (
         message ===

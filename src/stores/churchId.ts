@@ -2,13 +2,13 @@ import { create } from "zustand";
 
 //USER ID
 interface PersonalInfo {
-  churchId: string;
+  churchId: string | null;
   setChurchId: (id: string) => void;
 }
 
 //email
 const savedChurchId = localStorage.getItem("church_id");
-const churchId = savedChurchId ? JSON.parse(savedChurchId) : "";
+const churchId = savedChurchId ? JSON.parse(savedChurchId) : null
 
 export const useChurchIdStore = create<PersonalInfo>()((set, get) => ({
   churchId,

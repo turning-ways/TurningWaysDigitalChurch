@@ -4,6 +4,7 @@ import { success } from "../useUpdatePassword";
 import { notify } from "../useLogin";
 import useAddMember from "../AddMember/useAddMember";
 import { useMemberStore } from "../../stores/member";
+import { useNavigate } from "react-router-dom";
 
 
 interface Church {
@@ -20,6 +21,7 @@ interface Church {
 const useAddChurch = () => {
   const { mutate } = useAddMember();
   const { role, howDidYouHear, phoneNumber } = useMemberStore();
+  const navigate = useNavigate();
   return useMutation({
     mutationFn: (churchDetails: Church) =>
       axios
@@ -41,8 +43,10 @@ const useAddChurch = () => {
         role,
         howDidYouHear,
         phone: phoneNumber,
-        churchId: "66256fb84ed22b1e46b9a771",
+        churchId: res.data.church.id,
       });
+
+      navigate('/')
     },
     onError: () => {
       notify("Couldn't add church");
