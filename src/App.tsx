@@ -2,7 +2,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
+  // Navigate,
 } from "react-router-dom";
 import PersonalInfo from "./pages/Signup/ChurchAccountSetup/PersonalInfo";
 import PasswordReset from "./pages/PasswordReset/PasswordEntry/PasswordReset";
@@ -33,11 +33,11 @@ import Workflow from "./pages/Overview/Workflow/Workflow";
 import Settings from "./pages/Overview/Settings/Settings";
 import Help from "./pages/Overview/Help/Help";
 import Logout from "./pages/Overview/Logout/Logout";
-import { useChurchIdStore } from "./stores/churchId";
+// import { useChurchIdStore } from "./stores/churchId";
 
 function App() {
-  const { churchId } = useChurchIdStore();
-  const isAuthenticated = churchId !== (null || undefined);
+  // const { churchId } = useChurchIdStore();
+  // const isAuthenticated = churchId !== (null || undefined);
   return (
     <>
       <Router>
@@ -46,11 +46,11 @@ function App() {
           <Route
             path="/"
             element={
-              isAuthenticated ? (
-                <Navigate to={`/admin/overview/dashboard/${churchId}`} />
-              ) : (
+              // isAuthenticated ? (
+              //   <Navigate to={`/admin/overview/dashboard/${churchId}`} />
+              // ) : (
                 <LoginWithEmail />
-              )
+              // )
             }
           />
           <Route path="/nav" element={<Navbar />} />
@@ -76,7 +76,8 @@ function App() {
             path="/password-reset/email-entry"
             element={<EmailForPasswordReset />}
           />
-          <Route path={`/admin/overview/dashboard/${churchId}`} element={<Dashboard />} />
+          <Route path={`/admin/overview/dashboard/`} element={<Dashboard />} />
+          {/* <Route path={`/admin/overview/dashboard/${churchId}`} element={<Dashboard />} /> */}
           <Route path="/overview/membership" element={<MembershipProfile />}>
             <Route
               path="personal-information"
@@ -96,7 +97,8 @@ function App() {
             <Route path="contact-info" element={<EditProfileContactInfo />} />
             <Route path="church-info" element={<EditProfileChurchInfo />} />
           </Route>
-          <Route path={`/admin/church/${churchId}/members`} element={<Membership />} />
+          {/* <Route path={`/admin/church/${churchId}/members`} element={<Membership />} /> */}
+          <Route path={`/admin/church/members`} element={<Membership />} />
 
           {/* Forms Route */}
           <Route path="/overview/forms" element={<Forms />} />
