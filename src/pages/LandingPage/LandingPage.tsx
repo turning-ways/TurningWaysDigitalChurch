@@ -34,7 +34,9 @@ const LandingPage = () => {
         <p>Turning Ways</p>
         <ul className="flex text-[#6181E7] space-x-16 items-center font-azo text-xl">
           <li>
-            <button onClick={() => navigate('/register')}>Sign Up for free</button>
+            <button onClick={() => navigate("/register")}>
+              Sign Up for free
+            </button>
           </li>
           <li>
             <button className="border rounded-[22px] py-2 px-8 border-[#3A62E1]">
@@ -43,7 +45,7 @@ const LandingPage = () => {
           </li>
         </ul>
       </nav>
-      <main className="grid grid-cols-[500px,1fr] mt-5 relative gap-x-10">
+      <main className="grid grid-cols-[500px,1fr] mt-5  gap-x-10">
         <form
           onSubmit={handleSubmit((data) => {
             const { email, password } = data;
@@ -96,12 +98,12 @@ const LandingPage = () => {
             <PhoneButton />
           </div>
         </form>
-        <div className="place-self-center pr-10">
+        <div className="place-self-center pr-10 relative">
           {/* <img src="../../../public/assets/images/DashboardLaptop.png" alt="" /> */}
           <img src="../../../public/assets/images/Dashboard.svg" alt="" />
           <img
             src="../../../public/assets/images/DashboardMobile.svg"
-            className="absolute top-60 right-[-30px] "
+            className="absolute top-48 right-[-30px] "
           />
         </div>
       </main>
