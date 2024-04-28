@@ -18,7 +18,8 @@ const useVerifyOtp = () => {
           token
         )
         .then((res) => res.data),
-    onSuccess: (res) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onSuccess: (res:any) => {
       setUserId(res.userId);
       navigate("/password-reset/set-new-password");
     },
