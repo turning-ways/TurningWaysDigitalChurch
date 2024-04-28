@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
             <div className="bg-black w-10 h-10 rounded-full " />
             <div>
               <p>Admin</p>
-              <p>{admin.data.user.first_name}</p>
+              <p>{admin && admin.data.user.first_name}</p>
             </div>
           </div>
         </div>
