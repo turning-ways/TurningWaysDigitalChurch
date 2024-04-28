@@ -4,12 +4,14 @@ import {
   IoIosAddCircleOutline,
   IoMdNotificationsOutline,
 } from "react-icons/io";
+import useAuth from "../../hooks/useAuthorize";
 
 interface HeaderProps {
   text: string;
 }
 
 const Header: React.FC<HeaderProps> = ({ text }) => {
+  const { data: admin } = useAuth();
   return (
     <div className="space-y-5 font-azo">
       <h1 className="tracking-widest">Winner's Chapel</h1>
@@ -29,8 +31,8 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
           <div className="flex space-x-2 items-center">
             <div className="bg-black w-10 h-10 rounded-full " />
             <div>
-              <p>Administrator</p>
-              <p>Olamide</p>
+              <p>Admin</p>
+              <p>{admin.data.user.first_name}</p>
             </div>
           </div>
         </div>
