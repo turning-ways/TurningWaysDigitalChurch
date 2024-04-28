@@ -6,9 +6,9 @@ import SubHeader from "./SubHeader";
 
 const ProfileEdit = () => {
   const routes = {
-    personalInfo: "/overview/membership/profile-edit/personal-information",
-    contactInfo: "/overview/membership/profile-edit/contact-information",
-    churchInfo: "/overview/membership/profile-edit/church-information",
+    personalInfo: "/admin/directory/add-member/personal-information",
+    contactInfo: "/admin/directory/add-member/contact-information",
+    churchInfo: "/admin/directory/add-member/church-information",
   };
   return (
     <OverviewContainer active="Directory">

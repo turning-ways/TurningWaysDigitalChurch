@@ -11,11 +11,11 @@ const MembershipProfile = () => {
   const memberId = queryParams.get("id");
 
   const routes = {
-    personalInfo: `/overview/membership/personal-information?id=${memberId}`,
+    personalInfo: `/admin/directory/member/personal-information?id=${memberId}`,
 
-    contactInfo: `/overview/membership/contact-information?id=${memberId}`,
+    contactInfo: `/admin/directory/member/contact-information?id=${memberId}`,
 
-    churchInfo: `/overview/membership/church-information?id=${memberId}`,
+    churchInfo: `/admin/directory/member/church-information?id=${memberId}`,
   };
 
   return (

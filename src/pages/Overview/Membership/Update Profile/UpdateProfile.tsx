@@ -11,11 +11,11 @@ const UpdateProfile = () => {
   const memberId = queryParams.get("id");
 
   const routes = {
-    personalInfo: `/overview/member/updateprofile/personal-information?id=${memberId}`,
+    personalInfo: `/admin/directory/update-member/personal-information?id=${memberId}`,
 
-    contactInfo: `/overview/member/updateprofile/contact-information?id=${memberId}`,
+    contactInfo: `/admin/directory/update-member/contact-information?id=${memberId}`,
 
-    churchInfo: `/overview/member/updateprofile/church-information?id=${memberId}`,
+    churchInfo: `/admin/directory/update-member/church-information?id=${memberId}`,
   };
 
   return (
