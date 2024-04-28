@@ -37,7 +37,7 @@ import UpdatePersonalInfo from "./pages/Overview/Membership/Update Profile/Updat
 import UpdateContactInfo from "./pages/Overview/Membership/Update Profile/UpdateContactInfo";
 import UpdateChurchInfo from "./pages/Overview/Membership/Update Profile/UpdateChurchInfo";
 import SmsMessage from "./pages/Overview/Messages/SmsMessage";
-import EmailMessage from "./pages/Overview/Messages/EmailMessage";
+// import EmailMessage from "./pages/Overview/Messages/EmailMessage";
 import ResetPassword from "./pages/ForgotPassword/ResetPassword";
 import './App.css'
 import ProtectedRoutes from "./ProtectedRoutes";
