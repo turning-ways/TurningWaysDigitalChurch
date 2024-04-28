@@ -55,7 +55,7 @@ const PersonalInfo = () => {
 
             if (phone !== "" && hear !== "" && roleValue !== "") {
               if (isNumeric(phone)) {
-                navigate("/organizationinfo");
+                navigate("/register/organizationinfo");
               } else {
                 notify("Please enter a valid phone number");
               }

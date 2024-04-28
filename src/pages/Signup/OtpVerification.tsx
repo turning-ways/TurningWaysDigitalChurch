@@ -1,10 +1,10 @@
-import AuthContainer from "../../../../components/Container/AuthContainer";
-import Header from "../../../../components/Heading/Header";
+import AuthContainer from "../../components/Container/AuthContainer";
+import Header from "../../components/Heading/Header";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useUserIdStore } from "../../../../stores/user";
-import NextButton from "../../../../components/Button/NextButton";
-import useVerifySignUpOtp from "../../../../hooks/Signup/useVerifySignUpOtp";
+import { useUserIdStore } from "../../stores/user";
+import NextButton from "../../components/Button/NextButton";
+import useVerifySignUpOtp from "../../hooks/Signup/useVerifySignUpOtp";
 
 let currentOtpIndex: number = 0;
 

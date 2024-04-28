@@ -1,6 +1,6 @@
 export const routes = {
   membership: {
-    membershipProfilePage: "/overview/membership/profile-edit/personal-information",
+    membershipProfilePage: "/admin/directory/add-member/personal-information",
     membersPage: "/members",
   },
 };

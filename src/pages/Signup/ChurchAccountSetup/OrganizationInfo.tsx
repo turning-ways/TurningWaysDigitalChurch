@@ -31,7 +31,7 @@ const OrganizationInfo = () => {
             e.preventDefault();
             setChurchName(churchValue);
             setIsParentChurch(isParentChurchValue);
-            navigate("/churchinfo");
+            navigate("/register/churchinfo");
           }}
         >
           <div className="space-y-2 mb-10">
