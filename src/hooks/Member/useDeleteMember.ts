@@ -16,7 +16,7 @@ const useDeleteMember = () => {
         .then((res) => res.data),
     onSuccess: () => {
       success("Member has been deleted successfully");
-      navigate("/admin/church/members");
+      navigate("/admin/directory");
     },
     onError: () => notify("Couldn't delete member"),
   });

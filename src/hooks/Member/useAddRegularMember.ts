@@ -41,7 +41,7 @@ const useAddRegularMember = () => {
         .then((res) => res.data),
     onSuccess: () => {
       success("Member has been added successfully");
-      navigate("/admin/overview/dashboard");
+      navigate("/admin/dashboard");
     },
     onError: () => notify("Couldn't add member"),
   });
