@@ -1,5 +1,4 @@
 import React, {
-  KeyboardEventHandler,
   useEffect,
   useRef,
   useState,
@@ -31,6 +30,7 @@ const OtpInput = () => {
   };
 
   console.log(otp);
+  console.log(value);
 
   const handleOnKeyDown = (
     { key }: React.KeyboardEvent<HTMLInputElement>,
