@@ -47,8 +47,9 @@ const useAddChurch = () => {
 
       navigate("/");
     },
-    onError: () => {
+    onError: (err) => {
       notify("Couldn't add church");
+      console.log(err);
     },
   });
 };
