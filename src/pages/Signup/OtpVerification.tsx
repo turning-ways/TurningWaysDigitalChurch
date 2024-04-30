@@ -51,7 +51,7 @@ const OtpVerification = () => {
   const { mutate, isPending } = useVerifySignUpOtp();
   return (
     <>
-      <AuthContainer center="sm:items-center">
+      <AuthContainer center="sm:items-center h-screen">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -86,7 +86,7 @@ const OtpVerification = () => {
             })}
           </div>
           <NextButton isPending={isPending} text="Verify" />
-          <p>
+          <p className="mt-3">
             Didn't get a code?{" "}
             <span
               className="text-[#CCE9D1] cursor-pointer"

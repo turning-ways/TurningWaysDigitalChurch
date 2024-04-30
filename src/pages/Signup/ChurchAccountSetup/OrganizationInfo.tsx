@@ -25,7 +25,7 @@ const OrganizationInfo = () => {
 
   return (
     <>
-      <AuthContainer>
+      <AuthContainer center="sm:items-center h-screen">
         <form
           onSubmit={(e) => {
             e.preventDefault();
