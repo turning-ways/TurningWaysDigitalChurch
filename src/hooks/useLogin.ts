@@ -5,10 +5,21 @@ import { success } from "./useUpdatePassword";
 // import { useChurchIdStore } from "../stores/churchId";
 import { useNavigate } from "react-router-dom";
 import { useChurchIdStore } from "../stores/churchId";
+import useVerifyEmail from "./Signup/useVerifyEmail";
 
 interface User {
   email: string;
   password: string;
+}
+
+interface ErrorResponse {
+  response: {
+    data: {
+      message: string;
+      email: string;
+      redirectUrl: string;
+    };
+  };
 }
 
 export const notify = (err: string) => {
@@ -29,6 +40,8 @@ const useLogin = () => {
   const navigate = useNavigate();
   // const { setChurchId } = useChurchIdStore();
 
+  const { mutate } = useVerifyEmail();
+
   const { setChurchId } = useChurchIdStore();
   return useMutation({
     mutationFn: (user: User) => {
@@ -47,11 +60,16 @@ const useLogin = () => {
       success("Sign In was Successfull");
       const url = new URL(res.redirectUrl);
       navigate(url.pathname);
-      if (url.pathname === "/admin/overview/dashboard")
-        setChurchId(res.churchId);
+      if (url.pathname === "/admin/dashboard") setChurchId(res.churchId);
+      console.log(url, url.pathname);
     },
-    onError: () => {
-      notify("Incorrect Username or Password");
+    onError: (err: ErrorResponse) => {
+      notify(err.response.data.message);
+      const url = new URL(err.response.data.redirectUrl);
+      navigate(url.pathname);
+      mutate({ email: err.response.data.email });
+      console.log(err.response.data.redirectUrl);
+      
     },
   });
 };
