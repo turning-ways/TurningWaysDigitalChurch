@@ -2,7 +2,6 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { success } from "../useUpdatePassword";
 import { notify } from "../useLogin";
-import { useNavigate } from "react-router-dom";
 
 interface Member {
   role: string;
@@ -21,7 +20,6 @@ interface Member {
 }
 
 const useAddMember = () => {
-  const navigate = useNavigate();
   return useMutation({
     mutationFn: (memberDetails: Member) =>
       axios
@@ -35,7 +33,6 @@ const useAddMember = () => {
         .then((res) => res.data),
     onSuccess: () => {
       success("Member has been added successfully");
-      navigate("/overview/dashboard");
     },
     onError: () => notify("Couldn't add member"),
   });
