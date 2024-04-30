@@ -37,10 +37,12 @@ const SubHeader = () => {
         </div>
         <div className="flex flex-col space-y-3">
           <div className="flex space-x-3 items-center">
-            <p className="text-[32px] text-[#5B5A5A] ">{data && data.member.first_name + " " + data.member.last_name}</p>
+            <p className="text-[32px] text-[#5B5A5A] ">
+              {data && data.member.first_name + " " + data.member.last_name}
+            </p>
             <div className="bg-[#E7E6E6] p-2 rounded-[8px]">Member</div>
           </div>
-          <ul className="flex justify-between text-[#727171]">
+          <ul className="flex justify-between text-[#727171] gap-x-4">
             <li className="flex items-center space-x-1 cursor-pointer">
               <IoCallOutline className="text-xl" />
               <p className="text-xl">Call</p>

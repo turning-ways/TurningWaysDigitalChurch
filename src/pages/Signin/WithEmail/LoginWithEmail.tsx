@@ -54,9 +54,9 @@ const LoginWithEmail = () => {
             </p>
           </div>
           <Input
-            heading="Email"
+            heading="Email or Password"
             name="email"
-            placeholder="temidireowoeye@gmail.com"
+            placeholder=""
             register={register}
             formError={errors.email?.message}
           />
@@ -64,7 +64,7 @@ const LoginWithEmail = () => {
             name="password"
             heading="Password"
             register={register}
-            placeholder="********"
+            placeholder=""
             formError={errors.password?.message}
           />
           <div className="flex justify-between items-center my-10 text-sm lg:text-base">

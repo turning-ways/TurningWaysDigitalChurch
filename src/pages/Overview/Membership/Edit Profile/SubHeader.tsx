@@ -4,6 +4,7 @@ import { usePersonalInformationStore } from "../../../../stores/Add Member/perso
 import { useChurchIdStore } from "../../../../stores/churchId";
 import useAddRegularMember from "../../../../hooks/Member/useAddRegularMember";
 import { useContactInformationStore } from "../../../../stores/Add Member/contactInformation";
+import { notify } from "../../../../hooks/useLogin";
 
 interface SubHeaderProps {
   btnText: string;
@@ -18,19 +19,26 @@ const SubHeader: React.FC<SubHeaderProps> = ({ btnText }) => {
   const { contact_address, contact_phone } = useContactInformationStore();
   // const {access_permission, member_status, service_unit, work_type} = useChurchInformationSore();
   const { churchId } = useChurchIdStore();
-
   const handleAddingMember = () => {
-    mutate({
-      first_name,
-      last_name,
-      middle_name,
-      email: contact_email,
-      suffix,
-      address: { HomeAddress: contact_address },
-      phone: { MainPhone: contact_phone },
-      churchId: churchId ? churchId : "",
-      gender,
-    });
+    if (
+      first_name &&
+      last_name &&
+      middle_name &&
+      contact_email &&
+      contact_phone !== ""
+    ) {
+      mutate({
+        first_name,
+        last_name,
+        middle_name,
+        email: contact_email,
+        suffix,
+        address: { HomeAddress: contact_address },
+        phone: { MainPhone: contact_phone },
+        churchId: churchId ? churchId : "",
+        gender,
+      });
+    } else notify("Please fill in all required fields");
     console.log(first_name, last_name, middle_name, suffix, gender);
   };
 

@@ -55,7 +55,6 @@ const OtpVerification = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log("dire");
             mutate({ token: otp.join("") });
           }}
         >

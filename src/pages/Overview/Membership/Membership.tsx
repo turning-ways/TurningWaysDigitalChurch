@@ -10,6 +10,7 @@ import {
   FaRegCreditCard,
   FaRegEnvelope,
 } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const Membership = () => {
   const items = [
@@ -20,6 +21,8 @@ const Membership = () => {
   ];
 
   const [open, setOpen] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   return (
     <OverviewContainer active="Directory">
@@ -44,7 +47,7 @@ const Membership = () => {
           <Modal>
             <div className="bg-white px-[26px] py-[37px] rounded-2xl text-lg flex flex-col gap-6">
               <ul className="text-[#7F7F7F] flex flex-col gap-6 w-[334px]">
-                <li className="flex space-x-3 items-center cursor-pointer hover:text-[#555555]">
+                <li className="flex space-x-3 items-center cursor-pointer hover:text-[#555555]" onClick={() => navigate('/admin/directory/sms')}>
                   <FaCommentSms className="text-2xl" />
                   <p>Send Bulk SMS</p>
                 </li>
