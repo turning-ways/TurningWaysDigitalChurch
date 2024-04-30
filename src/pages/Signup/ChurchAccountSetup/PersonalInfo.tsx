@@ -12,6 +12,9 @@ import { useNavigate } from "react-router-dom";
 import { notify } from "../../../hooks/useLogin";
 // import useAddMember from "../../../hooks/AddMember/useAddMember";
 
+import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
+
 const PersonalInfo = () => {
   const [phone, setPhone] = useState("");
   const [showRoles, setShowRoles] = useState<boolean>(false);
@@ -77,17 +80,34 @@ const PersonalInfo = () => {
             <div className="mb-2">
               <HeaderTwo>Phone Number</HeaderTwo>
 
-              <div className="flex">
-                <input
-                  type="text"
-                  className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-r-xl w-full p-3 outline-none "
-                  placeholder="7043210987"
-                  value={phone}
-                  onChange={(e) => {
-                    setPhone(e.target.value);
-                  }}
-                />
-              </div>
+              <PhoneInput
+                defaultCountry="ng"
+                value={phone}
+                onChange={(phone) => setPhone(phone)}
+                inputStyle={{
+                  width: "100%",
+                  paddingLeft: "10px",
+                  paddingTop: "24px",
+                  paddingRight: "10px",
+                  paddingBottom: "24px",
+                  backgroundColor: "#F7FAFC",
+                  borderColor: "#EBEFF9",
+                  borderStartEndRadius: "12px",
+                  borderEndEndRadius: "12px",
+                  fontSize: "18px",
+                }}
+                countrySelectorStyleProps={{
+                  buttonStyle: {
+                    height: "100%",
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                    backgroundColor: "#F7FAFC",
+                    borderColor: "#EBEFF9",
+                    borderEndStartRadius: "12px",
+                    borderStartStartRadius: "12px",
+                  },
+                }}
+              />
             </div>
 
             <div className="relative">
