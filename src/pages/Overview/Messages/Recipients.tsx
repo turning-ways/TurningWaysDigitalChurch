@@ -35,11 +35,15 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
         </button>
       ) : (
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        <div >
+        <div>
           <div className="border">
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {members.map((item: any, index: number) => (
-              <div className={`flex justify-between items-center py-3 px-2 ${index !== members.length-1 ? 'border-b' : ''}`}>
+              <div
+                className={`flex justify-between items-center py-3 px-2 ${
+                  index !== members.length - 1 ? "border-b" : ""
+                }`}
+              >
                 <div className="flex items-center space-x-2">
                   <input type="checkbox" />
                   <p>{item.first_name}</p>
@@ -61,15 +65,17 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
             <p>100</p>
             <p>Next</p>
             <FaRightLong />
-            <div className="h-5 w-1 bg-[#AAAAAA] "/>
+            <div className="h-5 w-1 bg-[#AAAAAA] " />
             <p>Go to Page</p>
-            <div className="w-5 h-5 border rounded-[4px] border-[#555555]"/>
+            <div className="w-5 h-5 border rounded-[4px] border-[#555555]" />
           </div>
         </div>
       )}
 
       <div className="mt-10">
-        <p>Send SMS at</p>
+        <p>
+          Send SMS at <span className="text-secondary">*</span>
+        </p>
         <div className="flex space-x-8">
           <div className="flex space-x-2">
             <input type="checkbox" />
@@ -77,7 +83,7 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
           </div>
           <div className="flex space-x-2">
             <input type="checkbox" />
-            <p>Send SMS at</p>
+            <p>Later</p>
           </div>
         </div>
       </div>
@@ -98,7 +104,13 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
               >
                 <p>All Church Members</p>
               </li>
-              <li className="flex space-x-3 items-center cursor-pointer ">
+              <li
+                className="flex space-x-3 items-center cursor-pointer "
+                onClick={() => {
+                  setOpen(false);
+                  onOpen();
+                }}
+              >
                 <p>Filter Membership Profiles</p>
               </li>
             </ul>

@@ -1,11 +1,43 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Modal from "../../../components/Modal/Modal";
 import { IoFilter } from "react-icons/io5";
+import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
+import { useState } from "react";
 
 interface AddRecipientsModalProps {
-    onClose: () => void;
+  onClose: () => void;
 }
 
-const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({onClose}) => {
+const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({ onClose }) => {
+  const { data: members } = useGetAllMembers();
+
+  const [selectAll, setSelectAll] = useState(false);
+  const [memberCheckboxes, setMemberCheckboxes] = useState(
+    Array(members.length).fill(false)
+  );
+  const [displayedMembers, setDisplayedMembers] = useState([...members]);
+
+  const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const isChecked = event.target.checked;
+    setSelectAll(isChecked);
+    setMemberCheckboxes(memberCheckboxes.map(() => isChecked));
+  };
+
+  const handleMemberCheckboxChange = (index: number) => {
+    const updatedCheckboxes = [...memberCheckboxes];
+    updatedCheckboxes[index] = !updatedCheckboxes[index];
+    setMemberCheckboxes(updatedCheckboxes);
+    setSelectAll(updatedCheckboxes.every((checkbox) => checkbox === true));
+  };
+
+  const handleDisplayButtonClick = () => {
+    const selectedMembers = members.filter(
+      (_: any, index: number) => memberCheckboxes[index]
+    );
+    setDisplayedMembers(selectedMembers);
+    console.log(displayedMembers);
+  };
+
   return (
     <Modal>
       <div className="bg-white p-6 rounded-xl m-10 max-h-screen overflow-y-scroll">
@@ -24,7 +56,11 @@ const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({onClose}) => {
         <div className="border rounded-xl">
           <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] gap-4 border-b p-4 ">
             <div className="flex space-x-1 items-center">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={selectAll}
+                onChange={handleSelectAll}
+              />
               <p>Profile</p>
             </div>
             <div className="">Name</div>
@@ -32,29 +68,29 @@ const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({onClose}) => {
             <div className="">Phone Number</div>
             <div className="">Gender</div>
           </div>
-          <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] gap-4 border-b p-4  ">
-            <div className="flex space-x-1 items-center">
-              <input type="checkbox" />
-              <p>Profile</p>
+
+          {members.map((item: any, index: number) => (
+            <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] gap-4 border-b p-4  ">
+              <div className="flex space-x-1 items-center">
+                <input
+                  type="checkbox"
+                  checked={memberCheckboxes[index]}
+                  onChange={() => handleMemberCheckboxChange(index)}
+                />
+                <p>pic</p>
+              </div>
+              <div className="">{item.first_name + " " + item.last_name}</div>
+              <div className="">{item.email}</div>
+              <div className="">{item.phone.MainPhone}</div>
+              <div className="">{item.gender}</div>
             </div>
-            <div className="">Temidire Owoeye</div>
-            <div className="">temidireowoeye</div>
-            <div className="">09073210998</div>
-            <div className="">male</div>
-          </div>
-          <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] gap-4 p-4  ">
-            <div className="flex space-x-1 items-center">
-              <input type="checkbox" />
-              <p>Profile</p>
-            </div>
-            <div className="">Ikeokwu Somtochi</div>
-            <div className="">somtoikeokwu@gmail.com</div>
-            <div className="">07067893303</div>
-            <div className="">female</div>
-          </div>
+          ))}
         </div>
         <div className="flex justify-center space-x-8 mt-6">
-          <button className="text-[#4C4C4C] bg-[#F4F4F4] rounded-lg w-64 py-2 text-lg">
+          <button
+            className="text-[#4C4C4C] bg-[#F4F4F4] rounded-lg w-64 py-2 text-lg"
+            onClick={handleDisplayButtonClick}
+          >
             Add Recipients
           </button>
           <button
