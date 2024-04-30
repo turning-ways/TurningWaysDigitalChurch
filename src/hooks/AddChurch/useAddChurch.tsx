@@ -15,6 +15,10 @@ interface Church {
   state: string;
   city: string;
   address: string;
+
+  website: string;
+
+  email: string;
 }
 
 const useAddChurch = () => {

@@ -12,14 +12,20 @@ import { useState } from "react";
 import DropDownMenu from "../../../components/DropDownMenu/DropDownMenu";
 import NextButton from "../../../components/Button/NextButton";
 
+import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
+
 const ChurchInfo = () => {
-  const countryOfOpertion = ["Nigeria", "America", "Mexico"];
+  const countryOfOpertion = ["Temidire", "America", "Nigeria"];
 
   const [postalCode, setPostalCode] = useState<string>("");
   const [country, setCountry] = useState<string>("");
   const [state, setState] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [address, setAddress] = useState<string>("");
+  const [website, setWebsite] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
   const [parentChurch, setParentChurch] = useState<string>("");
   const [showParentChurch, setShowParentChurch] = useState<boolean>(false);
   const [churchLevel, setChurchLevel] = useState<string>("");
@@ -27,7 +33,7 @@ const ChurchInfo = () => {
 
   const [showCountry, setShowCountry] = useState<boolean>(false);
 
-  const { phoneNumber, churchName, isParentChurch } = useMemberStore();
+  const { churchName, isParentChurch } = useMemberStore();
 
   const { mutate, isPending } = useAddChurch();
 
@@ -43,6 +49,17 @@ const ChurchInfo = () => {
     setCountry(selectedItem);
     setShowCountry(false);
   };
+
+  // const [allCountries, setAllCountries] = useState();
+
+  // const getCountries = async () => {
+  //   const result = await axios
+  //     .get("https://api.first.org/data/v1/countries")
+  //     .then((res) => res.data)
+  //     .then((res) => res.data);
+  //   setAllCountries(result)
+  //   console.log(allCountries);
+  // };
   return (
     <>
       <AuthContainer center="sm:items-center">
@@ -50,13 +67,15 @@ const ChurchInfo = () => {
           onSubmit={(e) => {
             e.preventDefault();
             mutate({
-              phone: phoneNumber.MainPhone,
+              phone,
               name: churchName,
               country,
               state,
               address,
               postalCode,
               city,
+              website,
+              email,
             });
             console.log(churchName);
           }}
@@ -66,9 +85,7 @@ const ChurchInfo = () => {
               <span className="text-[#446DE3] text-2xl">3</span> of 3
             </p>
             <Header>Church Account Setup</Header>
-            <p className="text-[#949995]">
-              Kindly fill in the admin details below
-            </p>
+            <p className="text-[#949995]">Kindly fill the information below</p>
           </div>
           {/* < div className="space-y-8 sm:h-[440px] overflow-y-scroll"> */}
           <div className="space-y-8 mb-8">
@@ -130,6 +147,59 @@ const ChurchInfo = () => {
             )}
             <div className="mb-2">
               <HeaderTwo>
+                Your Church Website <span className="text-secondary">*</span>
+              </HeaderTwo>
+              <input
+                type="text"
+                className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
+                placeholder="https://hope.com"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+              />
+            </div>
+            <div className="mb-2">
+              <HeaderTwo>
+                Enter your church's email address{" "}
+                <span className="text-secondary">*</span>
+              </HeaderTwo>
+              <input
+                type="text"
+                className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
+                placeholder="info@hopecommunitychurch.org"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <PhoneInput
+              defaultCountry="ng"
+              value={phone}
+              onChange={(phone) => setPhone(phone)}
+              inputStyle={{
+                width: "100%",
+                paddingLeft: "10px",
+                paddingTop: "24px",
+                paddingRight: "10px",
+                paddingBottom: "24px",
+                backgroundColor: "#F7FAFC",
+                borderColor: "#EBEFF9",
+                borderStartEndRadius: "12px",
+                borderEndEndRadius: "12px",
+                fontSize: "18px",
+              }}
+              countrySelectorStyleProps={{
+                buttonStyle: {
+                  height: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  backgroundColor: "#F7FAFC",
+                  borderColor: "#EBEFF9",
+                  borderEndStartRadius: "12px",
+                  borderStartStartRadius: "12px",
+                },
+              }}
+            />
+            <div className="mb-2">
+              <HeaderTwo>
                 Enter your church's street address{" "}
                 <span className="text-secondary">*</span>
               </HeaderTwo>
@@ -142,30 +212,31 @@ const ChurchInfo = () => {
               />
             </div>
 
-            <div className="mb-2">
-              <HeaderTwo>
-                City <span className="text-secondary">*</span>
-              </HeaderTwo>
-              <input
-                type="text"
-                className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
-                placeholder="Magodo"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              />
-            </div>
-
-            <div className="mb-2">
-              <HeaderTwo>
-                State <span className="text-secondary">*</span>
-              </HeaderTwo>
-              <input
-                type="text"
-                className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
-                placeholder="Lagos"
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-              />
+            <div className="lg:flex gap-6">
+              <div className="mb-2 w-1/2 lg:mb-0">
+                <HeaderTwo>
+                  City <span className="text-secondary">*</span>
+                </HeaderTwo>
+                <input
+                  type="text"
+                  className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
+                  placeholder="Magodo"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              </div>
+              <div className="mb-2 lg:mb-0 w-1/2">
+                <HeaderTwo>
+                  State <span className="text-secondary">*</span>
+                </HeaderTwo>
+                <input
+                  type="text"
+                  className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
+                  placeholder="Lagos"
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                />
+              </div>
             </div>
 
             <div className="mb-2">
@@ -180,19 +251,6 @@ const ChurchInfo = () => {
                 onChange={(e) => setPostalCode(e.target.value)}
               />
             </div>
-
-            {/* <div className="mb-2">
-              <HeaderTwo>
-                Country of Operation <span className="text-secondary">*</span>
-              </HeaderTwo>
-              <input
-                type="text"
-                className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
-                placeholder="123456"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-              />
-            </div> */}
             <div className="relative">
               <HeaderTwo>
                 Country of Operation <span className="text-secondary">*</span>
@@ -208,7 +266,10 @@ const ChurchInfo = () => {
                 <div className="border-l border-l-[#CFD9E0] h-10 mx-3" />
                 <TiArrowSortedDown
                   className="cursor-pointer text-3xl"
-                  onClick={() => setShowCountry(!showCountry)}
+                  onClick={() => {
+                    setShowCountry(!showCountry);
+                    // getCountries();
+                  }}
                 />
               </div>
               {showCountry && (
