@@ -31,7 +31,7 @@ const Input: React.FC<InputProps> = ({
         <input
           {...register(name)}
           type={"text"}
-          className="outline-none w-full bg-inherit placeholder-[#4A5568] h-10"
+          className="outline-none w-full bg-inherit text-[#4A5568] h-10"
           placeholder={placeholder}
         />
         {formError && <MdError style={{ color: "#FF0000", fontSize: 30 }} />}

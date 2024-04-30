@@ -18,14 +18,13 @@ const PasswordInput: React.FC<InputProps> = ({
         <input
           {...register(name)}
           type={!show ? "text" : "password"}
-          className="outline-none w-full h-auto bg-inherit placeholder-[#4A5568] "
+          className="outline-none w-full h-auto bg-inherit text-[#4A5568] "
           placeholder={placeholder}
         />
         <div className="border-l border-l-[#CFD9E0] h-10 mx-3" />
-        <div onClick={() => setShow(!show)} className="mx-2">
+        <div onClick={() => setShow(!show)} className="mx-2 cursor-pointer">
           {!show ? (
             <HiMiniEye
-              className="cursor-pointer"
               style={{
                 color: "#718096",
               }}
