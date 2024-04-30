@@ -2,6 +2,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+
   // Navigate,
 } from "react-router-dom";
 import PersonalInfo from "./pages/Signup/ChurchAccountSetup/PersonalInfo";
@@ -37,21 +38,15 @@ import UpdatePersonalInfo from "./pages/Overview/Membership/Update Profile/Updat
 import UpdateContactInfo from "./pages/Overview/Membership/Update Profile/UpdateContactInfo";
 import UpdateChurchInfo from "./pages/Overview/Membership/Update Profile/UpdateChurchInfo";
 import SmsMessage from "./pages/Overview/Messages/SmsMessage";
-// import EmailMessage from "./pages/Overview/Messages/EmailMessage";
 import ResetPassword from "./pages/ForgotPassword/ResetPassword";
-import './App.css'
+import "./App.css";
 import ProtectedRoutes from "./ProtectedRoutes";
-// import { useChurchIdStore } from "./stores/churchId";
 
 function App() {
-  // const { churchId } = useChurchIdStore();
-  // const isAuthenticated = churchId !== (null || undefined);
   return (
     <>
       <Router>
         <Routes>
-          {/* <Route path="/login-with-number" element={<LoginWithNumber />} /> */}
-          {/* Landing Page  */}
           <Route path="/" element={<LandingPage />} />
 
           {/* Login User  */}
@@ -77,35 +72,62 @@ function App() {
             <Route path="reset-password" element={<ResetPassword />} />
           </Route>
 
-          <Route element={<ProtectedRoutes/>}>
-          <Route path="admin">
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="directory" element={<Membership />} />
-            <Route path="directory">
-              <Route path="member" element={<MembershipProfile />}>
-                <Route path="personal-information" element={<PersonalInformation />} />
-                <Route path="contact-information" element={<ContactInformation />} />
-                <Route path="church-information" element={<ChurchInformation />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="admin">
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="directory" element={<Membership />} />
+              <Route path="directory">
+                <Route path="member" element={<MembershipProfile />}>
+                  <Route
+                    path="personal-information"
+                    element={<PersonalInformation />}
+                  />
+                  <Route
+                    path="contact-information"
+                    element={<ContactInformation />}
+                  />
+                  <Route
+                    path="church-information"
+                    element={<ChurchInformation />}
+                  />
+                </Route>
+                <Route path="add-member" element={<ProfileEdit />}>
+                  <Route
+                    path="personal-information"
+                    element={<EditProfilePersonalInfo />}
+                  />
+                  <Route
+                    path="contact-information"
+                    element={<EditProfileContactInfo />}
+                  />
+                  <Route
+                    path="church-information"
+                    element={<EditProfileChurchInfo />}
+                  />
+                </Route>
+                <Route path="update-member" element={<UpdateProfile />}>
+                  <Route
+                    path="personal-information"
+                    element={<UpdatePersonalInfo />}
+                  />
+                  <Route
+                    path="contact-information"
+                    element={<UpdateContactInfo />}
+                  />
+                  <Route
+                    path="church-information"
+                    element={<UpdateChurchInfo />}
+                  />
+                </Route>
+                <Route path="sms" element={<SmsMessage />} />
               </Route>
-              <Route path="add-member" element={<ProfileEdit />}>
-                <Route path="personal-information" element={<EditProfilePersonalInfo />} />
-                <Route path="contact-information" element={<EditProfileContactInfo />} />
-                <Route path="church-information" element={<EditProfileChurchInfo />} />
-              </Route>
-              <Route path="update-member" element={<UpdateProfile />}>
-                <Route path="personal-information" element={<UpdatePersonalInfo />} />
-                <Route path="contact-information" element={<UpdateContactInfo />} />
-                <Route path="church-information" element={<UpdateChurchInfo />} />
-              </Route>
-            <Route path="forms" element={<Forms />} />
-            <Route path="workflow" element={<Workflow />} />
-            <Route path="settings" element={<Settings />} />
-            <Route path="help" element={<Help />} />
-            <Route path="logout" element={<Logout />} />
+              <Route path="forms" element={<Forms />} />
+              <Route path="workflow" element={<Workflow />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="help" element={<Help />} />
+              <Route path="logout" element={<Logout />} />
+              {/* <Route path={`/admin/overview/dashboard/${churchId}`} element={<Dashboard />} /> */}
             </Route>
-            {/* <Route path={`/admin/overview/dashboard/${churchId}`} element={<Dashboard />} /> */}
-          </Route>
-
           </Route>
 
           {/* Admin's Overview  */}
@@ -125,7 +147,6 @@ function App() {
           {/**UPDATE PROFILE */}
 
           {/**MESSAGES */}
-          <Route path="/sms" element={<SmsMessage />} />
         </Routes>
         {/* <Route path="/checkout">
         </Route> */}
