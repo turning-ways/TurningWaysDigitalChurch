@@ -13,7 +13,6 @@ interface NavBarProps {
 }
 
 const Navbar: React.FC<NavBarProps> = ({ active }) => {
-
   const { setUser } = useUserAuth();
 
   const logoutUser = async () => {
@@ -105,13 +104,13 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
         </ul>
       </div>
       <div
-        className={` hover:bg-DarkBlueHover hover:text-white py-2 pl-5 pr-10 rounded-[10px] cursor-pointer ${
+        className={` hover:bg-DarkBlueHover hover:text-white py-2 pl-5 pr-10 rounded-[10px] cursor-pointer mb-10 ${
           active === "Logout" && "bg-DarkBlueHover text-white"
         }`}
       >
         <li className="flex gap-x-4">
           <IoIosLogOut
-            className="text-2xl self-center mb-10 cursor-pointer"
+            className="text-2xl self-center cursor-pointer"
             onClick={() => {
               logoutUser();
             }}
