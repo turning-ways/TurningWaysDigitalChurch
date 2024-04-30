@@ -28,7 +28,7 @@ const LandingPage = () => {
   const navigate = useNavigate();
   const { mutate, isPending } = useLogin();
   return (
-    <div className="px-20 my-4 pt-6 max-w-[1440px]">
+    <div className="px-20 py-6 max-w-[1440px]">
       <nav className="flex justify-between items-center">
         <img src="/assets/images/turningwayslogo.svg" alt="" />
         <ul className="flex text-[#6181E7] space-x-10 items-center font-azo text-xl">
@@ -60,17 +60,17 @@ const LandingPage = () => {
             soul-winning all in one place.
           </p>
           <Input
-            heading={"Email or Password"}
+            heading={"Email or Phone number"}
             name={"email"}
             register={register}
-            placeholder={""}
+            placeholder={"email or phone"}
             formError={errors.email?.message}
           />
           <PasswordInput
             name="password"
             heading="Password"
             register={register}
-            placeholder=""
+            placeholder="********"
             formError={errors.password?.message}
           />
           <div className="flex justify-between items-center my-10 text-sm lg:text-base">
