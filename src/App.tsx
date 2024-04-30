@@ -27,11 +27,11 @@ import MembershipProfile from "./pages/Overview/Membership/Membership Profile/Me
 import Membership from "./pages/Overview/Membership/Membership";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Forms from "./pages/Overview/Forms/Forms";
-import Workflow from "./pages/Overview/Workflow/Workflow";
-import Settings from "./pages/Overview/Settings/Settings";
-import Help from "./pages/Overview/Help/Help";
-import Logout from "./pages/Overview/Logout/Logout";
+// import Forms from "./pages/Overview/Forms/Forms";
+// import Workflow from "./pages/Overview/Workflow/Workflow";
+// import Settings from "./pages/Overview/Settings/Settings";
+// import Help from "./pages/Overview/Help/Help";
+// import Logout from "./pages/Overview/Logout/Logout";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import UpdateProfile from "./pages/Overview/Membership/Update Profile/UpdateProfile";
 import UpdatePersonalInfo from "./pages/Overview/Membership/Update Profile/UpdatePersonalInfo";
@@ -41,6 +41,7 @@ import SmsMessage from "./pages/Overview/Messages/SmsMessage";
 import ResetPassword from "./pages/ForgotPassword/ResetPassword";
 import "./App.css";
 import ProtectedRoutes from "./ProtectedRoutes";
+import NotBuilt from "./pages/NotBuilt";
 
 function App() {
   return (
@@ -121,11 +122,11 @@ function App() {
                 </Route>
                 <Route path="sms" element={<SmsMessage />} />
               </Route>
-              <Route path="forms" element={<Forms />} />
-              <Route path="workflow" element={<Workflow />} />
-              <Route path="settings" element={<Settings />} />
-              <Route path="help" element={<Help />} />
-              <Route path="logout" element={<Logout />} />
+              <Route path="forms" element={<NotBuilt active="Forms" />} />
+              <Route path="workflow" element={<NotBuilt active="Workflow" />} />
+              <Route path="settings" element={<NotBuilt active="Settings" />} />
+              <Route path="help" element={<NotBuilt active="Help" />} />
+              <Route path="logout" element={<NotBuilt active="Logout" />} />
               {/* <Route path={`/admin/overview/dashboard/${churchId}`} element={<Dashboard />} /> */}
             </Route>
           </Route>

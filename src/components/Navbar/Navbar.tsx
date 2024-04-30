@@ -52,25 +52,25 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
     {
       source: "../../../public/assets/images/Navbar/FormsIcon.svg",
       title: "Forms",
-      route: "/overview/forms",
+      route: "/admin/forms",
       icon: <FaWpforms className="text-2xl" />,
     },
     {
       source: "../../../public/assets/images/Navbar/WorkflowIcon.svg",
       title: "Workflow",
-      route: "/overview/workflow",
+      route: "/admin/workflow",
       icon: <GoWorkflow className="text-2xl" />,
     },
     {
       source: "../../../public/assets/images/Navbar/SettingsIcon.svg",
       title: "Settings",
-      route: "/overview/settings",
+      route: "/admin/settings",
       icon: <IoSettingsOutline className="text-2xl" />,
     },
     {
       source: "../../../public/assets/images/Navbar/HelpIcon.svg",
       title: "Help",
-      route: "/overview/help",
+      route: "/admin/help",
       icon: <IoMdHelpCircleOutline className="text-2xl" />,
     },
   ];
@@ -107,14 +107,12 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
         className={` hover:bg-DarkBlueHover hover:text-white py-2 pl-5 pr-10 rounded-[10px] cursor-pointer mb-10 ${
           active === "Logout" && "bg-DarkBlueHover text-white"
         }`}
+        onClick={() => {
+          logoutUser();
+        }}
       >
         <li className="flex gap-x-4">
-          <IoIosLogOut
-            className="text-2xl self-center cursor-pointer"
-            onClick={() => {
-              logoutUser();
-            }}
-          />
+          <IoIosLogOut className="text-2xl self-center cursor-pointer" />
           <div>Logout</div>
         </li>
       </div>
