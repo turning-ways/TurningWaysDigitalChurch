@@ -58,6 +58,7 @@ const Register = () => {
               passwordConfirm
             );
           })}
+          className="bg-white py-10 px-6"
         >
           <div className=" mb-10">
             <Header>Sign Up</Header>

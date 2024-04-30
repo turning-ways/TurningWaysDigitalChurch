@@ -28,7 +28,7 @@ const LandingPage = () => {
   const navigate = useNavigate();
   const { mutate, isPending } = useLogin();
   return (
-    <div className="px-20 h-screen pt-6 max-w-[1440px]">
+    <div className="px-20 my-4 pt-6 max-w-[1440px]">
       <nav className="flex justify-between items-center">
         <img src="/assets/images/turningwayslogo.svg" alt="" />
         <ul className="flex text-[#6181E7] space-x-10 items-center font-azo text-xl">
@@ -44,7 +44,7 @@ const LandingPage = () => {
           </li>
         </ul>
       </nav>
-      <main className="grid grid-cols-[550px,1fr] mt-5  gap-x-10">
+      <main className="grid grid-cols-[550px,1fr]  mt-5  gap-x-10">
         <form
           onSubmit={handleSubmit((data) => {
             const { email, password } = data;
@@ -60,17 +60,17 @@ const LandingPage = () => {
             soul-winning all in one place.
           </p>
           <Input
-            heading={"Email"}
+            heading={"Email or Password"}
             name={"email"}
             register={register}
-            placeholder={"temidireowoeye@gmail.com"}
+            placeholder={""}
             formError={errors.email?.message}
           />
           <PasswordInput
             name="password"
             heading="Password"
             register={register}
-            placeholder="********"
+            placeholder=""
             formError={errors.password?.message}
           />
           <div className="flex justify-between items-center my-10 text-sm lg:text-base">
@@ -92,17 +92,15 @@ const LandingPage = () => {
             <div className="w-full h-[1px] bg-[#A0AEC0]" />
           </div>
 
-          <div className="flex space-x-3">
-            <GoogleButton />
-            <div
-              className="border border-[#CBD5E0] rounded-[20px] px-1 space-x-1 flex justify-center  items-center w-full lg:max-w-[550px] cursor-pointer mt-5"
-              onClick={() => navigate("/login-with-number")}
-            >
-              <img src="/assets/images/twsymbol.svg" alt="" />
-              <p className=" text-center text-[#67728A] text-sm lg:text-md font-medium">
-                New to TurningWays, Join Now
-              </p>
-            </div>
+          <GoogleButton />
+          <div
+            className="border border-[#CBD5E0] py-3 rounded-[20px] space-x-1 flex  px-6 items-center w-full lg:max-w-[550px] cursor-pointer mt-5"
+            onClick={() => navigate("/login-with-number")}
+          >
+            <img src="/assets/images/twsymbol.svg" className="" alt="" />
+            <p className=" text-center text-[#67728A] text-lg lg:text-md font-medium w-full ">
+              New to TurningWays, Join Now
+            </p>
           </div>
         </form>
         <div className="place-self-center justify-self-center pr-10 relative">
@@ -110,7 +108,7 @@ const LandingPage = () => {
           <img src="/assets/images/Dashboard.svg" alt="" />
           <img
             src="/assets/images/DashboardMobile.svg"
-            className="absolute top-48 right-[-30px] "
+            className="absolute top-24 right-[-30px] "
           />
         </div>
       </main>
