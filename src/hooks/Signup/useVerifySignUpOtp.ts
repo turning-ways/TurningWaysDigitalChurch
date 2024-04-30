@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../useLogin";
+import { success } from "../useUpdatePassword";
 
 interface Token {
   token: string;
@@ -18,7 +19,8 @@ const useVerifySignUpOtp = () => {
         )
         .then((res) => res.data),
     onSuccess: () => {
-      navigate("/personalinfo");
+      navigate("/");
+      success("Account Created, Please Sign In");
       console.log("work");
     },
     onError: () => notify("Invalid Otp!"),

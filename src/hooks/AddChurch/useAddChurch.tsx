@@ -45,10 +45,10 @@ const useAddChurch = () => {
         churchId: res.data.church.id,
       });
 
-      navigate("/");
+      navigate("/admin/dashboard");
     },
     onError: (err) => {
-      notify("Couldn't add church");
+      notify("THE CHURCH YOU ENTERED HAS AN ADMIN ALREADY!");
       console.log(err);
     },
   });
