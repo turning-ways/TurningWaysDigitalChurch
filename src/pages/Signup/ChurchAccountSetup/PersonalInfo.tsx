@@ -41,9 +41,9 @@ const PersonalInfo = () => {
   //navigation
   const navigate = useNavigate();
 
-  const isNumeric = (value: string) => {
-    return /^0\d{10}$/.test(value);
-  };
+  // const isNumeric = (value: string) => {
+  //   return /^0\d{10}$/.test(value);
+  // };
 
   return (
     <>
@@ -57,11 +57,12 @@ const PersonalInfo = () => {
             setRole(roleValue);
 
             if (phone !== "" && hear !== "" && roleValue !== "") {
-              if (isNumeric(phone)) {
+              // if (isNumeric(phone)) {
                 navigate("/register/organizationinfo");
-              } else {
-                notify("Please enter a valid phone number");
-              }
+              // } else {
+              //   notify("Please enter a valid phone number");
+              //   console.log(phone);
+              // }
             } else {
               notify("Please fill in all details");
             }
