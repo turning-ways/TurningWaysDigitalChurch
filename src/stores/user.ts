@@ -88,3 +88,24 @@ export const useTokenStore = create<Token>()((set, get) => ({
     localStorage.setItem("token", JSON.stringify(get().token));
   },
 }));
+
+// USER AUTHENTICATION HANDLE
+interface UserAuth {
+  user: { first_name: string; last_name: string; churchId: string } | null;
+  setUser: (user: {first_name: string; last_name: string; churchId: string} | null ) => void;
+}
+
+const savedUser = localStorage.getItem("user");
+const user = savedUser ? JSON.parse(savedUser) : null;
+
+export const useUserAuth = create<UserAuth>()((set, get) => ({
+  user,
+  setUser: (user) => {
+    {
+      set(() => {
+        return { user };
+      });
+    }
+    localStorage.setItem("user", JSON.stringify(get().user));
+  },
+}));
