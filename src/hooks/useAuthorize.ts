@@ -1,8 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+interface AuthResponse {
+  data: {
+    user: {
+      first_name: string;
+      last_name: string;
+      churchId: string;
+    };
+  };
+}
+
 const useAuth = () => {
-  return useQuery({
+  return useQuery<AuthResponse>({
     queryKey: ["auth"],
     queryFn: () =>
       axios
