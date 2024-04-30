@@ -1,18 +1,29 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "./hooks/useAuthorize";
 import { notify } from "./hooks/useLogin";
+import { useUserAuth } from "./stores/user";
 
 const ProtectedRoutes = () => {
-  const { isError } = useAuth();
+  const { isError, isPending, data: admin } = useAuth();
+
+  const [authChecked, setAuthChecked] = useState(false);
+
+  const { setUser, user } = useUserAuth();
 
   useEffect(() => {
-    if (isError) notify("Sorry, you've been logged out");
-  }, [isError]);
+    if (!isPending) {
+      setAuthChecked(true);
+      if (isError) notify("Sorry, you've not been signed in");
+    }
+    admin ? setUser(admin.data.user) : setUser(null);
+    console.log(user);
+  }, [isPending, isError, admin, setUser]);
 
-  const isAuth = isError;
+  // Render nothing until the authentication check is complete
+  if (!authChecked) return null;
 
-  return !isAuth ? <Outlet /> : <Navigate to={"/"} />;
+  return user ? <Outlet /> : <Navigate to={"/"} />;
 };
 
 export default ProtectedRoutes;
