@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MdCalendarToday } from "react-icons/md";
 import { MdOutlineNextWeek } from "react-icons/md";
 import { IoCalendarOutline } from "react-icons/io5";
@@ -7,8 +8,10 @@ import { IoFilter } from "react-icons/io5";
 import Header from "../Header";
 import OverviewContainer from "../OverviewContainer";
 import MembershipDataBar from "./MembershipDataBar";
+import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 
 const Dashboard = () => {
+  const { data: members } = useGetAllMembers();
   return (
     <OverviewContainer active="Dashboard">
       <Header text="Dashboard" />
@@ -47,7 +50,7 @@ const Dashboard = () => {
           <div className="w-2 bg-red-100" />
           <div className=" py-3 px-3 flex flex-col items-center justify-center flex-grow space-y-1">
             <p>Total Membership</p>
-            <p className="text-3xl">108</p>
+            <p className="text-3xl">{members.length}</p>
           </div>
         </div>
         <div className="flex rounded-[10px] w-48 overflow-hidden shadow-md">
@@ -74,8 +77,8 @@ const Dashboard = () => {
       </div>
       {/* component 3 closed */}
       {/* component 4 */}
-      <div className="mt-10 border border-secondary w-fit p-3 rounded-[20px]">
-        <div>
+      <div className="mt-10 border border-secondary w-fit px-4 pt-6 rounded-[20px]">
+        <div className="h-52 mb-14">
           <p className="text-xl text-[#2B3674]">Membership data</p>
           <p className="text-[#BABEC6]">New members added</p>
           <MembershipDataBar />
@@ -90,8 +93,11 @@ const Dashboard = () => {
           <li className="border-r p-2">Upcoming Anniversary</li>
           <li className="border-r p-2">Upcoming Birthday</li>
         </ul>
-        <button className="bg-[#758CD7] text-white  px-4 py-2 rounded-md">
-          Export Date
+        <button
+          className="bg-[#758CD7] text-white  px-4 py-2 rounded-md"
+          onClick={() => console.log(members)}
+        >
+          Export Data
         </button>
       </div>
       {/* component 5 closed */}
@@ -105,15 +111,21 @@ const Dashboard = () => {
           <div className="col-span-1">Marital Status</div>
           {/* Example data */}
         </div>
-        <div className="grid grid-cols-8 gap-4 border py-3">
-          <div className="col-span-2">Temidire Owoeye</div>
-          <div className="col-span-1">Male</div>
-          <div className="col-span-1">09073210998</div>
-          <div className="col-span-2">temidireowoeye@gmail.com</div>
-          <div className="col-span-1">31/01/2005</div>
-          <div className="col-span-1">Single</div>
-          {/* Example data */}
-        </div>
+        {members &&
+          members.map((item: any, index: number) => (
+            <div
+              className={`grid grid-cols-8 gap-4 border-r border-l border-t py-3 ${
+                members.length - 1 === index && "border-b"
+              }`}
+            >
+              <div className="col-span-2">{item.fullname}</div>
+              <div className="col-span-1">{item.gender}</div>
+              <div className="col-span-1">{item.phone.MainPhone}</div>
+              <div className="col-span-2">{item.email}</div>
+              <div className="col-span-1">31/01/2005</div>
+              <div className="col-span-1">Single</div>
+            </div>
+          ))}
       </div>
     </OverviewContainer>
   );

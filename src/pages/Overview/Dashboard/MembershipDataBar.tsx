@@ -20,7 +20,6 @@ ChartJS.register(
 );
 
 const MembershipDataBar = () => {
-
   return (
     <Bar
       options={{
@@ -28,7 +27,8 @@ const MembershipDataBar = () => {
           y: { border: { dash: [4, 4] } },
           x: { grid: { display: false } },
         },
-        layout: {padding: {bottom: 0}}
+        // layout: { padding: { bottom: 0 } },
+        maintainAspectRatio: false,
       }}
       data={memberData}
     />
