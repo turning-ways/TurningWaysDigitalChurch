@@ -13,7 +13,8 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ text }) => {
   const { user } = useUserAuth();
   const first_name = user?.first_name;
-   return (
+  const last_name = user?.last_name;
+  return (
     <div className="space-y-5 font-azo">
       <h1 className="tracking-widest">Winner's Chapel</h1>
       <div className="flex justify-between items-center">
@@ -30,10 +31,16 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
           <IoIosAddCircleOutline style={{ fontSize: "45px" }} />
           <IoMdNotificationsOutline style={{ fontSize: "45px" }} />
           <div className="flex space-x-2 items-center">
-            <div className="bg-black w-10 h-10 rounded-full " />
+            <div className="border-black border w-10 h-10 rounded-full flex justify-center items-center">
+              {first_name && first_name?.charAt(0) + last_name?.charAt(0)}
+            </div>
             <div>
-              <p>Admin</p>
-              <p>{first_name ? (first_name?.charAt(0).toUpperCase() + first_name?.slice(1)) : ""}</p>
+              <p onClick={() => console.log(user)}>Admin</p>
+              <p>
+                {first_name
+                  ? first_name?.charAt(0).toUpperCase() + first_name?.slice(1)
+                  : ""}
+              </p>
             </div>
           </div>
         </div>

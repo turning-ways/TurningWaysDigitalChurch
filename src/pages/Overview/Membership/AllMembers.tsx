@@ -4,6 +4,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useChurchIdStore } from "../../../stores/churchId";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
+import { useState } from "react";
 
 const AllMembers = () => {
   const navigate = useNavigate();
@@ -11,11 +12,32 @@ const AllMembers = () => {
 
   const { data: members } = useGetAllMembers();
 
+  const [memberCheckboxes, setMemberCheckboxes] = useState(
+    Array(members.length).fill(false)
+  );
+
+  const [selectAll, setSelectAll] = useState(false);
+
+  const handleMemberCheckboxChange = (index: number) => {
+    const updatedCheckboxes = [...memberCheckboxes];
+    updatedCheckboxes[index] = !updatedCheckboxes[index];
+    setMemberCheckboxes(updatedCheckboxes);
+    setSelectAll(updatedCheckboxes.every((checkbox) => checkbox === true));
+  };
+
+  const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const isChecked = event.target.checked;
+    setSelectAll(isChecked);
+    setMemberCheckboxes(memberCheckboxes.map(() => isChecked));
+  };
+
+
   return (
     <div>
       <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] gap-4 border-b py-2  ">
         <div className="flex space-x-1 items-center">
-          <input type="checkbox" />
+          <input type="checkbox"  checked={selectAll}
+                onChange={handleSelectAll}/>
           <p>Profile</p>
         </div>
         <div className="">Name</div>
@@ -25,11 +47,10 @@ const AllMembers = () => {
       </div>
 
       {churchId && members ? (
-        members.map((item: any) => (
+        members.map((item: any, index:number) => (
           <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] border-b py-4  text-[#636363] gap-4">
             <div className="flex space-x-2 items-center">
-              {/* <MdOutlineCheckBoxOutlineBlank className="text-xl" /> */}
-              <input type="checkbox" />
+              <input type="checkbox" checked={memberCheckboxes[index]} onChange={() => handleMemberCheckboxChange(index)}/>
               <p>pic</p>
             </div>
             <div className="">{item.first_name}</div>
