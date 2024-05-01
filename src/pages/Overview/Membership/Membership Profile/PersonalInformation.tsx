@@ -4,29 +4,6 @@ import { useChurchIdStore } from "../../../../stores/churchId";
 import axios from "axios";
 
 const PersonalInformation = () => {
-  // const information = [
-  //   {
-  //     name: "First Name",
-  //     value: "Temidire",
-  //   },
-  //   {
-  //     name: "Last Name",
-  //     value: "Owoeye",
-  //   },
-  //   {
-  //     name: "Birthday",
-  //     value: "Owoeye",
-  //   },
-  //   {
-  //     name: "Country",
-  //     value: "Owoeye",
-  //   },
-  //   {
-  //     name: "Marital Status",
-  //     value: "Owoeye",
-  //   },
-  // ];
-
   const queryParams = new URLSearchParams(location.search);
 
   const memberId = queryParams.get("id");

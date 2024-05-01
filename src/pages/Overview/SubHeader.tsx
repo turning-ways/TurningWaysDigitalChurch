@@ -45,7 +45,7 @@ const SubHeader = () => {
           <ul className="flex justify-between text-[#727171] gap-x-4">
             <li className="flex items-center space-x-1 cursor-pointer">
               <IoCallOutline className="text-xl" />
-              <p className="text-xl">Call</p>
+              <p>Call</p>
             </li>
             <li className="flex items-center space-x-1 cursor-pointer">
               <AiOutlineMessage className="text-xl" />
