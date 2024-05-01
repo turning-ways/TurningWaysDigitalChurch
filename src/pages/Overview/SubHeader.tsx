@@ -67,7 +67,7 @@ const SubHeader = () => {
           className="bg-white text-[#898888] border border-[#BFBFBF] px-6 py-3 rounded-[8px] font-medium h-fit"
           onClick={() =>
             navigate(
-              `/overview/member/updateprofile/personal-information?id=${memberId}`
+              `/admin/directory/update-member/personal-information?id=${memberId}`
             )
           }
         >
