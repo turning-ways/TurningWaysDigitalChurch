@@ -58,10 +58,10 @@ const useLogin = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
     onSuccess: (res: any) => {
       const url = new URL(res.redirectUrl);
-      navigate(url.pathname);
       if (url.pathname === "/admin/dashboard") {
         setChurchId(res.churchId);
         success("Sign In was Successfull");
+        navigate(url.pathname);
       }
       if (url.pathname === "/register/personalinfo")
         success("Sign In was Successfull, Please create your church");
