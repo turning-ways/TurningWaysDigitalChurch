@@ -47,7 +47,7 @@ const PersonalInfo = () => {
 
   return (
     <>
-      <AuthContainer center={" h-screen"}>
+      <AuthContainer center={"sm:items-center h-screen"}>
         <form
           className=""
           onSubmit={(e) => {
@@ -58,7 +58,7 @@ const PersonalInfo = () => {
 
             if (phone !== "" && hear !== "" && roleValue !== "") {
               // if (isNumeric(phone)) {
-                navigate("/register/organizationinfo");
+              navigate("/register/organizationinfo");
               // } else {
               //   notify("Please enter a valid phone number");
               //   console.log(phone);

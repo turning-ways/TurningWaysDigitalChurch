@@ -57,10 +57,14 @@ const useLogin = () => {
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
     onSuccess: (res: any) => {
-      success("Sign In was Successfull");
       const url = new URL(res.redirectUrl);
       navigate(url.pathname);
-      if (url.pathname === "/admin/dashboard") setChurchId(res.churchId);
+      if (url.pathname === "/admin/dashboard") {
+        setChurchId(res.churchId);
+        success("Sign In was Successfull");
+      }
+      if (url.pathname === "/register/personalinfo")
+        success("Sign In was Successfull, Please create your church");
       console.log(url, url.pathname);
     },
     onError: (err: ErrorResponse) => {
@@ -69,7 +73,6 @@ const useLogin = () => {
       navigate(url.pathname);
       mutate({ email: err.response.data.email });
       console.log(err.response.data.redirectUrl);
-      
     },
   });
 };
