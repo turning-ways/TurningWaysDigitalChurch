@@ -11,8 +11,9 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ text }) => {
-  const {user} = useUserAuth();
-  return (
+  const { user } = useUserAuth();
+  const first_name = user?.first_name;
+   return (
     <div className="space-y-5 font-azo">
       <h1 className="tracking-widest">Winner's Chapel</h1>
       <div className="flex justify-between items-center">
@@ -32,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
             <div className="bg-black w-10 h-10 rounded-full " />
             <div>
               <p>Admin</p>
-              <p>{user?.first_name}</p>
+              <p>{first_name ? (first_name?.charAt(0).toUpperCase() + first_name?.slice(1)) : ""}</p>
             </div>
           </div>
         </div>
