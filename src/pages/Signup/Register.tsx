@@ -14,10 +14,10 @@ const Register = () => {
   const schema = z.object({
     first_name: z
       .string()
-      .min(5, { message: "Name should be atleast 4 characters long" }),
+      .min(4, { message: "Name should be atleast 4 characters long" }),
     last_name: z
       .string()
-      .min(5, { message: "Name should be atleast 4 characters long" }),
+      .min(4, { message: "Name should be atleast 4 characters long" }),
     email: z.string().email({ message: "Please enter a valid email" }),
     password: z
       .string()

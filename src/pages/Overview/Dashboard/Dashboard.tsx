@@ -50,7 +50,7 @@ const Dashboard = () => {
           <div className="w-2 bg-red-100" />
           <div className=" py-3 px-3 flex flex-col items-center justify-center flex-grow space-y-1">
             <p>Total Membership</p>
-            <p className="text-3xl">{members.length}</p>
+            <p className="text-3xl">{members && members.length}</p>
           </div>
         </div>
         <div className="flex rounded-[10px] w-48 overflow-hidden shadow-md">
