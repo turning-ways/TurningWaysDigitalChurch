@@ -45,7 +45,7 @@ const LandingPage = () => {
             </li>
           </ul>
         </nav>
-        <main className="grid grid-cols-[550px,1fr]  mt-5  gap-x-10">
+        <main className="grid grid-cols-[550px,1fr]  mt-5  gap-x-20">
           <form
             onSubmit={handleSubmit((data) => {
               const { email, password } = data;
