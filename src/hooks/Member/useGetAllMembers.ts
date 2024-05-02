@@ -1,12 +1,11 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query";
 import { useChurchIdStore } from "../../stores/churchId";
 import axios from "axios";
 
 const useGetAllMembers = () => {
-    const { churchId } = useChurchIdStore();
+  const { churchId } = useChurchIdStore();
 
-
-  return useQuery({
+  return useQuery<[]>({
     queryKey: ["churches", churchId, "members"],
     queryFn: () =>
       axios
@@ -20,6 +19,6 @@ const useGetAllMembers = () => {
         .then((data) => data.data.members)
         .catch((err) => console.log(err)),
   });
-}
+};
 
-export default useGetAllMembers
+export default useGetAllMembers;
