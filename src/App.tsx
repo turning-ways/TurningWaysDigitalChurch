@@ -27,11 +27,6 @@ import MembershipProfile from "./pages/Overview/Membership/Membership Profile/Me
 import Membership from "./pages/Overview/Membership/Membership";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import Forms from "./pages/Overview/Forms/Forms";
-// import Workflow from "./pages/Overview/Workflow/Workflow";
-// import Settings from "./pages/Overview/Settings/Settings";
-// import Help from "./pages/Overview/Help/Help";
-// import Logout from "./pages/Overview/Logout/Logout";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import UpdateProfile from "./pages/Overview/Membership/Update Profile/UpdateProfile";
 import UpdatePersonalInfo from "./pages/Overview/Membership/Update Profile/UpdatePersonalInfo";
