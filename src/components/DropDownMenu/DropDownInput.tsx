@@ -21,15 +21,18 @@ export const DropDownInput: React.FC<DropDownInputProps> = ({
   const handleSelectList = (selectedItem: string) => {
     setValue(selectedItem);
     setShowDropDownList(false);
-    onSelect(selectedItem); 
+    onSelect(selectedItem);
   };
 
   return (
-    <div className="relative space-y-1 mb-2">
+    <div className={"relative space-y-1 mb-4"}>
       <p className="text-[#727272]">
         {text} <span className="text-[#61BD74]"> *</span>
       </p>
-      <div className="border border-[#EBEFF9] bg-[#ffffff] rounded-lg w-full px-3 py-1 flex items-center">
+      <div
+        className="border border-[#EBEFF9] bg-[#ffffff] rounded-lg w-full px-3 py-1 flex items-center"
+        onClick={() => setShowDropDownList(!showDropDownList)}
+      >
         <input
           className="outline-none w-full h-auto bg-inherit"
           placeholder={placeholder}
@@ -38,10 +41,7 @@ export const DropDownInput: React.FC<DropDownInputProps> = ({
           onChange={(e) => setValue(e.target.value)}
         />
         <div className="border-l border-l-[#CFD9E0] h-10 mx-3" />
-        <TiArrowSortedDown
-          className="cursor-pointer text-3xl"
-          onClick={() => setShowDropDownList(!showDropDownList)}
-        />
+        <TiArrowSortedDown className="cursor-pointer text-3xl" />
       </div>
       {showDropDownList && (
         <DropDownMenu onSelect={handleSelectList} dropdownItems={items} />

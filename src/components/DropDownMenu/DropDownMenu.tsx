@@ -14,7 +14,7 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({
   };
 
   return (
-    <div className="w-full bg-[#ffffff] mt-2 mb-4 absolute z-50 rounded-lg border">
+    <div className="w-full bg-[#ffffff] absolute z-50 rounded-lg border">
       {dropdownItems.map((item) => (
         <p
           key={item}
