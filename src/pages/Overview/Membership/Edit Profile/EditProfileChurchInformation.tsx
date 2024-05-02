@@ -2,16 +2,31 @@ import { DropDownInput } from "../../../../components/DropDownMenu/DropDownInput
 import { useChurchInformationSore } from "../../../../stores/Add Member/churchInformation";
 
 const EditProfileChurchInfo = () => {
-
-  const {setAccessPermission, setMemberStatus, setWorkType, setServiceUnit} = useChurchInformationSore();
+  const { setAccessPermission, setMemberStatus, setWorkType, setServiceUnit } =
+    useChurchInformationSore();
 
   const dropDown = [
-    { text: "Access Permission", items: ["Admin", "Member"], onSelect: (value:string) => setAccessPermission(value) },
-    { text: "Member Status", items: ["Verified", "Unverifies"], onSelect: (value:string) => setMemberStatus(value) },
-    { text: "Work Type", items: ["Pastor", "Reverend"], onSelect: (value:string) => setWorkType(value) },
-    { text: "Service Unit/Department", items: ["usher", "attendance"], onSelect: (value:string) => setServiceUnit(value)  },
+    {
+      text: "Access Permission",
+      items: ["Admin", "Member"],
+      onSelect: (value: string) => setAccessPermission(value),
+    },
+    {
+      text: "Member Status",
+      items: ["Active", "Inactive"],
+      onSelect: (value: string) => setMemberStatus(value),
+    },
+    {
+      text: "Work Type",
+      items: ["Pastor", "Reverend"],
+      onSelect: (value: string) => setWorkType(value),
+    },
+    {
+      text: "Service Unit/Department",
+      items: ["usher", "attendance"],
+      onSelect: (value: string) => setServiceUnit(value),
+    },
   ];
-
 
   return (
     <div className="mt-5">
@@ -19,7 +34,11 @@ const EditProfileChurchInfo = () => {
         <InformationInput text={item.name} />
       ))} */}
       {dropDown.map((item) => (
-        <DropDownInput text={item.text} items={item.items} onSelect={item.onSelect}/>
+        <DropDownInput
+          text={item.text}
+          items={item.items}
+          onSelect={item.onSelect}
+        />
       ))}
     </div>
   );

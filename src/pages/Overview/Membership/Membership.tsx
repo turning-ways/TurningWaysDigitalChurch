@@ -32,7 +32,7 @@ const Membership = () => {
       <Header text="Directory" />
       {/* component */}
       <div className="flex justify-between my-10">
-        <p className="text-xl">{members && members.length} Persons</p>
+        <p className="text-xl">{members ? members.length : "..."} Persons</p>
         <ul className="flex space-x-6 text-[18px] text-[#8A8989] ">
           {items.map((item) => (
             <li

@@ -5,6 +5,7 @@ import { useChurchIdStore } from "../../../../stores/churchId";
 import useAddRegularMember from "../../../../hooks/Member/useAddRegularMember";
 import { useContactInformationStore } from "../../../../stores/Add Member/contactInformation";
 import { notify } from "../../../../hooks/useLogin";
+import { useUserAuth } from "../../../../stores/user";
 
 interface SubHeaderProps {
   btnText: string;
@@ -17,6 +18,7 @@ const SubHeader: React.FC<SubHeaderProps> = ({ btnText }) => {
     usePersonalInformationStore();
   const { contact_email } = useContactInformationStore();
   const { contact_address, contact_phone } = useContactInformationStore();
+  const { user } = useUserAuth();
   // const {access_permission, member_status, service_unit, work_type} = useChurchInformationSore();
   const { churchId } = useChurchIdStore();
   const handleAddingMember = () => {
@@ -50,7 +52,12 @@ const SubHeader: React.FC<SubHeaderProps> = ({ btnText }) => {
       >
         <IoIosArrowBack className=" text-2xl w-auto text-[#6C6C6D]" />
       </div>
-      <div className="bg-black w-32 h-32 rounded-full mb-5" />
+      <div className="border border-black w-32 h-32 rounded-full mb-5 flex justify-center items-center text-5xl">
+        {user
+          ? user?.first_name.charAt(0).toUpperCase() +
+            user?.last_name.charAt(0).toUpperCase()
+          : "P"}
+      </div>
       <button
         className="bg-[#17275B] text-[#ffffff] border border-[#BFBFBF] px-6 py-3 rounded-[8px] font-medium h-fit"
         onClick={handleAddingMember}

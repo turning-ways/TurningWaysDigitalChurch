@@ -6,14 +6,16 @@ import Subject from "./Subject";
 import Body from "./Body";
 import AddRecipientsModal from "./AddRecipientsModal";
 import Recipients from "./Recipients";
+import { useNavigate } from "react-router-dom";
 
 const SmsMessage = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   return (
     <OverviewContainer active="Directory">
       <div className="space-y-5">
         <Header text="Bulk SMS Messages" />
-        <div className="bg-[#F1F0F3] rounded-lg p-2 w-fit cursor-pointer h-fit">
+        <div className="bg-[#F1F0F3] rounded-lg p-2 w-fit cursor-pointer h-fit" onClick={() => navigate('/admin/directory')}>
           <IoIosArrowBack className=" text-2xl w-auto text-[#6C6C6D]" />
         </div>
         <div className="px-16 text-[#555454] space-y-6">

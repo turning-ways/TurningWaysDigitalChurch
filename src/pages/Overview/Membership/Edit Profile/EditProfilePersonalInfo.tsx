@@ -14,7 +14,6 @@ const EditProfilePersonalInfo = () => {
     middle_name,
     last_name,
     suffix,
-    gender,
   } = usePersonalInformationStore();
 
   const information = [
@@ -38,15 +37,14 @@ const EditProfilePersonalInfo = () => {
       set: setSuffix,
       value: suffix,
     },
-    {
-      name: "Gender",
-      set: setGender,
-      value: gender,
-    },
   ];
 
-  const handleSelectValue = (value: string) => {
+  const handlePrefix = (value: string) => {
     setPrefix(value);
+  };
+
+  const handleGender = (value: string) => {
+    setGender(value);
   };
 
   return (
@@ -54,8 +52,8 @@ const EditProfilePersonalInfo = () => {
       <DropDownInput
         text="Prefix"
         items={["Mr", "Mrs"]}
-        placeholder="Mr/Mrs"
-        onSelect={handleSelectValue}
+        placeholder=""
+        onSelect={handlePrefix}
       />
       {information.map((item, index) => (
         <div key={index}>
@@ -68,6 +66,12 @@ const EditProfilePersonalInfo = () => {
           />
         </div>
       ))}
+      <DropDownInput
+        text="Gender"
+        items={["male", "female"]}
+        placeholder=""
+        onSelect={handleGender}
+      />
     </div>
   );
 };

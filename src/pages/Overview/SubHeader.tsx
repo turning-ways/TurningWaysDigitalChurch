@@ -8,13 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import useDeleteMember from "../../hooks/Member/useDeleteMember";
 import useGetMemberDetails from "../../hooks/Member/useGetMemberDetails";
+import { useState } from "react";
+import Modal from "../../components/Modal/Modal";
 
 const SubHeader = () => {
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
 
   const memberId = queryParams.get("id");
-
   const { data } = useGetMemberDetails();
 
   const { mutate } = useDeleteMember();
@@ -22,6 +23,8 @@ const SubHeader = () => {
   const handleDeleteMember = () => {
     mutate(memberId ? memberId : "");
   };
+
+  const [open, setOpen] = useState<boolean>(false);
   return (
     <div className="flex justify-between mt-10 items-center relative">
       <div className="bg-[#F1F0F3] rounded-lg p-2 w-fit cursor-pointer h-fit absolute top-1/3 left-0">
@@ -75,9 +78,26 @@ const SubHeader = () => {
         </button>
         <RiDeleteBin4Line
           className="text-[#F24E1E] text-xl cursor-pointer"
-          onClick={handleDeleteMember}
+          onClick={() => setOpen(true)}
         />
       </div>
+      {open && (
+        <Modal>
+          <div className="bg-white p-5 max-w-64 rounded-lg space-y-6">
+            <p className="text-center">
+              Are you sure you'd like to delete this profile?
+            </p>
+            <div className="flex justify-between space-x-4">
+              <button className="text-[#4C4C4C] bg-[#F4F4F4] w-1/2 rounded-lg py-2 px-2" onClick={() => setOpen(false)}>
+                Cancel
+              </button>
+              <button className="text-[#4C4C4C] bg-[#F4F4F4] w-1/2 rounded-lg py-2 px-2" onClick={() => handleDeleteMember()}>
+                Delete
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
