@@ -8,17 +8,17 @@ const EditProfileChurchInfo = () => {
   const dropDown = [
     {
       text: "Access Permission",
-      items: ["Admin", "Member"],
+      items: ["admin", "member"],
       onSelect: (value: string) => setAccessPermission(value),
     },
     {
       text: "Member Status",
-      items: ["Active", "Inactive"],
+      items: ["active", "inactive"],
       onSelect: (value: string) => setMemberStatus(value),
     },
     {
       text: "Work Type",
-      items: ["Pastor", "Reverend"],
+      items: ["pastor", "reverend"],
       onSelect: (value: string) => setWorkType(value),
     },
     {

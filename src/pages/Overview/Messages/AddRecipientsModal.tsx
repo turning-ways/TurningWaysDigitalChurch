@@ -2,20 +2,28 @@
 import Modal from "../../../components/Modal/Modal";
 import { IoFilter } from "react-icons/io5";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface AddRecipientsModalProps {
   onClose: () => void;
 }
 
 const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({ onClose }) => {
+  
   const { data: members } = useGetAllMembers();
 
   const [selectAll, setSelectAll] = useState(false);
   const [memberCheckboxes, setMemberCheckboxes] = useState(
-    Array(members.length).fill(false)
+    Array(members?.length).fill(false)
   );
-  const [displayedMembers, setDisplayedMembers] = useState([...members]);
+  const [displayedMembers, setDisplayedMembers] = useState([]);
+
+  useEffect(() => {
+    if (members) {
+      setDisplayedMembers([...members]);
+    }
+  }, [members]);
+  
 
   const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
@@ -31,10 +39,10 @@ const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({ onClose }) => {
   };
 
   const handleDisplayButtonClick = () => {
-    const selectedMembers = members.filter(
+    const selectedMembers = members?.filter(
       (_: any, index: number) => memberCheckboxes[index]
     );
-    setDisplayedMembers(selectedMembers);
+    setDisplayedMembers(selectedMembers ? selectedMembers : []);
     console.log(displayedMembers);
   };
 
@@ -69,7 +77,7 @@ const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({ onClose }) => {
             <div className="">Gender</div>
           </div>
 
-          {members.map((item: any, index: number) => (
+          {members?.map((item: any, index: number) => (
             <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] gap-4 border-b p-4  ">
               <div className="flex space-x-1 items-center">
                 <input

@@ -8,12 +8,16 @@ interface PersonalInfo {
   last_name: string;
   suffix: string;
   gender: string;
+  dateOfBirth: string;
+  anniversary: string;
   setPrefix: (prefix: string) => void;
   setFirstName: (first_name: string) => void;
   setMiddleName: (middle_name: string) => void;
   setLastName: (last_name: string) => void;
   setSuffix: (suffix: string) => void;
   setGender: (gender: string) => void;
+  setDateOfBirth: (dob: string) => void;
+  setAnniversary: (anniversary: string) => void;
 }
 
 //prefix
@@ -34,6 +38,12 @@ const suffix = savedSuffix ? JSON.parse(savedSuffix) : "";
 //gender
 const savedGender = localStorage.getItem("gender");
 const gender = savedGender ? JSON.parse(savedGender) : "";
+//dateOfBirth
+const savedDateOfBirth = localStorage.getItem("dateOfBirth");
+const dateOfBirth = savedDateOfBirth ? JSON.parse(savedDateOfBirth) : "";
+//anniversary
+const savedAnniversary = localStorage.getItem("anniversary");
+const anniversary = savedAnniversary ? JSON.parse(savedAnniversary) : "";
 
 export const usePersonalInformationStore = create<PersonalInfo>()(
   (set, get) => ({
@@ -43,6 +53,8 @@ export const usePersonalInformationStore = create<PersonalInfo>()(
     last_name,
     suffix,
     gender,
+    dateOfBirth,
+    anniversary,
     setPrefix: (prefix) => {
       {
         set(() => {
@@ -91,5 +103,17 @@ export const usePersonalInformationStore = create<PersonalInfo>()(
       }
       localStorage.setItem("gender", JSON.stringify(get().gender));
     },
+    setDateOfBirth: (dob) => {
+     { set(() => {
+        return {dateOfBirth: dob}
+      })}
+      localStorage.setItem("dateOfBirth", JSON.stringify(get().dateOfBirth));
+    },
+    setAnniversary: (anniversary) => {
+     { set(() => {
+        return {anniversary}
+      })}
+      localStorage.setItem("anniversary", JSON.stringify(get().anniversary));
+    }
   })
 );

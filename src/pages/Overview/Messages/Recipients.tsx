@@ -38,7 +38,7 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
         <div>
           <div className="border">
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {members.map((item: any, index: number) => (
+            {members && members.map((item: any, index: number) => (
               <div
                 className={`flex justify-between items-center py-3 px-2 ${
                   index !== members.length - 1 ? "border-b" : ""

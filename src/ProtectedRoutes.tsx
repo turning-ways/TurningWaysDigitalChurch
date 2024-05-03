@@ -16,7 +16,7 @@ const ProtectedRoutes = () => {
       setAuthChecked(true);
       if (isError) notify("Sorry, you've not been signed in");
     }
-    admin ? setUser(admin.data.user[0]) : setUser(null);
+    admin ? setUser(admin.data.user) : setUser(null);
     console.log(admin);
   }, [isPending, isError, admin, setUser]);
 

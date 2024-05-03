@@ -10,10 +10,14 @@ const EditProfilePersonalInfo = () => {
     setLastName,
     setSuffix,
     setGender,
+    setDateOfBirth,
+    setAnniversary,
     first_name,
     middle_name,
     last_name,
     suffix,
+    dateOfBirth,
+    anniversary
   } = usePersonalInformationStore();
 
   const information = [
@@ -47,6 +51,7 @@ const EditProfilePersonalInfo = () => {
     setGender(value);
   };
 
+
   return (
     <div className="mt-5">
       <DropDownInput
@@ -72,6 +77,32 @@ const EditProfilePersonalInfo = () => {
         placeholder=""
         onSelect={handleGender}
       />
+      <div className=" space-y-1 mb-4">
+        <p className="text-[#727272]">
+          D.O.B <span className="text-[#61BD74]"> *</span>
+        </p>
+        <div className="border rounded-lg p-2">
+          <input
+            className="outline-none text-[#434343] text-lg w-full"
+            type="date"
+            value={dateOfBirth}
+            onChange={(e) => setDateOfBirth(e.target.value)}
+          />
+        </div>
+      </div>
+      <div className=" space-y-1 mb-4">
+        <p className="text-[#727272]">
+          Anniversary
+        </p>
+        <div className="border rounded-lg p-2">
+          <input
+            className="outline-none text-[#434343] text-lg w-full"
+            type="date"
+            value={anniversary}
+            onChange={(e) => setAnniversary(e.target.value)}
+          />
+        </div>
+      </div>
     </div>
   );
 };

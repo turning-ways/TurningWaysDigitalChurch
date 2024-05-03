@@ -24,6 +24,11 @@ interface Member {
   title?: string;
   dateOfBirth?: string;
   MarriageStatus?: string;
+  anniversary?: string;
+  accessPermission: string;
+  memberStatus: string;
+  workType: string;
+  ServiceUnit: string;
 }
 
 const useAddRegularMember = () => {

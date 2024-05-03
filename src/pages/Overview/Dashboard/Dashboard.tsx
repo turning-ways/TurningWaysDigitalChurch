@@ -7,11 +7,30 @@ import { LuCalendarDays } from "react-icons/lu";
 import { IoFilter } from "react-icons/io5";
 import Header from "../Header";
 import OverviewContainer from "../OverviewContainer";
-import MembershipDataBar from "./MembershipDataBar";
+import MembershipDataBar from "./BarChart/MembershipDataBar";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
+import AgeDistrBar from "./BarChart/AgeDistrBar";
+import { PieChart } from "./PieChart/PieChart";
+import MemberList from "./MemberList";
+import { useChurchInformationSore } from "../../../stores/Add Member/churchInformation";
 
 const Dashboard = () => {
   const { data: members } = useGetAllMembers();
+  const noOfMembers = members?.length;
+  const getGenderPercentage = (gender: string) => {
+    const selectedGender = members?.filter(
+      (member: { gender: string }) => member.gender === gender
+    );
+    const noOfSelectedGender = selectedGender?.length;
+    const selectedGenderPercentage =
+      noOfSelectedGender &&
+      noOfMembers &&
+      (noOfSelectedGender / noOfMembers) * 100;
+    return selectedGenderPercentage?.toPrecision(3);
+  };
+
+  const { member_status } = useChurchInformationSore();
+
   return (
     <OverviewContainer active="Dashboard">
       <Header text="Dashboard" />
@@ -38,95 +57,103 @@ const Dashboard = () => {
           <LuCalendarDays />
           <p>YTD</p>
         </li>
-        <li className="px-6 border-b-4 flex items-center space-x-2 cursor-pointer">
+        <li
+          className="px-6 border-b-4 flex items-center space-x-2 cursor-pointer"
+          onClick={() => console.log(member_status)}
+        >
           <IoFilter />
           <p>Filter</p>
         </li>
       </ul>
       {/* component 2 closed */}
       {/* component 3 */}
-      <div className="mt-10 flex space-x-14 h-28">
-        <div className="flex rounded-[10px] w-48 overflow-hidden shadow-md">
-          <div className="w-2 bg-red-100" />
+      <div className="mt-10 flex space-x-14 h-28 text-[#999DA4]">
+        <div className="flex rounded-[10px] w-48 overflow-hidden custom-box-shadow">
+          <div className="w-2 bg-[#F2CCCC]" />
           <div className=" py-3 px-3 flex flex-col items-center justify-center flex-grow space-y-1">
             <p>Total Membership</p>
-            <p className="text-3xl">{members && members.length}</p>
+            <p className="text-3xl text-[#0F123F]">
+              {members && members.length}
+            </p>
           </div>
         </div>
-        <div className="flex rounded-[10px] w-48 overflow-hidden shadow-md">
-          <div className="w-2 bg-green-500" />
+        <div className="flex rounded-[10px] w-48 overflow-hidden custom-box-shadow">
+          <div className="w-2 bg-[#CFF4CF]" />
           <div className=" py-3 px-3 flex flex-col items-center justify-center flex-grow space-y-1">
             <p>Verified Members</p>
-            <p className="text-3xl">108</p>
+            <p className="text-3xl text-[#0F123F]">0</p>
           </div>
         </div>
-        <div className="flex rounded-[10px] w-48 overflow-hidden shadow-md">
-          <div className="w-2 bg-blue-700" />
+        <div className="flex rounded-[10px] w-48 overflow-hidden custom-box-shadow">
+          <div className="w-2 bg-[#CCCCFF]" />
           <div className=" py-3 px-3 flex flex-col items-center justify-center flex-grow space-y-1">
             <p>Unverified Members</p>
-            <p className="text-3xl">108</p>
+            <p className="text-3xl text-[#0F123F]">0</p>
           </div>
         </div>
-        <div className="flex rounded-[10px] w-48 overflow-hidden shadow-md">
-          <div className="w-2 bg-yellow-500" />
+        <div className="flex rounded-[10px] w-48 overflow-hidden custom-box-shadow">
+          <div className="w-2 bg-[#F8F8CC]" />
           <div className=" py-3 px-3 flex flex-col justify-center items-center flex-grow space-y-1">
             <p>Church Workers</p>
-            <p className="text-3xl">108</p>
+            <p className="text-3xl text-[#0F123F]">0</p>
+          </div>
+        </div>
+        <div className="flex rounded-[10px] w-48 overflow-hidden custom-box-shadow">
+          <div className="w-2 bg-[#E2CCE2]" />
+          <div className=" py-3 px-3 flex flex-col justify-center items-center flex-grow space-y-1">
+            <p>Household</p>
+            <p className="text-3xl text-[#0F123F]">0</p>
           </div>
         </div>
       </div>
       {/* component 3 closed */}
       {/* component 4 */}
-      <div className="mt-10 border border-secondary w-fit px-4 pt-6 rounded-[20px]">
-        <div className="h-52 mb-14">
-          <p className="text-xl text-[#2B3674]">Membership data</p>
-          <p className="text-[#BABEC6]">New members added</p>
-          <MembershipDataBar />
+      <div className="flex gap-x-6">
+        <div className="mt-10 border border-secondary w-full px-4 pt-6 rounded-[20px]">
+          <div className="h-52 mb-20">
+            <p className="text-xl text-[#2B3674]">Membership data</p>
+            <p className="text-[#BABEC6] mb-4">New members added</p>
+            <MembershipDataBar />
+          </div>
+        </div>
+        <div className="mt-10 border border-secondary w-full px-4 pt-6 rounded-[20px]">
+          <div className="h-52">
+            <p className="text-xl text-[#2B3674] mb-10">Age Distribution</p>
+            <AgeDistrBar />
+          </div>
+        </div>
+        <div className="mt-10 w-full px-4  pt-6 rounded-[20px] bg-[#F6F8FA]">
+          <div className=" flex flex-col">
+            <p className="text-xl text-[#2B3674] mb-3">Gender Distribution</p>
+            <div className="w-[200px] self-center">
+              <PieChart />
+            </div>
+            <div className="flex bg-white justify-between pt-2 px-16 mt-4 rounded-[15px]">
+              <div>
+                <div className="flex gap-x-2">
+                  <div className="w-2 h-2 bg-[#758CD7] rounded-full" />
+                  <p className="text-[#A3AED0]">Male</p>
+                </div>
+                <p className="text-right text-[#2B3674] text-[18px] font-azoBold">
+                  {getGenderPercentage("male") + "%"}
+                </p>
+              </div>
+              <div>
+                <div className="flex gap-x-2">
+                  <div className="w-2 h-2 bg-[#A0D7AB] rounded-full" />
+                  <p className="text-[#A3AED0]">Female</p>
+                </div>
+                <p className="text-right text-[#2B3674] text-[18px] font-azoBold">
+                  {getGenderPercentage("female") + "%"}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       {/* component 4 closed */}
       {/* component 5 */}
-      <div className="flex justify-between font-medium mt-10">
-        <ul className="border flex border-[#CBCBCB] text-[#636363]">
-          <li className="border-r p-2 ">All</li>
-          <li className="border-r p-2">First Timers</li>
-          <li className="border-r p-2">Upcoming Anniversary</li>
-          <li className="border-r p-2">Upcoming Birthday</li>
-        </ul>
-        <button
-          className="bg-[#758CD7] text-white  px-4 py-2 rounded-md"
-          onClick={() => console.log(members)}
-        >
-          Export Data
-        </button>
-      </div>
-      {/* component 5 closed */}
-      <div>
-        <div className="grid grid-cols-8 gap-4 border mt-10 border-b-0 py-3 text-[#A3AED0]">
-          <div className="col-span-2">Name</div>
-          <div className="col-span-1">Gender</div>
-          <div className="col-span-1">Phone Number</div>
-          <div className="col-span-2">Email</div>
-          <div className="col-span-1">DOB</div>
-          <div className="col-span-1">Marital Status</div>
-          {/* Example data */}
-        </div>
-        {members &&
-          members.map((item: any, index: number) => (
-            <div
-              className={`grid grid-cols-8 gap-4 border-r border-l border-t py-3 ${
-                members.length - 1 === index && "border-b"
-              }`}
-            >
-              <div className="col-span-2">{item.fullname}</div>
-              <div className="col-span-1">{item.gender}</div>
-              <div className="col-span-1">{item.phone.MainPhone}</div>
-              <div className="col-span-2">{item.email}</div>
-              <div className="col-span-1">31/01/2005</div>
-              <div className="col-span-1">Single</div>
-            </div>
-          ))}
-      </div>
+      <MemberList />
     </OverviewContainer>
   );
 };

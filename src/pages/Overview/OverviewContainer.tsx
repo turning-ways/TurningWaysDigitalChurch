@@ -10,7 +10,7 @@ const OverviewContainer: React.FC<OverviewContainerProps> = ({ children, active 
   return (
     <div className="flex relative">
       <Navbar active={active}/>
-      <div className="p-10 flex-grow font-azo h-screen overflow-y-scroll">
+      <div className="p-10 flex-grow font-azo h-screen overflow-y-scroll bg-[#FFFDFD]">
         {children}
       </div>
     </div>

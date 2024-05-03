@@ -6,6 +6,7 @@ import useAddRegularMember from "../../../../hooks/Member/useAddRegularMember";
 import { useContactInformationStore } from "../../../../stores/Add Member/contactInformation";
 import { notify } from "../../../../hooks/useLogin";
 import { useUserAuth } from "../../../../stores/user";
+import { useChurchInformationSore } from "../../../../stores/Add Member/churchInformation";
 
 interface SubHeaderProps {
   btnText: string;
@@ -14,12 +15,19 @@ interface SubHeaderProps {
 const SubHeader: React.FC<SubHeaderProps> = ({ btnText }) => {
   const navigate = useNavigate();
   const { mutate } = useAddRegularMember();
-  const { first_name, last_name, middle_name, suffix, gender } =
-    usePersonalInformationStore();
+  const {
+    first_name,
+    last_name,
+    middle_name,
+    suffix,
+    gender,
+    dateOfBirth,
+    anniversary,
+  } = usePersonalInformationStore();
   const { contact_email } = useContactInformationStore();
   const { contact_address, contact_phone } = useContactInformationStore();
   const { user } = useUserAuth();
-  // const {access_permission, member_status, service_unit, work_type} = useChurchInformationSore();
+  const {access_permission, member_status, service_unit, work_type} = useChurchInformationSore();
   const { churchId } = useChurchIdStore();
   const handleAddingMember = () => {
     if (
@@ -27,7 +35,8 @@ const SubHeader: React.FC<SubHeaderProps> = ({ btnText }) => {
       last_name &&
       middle_name &&
       contact_email &&
-      contact_phone !== ""
+      contact_phone !== "" &&
+      dateOfBirth !== ""
     ) {
       mutate({
         first_name,
@@ -39,6 +48,12 @@ const SubHeader: React.FC<SubHeaderProps> = ({ btnText }) => {
         phone: { MainPhone: contact_phone },
         churchId: churchId ? churchId : "",
         gender,
+        dateOfBirth,
+        anniversary,
+        accessPermission: access_permission,
+        memberStatus: member_status,
+        ServiceUnit: service_unit,
+        workType: work_type,
       });
     } else notify("Please fill in all required fields");
     console.log(first_name, last_name, middle_name, suffix, gender);

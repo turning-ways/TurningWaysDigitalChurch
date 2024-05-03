@@ -13,7 +13,7 @@ const AllMembers = () => {
   const { data: members } = useGetAllMembers();
 
   const [memberCheckboxes, setMemberCheckboxes] = useState(
-    Array(members.length).fill(false)
+    Array(members?.length).fill(false)
   );
 
   const [selectAll, setSelectAll] = useState(false);

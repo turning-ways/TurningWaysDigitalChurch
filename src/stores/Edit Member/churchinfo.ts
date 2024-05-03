@@ -67,7 +67,7 @@ export const useEditChurchInformationSore = create<PersonalInfo>()(
     setServiceUnit: (service) => {
       {
         set(() => {
-          return { service_unit: service };
+          return { service_unit: service};
         });
       }
       localStorage.setItem(

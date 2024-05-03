@@ -1,34 +1,42 @@
+import { useQuery } from "@tanstack/react-query";
+import { useChurchIdStore } from "../../../../stores/churchId";
 import InformationInput from "./InformationField";
+import axios from "axios";
 
 const ChurchInformation = () => {
+  const queryParams = new URLSearchParams(location.search);
+
+  const memberId = queryParams.get("id");
+
+  const { churchId } = useChurchIdStore();
+
+  const { data } = useQuery({
+    queryKey: ["church", churchId, "member", memberId],
+    queryFn: () =>
+      axios
+        .get(`https://digital-church.onrender.com/api/v1/members/${memberId}`, {
+          withCredentials: true,
+        })
+        .then((res) => res.data),
+  });
+
+
   const information = [
     {
       name: "Access Permission",
-      value: "Temidire",
+      value: data.member.accessPermission,
     },
     {
       name: "Member Status",
-      value: "Owoeye",
+      value: data.member.memberStatus,
     },
     {
       name: "Work Type",
-      value: "Owoeye",
+      value: data.member.workType,
     },
     {
       name: "Service Unit or Department",
-      value: "Owoeye",
-    },
-    {
-      name: "Membership Confirmation/Date",
-      value: "Owoeye",
-    },
-    {
-      name: "Work Ordination",
-      value: "Owoeye",
-    },
-    {
-      name: "Salvation Date",
-      value: "Owoeye",
+      value: data.member.ServiceUnit,
     },
   ];
   return (
