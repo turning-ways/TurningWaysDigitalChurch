@@ -104,7 +104,7 @@ const MemberList = () => {
               >
                 <div className="col-span-2">{item.fullname}</div>
                 <div className="col-span-1">{item.gender}</div>
-                <div className="col-span-1">{item.phone.MainPhone}</div>
+                <div className="col-span-1">{}</div>
                 <div className="col-span-2">{item.email}</div>
                 <div className="col-span-1">
                   {item.dateOfBirth?.slice(0, 10)}
@@ -122,7 +122,7 @@ const MemberList = () => {
             >
               <div className="col-span-2">{first_timer.fullname}</div>
               <div className="col-span-1">{first_timer.gender}</div>
-              <div className="col-span-1">{first_timer.phone.MainPhone}</div>
+              <div className="col-span-1">{}</div>
               <div className="col-span-2">{first_timer.email}</div>
               <div className="col-span-1">{first_timer.dateOfBirth?.slice(0,10)}</div>
               <div className="col-span-1">Single</div>

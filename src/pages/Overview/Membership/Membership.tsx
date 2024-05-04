@@ -23,7 +23,7 @@ const Membership = () => {
 
   const [open, setOpen] = useState<boolean>(false);
 
-  const {data: members} = useGetAllMembers();
+  const { data: members } = useGetAllMembers();
 
   const navigate = useNavigate();
 
@@ -81,7 +81,6 @@ const Membership = () => {
         )}
       </div>
       {/* componentClosed */}
-
       <AllMembers />
     </OverviewContainer>
   );

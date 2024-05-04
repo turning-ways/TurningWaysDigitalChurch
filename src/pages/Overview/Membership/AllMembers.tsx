@@ -5,10 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { useChurchIdStore } from "../../../stores/churchId";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import { useState } from "react";
+// import { FaLeftLong, FaRightLong } from "react-icons/fa6";
 
 const AllMembers = () => {
   const navigate = useNavigate();
   const { churchId } = useChurchIdStore();
+  // const pageSize = 5;
+
+  // const [page, setPage] = useState(1);
 
   const { data: members } = useGetAllMembers();
 
@@ -31,13 +35,15 @@ const AllMembers = () => {
     setMemberCheckboxes(memberCheckboxes.map(() => isChecked));
   };
 
-
   return (
     <div>
       <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] gap-4 border-b py-2  ">
         <div className="flex space-x-1 items-center">
-          <input type="checkbox"  checked={selectAll}
-                onChange={handleSelectAll}/>
+          <input
+            type="checkbox"
+            checked={selectAll}
+            onChange={handleSelectAll}
+          />
           <p>Profile</p>
         </div>
         <div className="">Name</div>
@@ -47,16 +53,20 @@ const AllMembers = () => {
       </div>
 
       {churchId && members ? (
-        members.map((item: any, index:number) => (
+        members.map((item: any, index: number) => (
           <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] border-b py-4  text-[#636363] gap-4">
             <div className="flex space-x-2 items-center">
-              <input type="checkbox" checked={memberCheckboxes[index]} onChange={() => handleMemberCheckboxChange(index)}/>
+              <input
+                type="checkbox"
+                checked={memberCheckboxes[index]}
+                onChange={() => handleMemberCheckboxChange(index)}
+              />
               <p>pic</p>
             </div>
-            <div className="">{item.first_name}</div>
-            <div className="">{item.email}</div>
-            <div className="">{item.phone.MainPhone}</div>
-            <div className="">{item.gender}</div>
+            <div>{item.first_name}</div>
+            <div>{item.email}</div>
+            <div>{item.phone?.MainPhone}</div>
+            <div>{item.gender}</div>
             <div
               className="flex items-center gap-x-2 text-secondary cursor-pointer"
               onClick={() => {

@@ -5,7 +5,6 @@ import { success } from "./useUpdatePassword";
 // import { useChurchIdStore } from "../stores/churchId";
 import { useNavigate } from "react-router-dom";
 import { useChurchIdStore } from "../stores/churchId";
-import useVerifyEmail from "./Signup/useVerifyEmail";
 
 interface User {
   email: string;
@@ -40,8 +39,6 @@ const useLogin = () => {
   const navigate = useNavigate();
   // const { setChurchId } = useChurchIdStore();
 
-  const { mutate } = useVerifyEmail();
-
   const { setChurchId } = useChurchIdStore();
   return useMutation({
     mutationFn: (user: User) => {
@@ -63,16 +60,11 @@ const useLogin = () => {
         success("Sign In was Successfull");
         navigate(url.pathname);
       }
-      if (url.pathname === "/register/personalinfo")
-        success("Sign In was Successfull, Please create your church");
-      console.log(url, url.pathname);
     },
     onError: (err: ErrorResponse) => {
-      notify(err.response.data.message);
       const url = new URL(err.response.data.redirectUrl);
       navigate(url.pathname);
-      mutate({ email: err.response.data.email });
-      console.log(err.response.data.redirectUrl);
+      success("Sign In was Successfull, Please create your church");
     },
   });
 };
