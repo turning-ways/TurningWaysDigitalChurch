@@ -1,24 +1,11 @@
 import { IoIosArrowForward } from "react-icons/io";
-import { useQuery } from "@tanstack/react-query";
-import { useChurchIdStore } from "../../../../stores/churchId";
-import axios from "axios";
+import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
 
 const PersonalInformation = () => {
-  const queryParams = new URLSearchParams(location.search);
 
-  const memberId = queryParams.get("id");
 
-  const { churchId } = useChurchIdStore();
 
-  const { data } = useQuery({
-    queryKey: ["church", churchId, "member", memberId],
-    queryFn: () =>
-      axios
-        .get(`https://digital-church.onrender.com/api/v1/members/${memberId}`, {
-          withCredentials: true,
-        })
-        .then((res) => res.data),
-  });
+  const {data}= useGetMemberDetails();
 
   return (
     <div className="mt-10">

@@ -1,22 +1,25 @@
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, Tooltip, Legend, ArcElement } from "chart.js";
-import useGetAllMembers from "../../../../hooks/Member/useGetAllMembers";
+import useMemberStats from "../../../../hooks/Member/useMemberStats";
 
 ChartJS.register(Tooltip, Legend, ArcElement);
 
-export const PieChart = () => {
-  const { data: members } = useGetAllMembers();
-  const noOfMembers = members?.length;
+interface PieProps {
+  timeLine: string;
+}
+
+export const PieChart: React.FC<PieProps> = ({timeLine}) => {
+  const{data} = useMemberStats(timeLine);
+  const noOfFemale = data?.["female-members-count"];
+  const noOfMale = data?.["male-members-count"];
+  const totalMembers = data?.["members-count"];
   const getGenderPercentage = (gender: string) => {
-    const selectedGender = members?.filter(
-      (member: { gender: string }) => member.gender === gender
-    );
-    const noOfSelectedGender = selectedGender?.length;
-    const selectedGenderPercentage =
-      noOfSelectedGender &&
-      noOfMembers &&
-      (noOfSelectedGender / noOfMembers) * 100;
-    return selectedGenderPercentage;
+    if (gender === "male") {
+      return (noOfMale && totalMembers ? noOfMale/totalMembers : 0) * 100;
+    }
+    if (gender === "female") {
+      return (noOfFemale && totalMembers ? noOfFemale/totalMembers : 0 ) * 100;
+    }
   };
   return (
     <Pie

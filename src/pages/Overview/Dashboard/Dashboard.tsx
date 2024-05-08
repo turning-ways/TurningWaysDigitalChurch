@@ -4,7 +4,6 @@ import { MdOutlineNextWeek } from "react-icons/md";
 import { IoCalendarOutline } from "react-icons/io5";
 import { TbCloudSearch } from "react-icons/tb";
 import { LuCalendarDays } from "react-icons/lu";
-import { IoFilter } from "react-icons/io5";
 import Header from "../Header";
 import OverviewContainer from "../OverviewContainer";
 import MembershipDataBar from "./BarChart/MembershipDataBar";
@@ -12,7 +11,8 @@ import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import AgeDistrBar from "./BarChart/AgeDistrBar";
 import { PieChart } from "./PieChart/PieChart";
 import MemberList from "./MemberList";
-import { useChurchInformationSore } from "../../../stores/Add Member/churchInformation";
+import { useState } from "react";
+
 
 const Dashboard = () => {
   const { data: members } = useGetAllMembers();
@@ -29,7 +29,36 @@ const Dashboard = () => {
     return selectedGenderPercentage?.toPrecision(3);
   };
 
-  const { member_status } = useChurchInformationSore();
+  const getData = [
+    {
+      icon: <MdCalendarToday />,
+      title: "Today",
+      id: "",
+    },
+    {
+      icon: <MdOutlineNextWeek />,
+      title: "Last Week",
+      id: "lastWeek",
+    },
+    {
+      icon: <IoCalendarOutline />,
+      title: "Last Month",
+      id: "lastMonth",
+    },
+    {
+      icon: <TbCloudSearch />,
+      title: "Last Quarter",
+      id: "lastQuarter",
+    },
+    {
+      icon: <LuCalendarDays />,
+      title: "YTD",
+      id: "ytd",
+    },
+  ];
+
+  const [active, setActive] = useState<string>("");
+
 
   return (
     <OverviewContainer active="Dashboard">
@@ -37,33 +66,22 @@ const Dashboard = () => {
 
       {/* component 2 */}
       <ul className="mt-10 flex">
-        <li className="px-6 border-b-4 border-b-[#446DE3] text-[#446DE3] flex items-center space-x-2 cursor-pointer">
-          <MdCalendarToday />
-          <p>Today</p>
-        </li>
-        <li className="px-6 border-b-4 flex items-center space-x-2 cursor-pointer">
-          <MdOutlineNextWeek />
-          <p>Next week</p>
-        </li>
-        <li className="px-6 border-b-4 flex items-center space-x-2 cursor-pointer">
-          <IoCalendarOutline />
-          <p>Last Month</p>
-        </li>
-        <li className="px-6 border-b-4 flex items-center space-x-2 cursor-pointer">
-          <TbCloudSearch />
-          <p>Last Quarter</p>
-        </li>
-        <li className="px-6 border-b-4 flex items-center space-x-2 cursor-pointer">
-          <LuCalendarDays />
-          <p>YTD</p>
-        </li>
-        <li
-          className="px-6 border-b-4 flex items-center space-x-2 cursor-pointer"
-          onClick={() => console.log(member_status)}
-        >
-          <IoFilter />
-          <p>Filter</p>
-        </li>
+        {getData.map((item, i) => (
+          <li
+            className={`px-6 border-b-4 ${
+              active === item.id
+                ? "border-b-[#446DE3] text-[#446DE3]"
+                : "border-b-[#B6B5B5] text-[#B6B5B5]"
+            } flex items-center space-x-2 cursor-pointer`}
+            key={i}
+            onClick={() => {
+              setActive(item.id);
+            }}
+          >
+            {item.icon}
+            {item.title}
+          </li>
+        ))}
       </ul>
       {/* component 2 closed */}
       {/* component 3 */}
@@ -119,14 +137,14 @@ const Dashboard = () => {
         <div className="mt-10 border border-secondary w-full px-4 pt-6 rounded-[20px]">
           <div className="h-52">
             <p className="text-xl text-[#2B3674] mb-10">Age Distribution</p>
-            <AgeDistrBar />
+            <AgeDistrBar timeLine={active} />
           </div>
         </div>
         <div className="mt-10 w-full px-4  pt-6 rounded-[20px] bg-[#F6F8FA]">
           <div className=" flex flex-col">
             <p className="text-xl text-[#2B3674] mb-3">Gender Distribution</p>
             <div className="w-[200px] self-center">
-              <PieChart />
+              <PieChart timeLine={active}/>
             </div>
             <div className="flex bg-white justify-between pt-2 px-16 mt-4 rounded-[15px]">
               <div>

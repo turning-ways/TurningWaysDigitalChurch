@@ -41,7 +41,7 @@ const useUpdateMember = (memberId: string) => {
         .then((res) => res.data),
     onSuccess: () => {
       success("Member has been updated successfully");
-      navigate("/admin/overview/dashboard");
+      navigate("/admin/dashboard");
     },
     onError: () => notify("Couldn't update member"),
   });

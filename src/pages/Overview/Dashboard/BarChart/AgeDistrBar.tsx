@@ -19,13 +19,20 @@ ChartJS.register(
   Legend
 );
 
-const AgeDistrBar = () => {
-  const { data } = useMemberStats();
-  const filteredKeys = data && data.ageRanges ? Object.keys(data.ageRanges).filter(
-    (key) => key !== "71-80" && key !== "81-90" && key !== "91-100"
-  ) : [];
+interface BarProps {
+  timeLine: string;
+}
 
-  const values = filteredKeys?.map((key) => data?.ageRanges[key]);
+const AgeDistrBar: React.FC<BarProps> = ({ timeLine }) => {
+  const { data } = useMemberStats(timeLine);
+  const filteredKeys =
+    data && data.ageRanges
+      ? Object.keys(data.ageRanges).filter(
+          (key) => key !== "71-80" && key !== "81-90" && key !== "91-100"
+        )
+      : [];
+
+  const values = filteredKeys?.map((key) => data?.ageRanges[key as keyof typeof data.ageRanges]);
 
   return (
     <Bar

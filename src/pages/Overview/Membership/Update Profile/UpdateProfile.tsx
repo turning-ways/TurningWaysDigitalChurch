@@ -1,9 +1,13 @@
 import Header from "../../Header";
 import SubHeader from "./SubHeader";
 import { Outlet } from "react-router-dom";
-import AddMember from "../../AddMemberBtn";
 import InformationHeader from "../InformationHeader";
 import OverviewContainer from "../../OverviewContainer";
+import ProfileEditButton from "../../../../components/Button/ProfileEditButton";
+import useUpdateMember from "../../../../hooks/Member/useUpdateMember";
+import { useEditPersonalInformationStore } from "../../../../stores/Edit Member/personalinfo";
+import { useEditContactInformationStore } from "../../../../stores/Edit Member/contactinfo";
+import { useChurchIdStore } from "../../../../stores/churchId";
 
 const UpdateProfile = () => {
   const queryParams = new URLSearchParams(location.search);
@@ -18,6 +22,30 @@ const UpdateProfile = () => {
     churchInfo: `/admin/directory/update-member/church-information?id=${memberId}`,
   };
 
+  const { mutate } = useUpdateMember(memberId ? memberId : "");
+  const { first_name, last_name, middle_name, suffix, gender } =
+    useEditPersonalInformationStore();
+  const { contact_address, contact_phone, contact_email } = useEditContactInformationStore();
+  // const {access_permission, member_status, service_unit, work_type} = useChurchInformationSore();
+  const { churchId } = useChurchIdStore();
+
+  
+
+  const handleAddingMember = () => {
+    mutate({
+      first_name,
+      last_name,
+      middle_name,
+      email: contact_email,
+      suffix,
+      address: { HomeAddress: contact_address },
+      phone: { MainPhone: contact_phone },
+      churchId: churchId ? churchId : "",
+      gender,
+    });
+    console.log(first_name, last_name, middle_name, suffix, gender);
+  };
+
   return (
     <OverviewContainer active="Directory">
       <Header text="MemberShip" />
@@ -26,7 +54,7 @@ const UpdateProfile = () => {
 
       <Outlet />
 
-      <AddMember />
+      <ProfileEditButton text={"UPDATE"} onPress={handleAddingMember}/>
     </OverviewContainer>
   );
 };

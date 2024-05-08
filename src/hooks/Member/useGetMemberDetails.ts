@@ -1,10 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useChurchIdStore } from "../../stores/churchId";
+import { useEffect } from "react";
 
 const useGetMemberDetails = () => {
   const { churchId } = useChurchIdStore();
+  
   const queryParams = new URLSearchParams(location.search);
+
+  useEffect(() => {
+  }, [])
 
   const memberId = queryParams.get("id");
   return useQuery({
