@@ -19,9 +19,9 @@ const useVerifySignUpOtp = () => {
         )
         .then((res) => res.data),
     onSuccess: () => {
-      navigate("/");
-      success("Account Created, Please Sign In");
-      console.log("work");
+      navigate("/register/personalinfo");
+      success("Account Created, Please Create Church");
+      console.log("Account created, please create church");
     },
     onError: () => notify("Invalid Otp!"),
   });

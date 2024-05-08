@@ -35,7 +35,7 @@ const LandingPage = () => {
           <ul className="flex text-[#6181E7] space-x-10 items-center font-azo text-xl">
             <li>
               <button onClick={() => navigate("/register")}>
-                Sign Up for free
+                Sign up with Email
               </button>
             </li>
             <li>

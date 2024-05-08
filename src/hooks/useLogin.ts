@@ -59,6 +59,7 @@ const useLogin = () => {
         setChurchId(res.churchId);
         success("Sign In was Successfull");
         navigate(url.pathname);
+        console.log(res.churchId)
       }
       if (url.pathname === "/register/personalinfo") {
         success("Sign In was Successfull, Please create your church");
@@ -67,9 +68,10 @@ const useLogin = () => {
 
     },
     onError: (err: ErrorResponse) => {
-      const url = new URL(err.response.data.redirectUrl);
-      navigate(url.pathname);
-      notify("Sign In was Successfull, Please create your church");
+      // const url = new URL(err.response.data.redirectUrl);
+      // navigate(url.pathname);
+      // notify("Sign In was Successfull, Please create your church");
+      notify(err.response.data.message)
     },
   });
 };

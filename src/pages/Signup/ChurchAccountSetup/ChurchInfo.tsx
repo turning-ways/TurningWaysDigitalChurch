@@ -249,6 +249,7 @@ const ChurchInfo = () => {
                 placeholder="123456"
                 value={postalCode}
                 onChange={(e) => setPostalCode(e.target.value)}
+                maxLength={6}
               />
             </div>
             <div className="relative">
