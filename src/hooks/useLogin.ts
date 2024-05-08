@@ -60,11 +60,16 @@ const useLogin = () => {
         success("Sign In was Successfull");
         navigate(url.pathname);
       }
+      if (url.pathname === "/register/personalinfo") {
+        success("Sign In was Successfull, Please create your church");
+        navigate(url.pathname);
+      }
+
     },
     onError: (err: ErrorResponse) => {
       const url = new URL(err.response.data.redirectUrl);
       navigate(url.pathname);
-      success("Sign In was Successfull, Please create your church");
+      notify("Sign In was Successfull, Please create your church");
     },
   });
 };
