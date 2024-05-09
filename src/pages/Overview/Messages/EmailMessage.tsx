@@ -3,7 +3,7 @@ import Header from "../Header";
 import OverviewContainer from "../OverviewContainer";
 import { useState } from "react";
 import Subject from "./Subject";
-import Body from "./Body";
+// import Body from "./Body";
 import AddRecipientsModal from "./AddRecipientsModal";
 import Recipients from "./Recipients";
 
@@ -18,7 +18,7 @@ const EmailMessage = () => {
         </div>
         <div className="px-16 text-[#555454] space-y-6">
           <Subject title="Subject" placeholder="Winners Chapel Magodo" />
-          <Body title="Body Message" placeholder="Enter messsage here" />
+          {/* <Body title="Body Message" placeholder="Enter messsage here" /> */}
           <Recipients onOpen={() => setOpen(!open)} />
         </div>
       </div>

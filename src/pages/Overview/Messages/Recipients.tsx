@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { FiPlusCircle } from "react-icons/fi";
 import { HiQuestionMarkCircle } from "react-icons/hi2";
@@ -5,15 +6,45 @@ import { RiDeleteBin4Line } from "react-icons/ri";
 import Modal from "../../../components/Modal/Modal";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import { FaLeftLong, FaRightLong } from "react-icons/fa6";
+import useSendSms from "../../../hooks/Member/useSendSms";
+import Subject from "./Subject";
+import Body from "./Body";
+
 interface RecipientsProp {
   onOpen: () => void;
 }
 
+interface Member {
+  WorkerStatus: string;
+  age: null;
+  dateJoined: string;
+  first_name: string;
+
+  fullname: string;
+  howDidYouHear: string;
+  id: string;
+  last_name: string;
+  notes: [];
+  phone: { MainPhone: string };
+  photo: string;
+  role: string;
+  suffix: string;
+  title: string;
+  userId: string;
+  _id: string;
+}
+
 const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [selectedMembers, setSelectedMembers] = useState<boolean>(false);
+  const [allMembers, setAllMembers] = useState<boolean>(false);
+  const [selectMembers, setSelectMember] = useState<Member[]>([]);
   const { data: members } = useGetAllMembers();
+  const {mutate} = useSendSms();
+  const [message, setMessage] = useState<string>("");
   return (
+    <>
+    <Subject title="Sender's ID" placeholder="Winners Chapel Magodo" />
+    <Body title="Text Message" placeholder="Enter text messsage here" onMessageChange={(value: string) => {setMessage(value)}}/>
     <div>
       <div className="flex justify-between items-center bg-[#EDEDFF] py-3 px-2">
         <p>Recipients</p>
@@ -26,7 +57,7 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
         </div>
       </div>
 
-      {!selectedMembers ? (
+      {!allMembers ? (
         <button
           className="w-full py-3 px-2 border border-[#AAA9A9] text-[#555454] rounded-lg  my-5"
           onClick={() => setOpen(true)}
@@ -38,22 +69,23 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
         <div>
           <div className="border">
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {members && members.map((item: any, index: number) => (
-              <div
-                className={`flex justify-between items-center py-3 px-2 ${
-                  index !== members.length - 1 ? "border-b" : ""
-                }`}
-              >
-                <div className="flex items-center space-x-2">
-                  <input type="checkbox" />
-                  <p>{item.first_name}</p>
+            {members &&
+              members.map((item: any, index: number) => (
+                <div
+                  className={`flex justify-between items-center py-3 px-2 ${
+                    index !== members.length - 1 ? "border-b" : ""
+                  }`}
+                >
+                  <div className="flex items-center space-x-2">
+                    <input type="checkbox" />
+                    <p>{item.first_name}</p>
+                  </div>
+                  <div className="flex items-center space-x-6">
+                    <p>{item.phone.MainPhone}</p>
+                    <RiDeleteBin4Line className="text-[#F24E1E] text-xl cursor-pointer" />
+                  </div>
                 </div>
-                <div className="flex items-center space-x-6">
-                  <p>{item.phone.MainPhone}</p>
-                  <RiDeleteBin4Line className="text-[#F24E1E] text-xl cursor-pointer" />
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
           <div className="flex items-center justify-center space-x-5 mt-6 font-azeret">
             <FaLeftLong />
@@ -88,6 +120,16 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
         </div>
       </div>
 
+      <button
+        className="mt-10 bg-[#446DE3] text-white w-full p-4 rounded-[8px]"
+        onClick={() => {
+          mutate({message, members: selectMembers && selectMembers.map((member: Member) => member.id)})
+
+        }}
+      >
+        Send SMS
+      </button>
+
       {open && (
         <Modal>
           <div className="bg-white px-[26px] py-[37px] rounded-2xl text-lg flex flex-col gap-6">
@@ -98,8 +140,9 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
               <li
                 className="flex space-x-3 items-center cursor-pointer "
                 onClick={() => {
-                  setSelectedMembers(!selectedMembers);
+                  setAllMembers(!allMembers);
                   setOpen(!open);
+                  members && setSelectMember(members);
                 }}
               >
                 <p>All Church Members</p>
@@ -124,6 +167,7 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
         </Modal>
       )}
     </div>
+    </>
   );
 };
 

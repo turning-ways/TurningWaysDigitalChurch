@@ -9,7 +9,7 @@ const Subject: React.FC<SubjectProps> = ({title, placeholder}) => {
   return (
     <div className="space-y-2">
       <p>{title}</p>
-      <div className="flex border justify-between p-2 px-4 rounded-2xl space-x-5">
+      <div className="flex border justify-between p-2 px-4 rounded-2xl space-x-5 bg-white">
         <input
           type="text"
           className="w-full outline-none"
