@@ -39,7 +39,7 @@ const LandingPage = () => {
               </button>
             </li>
             <li>
-              <button onClick={() => navigate("/register")}>
+              <button onClick={() => navigate("/register/phone")}>
                 Sign up with Phone
               </button>
             </li>
