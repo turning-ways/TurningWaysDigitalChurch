@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 interface AuthResponse {
@@ -26,5 +26,9 @@ const useAuth = () => {
         .catch((err) => console.log(err)),
   });
 };
+
+export const refetchAuth = (queryClient: QueryClient) => {
+  queryClient.invalidateQueries({queryKey: ["auth"]})
+}
 
 export default useAuth;

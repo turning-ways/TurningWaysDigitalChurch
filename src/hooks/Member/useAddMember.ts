@@ -1,7 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { success } from "../useUpdatePassword";
 import { notify } from "../useLogin";
+import { useNavigate } from "react-router-dom";
+import { refetchAuth } from "../useAuthorize";
 
 interface Member {
   role: string;
@@ -20,6 +22,11 @@ interface Member {
 }
 
 const useAddMember = () => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const handleRefresh = () => {
+    refetchAuth(queryClient);
+  };
   return useMutation({
     mutationFn: (memberDetails: Member) =>
       axios
@@ -33,6 +40,10 @@ const useAddMember = () => {
         .then((res) => res.data),
     onSuccess: () => {
       success("Member has been added successfully");
+      handleRefresh();
+
+        navigate("/admin/dashboard");
+
     },
     onError: () => notify("Couldn't add member"),
   });

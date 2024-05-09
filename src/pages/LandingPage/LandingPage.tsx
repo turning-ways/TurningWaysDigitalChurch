@@ -10,7 +10,7 @@ import useLogin from "../../hooks/useLogin";
 
 const LandingPage = () => {
   const schema = z.object({
-    email: z.string().email({ message: "Please enter a valid email" }),
+    inputKey: z.string(),
     password: z
       .string()
       .min(5, { message: "Password should be atleast 5 characters long" }),
@@ -39,17 +39,22 @@ const LandingPage = () => {
               </button>
             </li>
             <li>
+              <button onClick={() => navigate("/register")}>
+                Sign up with Phone
+              </button>
+            </li>
+            {/* <li>
               <button className="border rounded-[22px] py-2 px-8 border-[#3A62E1]">
                 Login
               </button>
-            </li>
+            </li> */}
           </ul>
         </nav>
         <main className="grid grid-cols-[550px,1fr]  mt-5  gap-x-20">
           <form
             onSubmit={handleSubmit((data) => {
-              const { email, password } = data;
-              mutate({ email, password });
+              const { inputKey, password } = data;
+              mutate({ inputKey, password });
             })}
           >
             <h1 className="text-[#555454] text-[46px] font-azoBold leading-[60px]">
@@ -62,10 +67,10 @@ const LandingPage = () => {
             </p>
             <Input
               heading={"Email or Phone number"}
-              name={"email"}
+              name={"inputKey"}
               register={register}
               placeholder={"email or phone"}
-              formError={errors.email?.message}
+              formError={errors.inputKey?.message}
             />
             <PasswordInput
               name="password"

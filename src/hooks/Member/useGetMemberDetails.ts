@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useChurchIdStore } from "../../stores/churchId";
+// import { useChurchIdStore } from "../../stores/churchId";
 import { useEffect } from "react";
+import { useUserAuth } from "../../stores/user";
 
 const useGetMemberDetails = () => {
-  const { churchId } = useChurchIdStore();
+  // const { churchId } = useChurchIdStore();
+  const {user} = useUserAuth();
   
   const queryParams = new URLSearchParams(location.search);
 
@@ -13,7 +15,7 @@ const useGetMemberDetails = () => {
 
   const memberId = queryParams.get("id");
   return useQuery({
-    queryKey: ["church", churchId, "member", memberId],
+    queryKey: ["church", user?.churchId?._id, "member", memberId],
     queryFn: () =>
       axios
         .get(`https://digital-church.onrender.com/api/v1/members/${memberId}`, {

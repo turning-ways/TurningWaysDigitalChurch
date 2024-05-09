@@ -15,6 +15,9 @@ import { useState } from "react";
 
 
 const Dashboard = () => {
+
+
+
   const { data: members } = useGetAllMembers();
   const noOfMembers = members?.length;
   const getGenderPercentage = (gender: string) => {
@@ -58,6 +61,8 @@ const Dashboard = () => {
   ];
 
   const [active, setActive] = useState<string>("");
+
+
 
 
   return (

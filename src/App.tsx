@@ -11,8 +11,8 @@ import Register from "./pages/Signup/Register";
 import OrganizationInfo from "./pages/Signup/ChurchAccountSetup/OrganizationInfo";
 import ChurchInfo from "./pages/Signup/ChurchAccountSetup/ChurchInfo";
 import Request from "./pages/Signup/ChurchAccountSetup/BranchOfPC/Request";
-import LoginWithEmail from "./pages/Signin/WithEmail/LoginWithEmail";
-import LoginWithNumber from "./pages/Signin/WithPhoneNumber/LoginWithNumber";
+// import LoginWithEmail from "./pages/Signin/WithEmail/LoginWithEmail";
+// import LoginWithNumber from "./pages/Signin/WithPhoneNumber/LoginWithNumber";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ForgotPasswordOtp from "./pages/ForgotPassword/ForgotPasswordOtp";
 import Dashboard from "./pages/Overview/Dashboard/Dashboard";
@@ -37,6 +37,8 @@ import ResetPassword from "./pages/ForgotPassword/ResetPassword";
 import "./App.css";
 import ProtectedRoutes from "./ProtectedRoutes";
 import NotBuilt from "./pages/NotBuilt";
+import RegisterWithPhone from "./pages/Signup/RegisterWithPhone";
+import PhoneOtpVerification from "./pages/Signup/PhoneOtpVerification";
 
 function App() {
   return (
@@ -46,16 +48,18 @@ function App() {
           <Route path="/" element={<LandingPage />} />
 
           {/* Login User  */}
-          <Route path="login">
+          {/* <Route path="login">
             <Route path="email" element={<LoginWithEmail />} />
             <Route path="phone" element={<LoginWithNumber />} />
-          </Route>
+          </Route> */}
           {/* <Route path="/login-with-email" element={<LoginWithEmail />} /> */}
 
           {/* Register a New User  */}
           <Route path="/register" element={<Register />} />
+          <Route path="/register/phone" element={<RegisterWithPhone />} />
           <Route path="register">
             <Route path="otp-verification" element={<OtpVerification />} />
+            <Route path="phone-otp-verification" element={<PhoneOtpVerification />} />
             <Route path="personalinfo" element={<PersonalInfo />} />
             <Route path="organizationinfo" element={<OrganizationInfo />} />
             <Route path="churchinfo" element={<ChurchInfo />} />

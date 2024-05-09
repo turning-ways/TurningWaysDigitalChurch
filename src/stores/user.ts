@@ -26,9 +26,11 @@ interface UserName {
   //   first_name: string;
   //   last_name: string;
   email: string;
+  phone: string;
   //   password: string;
   //   passwordConfirm: string;
   setEmail: (email: string) => void;
+  setPhone: (email:string) => void;
 }
 
 // const savedFirstName = localStorage.getItem("first_name");
@@ -37,6 +39,8 @@ interface UserName {
 // const last_name = savedLastName ? JSON.parse(savedLastName) : "";
 const savedEmail = localStorage.getItem("email");
 const email = savedEmail ? JSON.parse(savedEmail) : "";
+const savedPhone = localStorage.getItem("phone");
+const phone = savedPhone ? JSON.parse(savedPhone) : "";
 // const savedPassword = localStorage.getItem("password");
 // const password = savedPassword ? JSON.parse(savedPassword) : "";
 // const savedPasswordConfirm = localStorage.getItem("passwordConfirm");
@@ -48,6 +52,8 @@ export const useUserDetailsStore = create<UserName>()((set, get) => ({
   //   first_name,
   //   last_name,
   email,
+  phone,
+
   //   password,
   //   passwordConfirm,
   setEmail: (email) => {
@@ -64,6 +70,14 @@ export const useUserDetailsStore = create<UserName>()((set, get) => ({
     //   "passwordConfirm",
     //   JSON.stringify(get().passwordConfirm)
     // );
+  },
+  setPhone: (phone) => {
+    {
+      set(() => {
+        return { phone };
+      });
+    }
+    localStorage.setItem("phone", JSON.stringify(get().phone));
   },
 }));
 

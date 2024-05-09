@@ -36,8 +36,12 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
     <div className="space-y-5 font-azo flex flex-col relative">
       <div className="flex items-center gap-x-2">
         {/* <img src="/assets/images/winnerschapellogo.svg" alt="church's logo" /> */}
-        <div className="bg-yellow-400 px-2 py-1 rounded-full">W</div>
-        <h1 className="tracking-widest">{user?.churchId?.name.toUpperCase()}</h1>
+        <div className="bg-yellow-400 px-3 py-1 rounded-full">
+          {user?.churchId?.name?.charAt(0)?.toUpperCase()}
+        </div>
+        <h1 className="tracking-widest">
+          {user?.churchId?.name?.toUpperCase()}
+        </h1>
       </div>
       <div className="flex justify-between items-center">
         <h2 className="font-azoBold text-[#0F1D48] text-3xl">{text}</h2>

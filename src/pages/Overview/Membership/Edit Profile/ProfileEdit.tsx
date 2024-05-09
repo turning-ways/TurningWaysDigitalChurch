@@ -8,8 +8,8 @@ import useAddRegularMember from "../../../../hooks/Member/useAddRegularMember";
 import { usePersonalInformationStore } from "../../../../stores/Add Member/personalinformation";
 import { useContactInformationStore } from "../../../../stores/Add Member/contactInformation";
 import { useChurchInformationSore } from "../../../../stores/Add Member/churchInformation";
-import { useChurchIdStore } from "../../../../stores/churchId";
 import { notify } from "../../../../hooks/useLogin";
+import { useUserAuth } from "../../../../stores/user";
 
 const ProfileEdit = () => {
   const routes = {
@@ -31,7 +31,8 @@ const ProfileEdit = () => {
   const { contact_email } = useContactInformationStore();
   const { contact_address, contact_phone } = useContactInformationStore();
   const {access_permission, member_status, service_unit, work_type} = useChurchInformationSore();
-  const { churchId } = useChurchIdStore();
+
+  const {user} = useUserAuth();
   const handleAddingMember = () => {
     if (
       first_name &&
@@ -49,7 +50,7 @@ const ProfileEdit = () => {
         suffix,
         address: { HomeAddress: contact_address },
         phone: { MainPhone: contact_phone },
-        churchId: churchId ? churchId : "",
+        churchId: user ? user?.churchId?._id : "",
         gender,
         dateOfBirth,
         anniversary,

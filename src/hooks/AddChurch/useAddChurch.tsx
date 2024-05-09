@@ -4,7 +4,9 @@ import { success } from "../useUpdatePassword";
 import { notify } from "../useLogin";
 import useAddMember from "../Member/useAddMember";
 import { useMemberStore } from "../../stores/member";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+// import { useUserAuth } from "../../stores/user";
+// import useAuth, { refetchAuth } from "../useAuthorize";
 
 interface Church {
   name: string;
@@ -24,7 +26,13 @@ interface Church {
 const useAddChurch = () => {
   const { mutate } = useAddMember();
   const { role, howDidYouHear, phoneNumber } = useMemberStore();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  // const { setUser } = useUserAuth();
+  // const { data: admin } = useAuth();
+  // const queryClient = useQueryClient();
+  // const handleRefresh = () => {
+  //   refetchAuth(queryClient);
+  // };
   return useMutation({
     mutationFn: (churchDetails: Church) =>
       axios
@@ -38,7 +46,7 @@ const useAddChurch = () => {
         .then((res) => res.data),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: (res: any) => {
-      success("Church has been added successfully");
+      success("Church has been created successfully");
 
       console.log(res.data.church.id);
 
@@ -49,7 +57,9 @@ const useAddChurch = () => {
         churchId: res.data.church.id,
       });
 
-      navigate("/admin/dashboard");
+      // handleRefresh();
+
+      // navigate("/admin/dashboard");
     },
     onError: (err) => {
       notify("THE CHURCH YOU ENTERED HAS AN ADMIN ALREADY!");

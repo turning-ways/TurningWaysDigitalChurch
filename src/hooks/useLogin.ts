@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useChurchIdStore } from "../stores/churchId";
 
 interface User {
-  email: string;
+  inputKey: string;
   password: string;
 }
 
