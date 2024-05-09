@@ -30,7 +30,7 @@ interface UserName {
   //   password: string;
   //   passwordConfirm: string;
   setEmail: (email: string) => void;
-  setPhone: (email:string) => void;
+  setPhone: (email: string) => void;
 }
 
 // const savedFirstName = localStorage.getItem("first_name");
@@ -105,7 +105,11 @@ export const useTokenStore = create<Token>()((set, get) => ({
 
 // USER AUTHENTICATION HANDLE
 interface UserAuth {
-  user: { first_name: string; last_name: string; churchId: { _id: string; name: string } } | null;
+  user: {
+    first_name: string;
+    last_name: string;
+    churchId: { _id: string; name: string };
+  } | null;
   setUser: (
     user: {
       first_name: string;
@@ -123,7 +127,11 @@ export const useUserAuth = create<UserAuth>()((set, get) => ({
   setUser: (user) => {
     {
       set(() => {
-        return { user };
+        if (user === undefined) {
+          return { user: null };
+        } else {
+          return { user };
+        }
       });
     }
     localStorage.setItem("user", JSON.stringify(get().user));
