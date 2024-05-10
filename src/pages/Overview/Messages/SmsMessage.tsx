@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IoIosArrowBack } from "react-icons/io";
 import Header from "../Header";
 import OverviewContainer from "../OverviewContainer";
@@ -11,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 const SmsMessage = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const [selectedMembers, setSelectedMembers] = useState<any[]>([]); // New state variable
   return (
     <OverviewContainer active="Directory">
       <div className="space-y-5">
@@ -24,10 +26,10 @@ const SmsMessage = () => {
         <div className="px-16 text-[#555454] space-y-6">
           {/* <Subject title="Sender's ID" placeholder="Winners Chapel Magodo" />
           <Body title="Text Message" placeholder="Enter text messsage here" /> */}
-          <Recipients onOpen={() => setOpen(!open)} />
+          <Recipients onOpen={() => setOpen(!open)} selectedMembers={selectedMembers} />
         </div>
       </div>
-      {open && <AddRecipientsModal onClose={() => setOpen(!open)} />}
+      {open && <AddRecipientsModal onClose={() => setOpen(!open)} onUpdateSelectedMembers={(members) => setSelectedMembers(members)}/>}
     </OverviewContainer>
   );
 };

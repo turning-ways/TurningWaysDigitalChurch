@@ -18,7 +18,7 @@ const Dashboard = () => {
 
 
 
-  const { data: members } = useGetAllMembers();
+  const { data: members } = useGetAllMembers({page: 1, pageSize: 100000});
   const noOfMembers = members?.length;
   const getGenderPercentage = (gender: string) => {
     const selectedGender = members?.filter(

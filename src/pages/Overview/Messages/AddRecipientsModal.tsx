@@ -2,33 +2,37 @@
 import Modal from "../../../components/Modal/Modal";
 import { IoFilter } from "react-icons/io5";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface AddRecipientsModalProps {
   onClose: () => void;
+  onUpdateSelectedMembers: (members: any[]) => void;
 }
 
-const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({ onClose }) => {
-  
-  const { data: members } = useGetAllMembers();
+const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({
+  onClose,
+  onUpdateSelectedMembers,
+}) => {
+  const { data: members } = useGetAllMembers({ page: 1, pageSize: 10000 });
 
   const [selectAll, setSelectAll] = useState(false);
   const [memberCheckboxes, setMemberCheckboxes] = useState(
     Array(members?.length).fill(false)
   );
-  const [displayedMembers, setDisplayedMembers] = useState([]);
 
-  useEffect(() => {
-    if (members) {
-      setDisplayedMembers([...members]);
-    }
-  }, [members]);
-  
+  const [selectedMembers, setSelectedMembers] = useState<any[]>([]);
 
   const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
     setSelectAll(isChecked);
     setMemberCheckboxes(memberCheckboxes.map(() => isChecked));
+    if (isChecked) {
+      // If select all is checked, add all members to selectedMembers
+      setSelectedMembers(members ? [...members] : []);
+    } else {
+      // If select all is unchecked, remove all members from selectedMembers
+      setSelectedMembers([]);
+    }
   };
 
   const handleMemberCheckboxChange = (index: number) => {
@@ -36,14 +40,27 @@ const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({ onClose }) => {
     updatedCheckboxes[index] = !updatedCheckboxes[index];
     setMemberCheckboxes(updatedCheckboxes);
     setSelectAll(updatedCheckboxes.every((checkbox) => checkbox === true));
+    const selectedMember = members && members[index];
+    if (updatedCheckboxes[index]) {
+      setSelectedMembers((prevMembers) => [...prevMembers, selectedMember]);
+    } else if (updatedCheckboxes[index] === false) {
+      setSelectedMembers((prevState) =>
+        selectedMember
+          ? prevState.filter(
+              (member: { id: string }) => member.id !== selectedMember.id
+            )
+          : []
+      );
+    }
   };
 
   const handleDisplayButtonClick = () => {
-    const selectedMembers = members?.filter(
-      (_: any, index: number) => memberCheckboxes[index]
-    );
-    setDisplayedMembers(selectedMembers ? selectedMembers : []);
-    console.log(displayedMembers);
+    // const selectedMembers = members?.filter(
+    //   (_: any, index: number) => memberCheckboxes[index]
+    // );
+    // setDisplayedMembers(selectedMembers ? selectedMembers : []);
+    console.log(selectedMembers);
+    onUpdateSelectedMembers(selectedMembers);
   };
 
   return (
@@ -51,8 +68,8 @@ const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({ onClose }) => {
       <div className="bg-white p-6 rounded-xl m-10 max-h-screen overflow-y-scroll">
         <div className="p-4 flex justify-between items-center">
           <div className="flex space-x-2 text-[#7F7F7F]">
-            <input type="checkbox" />
-            <p>40 Persons</p>
+            {/* <input type="checkbox" /> */}
+            <p>{members?.length} Persons</p>
           </div>
           <div className="flex items-center space-x-2 cursor-pointer text-[#AAAAAA]">
             <p>
@@ -97,7 +114,10 @@ const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({ onClose }) => {
         <div className="flex justify-center space-x-8 mt-6">
           <button
             className="text-[#4C4C4C] bg-[#F4F4F4] rounded-lg w-64 py-2 text-lg"
-            onClick={handleDisplayButtonClick}
+            onClick={() => {
+              handleDisplayButtonClick();
+              onClose();
+            }}
           >
             Add Recipients
           </button>

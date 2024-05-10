@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
 
   const [value, setValue] = useState<string>("");
 
-  const { data: members } = useGetAllMembers();
+  const { data: members } = useGetAllMembers({page:1, pageSize:10000});
 
   const [showProfile, setShowProfile] = useState<boolean>(false);
 

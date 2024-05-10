@@ -39,6 +39,9 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import NotBuilt from "./pages/NotBuilt";
 import RegisterWithPhone from "./pages/Signup/RegisterWithPhone";
 import PhoneOtpVerification from "./pages/Signup/PhoneOtpVerification";
+import Members from "./pages/Members";
+import LoginWithEmail from "./pages/Signin/WithEmail/LoginWithEmail";
+import LoginWithNumber from "./pages/Signin/WithPhoneNumber/LoginWithNumber";
 
 function App() {
   return (
@@ -48,10 +51,10 @@ function App() {
           <Route path="/" element={<LandingPage />} />
 
           {/* Login User  */}
-          {/* <Route path="login">
+          <Route path="login">
             <Route path="email" element={<LoginWithEmail />} />
             <Route path="phone" element={<LoginWithNumber />} />
-          </Route> */}
+          </Route>
           {/* <Route path="/login-with-email" element={<LoginWithEmail />} /> */}
 
           {/* Register a New User  */}
@@ -126,12 +129,14 @@ function App() {
               <Route path="settings" element={<NotBuilt active="Settings" />} />
               <Route path="help" element={<NotBuilt active="Help" />} />
               <Route path="logout" element={<NotBuilt active="Logout" />} />
+              
               {/* <Route path={`/admin/overview/dashboard/${churchId}`} element={<Dashboard />} /> */}
             </Route>
           </Route>
 
           {/* Admin's Overview  */}
           <Route path="/request" element={<Request />} />
+          <Route path="/member" element={<Members />} />
           {/* <Route path={`/admin/church/${churchId}/members`} element={<Membership />} /> */}
 
           {/* Forms Route */}

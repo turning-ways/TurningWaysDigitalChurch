@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AddMemberBtn from "../AddMemberBtn";
 import { FaArrowRight } from "react-icons/fa";
@@ -5,16 +6,16 @@ import { useNavigate } from "react-router-dom";
 import { useChurchIdStore } from "../../../stores/churchId";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import { useState } from "react";
-// import { FaLeftLong, FaRightLong } from "react-icons/fa6";
+import { FaArrowLeft } from "react-icons/fa6";
 
 const AllMembers = () => {
   const navigate = useNavigate();
   const { churchId } = useChurchIdStore();
-  // const pageSize = 5;
+  const pageSize = 10;
 
-  // const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
 
-  const { data: members } = useGetAllMembers();
+  const { data: members } = useGetAllMembers({ page, pageSize });
 
   const [memberCheckboxes, setMemberCheckboxes] = useState(
     Array(members?.length).fill(false)
@@ -22,17 +23,60 @@ const AllMembers = () => {
 
   const [selectAll, setSelectAll] = useState(false);
 
+  const [selectedMembers, setSelectedMembers] = useState<any[]>([]);
+
+
   const handleMemberCheckboxChange = (index: number) => {
     const updatedCheckboxes = [...memberCheckboxes];
     updatedCheckboxes[index] = !updatedCheckboxes[index];
     setMemberCheckboxes(updatedCheckboxes);
     setSelectAll(updatedCheckboxes.every((checkbox) => checkbox === true));
+
+    const selectedMember = members && members[index];
+    if (updatedCheckboxes[index]) {
+      setSelectedMembers((prevMembers) => [...prevMembers, selectedMember]);
+    } else if (updatedCheckboxes[index] === false) {
+      setSelectedMembers(prevState => selectedMember ? prevState.filter((member:{id:string}) => member.id !== selectedMember.id) : []);
+    }
   };
 
   const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
     setSelectAll(isChecked);
     setMemberCheckboxes(memberCheckboxes.map(() => isChecked));
+    if (isChecked) {
+      // If select all is checked, add all members to selectedMembers
+      setSelectedMembers(members ? [...members] : []);
+  } else {
+      // If select all is unchecked, remove all members from selectedMembers
+      setSelectedMembers([]);
+      console.log(selectedMembers)
+  }
+  };
+
+  const renderPaginationNumbers = () => {
+    const pagesToShow = 5;
+    const startPage = Math.max(1, page - Math.floor(pagesToShow / 2));
+    const endPage = Math.min(100, startPage + pagesToShow - 1);
+
+    const paginationNumbers = [];
+    for (let i = startPage; i <= endPage; i++) {
+      paginationNumbers.push(
+        <span
+          key={i}
+          onClick={() => setPage(i)}
+          className={
+            i === page
+              ? "active bg-[#AAA9A9] rounded-full w-12 h-12 text-white flex items-center justify-center"
+              : ""
+          }
+        >
+          <p className="w-4 cursor-pointer text-center">{i}</p>
+        </span>
+      );
+    }
+
+    return paginationNumbers;
   };
 
   return (
@@ -52,7 +96,7 @@ const AllMembers = () => {
         <div className="">Gender</div>
       </div>
 
-      {churchId && members ? (
+      {churchId && members && members?.length !== 0 ? (
         members.map((item: any, index: number) => (
           <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] border-b py-4  text-[#636363] gap-4">
             <div className="flex space-x-2 items-center">
@@ -82,6 +126,23 @@ const AllMembers = () => {
       ) : (
         <div>There's no member</div>
       )}
+      <div className="flex justify-center items-center space-x-10 absolute bottom-10 right-0 w-full">
+        <button
+          className="flex items-center space-x-3 cursor-pointer"
+          onClick={() => setPage((page) => page - 1)}
+        >
+          <FaArrowLeft className="text-[#555545]" />
+          <p className="text-[#7F7E7E]">Previous</p>
+        </button>
+        {renderPaginationNumbers()}
+        <button
+          className="flex items-center space-x-3 cursor-pointer"
+          onClick={() => setPage((page) => page + 1)}
+        >
+          <p className="text-[#7F7E7E]">Next</p>
+          <FaArrowRight className="text-[#555545]" />
+        </button>
+      </div>
       <AddMemberBtn />
     </div>
   );

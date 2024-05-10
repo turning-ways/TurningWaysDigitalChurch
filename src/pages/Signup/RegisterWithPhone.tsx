@@ -13,6 +13,7 @@ import "react-international-phone/style.css";
 import HeaderTwo from "../../components/Heading/HeaderTwo";
 import { useState } from "react";
 import useRegisterWithPhone from "../../hooks/Signup/useRegisterWithPhone";
+import EmailButton from "../../components/Button/EmailButton";
 
 const RegisterWithPhone = () => {
   const schema = z.object({
@@ -43,22 +44,27 @@ const RegisterWithPhone = () => {
 
   const { mutate, isPending } = useRegisterWithPhone();
 
-  const [phoneNumber, setPhoneNumber] = useState("")
+  const [phoneNumber, setPhoneNumber] = useState("");
   return (
     <>
       <AuthContainer center="sm:items-center">
         <form
           onSubmit={handleSubmit((data) => {
-            const { first_name, last_name, password, passwordConfirm } =
-              data;
+            const { first_name, last_name, password, passwordConfirm } = data;
             // setEmail(email);
-            mutate({ first_name, last_name, password, passwordConfirm, phoneNumber });
-            console.log(
+            mutate({
               first_name,
               last_name,
               password,
               passwordConfirm,
               phoneNumber,
+            });
+            console.log(
+              first_name,
+              last_name,
+              password,
+              passwordConfirm,
+              phoneNumber
             );
           })}
           className="bg-white py-10 px-6"
@@ -151,6 +157,7 @@ const RegisterWithPhone = () => {
             <div className="w-full h-[1px] bg-[#A0AEC0]" />
           </div>
           <GoogleButton />
+          <EmailButton onClick={() => navigate("/register")} />
         </form>
       </AuthContainer>
     </>

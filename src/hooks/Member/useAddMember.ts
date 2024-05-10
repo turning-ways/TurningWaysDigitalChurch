@@ -11,6 +11,7 @@ interface Member {
   phone: {
     MainPhone: string;
   };
+  gender?:string;
   churchId: string;
   prefix?: string;
   suffix?: string;
@@ -19,6 +20,7 @@ interface Member {
   last_name?: string;
   email?: string;
   address?: { HomeAddress: string };
+  dateOfBirth?: string;
 }
 
 const useAddMember = () => {

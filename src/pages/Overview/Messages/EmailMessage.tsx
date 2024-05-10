@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IoIosArrowBack } from "react-icons/io";
 import Header from "../Header";
 import OverviewContainer from "../OverviewContainer";
@@ -9,6 +10,7 @@ import Recipients from "./Recipients";
 
 const EmailMessage = () => {
   const [open, setOpen] = useState(false);
+  const [selectedMembers, setSelectedMembers] = useState<any[]>([]); 
   return (
     <OverviewContainer active="Directory">
       <div className="space-y-5">
@@ -19,10 +21,10 @@ const EmailMessage = () => {
         <div className="px-16 text-[#555454] space-y-6">
           <Subject title="Subject" placeholder="Winners Chapel Magodo" />
           {/* <Body title="Body Message" placeholder="Enter messsage here" /> */}
-          <Recipients onOpen={() => setOpen(!open)} />
+          <Recipients onOpen={() => setOpen(!open)} selectedMembers={selectedMembers} />
         </div>
       </div>
-      {open && <AddRecipientsModal onClose={() => setOpen(!open)} />}
+      {open && <AddRecipientsModal onClose={() => setOpen(!open)} onUpdateSelectedMembers={(members) => setSelectedMembers(members)} />}
     </OverviewContainer>
   );
 };

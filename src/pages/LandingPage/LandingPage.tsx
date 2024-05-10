@@ -34,20 +34,16 @@ const LandingPage = () => {
           <img src="/assets/images/turningwayslogo.svg" alt="" />
           <ul className="flex text-[#6181E7] space-x-10 items-center font-azo text-xl">
             <li>
-              <button onClick={() => navigate("/register")}>
-                Sign up with Email
-              </button>
+              <button onClick={() => navigate("/register")}>Sign up</button>
             </li>
             <li>
-              <button onClick={() => navigate("/register/phone")}>
-                Sign up with Phone
-              </button>
-            </li>
-            {/* <li>
-              <button className="border rounded-[22px] py-2 px-8 border-[#3A62E1]">
+              <button
+                className="border rounded-[22px] py-2 px-8 border-[#3A62E1]"
+                onClick={() => navigate("/login/email")}
+              >
                 Login
               </button>
-            </li> */}
+            </li>
           </ul>
         </nav>
         <main className="grid grid-cols-[550px,1fr]  mt-5  gap-x-20">
@@ -57,7 +53,7 @@ const LandingPage = () => {
               mutate({ inputKey, password });
             })}
           >
-            <h1 className="text-[#555454] text-[46px] font-azoBold leading-[60px]">
+            <h1 className="text-[#555454] text-[46px] font-azoBold leading-[60px] mb-4">
               Your one-stop digital church platform
             </h1>
             <p className="font-azo text=[#7F7E7E] mb-4">

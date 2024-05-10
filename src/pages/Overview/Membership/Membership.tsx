@@ -23,7 +23,7 @@ const Membership = () => {
 
   const [open, setOpen] = useState<boolean>(false);
 
-  const { data: members } = useGetAllMembers();
+  const { data: members } = useGetAllMembers({ page: 1, pageSize: 10000000 });
 
   const navigate = useNavigate();
 
@@ -37,9 +37,9 @@ const Membership = () => {
           {items.map((item) => (
             <li
               className="flex items-center space-x-1 p-2 cursor-pointer hover:text-[#555555]"
-              onClick={() =>
-                item.name === "Send Bulk Message" && setOpen(!open)
-              }
+              onClick={() => {
+                if (item.name === "Send Bulk Message") setOpen(!open);
+              }}
             >
               <div>{item.icon}</div>
               <p className="leading-3">{item.name}</p>
@@ -81,7 +81,8 @@ const Membership = () => {
         )}
       </div>
       {/* componentClosed */}
-      <AllMembers />
+
+      <AllMembers/>
     </OverviewContainer>
   );
 };

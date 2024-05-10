@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
-// import { CSVLink } from "react-csv";
+import * as XLSX from 'xlsx';
 
 const MemberList = () => {
-  const { data: members } = useGetAllMembers();
+  const { data: members } = useGetAllMembers({page:1, pageSize: 100000});
   const items = [
     { name: "All" },
     { name: "First Timers" },
@@ -56,6 +56,13 @@ const MemberList = () => {
       isAnniversary(member.anniversary) === true
   );
 
+  const handleOnExport = () => {
+    const wb = XLSX.utils.book_new(),
+      ws = XLSX.utils.json_to_sheet(members ? members : [{}]);
+    XLSX.utils.book_append_sheet(wb, ws, "My Sheet !");
+    XLSX.writeFile(wb, "MyExcel.xlsx");
+  };
+
   return (
     <>
       <div className="flex justify-between font-medium mt-10">
@@ -76,7 +83,10 @@ const MemberList = () => {
             </li>
           ))}
         </ul>
-        <button className="bg-[#758CD7] text-white  px-4 py-2 rounded-md">
+        <button
+          className="bg-[#758CD7] text-white  px-4 py-2 rounded-md"
+          onClick={handleOnExport}
+        >
           Export Data
         </button>
         {/* <CSVLink data={members ? members : []}>export data</CSVLink> */}

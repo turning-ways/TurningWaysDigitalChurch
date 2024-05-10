@@ -32,7 +32,7 @@ function getGradient(chart: any) {
 }
 
 const MembershipDataBar = () => {
-  const { data: members } = useGetAllMembers();
+  const { data: members } = useGetAllMembers({page:1, pageSize:1000000});
   const getMonth = (date: string) => {
     const dateJoined = new Date(date);
     const monthJoined: number = dateJoined.getMonth() + 1;

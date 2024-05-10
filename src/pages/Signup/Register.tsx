@@ -10,6 +10,7 @@ import GoogleButton from "../../components/Button/GoogleButton";
 import PasswordInput from "../../components/Input/PasswordInput";
 import Input from "../../components/Input/Input";
 import NextButton from "../../components/Button/NextButton";
+import PhoneButton from "../../components/Button/PhoneButton";
 const Register = () => {
   const schema = z.object({
     first_name: z
@@ -123,6 +124,7 @@ const Register = () => {
             <div className="w-full h-[1px] bg-[#A0AEC0]" />
           </div>
           <GoogleButton />
+          <PhoneButton onClick={() => navigate('/register/phone')} />
         </form>
       </AuthContainer>
     </>

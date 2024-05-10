@@ -5,79 +5,127 @@ import { HiQuestionMarkCircle } from "react-icons/hi2";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import Modal from "../../../components/Modal/Modal";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
-import { FaLeftLong, FaRightLong } from "react-icons/fa6";
+// import { FaLeftLong, FaRightLong } from "react-icons/fa6";
 import useSendSms from "../../../hooks/Member/useSendSms";
 import Subject from "./Subject";
 import Body from "./Body";
 
 interface RecipientsProp {
   onOpen: () => void;
+  selectedMembers: any[];
 }
 
 interface Member {
+  ServiceUnit: string;
   WorkerStatus: string;
-  age: null;
+  accessPermission: string;
+  age: number;
+  anniversary: string;
   dateJoined: string;
+  dateOfBirth: string;
+  email: string;
   first_name: string;
-
   fullname: string;
-  howDidYouHear: string;
+  gender: string;
   id: string;
   last_name: string;
+  memberStatus: string;
+  middle_name: string;
   notes: [];
   phone: { MainPhone: string };
   photo: string;
   role: string;
   suffix: string;
   title: string;
-  userId: string;
+  workType: string;
   _id: string;
 }
 
-const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
+const Recipients: React.FC<RecipientsProp> = ({ onOpen, selectedMembers }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [allMembers, setAllMembers] = useState<boolean>(false);
   const [selectMembers, setSelectMember] = useState<Member[]>([]);
-  const { data: members } = useGetAllMembers();
-  const {mutate} = useSendSms();
+  const { data: members } = useGetAllMembers({ page: 1, pageSize: 10000 });
+  const { mutate } = useSendSms();
   const [message, setMessage] = useState<string>("");
   return (
     <>
-    <Subject title="Sender's ID" placeholder="Winners Chapel Magodo" />
-    <Body title="Text Message" placeholder="Enter text messsage here" onMessageChange={(value: string) => {setMessage(value)}}/>
-    <div>
-      <div className="flex justify-between items-center bg-[#EDEDFF] py-3 px-2">
-        <p>Recipients</p>
-        <div className="flex items-center space-x-2">
-          <FiPlusCircle
-            className="text-2xl text-[#7F7F7F] cursor-pointer"
-            onClick={onOpen}
-          />
-          <HiQuestionMarkCircle className="text-[28px] text-[#7F7F7F] cursor-pointer" />
+      <Subject title="Sender's ID" placeholder="Winners Chapel Magodo" />
+      <Body
+        title="Text Message"
+        placeholder="Enter text messsage here"
+        onMessageChange={(value: string) => {
+          setMessage(value);
+        }}
+      />
+      <div>
+        <div className="flex justify-between items-center bg-[#EDEDFF] py-3 px-2">
+          <p>Recipients</p>
+          <div className="flex items-center space-x-2">
+            <FiPlusCircle
+              className="text-2xl text-[#7F7F7F] cursor-pointer"
+              onClick={onOpen}
+            />
+            <HiQuestionMarkCircle className="text-[28px] text-[#7F7F7F] cursor-pointer" />
+          </div>
         </div>
-      </div>
 
-      {!allMembers ? (
-        <button
-          className="w-full py-3 px-2 border border-[#AAA9A9] text-[#555454] rounded-lg  my-5"
-          onClick={() => setOpen(true)}
-        >
-          Quick Actions
-        </button>
-      ) : (
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        <div>
-          <div className="border">
+        {!allMembers && selectMembers.length === 0 && (
+          <button
+            className="w-full py-3 px-2 border border-[#AAA9A9] text-[#555454] rounded-lg  my-5"
+            onClick={() => setOpen(true)}
+          >
+            Quick Actions
+          </button>
+        )}
+        {allMembers && (
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          <div>
+            <div>
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+              {members &&
+                members.map((item: any) => (
+                  <div
+                    className={`flex justify-between items-center py-3 px-2 border-b`}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <p>{item.first_name}</p>
+                    </div>
+                    <div className="flex items-center space-x-6">
+                      <p>{item.phone.MainPhone}</p>
+                      <RiDeleteBin4Line className="text-[#F24E1E] text-xl cursor-pointer" />
+                    </div>
+                  </div>
+                ))}
+            </div>
+            {/* <div className="flex items-center justify-center space-x-5 mt-6 font-azeret">
+              <FaLeftLong />
+              <p>Previous</p>
+              <p>1</p>
+              <p>2</p>
+              <p>3</p>
+              <p>...</p>
+              <p>100</p>
+              <p>Next</p>
+              <FaRightLong />
+              <div className="h-5 w-1 bg-[#AAAAAA] " />
+              <p>Go to Page</p>
+              <div className="w-5 h-5 border rounded-[4px] border-[#555555]" />
+            </div> */}
+          </div>
+        )}
+
+        {selectedMembers.length !== 0 && (
+          <div>
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {members &&
-              members.map((item: any, index: number) => (
+            {selectedMembers &&
+              selectedMembers.map((item: any, index: number) => (
                 <div
                   className={`flex justify-between items-center py-3 px-2 ${
-                    index !== members.length - 1 ? "border-b" : ""
+                    index !== selectMembers.length - 1 ? "border-b" : ""
                   }`}
                 >
                   <div className="flex items-center space-x-2">
-                    <input type="checkbox" />
                     <p>{item.first_name}</p>
                   </div>
                   <div className="flex items-center space-x-6">
@@ -87,86 +135,75 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
                 </div>
               ))}
           </div>
-          <div className="flex items-center justify-center space-x-5 mt-6 font-azeret">
-            <FaLeftLong />
-            <p>Previous</p>
-            <p>1</p>
-            <p>2</p>
-            <p>3</p>
-            <p>...</p>
-            <p>100</p>
-            <p>Next</p>
-            <FaRightLong />
-            <div className="h-5 w-1 bg-[#AAAAAA] " />
-            <p>Go to Page</p>
-            <div className="w-5 h-5 border rounded-[4px] border-[#555555]" />
-          </div>
-        </div>
-      )}
+        )}
 
-      <div className="mt-10">
-        <p>
-          Send SMS at <span className="text-secondary">*</span>
-        </p>
-        <div className="flex space-x-8">
-          <div className="flex space-x-2">
-            <input type="checkbox" />
-            <p>Immediately</p>
-          </div>
-          <div className="flex space-x-2">
-            <input type="checkbox" />
-            <p>Later</p>
+        <div className="mt-10">
+          <p>
+            Send SMS at <span className="text-secondary">*</span>
+          </p>
+          <div className="flex space-x-8">
+            <div className="flex space-x-2">
+              <input type="checkbox" />
+              <p>Immediately</p>
+            </div>
+            <div className="flex space-x-2">
+              <input type="checkbox" />
+              <p>Later</p>
+            </div>
           </div>
         </div>
+
+        <button
+          className="mt-10 bg-[#446DE3] text-white w-full p-4 rounded-[8px]"
+          onClick={() => {
+            mutate({
+              message,
+              members:
+                selectMembers &&
+                selectMembers.map((member: Member) => member.id),
+            });
+          }}
+        >
+          Send SMS
+        </button>
+
+        {open && (
+          <Modal>
+            <div className="bg-white px-[26px] py-[37px] rounded-2xl text-lg flex flex-col gap-6">
+              <ul className="text-[#7F7F7F] flex flex-col gap-6 w-[334px]">
+                <li className="flex space-x-3 items-center cursor-pointer text-[#555555]">
+                  <p>Send Bulk SMS To</p>
+                </li>
+                <li
+                  className="flex space-x-3 items-center cursor-pointer "
+                  onClick={() => {
+                    setAllMembers(!allMembers);
+                    setOpen(!open);
+                    members && setSelectMember(members);
+                  }}
+                >
+                  <p>All Church Members</p>
+                </li>
+                <li
+                  className="flex space-x-3 items-center cursor-pointer "
+                  onClick={() => {
+                    setOpen(false);
+                    onOpen();
+                  }}
+                >
+                  <p>Filter Membership Profiles</p>
+                </li>
+              </ul>
+              <button
+                className=" text-[#7B7B7B] bg-[#F4F4F4] w-[280px] py-2 rounded-[14px] self-center"
+                onClick={() => setOpen(!open)}
+              >
+                Cancel
+              </button>
+            </div>
+          </Modal>
+        )}
       </div>
-
-      <button
-        className="mt-10 bg-[#446DE3] text-white w-full p-4 rounded-[8px]"
-        onClick={() => {
-          mutate({message, members: selectMembers && selectMembers.map((member: Member) => member.id)})
-
-        }}
-      >
-        Send SMS
-      </button>
-
-      {open && (
-        <Modal>
-          <div className="bg-white px-[26px] py-[37px] rounded-2xl text-lg flex flex-col gap-6">
-            <ul className="text-[#7F7F7F] flex flex-col gap-6 w-[334px]">
-              <li className="flex space-x-3 items-center cursor-pointer text-[#555555]">
-                <p>Send Bulk SMS To</p>
-              </li>
-              <li
-                className="flex space-x-3 items-center cursor-pointer "
-                onClick={() => {
-                  setAllMembers(!allMembers);
-                  setOpen(!open);
-                  members && setSelectMember(members);
-                }}
-              >
-                <p>All Church Members</p>
-              </li>
-              <li
-                className="flex space-x-3 items-center cursor-pointer "
-                onClick={() => {
-                  setOpen(false);
-                  onOpen();
-                }}
-              >
-                <p>Filter Membership Profiles</p>
-              </li>
-            </ul>
-            <button
-              className=" text-[#7B7B7B] bg-[#F4F4F4] w-[280px] py-2 rounded-[14px] self-center"
-              onClick={() => setOpen(!open)}
-            >
-              Cancel
-            </button>
-          </div>
-        </Modal>
-      )}
-    </div>
     </>
   );
 };
