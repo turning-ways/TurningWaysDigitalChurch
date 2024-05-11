@@ -59,10 +59,11 @@ const AllMembers = () => {
     }
   };
 
+  const totalPages = members ? Math.ceil(members?.length / pageSize) : 0; 
   const renderPaginationNumbers = () => {
     const pagesToShow = 5;
     const startPage = Math.max(1, page - Math.floor(pagesToShow / 2));
-    const endPage = Math.min(100, startPage + pagesToShow - 1);
+    const endPage = Math.min(totalPages, startPage + pagesToShow - 1);
 
     const paginationNumbers = [];
     for (let i = startPage; i <= endPage; i++) {
@@ -135,6 +136,7 @@ const AllMembers = () => {
         <button
           className="flex items-center space-x-3 cursor-pointer"
           onClick={() => setPage((page) => page - 1)}
+          disabled={page === 1 }
         >
           <FaArrowLeft className="text-[#555545]" />
           <p className="text-[#7F7E7E]">Previous</p>
@@ -143,6 +145,7 @@ const AllMembers = () => {
         <button
           className="flex items-center space-x-3 cursor-pointer"
           onClick={() => setPage((page) => page + 1)}
+          disabled={totalPages === 1}
         >
           <p className="text-[#7F7E7E]">Next</p>
           <FaArrowRight className="text-[#555545]" />
