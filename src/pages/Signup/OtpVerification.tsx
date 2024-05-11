@@ -48,6 +48,27 @@ const OtpVerification = () => {
     inputRef.current?.focus();
   }, [activeOTPIndex]);
 
+  const [timer, setTimer] = useState(60);
+  const [timerActive, setTimerActive] = useState(true);
+
+  useEffect(() => {
+    let interval: number;
+    if (timerActive) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer === 0) {
+            clearInterval(interval);
+            setTimerActive(false);
+            return 60;
+          } else {
+            return prevTimer - 1;
+          }
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [timerActive]);
+
   const { mutate, isPending } = useVerifySignUpOtp();
   return (
     <>
@@ -86,16 +107,21 @@ const OtpVerification = () => {
             })}
           </div>
           <NextButton isPending={isPending} text="Verify" />
-          <p className="mt-3">
-            Didn't get a code?{" "}
-            <span
-              className="text-[#CCE9D1] cursor-pointer"
-              onClick={() => console.log(userId)}
-            >
-              Resend Code
-            </span>
-          </p>
         </form>
+        <p className="mt-3 text-[#949995]">Resend code in {timer} seconds</p>
+        <p className="mt-3">
+          Didn't get a code?{" "}
+          <button
+            className="text-[#CCE9D1]"
+            disabled={timerActive}
+            onClick={() => {
+              setTimerActive(true);
+              console.log(userId);
+            }}
+          >
+            Resend Code
+          </button>
+        </p>
       </AuthContainer>
     </>
   );

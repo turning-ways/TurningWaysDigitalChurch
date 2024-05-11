@@ -18,7 +18,7 @@ const useVerifyPhoneSignUpOtp = () => {
         )
         .then((res) => res.data),
       onSuccess: () => {
-        navigate("/");
+        navigate("/login/phone");
         success("Verified! Please sign in to continue")
       }
   });

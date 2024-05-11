@@ -48,6 +48,27 @@ const PhoneOtpVerification = () => {
     inputRef.current?.focus();
   }, [activeOTPIndex]);
 
+  const [timer, setTimer] = useState(60);
+  const [timerActive, setTimerActive] = useState(true);
+
+  useEffect(() => {
+    let interval: number;
+    if (timerActive) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer === 0) {
+            clearInterval(interval);
+            setTimerActive(false);
+            return 60;
+          } else {
+            return prevTimer - 1;
+          }
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [timerActive]);
+
   const { mutate, isPending } = useVerifyPhoneSignUpOtp();
   return (
     <>
@@ -62,10 +83,9 @@ const PhoneOtpVerification = () => {
             <p>
               <span className="text-[#446DE3] text-2xl">2</span> of 3
             </p>
-            <Header>Check your email</Header>
+            <Header>Check your sms</Header>
             <p className="text-[#949995]">
-              Kindly enter the verification code (OTP) sent to your email
-              address
+              Kindly enter the verification code (OTP) sent to your phone
             </p>
           </div>
           <div className="mb-6 flex justify-between max-w-[550px] space-x-4">
@@ -86,16 +106,21 @@ const PhoneOtpVerification = () => {
             })}
           </div>
           <NextButton isPending={isPending} text="Verify" />
-          <p className="mt-3">
-            Didn't get a code?{" "}
-            <span
-              className="text-[#CCE9D1] cursor-pointer"
-              onClick={() => console.log(userId)}
-            >
-              Resend Code
-            </span>
-          </p>
         </form>
+        <p className="mt-3 text-[#949995]">Resend code in {timer} seconds</p>
+        <p className="mt-3">
+          Didn't get a code?{" "}
+          <button
+            className="text-[#CCE9D1] "
+            disabled={timerActive}
+            onClick={() => {
+              setTimerActive(true);
+              console.log(userId);
+            }}
+          >
+            Resend Code
+          </button>
+        </p>
       </AuthContainer>
     </>
   );

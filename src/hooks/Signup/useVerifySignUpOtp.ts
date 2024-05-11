@@ -19,7 +19,7 @@ const useVerifySignUpOtp = () => {
         )
         .then((res) => res.data),
     onSuccess: () => {
-      navigate("/");
+      navigate("/login/email");
       success("Account Created, Please Sign In");
       console.log("Account created, sign In");
     },
