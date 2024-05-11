@@ -30,9 +30,10 @@ const ProfileEdit = () => {
   } = usePersonalInformationStore();
   const { contact_email } = useContactInformationStore();
   const { contact_address, contact_phone } = useContactInformationStore();
-  const {access_permission, member_status, service_unit, work_type} = useChurchInformationSore();
+  const { access_permission, member_status, service_unit, work_type } =
+    useChurchInformationSore();
 
-  const {user} = useUserAuth();
+  const { user } = useUserAuth();
   const handleAddingMember = () => {
     if (
       first_name &&
@@ -40,8 +41,8 @@ const ProfileEdit = () => {
       middle_name &&
       contact_email &&
       contact_phone !== "" &&
-      dateOfBirth !== "" && 
-      gender !== "" && 
+      dateOfBirth !== "" &&
+      gender !== "" &&
       contact_address !== ""
     ) {
       mutate({
@@ -67,10 +68,10 @@ const ProfileEdit = () => {
   return (
     <OverviewContainer active="Directory">
       <Header text="Membership" />
-      <SubHeader btnText="Add Profile" />
+      <SubHeader />
       <InformationHeader route={routes} />
       <Outlet />
-      <ProfileEditButton text="SAVE" onPress={handleAddingMember}  />
+      <ProfileEditButton text="Save" onPress={handleAddingMember} />
     </OverviewContainer>
   );
 };

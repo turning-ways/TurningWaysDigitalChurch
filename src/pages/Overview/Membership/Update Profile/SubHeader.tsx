@@ -2,11 +2,11 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../../../../stores/user";
 
-interface SubHeaderProps {
-  btnText: string;
-}
+// interface SubHeaderProps {
+//   btnText: string;
+// }
 
-const SubHeader: React.FC<SubHeaderProps> = ({ btnText }) => {
+const SubHeader= () => {
   const navigate = useNavigate();
   const {user} = useUserAuth();
   return (
@@ -23,11 +23,11 @@ const SubHeader: React.FC<SubHeaderProps> = ({ btnText }) => {
             user?.last_name.charAt(0).toUpperCase()
           : "P"}
       </div>
-      <div
+      {/* <div
         className="bg-[#17275B] text-[#ffffff] border border-[#BFBFBF] px-6 py-3 font-medium h-fit"
       >
         {btnText}
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -20,7 +20,7 @@ const MembershipProfile = () => {
 
   return (
     <OverviewContainer active="Directory">
-      <Header text="MemberShip" />
+      <Header text="Profile Information" />
       <SubHeader />
       <InformationHeader route={routes} />
 

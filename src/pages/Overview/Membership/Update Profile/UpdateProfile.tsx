@@ -25,11 +25,10 @@ const UpdateProfile = () => {
   const { mutate } = useUpdateMember(memberId ? memberId : "");
   const { first_name, last_name, middle_name, suffix, gender } =
     useEditPersonalInformationStore();
-  const { contact_address, contact_phone, contact_email } = useEditContactInformationStore();
+  const { contact_address, contact_phone, contact_email } =
+    useEditContactInformationStore();
   // const {access_permission, member_status, service_unit, work_type} = useChurchInformationSore();
   const { churchId } = useChurchIdStore();
-
-  
 
   const handleAddingMember = () => {
     mutate({
@@ -48,13 +47,13 @@ const UpdateProfile = () => {
 
   return (
     <OverviewContainer active="Directory">
-      <Header text="MemberShip" />
-      <SubHeader btnText="Update Profile" />
+      <Header text="Directory Profile" />
+      <SubHeader />
       <InformationHeader route={routes} />
 
       <Outlet />
 
-      <ProfileEditButton text={"UPDATE"} onPress={handleAddingMember}/>
+      <ProfileEditButton text={"Update Profile"} onPress={handleAddingMember} />
     </OverviewContainer>
   );
 };
