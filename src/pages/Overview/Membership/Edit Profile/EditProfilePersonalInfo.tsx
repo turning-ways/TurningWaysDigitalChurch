@@ -17,7 +17,9 @@ const EditProfilePersonalInfo = () => {
     last_name,
     suffix,
     dateOfBirth,
-    anniversary
+    anniversary,
+    prefix,
+    gender,
   } = usePersonalInformationStore();
 
   const information = [
@@ -51,12 +53,13 @@ const EditProfilePersonalInfo = () => {
     setGender(value);
   };
 
-
   return (
     <div className="mt-5">
       <DropDownInput
         text="Prefix"
         items={["Mr", "Mrs"]}
+        value={prefix}
+        onChange={(prefix) => setPrefix(prefix)}
         placeholder=""
         onSelect={handlePrefix}
       />
@@ -68,14 +71,18 @@ const EditProfilePersonalInfo = () => {
               item.set(e.target.value);
             }}
             value={item.value}
+            notCompulsory={item.name === "Suffix" ? " " : "*"}
           />
         </div>
       ))}
       <DropDownInput
         text="Gender"
         items={["male", "female"]}
-        placeholder=""
+        placeholder="Male"
+        compulsory="*"
         onSelect={handleGender}
+        value={gender}
+        onChange={(gender) => setGender(gender)}
       />
       <div className=" space-y-1 mb-4">
         <p className="text-[#727272]">
@@ -91,9 +98,7 @@ const EditProfilePersonalInfo = () => {
         </div>
       </div>
       <div className=" space-y-1 mb-4">
-        <p className="text-[#727272]">
-          Anniversary
-        </p>
+        <p className="text-[#727272]">Anniversary</p>
         <div className="border rounded-lg p-2">
           <input
             className="outline-none text-[#434343] text-lg w-full"

@@ -40,7 +40,9 @@ const ProfileEdit = () => {
       middle_name &&
       contact_email &&
       contact_phone !== "" &&
-      dateOfBirth !== ""
+      dateOfBirth !== "" && 
+      gender !== "" && 
+      contact_address !== ""
     ) {
       mutate({
         first_name,

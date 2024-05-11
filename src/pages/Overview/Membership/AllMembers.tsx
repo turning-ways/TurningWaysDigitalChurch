@@ -25,7 +25,6 @@ const AllMembers = () => {
 
   const [selectedMembers, setSelectedMembers] = useState<any[]>([]);
 
-
   const handleMemberCheckboxChange = (index: number) => {
     const updatedCheckboxes = [...memberCheckboxes];
     updatedCheckboxes[index] = !updatedCheckboxes[index];
@@ -36,7 +35,13 @@ const AllMembers = () => {
     if (updatedCheckboxes[index]) {
       setSelectedMembers((prevMembers) => [...prevMembers, selectedMember]);
     } else if (updatedCheckboxes[index] === false) {
-      setSelectedMembers(prevState => selectedMember ? prevState.filter((member:{id:string}) => member.id !== selectedMember.id) : []);
+      setSelectedMembers((prevState) =>
+        selectedMember
+          ? prevState.filter(
+              (member: { id: string }) => member.id !== selectedMember.id
+            )
+          : []
+      );
     }
   };
 
@@ -47,11 +52,11 @@ const AllMembers = () => {
     if (isChecked) {
       // If select all is checked, add all members to selectedMembers
       setSelectedMembers(members ? [...members] : []);
-  } else {
+    } else {
       // If select all is unchecked, remove all members from selectedMembers
       setSelectedMembers([]);
-      console.log(selectedMembers)
-  }
+      console.log(selectedMembers);
+    }
   };
 
   const renderPaginationNumbers = () => {
@@ -80,8 +85,8 @@ const AllMembers = () => {
   };
 
   return (
-    <div>
-      <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] gap-4 border-b py-2  ">
+    <div className="flex flex-col items-center">
+      <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] gap-4 border-b py-2  w-full">
         <div className="flex space-x-1 items-center">
           <input
             type="checkbox"
@@ -98,7 +103,7 @@ const AllMembers = () => {
 
       {churchId && members && members?.length !== 0 ? (
         members.map((item: any, index: number) => (
-          <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] border-b py-4  text-[#636363] gap-4">
+          <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] border-b py-4  text-[#636363] gap-4 w-full">
             <div className="flex space-x-2 items-center">
               <input
                 type="checkbox"
@@ -126,7 +131,7 @@ const AllMembers = () => {
       ) : (
         <div>There's no member</div>
       )}
-      <div className="flex justify-center items-center space-x-10 absolute bottom-10 right-0 w-full">
+      <div className="flex justify-center items-center space-x-10 absolute bottom-10 ">
         <button
           className="flex items-center space-x-3 cursor-pointer"
           onClick={() => setPage((page) => page - 1)}
