@@ -10,7 +10,14 @@ const ChurchInformation = () => {
 
   const { churchId } = useChurchIdStore();
 
-  const { data } = useQuery({
+  const { data } = useQuery<{
+    member: {
+      accessPermission: string;
+      memberStatus: string;
+      workType: string;
+      ServiceUnit: string;
+    };
+  }>({
     queryKey: ["church", churchId, "member", memberId],
     queryFn: () =>
       axios
@@ -20,23 +27,34 @@ const ChurchInformation = () => {
         .then((res) => res.data),
   });
 
-
   const information = [
     {
       name: "Access Permission",
-      value: data.member.accessPermission,
+      value:
+        data &&
+        data?.member.accessPermission.slice(0, 1).toUpperCase() +
+          data?.member.accessPermission.slice(1),
     },
     {
       name: "Member Status",
-      value: data.member.memberStatus,
+      value:
+        data &&
+        data?.member.memberStatus.slice(0, 1).toUpperCase() +
+          data?.member.memberStatus.slice(1),
     },
     {
       name: "Work Type",
-      value: data.member.workType,
+      value:
+        data &&
+        data?.member.workType.slice(0, 1).toUpperCase() +
+          data?.member.workType.slice(1),
     },
     {
       name: "Service Unit or Department",
-      value: data.member.ServiceUnit,
+      value:
+        data &&
+        data?.member.ServiceUnit.slice(0, 1).toUpperCase() +
+          data?.member.ServiceUnit.slice(1),
     },
   ];
   return (

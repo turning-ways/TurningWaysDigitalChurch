@@ -8,17 +8,21 @@ interface PersonalInfo {
   last_name: string;
   suffix: string;
   gender: string;
+  dateOfBirth: string;
+  anniversary: string;
   setPrefix: (prefix: string) => void;
   setFirstName: (first_name: string) => void;
   setMiddleName: (middle_name: string) => void;
   setLastName: (last_name: string) => void;
   setSuffix: (suffix: string) => void;
   setGender: (gender: string) => void;
+  setDateOfBirth: (dob: string) => void;
+  setAnniversary: (anniversary: string) => void;
 }
 
 //prefix
 const savedPrefix = localStorage.getItem("edit_prefix");
-const prefix = savedPrefix ? JSON.parse(savedPrefix) : "";
+const prefix = savedPrefix && savedPrefix !== "undefined" ? JSON.parse(savedPrefix) : "";
 //first name
 const savedFirstName = localStorage.getItem("edit_first_name");
 const first_name = savedFirstName ? JSON.parse(savedFirstName) : "";
@@ -34,6 +38,12 @@ const suffix = savedSuffix ? JSON.parse(savedSuffix) : "";
 //gender
 const savedGender = localStorage.getItem("edit_gender");
 const gender = savedGender ? JSON.parse(savedGender) : "";
+//dateOfBirth
+const savedDateOfBirth = localStorage.getItem("dateOfBirth");
+const dateOfBirth = savedDateOfBirth ? JSON.parse(savedDateOfBirth) : "";
+//anniversary
+const savedAnniversary = localStorage.getItem("anniversary");
+const anniversary = savedAnniversary ? JSON.parse(savedAnniversary) : "";
 
 export const useEditPersonalInformationStore = create<PersonalInfo>()(
   (set, get) => ({
@@ -43,6 +53,8 @@ export const useEditPersonalInformationStore = create<PersonalInfo>()(
     last_name,
     suffix,
     gender,
+    dateOfBirth,
+    anniversary,
     setPrefix: (prefix) => {
       {
         set(() => {
@@ -91,5 +103,17 @@ export const useEditPersonalInformationStore = create<PersonalInfo>()(
       }
       localStorage.setItem("edit_gender", JSON.stringify(get().gender));
     },
+    setDateOfBirth: (dob) => {
+      { set(() => {
+         return {dateOfBirth: dob}
+       })}
+       localStorage.setItem("dateOfBirth", JSON.stringify(get().dateOfBirth));
+     },
+     setAnniversary: (anniversary) => {
+      { set(() => {
+         return {anniversary}
+       })}
+       localStorage.setItem("anniversary", JSON.stringify(get().anniversary));
+     }
   })
 );

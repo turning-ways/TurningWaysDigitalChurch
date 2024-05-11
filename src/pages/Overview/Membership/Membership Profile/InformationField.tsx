@@ -1,6 +1,6 @@
 interface InformationInputProps {
   text: string;
-  subText: string;
+  subText?: string;
 }
 
 const InformationInput: React.FC<InformationInputProps> = ({

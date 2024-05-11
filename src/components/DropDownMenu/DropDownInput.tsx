@@ -8,7 +8,7 @@ interface DropDownInputProps {
   placeholder?: string;
   compulsory?: string;
   value?:string;
-  onChange: (e:string) => void;
+  onChange?: (e:string) => void;
   onSelect: (selectedItem: string) => void;
 }
 
@@ -26,7 +26,7 @@ export const DropDownInput: React.FC<DropDownInputProps> = ({
   const handleSelectList = (selectedItem: string) => {
     setShowDropDownList(false);
     onSelect(selectedItem);
-    onChange(selectedItem);
+    onChange && onChange(selectedItem);
   };
 
   return (

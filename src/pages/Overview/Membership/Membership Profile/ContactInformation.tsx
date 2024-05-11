@@ -26,6 +26,7 @@ const ContactInformation = () => {
       value: data && data.member && data.member.email && data.member.email,
     },
     { name: "Phone Number", value: data && data.member && data.member.phone && data.member.phone.MainPhone && data.member.phone.MainPhone },
+    { name: "Address", value: data && data.member && data.member.address.HomeAddress && data.member.address.HomeAddress && data.member.address.HomeAddress },
   ];
 
   return (

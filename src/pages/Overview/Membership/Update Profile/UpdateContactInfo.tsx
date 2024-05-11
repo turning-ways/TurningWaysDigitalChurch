@@ -2,6 +2,9 @@ import InformationInput from "../Edit Profile/InformationInput";
 import { useEditContactInformationStore } from "../../../../stores/Edit Member/contactinfo";
 import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
 import { useEffect } from "react";
+import HeaderTwo from "../../../../components/Heading/HeaderTwo";
+import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
 
 const UpdateContactInfo = () => {
   const {
@@ -15,7 +18,6 @@ const UpdateContactInfo = () => {
 
   const information = [
     { name: "Email", set: setContactEmail, value: contact_email },
-    { name: "Phone Number", set: setContactPhone, value: contact_phone },
     { name: "Home Address", set: setContactAddress, value: contact_address },
   ];
 
@@ -39,6 +41,39 @@ const UpdateContactInfo = () => {
           value={item.value}
         />
       ))}
+      <div className="mb-2">
+        <HeaderTwo>Phone Number <span className="text-[#61BD74]">*</span></HeaderTwo>
+
+        <PhoneInput
+          defaultCountry="ng"
+          value={contact_phone}
+          onChange={(phone) => setContactPhone(phone)}
+          inputStyle={{
+            width: "100%",
+            paddingLeft: "10px",
+            paddingTop: "24px",
+            paddingRight: "10px",
+            paddingBottom: "24px",
+            // backgroundColor: "#F7FAFC",
+            borderColor: "#EBEFF9",
+            borderStartEndRadius: "8px",
+            borderEndEndRadius: "8px",
+            fontSize: "18px",
+          }}
+          countrySelectorStyleProps={{
+            buttonStyle: {
+              height: "100%",
+              paddingLeft: "10px",
+              paddingRight: "10px",
+              // backgroundColor: "#F7FAFC",
+              borderColor: "#EBEFF9",
+              borderEndStartRadius: "8px",
+              borderStartStartRadius: "8px",
+            },
+          }}
+        />
+      </div>
+
     </div>
   );
 };
