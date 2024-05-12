@@ -118,10 +118,10 @@ interface UserAuth {
     } | null
   ) => void;
 }
+const savedUser = localStorage.getItem("user");
+const user = savedUser && savedUser!=="undefined" ? JSON.parse(savedUser) : null;
 
 export const useUserAuth = create<UserAuth>()((set, get) => {
-  const savedUser = localStorage.getItem("user");
-  const user = savedUser ? JSON.parse(savedUser) : null;
 
   return {
     user,
