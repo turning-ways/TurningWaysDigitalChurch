@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiPlusCircle } from "react-icons/fi";
 import { HiQuestionMarkCircle } from "react-icons/hi2";
 import { RiDeleteBin4Line } from "react-icons/ri";
@@ -9,45 +9,45 @@ import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import useSendSms from "../../../hooks/Member/useSendSms";
 import Subject from "./Subject";
 import Body from "./Body";
+import { useSmsRecepientStore } from "../../../stores/smsRecepient";
 
 interface RecipientsProp {
   onOpen: () => void;
-  selectedMembers: any[];
 }
 
-interface Member {
-  ServiceUnit: string;
-  WorkerStatus: string;
-  accessPermission: string;
-  age: number;
-  anniversary: string;
-  dateJoined: string;
-  dateOfBirth: string;
-  email: string;
-  first_name: string;
-  fullname: string;
-  gender: string;
-  id: string;
-  last_name: string;
-  memberStatus: string;
-  middle_name: string;
-  notes: [];
-  phone: { MainPhone: string };
-  photo: string;
-  role: string;
-  suffix: string;
-  title: string;
-  workType: string;
-  _id: string;
-}
+// interface Member {
+//   ServiceUnit: string;
+//   WorkerStatus: string;
+//   accessPermission: string;
+//   age: number;
+//   anniversary: string;
+//   dateJoined: string;
+//   dateOfBirth: string;
+//   email: string;
+//   first_name: string;
+//   fullname: string;
+//   gender: string;
+//   id: string;
+//   last_name: string;
+//   memberStatus: string;
+//   middle_name: string;
+//   notes: [];
+//   phone: { MainPhone: string };
+//   photo: string;
+//   role: string;
+//   suffix: string;
+//   title: string;
+//   workType: string;
+//   _id: string;
+// }
 
-const Recipients: React.FC<RecipientsProp> = ({ onOpen, selectedMembers }) => {
+const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [allMembers, setAllMembers] = useState<boolean>(false);
-  const [selectMembers, setSelectMember] = useState<Member[]>([]);
   const { data: members } = useGetAllMembers({ page: 1, pageSize: 10000 });
   const { mutate } = useSendSms();
   const [message, setMessage] = useState<string>("");
+  const {recepients, removeAllRecepients, removeRecepientById, addRecepients} =useSmsRecepientStore();
+  useEffect(() => removeAllRecepients(),[removeAllRecepients])
   return (
     <>
       <Subject title="Sender's ID" placeholder="Winners Chapel Magodo" />
@@ -70,7 +70,7 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen, selectedMembers }) => {
           </div>
         </div>
 
-        {!allMembers && selectMembers.length === 0 && (
+        {recepients.length === 0 && (
           <button
             className="w-full py-3 px-2 border border-[#AAA9A9] text-[#555454] rounded-lg  my-5"
             onClick={() => setOpen(true)}
@@ -78,26 +78,7 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen, selectedMembers }) => {
             Quick Actions
           </button>
         )}
-        {allMembers && (
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          <div>
-            <div>
-              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              {members &&
-                members.map((item: any) => (
-                  <div
-                    className={`flex justify-between items-center py-3 px-2 border-b`}
-                  >
-                    <div className="flex items-center space-x-2">
-                      <p>{item.first_name}</p>
-                    </div>
-                    <div className="flex items-center space-x-6">
-                      <p>{item.phone.MainPhone}</p>
-                      <RiDeleteBin4Line className="text-[#F24E1E] text-xl cursor-pointer" />
-                    </div>
-                  </div>
-                ))}
-            </div>
+       
             {/* <div className="flex items-center justify-center space-x-5 mt-6 font-azeret">
               <FaLeftLong />
               <p>Previous</p>
@@ -112,17 +93,16 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen, selectedMembers }) => {
               <p>Go to Page</p>
               <div className="w-5 h-5 border rounded-[4px] border-[#555555]" />
             </div> */}
-          </div>
-        )}
 
-        {selectedMembers.length !== 0 && (
+
+        {recepients.length !== 0 && (
           <div>
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {selectedMembers &&
-              selectedMembers.map((item: any, index: number) => (
+            {recepients &&
+              recepients.map((item: any, index: number) => (
                 <div
                   className={`flex justify-between items-center py-3 px-2 ${
-                    index !== selectMembers.length - 1 ? "border-b" : ""
+                    index !== recepients.length - 1 ? "border-b" : ""
                   }`}
                 >
                   <div className="flex items-center space-x-2">
@@ -130,14 +110,14 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen, selectedMembers }) => {
                   </div>
                   <div className="flex items-center space-x-6">
                     <p>{item.phone.MainPhone}</p>
-                    <RiDeleteBin4Line className="text-[#F24E1E] text-xl cursor-pointer" />
+                    <RiDeleteBin4Line className="text-[#F24E1E] text-xl cursor-pointer" onClick={() => removeRecepientById(item.id)} />
                   </div>
                 </div>
               ))}
           </div>
         )}
 
-        <div className="mt-10">
+        {/* <div className="mt-10">
           <p>
             Send SMS at <span className="text-secondary">*</span>
           </p>
@@ -151,7 +131,7 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen, selectedMembers }) => {
               <p>Later</p>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <button
           className="mt-10 bg-[#446DE3] text-white w-full p-4 rounded-[8px]"
@@ -159,8 +139,8 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen, selectedMembers }) => {
             mutate({
               message,
               members:
-                selectMembers &&
-                selectMembers.map((member: Member) => member.id),
+                recepients &&
+                recepients.map((member) => member.id),
             });
           }}
         >
@@ -177,9 +157,8 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen, selectedMembers }) => {
                 <li
                   className="flex space-x-3 items-center cursor-pointer "
                   onClick={() => {
-                    setAllMembers(!allMembers);
                     setOpen(!open);
-                    members && setSelectMember(members);
+                    members && addRecepients(members);
                   }}
                 >
                   <p>All Church Members</p>

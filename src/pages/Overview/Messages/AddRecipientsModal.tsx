@@ -2,18 +2,18 @@
 import Modal from "../../../components/Modal/Modal";
 import { IoFilter } from "react-icons/io5";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSmsRecepientStore } from "../../../stores/smsRecepient";
 
 interface AddRecipientsModalProps {
   onClose: () => void;
-  onUpdateSelectedMembers: (members: any[]) => void;
 }
 
 const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({
   onClose,
-  onUpdateSelectedMembers,
 }) => {
   const { data: members } = useGetAllMembers({ page: 1, pageSize: 10000 });
+  const {addRecepients, recepients} = useSmsRecepientStore();
 
   const [selectAll, setSelectAll] = useState(false);
   const [memberCheckboxes, setMemberCheckboxes] = useState(
@@ -60,8 +60,14 @@ const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({
     // );
     // setDisplayedMembers(selectedMembers ? selectedMembers : []);
     console.log(selectedMembers);
-    onUpdateSelectedMembers(selectedMembers);
+    addRecepients(selectedMembers);
   };
+
+  useEffect(() => {
+    if (members) {
+      setMemberCheckboxes(members.map(member => recepients.some(recipient => recipient.id === member.id)));
+    }
+  }, [members, recepients]);
 
   return (
     <Modal>

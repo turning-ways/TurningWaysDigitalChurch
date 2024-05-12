@@ -10,7 +10,6 @@ import Recipients from "./Recipients";
 
 const EmailMessage = () => {
   const [open, setOpen] = useState(false);
-  const [selectedMembers, setSelectedMembers] = useState<any[]>([]); 
   return (
     <OverviewContainer active="Directory">
       <div className="space-y-5">
@@ -21,10 +20,10 @@ const EmailMessage = () => {
         <div className="px-16 text-[#555454] space-y-6">
           <Subject title="Subject" placeholder="Winners Chapel Magodo" />
           {/* <Body title="Body Message" placeholder="Enter messsage here" /> */}
-          <Recipients onOpen={() => setOpen(!open)} selectedMembers={selectedMembers} />
+          <Recipients onOpen={() => setOpen(!open)}  />
         </div>
       </div>
-      {open && <AddRecipientsModal onClose={() => setOpen(!open)} onUpdateSelectedMembers={(members) => setSelectedMembers(members)} />}
+      {open && <AddRecipientsModal onClose={() => setOpen(!open)} />}
     </OverviewContainer>
   );
 };
