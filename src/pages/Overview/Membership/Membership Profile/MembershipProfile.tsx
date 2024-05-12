@@ -4,6 +4,8 @@ import { Outlet } from "react-router-dom";
 import AddMember from "../../AddMemberBtn";
 import InformationHeader from "../InformationHeader";
 import OverviewContainer from "../../OverviewContainer";
+import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
+import { ThreeDots } from "react-loader-spinner";
 
 const MembershipProfile = () => {
   const queryParams = new URLSearchParams(location.search);
@@ -18,15 +20,23 @@ const MembershipProfile = () => {
     churchInfo: `/admin/directory/member/church-information?id=${memberId}`,
   };
 
+  const { isPending } = useGetMemberDetails();
+
   return (
     <OverviewContainer active="Directory">
-      <Header text="Profile Information" />
-      <SubHeader />
-      <InformationHeader route={routes} />
-
-      <Outlet />
-
-      <AddMember />
+      {!isPending ? (
+        <>
+          <Header text="Profile Information" />
+          <SubHeader />
+          <InformationHeader route={routes} />
+          <Outlet />
+          <AddMember />
+        </>
+      ) : (
+        <div>
+          <ThreeDots height="25" width="50" color="#000" />
+        </div>
+      )}
     </OverviewContainer>
   );
 };

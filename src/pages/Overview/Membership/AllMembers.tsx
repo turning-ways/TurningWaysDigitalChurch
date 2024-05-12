@@ -7,6 +7,7 @@ import { useChurchIdStore } from "../../../stores/churchId";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
+import { ThreeDots } from "react-loader-spinner";
 
 const AllMembers = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const AllMembers = () => {
 
   const [page, setPage] = useState(1);
 
-  const { data: members } = useGetAllMembers({ page, pageSize });
+  const { data: members, isPending } = useGetAllMembers({ page, pageSize });
 
   const [memberCheckboxes, setMemberCheckboxes] = useState(
     Array(members?.length).fill(false)
@@ -59,7 +60,7 @@ const AllMembers = () => {
     }
   };
 
-  const totalPages = members ? Math.ceil(members?.length / pageSize) : 0; 
+  const totalPages = members ? Math.ceil(members?.length / pageSize) : 0;
   const renderPaginationNumbers = () => {
     const pagesToShow = 5;
     const startPage = Math.max(1, page - Math.floor(pagesToShow / 2));
@@ -86,73 +87,81 @@ const AllMembers = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] gap-4 border-b py-2  w-full">
-        <div className="flex space-x-1 items-center">
-          <input
-            type="checkbox"
-            checked={selectAll}
-            onChange={handleSelectAll}
-          />
-          <p>Profile</p>
-        </div>
-        <div className="">Name</div>
-        <div className="">Email</div>
-        <div className="">Phone Number</div>
-        <div className="">Gender</div>
-      </div>
-
-      {churchId && members && members?.length !== 0 ? (
-        members.map((item: any, index: number) => (
-          <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] border-b py-4  text-[#636363] gap-4 w-full items-center">
-            <div className="flex space-x-2 items-center">
+    <>
+      {!isPending ? (
+        <div className="flex flex-col items-center">
+          <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] gap-4 border-b py-2  w-full">
+            <div className="flex space-x-1 items-center">
               <input
                 type="checkbox"
-                checked={memberCheckboxes[index]}
-                onChange={() => handleMemberCheckboxChange(index)}
+                checked={selectAll}
+                onChange={handleSelectAll}
               />
-              <p>pic</p>
+              <p>Profile</p>
             </div>
-            <div>{item.first_name}</div>
-            <div>{item.email}</div>
-            <div>{item.phone?.MainPhone}</div>
-            <div>{item.gender}</div>
-            <div
-              className="flex items-center gap-x-2 text-secondary cursor-pointer"
-              onClick={() => {
-                navigate(
-                  `/admin/directory/member/personal-information?id=${item._id}`
-                );
-              }}
-            >
-              <p>View more</p> <FaArrowRight />
-            </div>
+            <div className="">Name</div>
+            <div className="">Email</div>
+            <div className="">Phone Number</div>
+            <div className="">Gender</div>
           </div>
-        ))
+
+          {churchId && members && members?.length !== 0 ? (
+            members.map((item: any, index: number) => (
+              <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] border-b py-4  text-[#636363] gap-4 w-full items-center">
+                <div className="flex space-x-2 items-center">
+                  <input
+                    type="checkbox"
+                    checked={memberCheckboxes[index]}
+                    onChange={() => handleMemberCheckboxChange(index)}
+                  />
+                  <p>pic</p>
+                </div>
+                <div>{item.first_name}</div>
+                <div>{item.email}</div>
+                <div>{item.phone?.MainPhone}</div>
+                <div>{item.gender}</div>
+                <div
+                  className="flex items-center gap-x-2 text-secondary cursor-pointer"
+                  onClick={() => {
+                    navigate(
+                      `/admin/directory/member/personal-information?id=${item._id}`
+                    );
+                  }}
+                >
+                  <p>View more</p> <FaArrowRight />
+                </div>
+              </div>
+            ))
+          ) : (
+            <div>There's no member</div>
+          )}
+          <div className="flex justify-center items-center space-x-10 absolute bottom-10 ">
+            <button
+              className="flex items-center space-x-3 cursor-pointer"
+              onClick={() => setPage((page) => page - 1)}
+              disabled={page === 1}
+            >
+              <FaArrowLeft className="text-[#555545]" />
+              <p className="text-[#7F7E7E]">Previous</p>
+            </button>
+            {renderPaginationNumbers()}
+            <button
+              className="flex items-center space-x-3 cursor-pointer"
+              onClick={() => setPage((page) => page + 1)}
+              disabled={totalPages === 1}
+            >
+              <p className="text-[#7F7E7E]">Next</p>
+              <FaArrowRight className="text-[#555545]" />
+            </button>
+          </div>
+          <AddMemberBtn />
+        </div>
       ) : (
-        <div>There's no member</div>
+        <div>
+          <ThreeDots height="25" width="50" color="#000" />
+        </div>
       )}
-      <div className="flex justify-center items-center space-x-10 absolute bottom-10 ">
-        <button
-          className="flex items-center space-x-3 cursor-pointer"
-          onClick={() => setPage((page) => page - 1)}
-          disabled={page === 1 }
-        >
-          <FaArrowLeft className="text-[#555545]" />
-          <p className="text-[#7F7E7E]">Previous</p>
-        </button>
-        {renderPaginationNumbers()}
-        <button
-          className="flex items-center space-x-3 cursor-pointer"
-          onClick={() => setPage((page) => page + 1)}
-          disabled={totalPages === 1}
-        >
-          <p className="text-[#7F7E7E]">Next</p>
-          <FaArrowRight className="text-[#555545]" />
-        </button>
-      </div>
-      <AddMemberBtn />
-    </div>
+    </>
   );
 };
 
