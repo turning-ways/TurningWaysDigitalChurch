@@ -97,7 +97,7 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
             >
               <li className="flex gap-x-4">
                 {item.icon}
-                <div>{item.title}</div>
+                <div className="w-28">{item.title}</div>
               </li>
             </Link>
           ))}

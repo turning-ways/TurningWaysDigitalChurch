@@ -18,6 +18,8 @@ const MembershipProfile = () => {
     contactInfo: `/admin/directory/member/contact-information?id=${memberId}`,
 
     churchInfo: `/admin/directory/member/church-information?id=${memberId}`,
+
+    membershipHistory: `/admin/directory/member/membership-history?id=${memberId}`
   };
 
   const { isPending } = useGetMemberDetails();

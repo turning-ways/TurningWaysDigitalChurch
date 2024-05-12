@@ -42,6 +42,7 @@ import PhoneOtpVerification from "./pages/Signup/PhoneOtpVerification";
 import Members from "./pages/Members";
 import LoginWithEmail from "./pages/Signin/WithEmail/LoginWithEmail";
 import LoginWithNumber from "./pages/Signin/WithPhoneNumber/LoginWithNumber";
+import MembershipHistory from "./pages/Overview/Membership/Membership Profile/MembershipHistory";
 
 function App() {
   return (
@@ -92,6 +93,10 @@ function App() {
                   <Route
                     path="church-information"
                     element={<ChurchInformation />}
+                  />
+                  <Route
+                    path="membership-history"
+                    element={<MembershipHistory />}
                   />
                 </Route>
                 <Route path="add-member" element={<ProfileEdit />}>
