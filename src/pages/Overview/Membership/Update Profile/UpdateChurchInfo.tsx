@@ -22,8 +22,7 @@ const UpdateChurchInfo = () => {
     setMemberStatus(data ? data.member.memberStatus : "");
     setWorkType(data ? data.member.workType : "");
     setServiceUnit(data ? data.member.ServiceUnit : "");
-    console.log(data);
-  }, [data]);
+  }, []);
 
   const dropDown = [
     {
@@ -59,7 +58,7 @@ const UpdateChurchInfo = () => {
           text={item.text}
           items={item.items}
           onSelect={item.onSelect}
-          value={item.value.slice(0, 1).toUpperCase() + item.value.slice(1)}
+          value={item?.value?.slice(0, 1).toUpperCase() + item?.value?.slice(1)}
         />
       ))}
     </div>

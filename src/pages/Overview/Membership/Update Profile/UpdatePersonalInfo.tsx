@@ -56,13 +56,13 @@ const UpdatePersonalInfo = () => {
   const { data } = useGetMemberDetails();
 
   useEffect(() => {
-    setFirstName(data ? data.member.first_name : "");
-    setMiddleName(data ? data.member.middle_name : "");
-    setLastName(data ? data.member.last_name : "");
-    setSuffix(data ? data.member.suffix : "");
-    setPrefix(data ? data.member.prefix : "");
-    setDateOfBirth(data ? data.member.dateOfBirth : "");
-  }, [data]);
+    setFirstName(data ? data?.member?.first_name : "");
+    setMiddleName(data ? data?.member?.middle_name : "");
+    setLastName(data ? data?.member?.last_name : "");
+    setSuffix(data ? data?.member?.suffix : "");
+    setPrefix(data ? data?.member?.prefix : "");
+    setDateOfBirth(data ? data?.member?.dateOfBirth : "");
+  }, []);
 
   return (
     <div className="mt-5">
@@ -80,7 +80,7 @@ const UpdatePersonalInfo = () => {
             onChange={(e) => {
               item.set(e.target.value);
             }}
-            value={item.value.slice(0, 1).toUpperCase() + item.value.slice(1)}
+            value={item?.value?.slice(0, 1).toUpperCase() + item?.value?.slice(1)}
           />
         </div>
       ))}
@@ -90,7 +90,7 @@ const UpdatePersonalInfo = () => {
         placeholder="Male"
         compulsory="*"
         onSelect={handleGender}
-        value={gender.slice(0, 1).toUpperCase() + gender.slice(1)}
+        value={gender?.slice(0, 1).toUpperCase() + gender?.slice(1)}
       />
       <div className=" space-y-1 mb-4">
         <p className="text-[#727272]">

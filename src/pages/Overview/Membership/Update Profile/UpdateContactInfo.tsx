@@ -24,11 +24,10 @@ const UpdateContactInfo = () => {
   const { data } = useGetMemberDetails();
 
   useEffect(() => {
-    setContactEmail(data ? data.member.email : "");
-    setContactAddress(data ? data.member.address.HomeAddress : "");
-    setContactPhone(data ? data.member.phone.MainPhone : "");
-    console.log(data);
-  }, [data]);
+    setContactEmail(data ? data?.member?.email : "");
+    setContactAddress(data ? data?.member?.address?.HomeAddress : "");
+    setContactPhone(data ? data?.member?.phone?.MainPhone : "");
+  }, []);
 
   return (
     <div className="mt-5">

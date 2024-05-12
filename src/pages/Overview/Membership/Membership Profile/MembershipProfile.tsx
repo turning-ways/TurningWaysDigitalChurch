@@ -24,7 +24,7 @@ const MembershipProfile = () => {
 
   return (
     <OverviewContainer active="Directory">
-      {!isPending ? (
+      {!isPending  ? (
         <>
           <Header text="Profile Information" />
           <SubHeader />

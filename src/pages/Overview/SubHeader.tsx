@@ -27,10 +27,10 @@ const SubHeader = () => {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <div className="flex justify-between mt-10 items-center relative">
-      <div className="bg-[#F1F0F3] rounded-lg p-2 w-fit cursor-pointer h-fit absolute top-1/3 left-0">
+      <div className="bg-[#F1F0F3] rounded-lg p-2 w-fit cursor-pointer h-fit absolute top-1/3 left-0" onClick={() => navigate("/admin/directory")}>
         <IoIosArrowBack
           className=" text-2xl w-auto text-[#6C6C6D]"
-          onClick={() => navigate("/admin/directory")}
+          
         />
       </div>
       <div className="flex space-x-5 items-center ml-20">

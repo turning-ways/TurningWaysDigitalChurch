@@ -32,29 +32,29 @@ const ChurchInformation = () => {
       name: "Access Permission",
       value:
         data &&
-        data?.member.accessPermission.slice(0, 1).toUpperCase() +
-          data?.member.accessPermission.slice(1),
+        data?.member?.accessPermission?.slice(0, 1).toUpperCase() +
+          data?.member?.accessPermission?.slice(1),
     },
     {
       name: "Member Status",
       value:
         data &&
-        data?.member.memberStatus.slice(0, 1).toUpperCase() +
-          data?.member.memberStatus.slice(1),
+        data?.member?.memberStatus?.slice(0, 1).toUpperCase() +
+          data?.member?.memberStatus?.slice(1),
     },
     {
       name: "Work Type",
       value:
         data &&
-        data?.member.workType.slice(0, 1).toUpperCase() +
-          data?.member.workType.slice(1),
+        data?.member?.workType?.slice(0, 1).toUpperCase() +
+          data?.member?.workType?.slice(1),
     },
     {
       name: "Service Unit or Department",
       value:
         data &&
-        data?.member.ServiceUnit.slice(0, 1).toUpperCase() +
-          data?.member.ServiceUnit.slice(1),
+        data?.member?.ServiceUnit?.slice(0, 1).toUpperCase() +
+          data?.member?.ServiceUnit?.slice(1),
     },
   ];
   return (
