@@ -57,7 +57,7 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
     },
     {
       source: "../../../public/assets/images/Navbar/WorkflowIcon.svg",
-      title: "Workflow",
+      title: "Soul Tracker",
       route: "/admin/workflow",
       icon: <GoWorkflow className="text-2xl" />,
     },
