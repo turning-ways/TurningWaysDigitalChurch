@@ -1,13 +1,13 @@
 import Header from "../../Header";
 import SubHeader from "./SubHeader";
 import { Outlet } from "react-router-dom";
-import InformationHeader from "../InformationHeader";
 import OverviewContainer from "../../OverviewContainer";
 import ProfileEditButton from "../../../../components/Button/ProfileEditButton";
 import useUpdateMember from "../../../../hooks/Member/useUpdateMember";
 import { useEditPersonalInformationStore } from "../../../../stores/Edit Member/personalinfo";
 import { useEditContactInformationStore } from "../../../../stores/Edit Member/contactinfo";
 import { useChurchIdStore } from "../../../../stores/churchId";
+import AddUpdateInfoHeader from "../AddUpdateInfoHeader";
 
 const UpdateProfile = () => {
   const queryParams = new URLSearchParams(location.search);
@@ -49,7 +49,7 @@ const UpdateProfile = () => {
     <OverviewContainer active="Directory">
       <Header text="Directory Profile" />
       <SubHeader />
-      <InformationHeader route={routes} />
+      <AddUpdateInfoHeader route={routes} />
 
       <Outlet />
 

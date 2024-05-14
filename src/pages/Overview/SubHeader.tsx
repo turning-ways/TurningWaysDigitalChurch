@@ -11,7 +11,11 @@ import useGetMemberDetails from "../../hooks/Member/useGetMemberDetails";
 import { useState } from "react";
 import Modal from "../../components/Modal/Modal";
 
-const SubHeader = () => {
+interface SubHeaderProps {
+  onNoteClick: () => void;
+}
+
+const SubHeader: React.FC<SubHeaderProps> = ({onNoteClick}) => {
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
 
@@ -25,13 +29,16 @@ const SubHeader = () => {
   };
 
   const [open, setOpen] = useState<boolean>(false);
+
+  const [openNote, setOpenNote] = useState<boolean>(false);
+
   return (
     <div className="flex justify-between mt-10 items-center relative">
-      <div className="bg-[#F1F0F3] rounded-lg p-2 w-fit cursor-pointer h-fit absolute top-1/3 left-0" onClick={() => navigate("/admin/directory")}>
-        <IoIosArrowBack
-          className=" text-2xl w-auto text-[#6C6C6D]"
-          
-        />
+      <div
+        className="bg-[#F1F0F3] rounded-lg p-2 w-fit cursor-pointer h-fit absolute top-1/3 left-0"
+        onClick={() => navigate("/admin/directory")}
+      >
+        <IoIosArrowBack className=" text-2xl w-auto text-[#6C6C6D]" />
       </div>
       <div className="flex space-x-5 items-center ml-20">
         <div className="h-24 relative">
@@ -58,7 +65,13 @@ const SubHeader = () => {
               <FaRegEnvelope className="text-xl" />
               <p>Email</p>
             </li>
-            <li className="flex items-center space-x-1 cursor-pointer">
+            <li
+              className="flex items-center space-x-1 cursor-pointer"
+              onClick={() => {
+                setOpenNote(!openNote);
+                onNoteClick();
+              }}
+            >
               <SlNote className="text-xl" />
               <p>Note</p>
             </li>
@@ -88,10 +101,16 @@ const SubHeader = () => {
               Are you sure you'd like to delete this profile?
             </p>
             <div className="flex justify-between space-x-4">
-              <button className="text-[#4C4C4C] bg-[#F4F4F4] w-1/2 rounded-lg py-2 px-2" onClick={() => setOpen(false)}>
+              <button
+                className="text-[#4C4C4C] bg-[#F4F4F4] w-1/2 rounded-lg py-2 px-2"
+                onClick={() => setOpen(false)}
+              >
                 Cancel
               </button>
-              <button className="text-[#4C4C4C] bg-[#F4F4F4] w-1/2 rounded-lg py-2 px-2" onClick={() => handleDeleteMember()}>
+              <button
+                className="text-[#4C4C4C] bg-[#F4F4F4] w-1/2 rounded-lg py-2 px-2"
+                onClick={() => handleDeleteMember()}
+              >
                 Delete
               </button>
             </div>

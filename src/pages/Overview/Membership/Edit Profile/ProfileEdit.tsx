@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Header from "../../Header";
 import OverviewContainer from "../../OverviewContainer";
-import InformationHeader from "../InformationHeader";
 import SubHeader from "./SubHeader";
 import ProfileEditButton from "../../../../components/Button/ProfileEditButton";
 import useAddRegularMember from "../../../../hooks/Member/useAddRegularMember";
@@ -10,6 +9,7 @@ import { useContactInformationStore } from "../../../../stores/Add Member/contac
 import { useChurchInformationSore } from "../../../../stores/Add Member/churchInformation";
 import { notify } from "../../../../hooks/useLogin";
 import { useUserAuth } from "../../../../stores/user";
+import AddUpdateInfoHeader from "../AddUpdateInfoHeader";
 
 const ProfileEdit = () => {
   const routes = {
@@ -69,7 +69,7 @@ const ProfileEdit = () => {
     <OverviewContainer active="Directory">
       <Header text="Membership" />
       <SubHeader />
-      <InformationHeader route={routes} />
+      <AddUpdateInfoHeader route={routes} />
       <Outlet />
       <ProfileEditButton text="Save" onPress={handleAddingMember} />
     </OverviewContainer>

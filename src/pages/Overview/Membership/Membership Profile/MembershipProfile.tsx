@@ -6,6 +6,8 @@ import InformationHeader from "../InformationHeader";
 import OverviewContainer from "../../OverviewContainer";
 import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
 import { ThreeDots } from "react-loader-spinner";
+import { useState } from "react";
+import Notes from "./Notes";
 
 const MembershipProfile = () => {
   const queryParams = new URLSearchParams(location.search);
@@ -19,20 +21,25 @@ const MembershipProfile = () => {
 
     churchInfo: `/admin/directory/member/church-information?id=${memberId}`,
 
-    membershipHistory: `/admin/directory/member/membership-history?id=${memberId}`
+    membershipHistory: `/admin/directory/member/membership-history?id=${memberId}`,
   };
 
   const { isPending } = useGetMemberDetails();
 
+  const [openNote, setOpenNote] = useState<boolean>(false);
+
   return (
     <OverviewContainer active="Directory">
-      {!isPending  ? (
+      {!isPending ? (
         <>
           <Header text="Profile Information" />
-          <SubHeader />
+          <SubHeader onNoteClick={() => setOpenNote(!openNote)} />
           <InformationHeader route={routes} />
           <Outlet />
+
           <AddMember />
+
+          <Notes openNote={openNote} onClose={() => setOpenNote(false)} />
         </>
       ) : (
         <div>
