@@ -8,7 +8,7 @@ import HeaderTwo from "../../../components/Heading/HeaderTwo";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { useMemberStore } from "../../../stores/member";
 import useAddChurch from "../../../hooks/AddChurch/useAddChurch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DropDownMenu from "../../../components/DropDownMenu/DropDownMenu";
 import NextButton from "../../../components/Button/NextButton";
 
@@ -16,8 +16,6 @@ import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 
 const ChurchInfo = () => {
-  const countryOfOpertion = ["Temidire", "America", "Nigeria"];
-
   const [postalCode, setPostalCode] = useState<string>("");
   const [country, setCountry] = useState<string>("");
   const [state, setState] = useState<string>("");
@@ -50,6 +48,8 @@ const ChurchInfo = () => {
     setShowCountry(false);
   };
 
+  const [countries, setCountries] = useState<[]>([]);
+
   // const [allCountries, setAllCountries] = useState();
 
   // const getCountries = async () => {
@@ -60,9 +60,25 @@ const ChurchInfo = () => {
   //   setAllCountries(result)
   //   console.log(allCountries);
   // };
+
+  const fetchCountries = () => {
+    fetch("https://restcountries.com/v3.1/all")
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response data here
+        setCountries(data); // This will log an array of objects, each representing a country
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
+  useEffect(() => {
+    fetchCountries();
+  }, []);
   return (
     <>
-      <AuthContainer center="sm:items-center">
+      <AuthContainer center="sm:items-center pb-10">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -256,7 +272,7 @@ const ChurchInfo = () => {
               <HeaderTwo>
                 Country of Operation <span className="text-secondary">*</span>
               </HeaderTwo>
-              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center">
+              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center mb-6">
                 <input
                   className="outline-none w-full h-auto bg-inherit"
                   placeholder="Nigeria"
@@ -276,7 +292,12 @@ const ChurchInfo = () => {
               {showCountry && (
                 <DropDownMenu
                   onSelect={handleSelectedCountry}
-                  dropdownItems={countryOfOpertion}
+                  dropdownItems={countries
+                    .map(
+                      (country: { name: { common: string } }) =>
+                        country.name.common
+                    )
+                    .sort((a, b) => a.localeCompare(b))}
                 />
               )}
             </div>
