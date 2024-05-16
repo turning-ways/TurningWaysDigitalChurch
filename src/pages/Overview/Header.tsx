@@ -155,9 +155,18 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
             </p>
           </div>
         </div>
-        <h1>Profile</h1>
-        <h1>Settings</h1>
-        <h1 className="cursor-pointer" onClick={() => setActive("logout")}>Logout</h1>
+        <h1 className="text-[#7F7F7F] hover:text-[#555555] cursor-pointer">
+          Profile
+        </h1>
+        <h1 className="text-[#7F7F7F] hover:text-[#555555] cursor-pointer">
+          Settings
+        </h1>
+        <h1
+          className="cursor-pointer text-[#7F7F7F] hover:text-[#555555] cursor-pointer"
+          onClick={() => setActive("logout")}
+        >
+          Logout
+        </h1>
         {active === "logout" && (
           <Modal>
             <div className="bg-white px-[26px] py-[37px] rounded-2xl text-lg flex flex-col gap-6">
