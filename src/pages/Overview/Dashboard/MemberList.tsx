@@ -110,6 +110,7 @@ const MemberList = () => {
                 gender: string;
                 phone: { MainPhone: string };
                 email: string;
+                first_name: string;
                 dateOfBirth: string;
               },
               index: number
@@ -119,7 +120,7 @@ const MemberList = () => {
                   members.length - 1 === index && "border-b"
                 }`}
               >
-                <div className="col-span-2">{item.fullname}</div>
+                <div className="col-span-2">{item.first_name}</div>
                 <div className="col-span-1">{item.gender}</div>
                 <div className="col-span-2">{item.phone.MainPhone}</div>
                 <div className="col-span-2">{item.email}</div>

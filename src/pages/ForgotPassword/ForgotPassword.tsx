@@ -7,6 +7,7 @@ import Header from "../../components/Heading/Header";
 import HeaderTwo from "../../components/Heading/HeaderTwo";
 import useForgotPassword from "../../hooks/ForgotPassword/useForgotPassword";
 import NextButton from "../../components/Button/NextButton";
+import { useUserDetailsStore } from "../../stores/user";
 
 const ForgotPassword = () => {
   const schema = z.object({
@@ -23,14 +24,17 @@ const ForgotPassword = () => {
     resolver: zodResolver(schema),
   });
 
+  const {setEmail} = useUserDetailsStore();
+
   const { mutate, isPending } = useForgotPassword();
 
   return (
     <>
-      <AuthContainer center="sm:items-center ">
+      <AuthContainer center="sm:items-center h-screen ">
         <form
           onSubmit={handleSubmit((data) => {
             const { email } = data;
+            setEmail(email);
             mutate({ email });
           })}
         >

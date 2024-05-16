@@ -2,8 +2,8 @@ import { create } from "zustand";
 
 //USER ID
 interface UserId {
-  userId: string;
-  setUserId: (id: string) => void;
+  userId: string | null;
+  setUserId: (id: string | null) => void;
 }
 
 const savedUserId = localStorage.getItem("userId");

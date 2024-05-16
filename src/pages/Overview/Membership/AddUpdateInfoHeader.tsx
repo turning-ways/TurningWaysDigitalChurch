@@ -4,11 +4,13 @@ import { IoPersonSharp } from "react-icons/io5";
 import { MdContactPage } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
+
 interface InformationHeaderProps {
   route: {
     personalInfo: string;
     contactInfo: string;
     churchInfo: string;
+
   };
 }
 

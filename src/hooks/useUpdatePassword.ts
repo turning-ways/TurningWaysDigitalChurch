@@ -24,7 +24,7 @@ export const success = (success: string) => {
 };
 
 const useUpdatePassword = () => {
-  const { userId } = useUserIdStore();
+  const { userId, setUserId } = useUserIdStore();
   const navigate = useNavigate();
 
   return useMutation({
@@ -36,9 +36,9 @@ const useUpdatePassword = () => {
         )
         .then((res) => res.data),
     onSuccess: () => {
-      console.log("password has been changed");
       success("Password has been changed");
-      navigate('/login/email')
+      navigate('/login/email');
+      setUserId(null);
     },
   });
 };

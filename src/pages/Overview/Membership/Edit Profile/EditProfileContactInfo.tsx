@@ -3,6 +3,7 @@ import { useContactInformationStore } from "../../../../stores/Add Member/contac
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import HeaderTwo from "../../../../components/Heading/HeaderTwo";
+import { useNavigate } from "react-router-dom";
 
 const EditProfileContactInfo = () => {
   const {
@@ -19,8 +20,10 @@ const EditProfileContactInfo = () => {
     // { name: "Phone Number", set: setContactPhone, value: contact_phone },
     { name: "Home Address", set: setContactAddress, value: contact_address },
   ];
+
+  const navigate = useNavigate();
   return (
-    <div className="mt-5">
+    <div className="mt-5 flex flex-col">
       {information.map((item) => (
         <InformationInput
           text={item.name}
@@ -31,7 +34,9 @@ const EditProfileContactInfo = () => {
         />
       ))}
       <div className="mb-2">
-        <HeaderTwo>Phone Number <span className="text-[#61BD74]">*</span></HeaderTwo>
+        <HeaderTwo>
+          Phone Number <span className="text-[#61BD74]">*</span>
+        </HeaderTwo>
 
         <PhoneInput
           defaultCountry="ng"
@@ -61,6 +66,25 @@ const EditProfileContactInfo = () => {
             },
           }}
         />
+      </div>
+      <div className="flex justify-between">
+        <button
+          className=" flex mt-4 bg-[#17275B] text-white px-4 py-2  rounded-lg gap-2 justify-center "
+          onClick={() =>
+            navigate("/admin/directory/add-member/personal-information")
+          }
+        >
+          <p className="text-lg ">Previous</p>
+        </button>
+        <button
+          className=" flex mt-4 bg-[#17275B] text-white px-4 py-2  rounded-lg gap-2 justify-center "
+          onClick={() =>
+            navigate("/admin/directory/add-member/church-information")
+          }
+        >
+          {/* <RiAddCircleFill className="text-2xl" /> */}
+          <p className="text-lg ">Next</p>
+        </button>
       </div>
     </div>
   );

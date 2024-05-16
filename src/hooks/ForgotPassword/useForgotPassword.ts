@@ -1,6 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { notify } from "../useLogin";
+import { success } from "../useUpdatePassword";
 
 interface Email {
   email: string;
@@ -16,8 +18,13 @@ const useForgotPassword = () => {
           email
         )
         .then((res) => res.data),
-    onSuccess: () => navigate("/forgot-password/otp-verification"),
-    onError: (err) => console.log(err.message),
+    onSuccess: () => {
+      navigate("/forgot-password/otp-verification");
+      success("Enter the otp that was sent");
+    },
+    onError: () => {
+      notify("This email doesn't exist");
+    },
   });
 };
 

@@ -1,6 +1,7 @@
 import InformationInput from "./InformationInput";
 import { usePersonalInformationStore } from "../../../../stores/Add Member/personalinformation";
 import { DropDownInput } from "../../../../components/DropDownMenu/DropDownInput";
+import { useNavigate } from "react-router-dom";
 
 const EditProfilePersonalInfo = () => {
   const {
@@ -21,6 +22,8 @@ const EditProfilePersonalInfo = () => {
     prefix,
     gender,
   } = usePersonalInformationStore();
+
+  const navigate = useNavigate();
 
   const information = [
     {
@@ -54,7 +57,7 @@ const EditProfilePersonalInfo = () => {
   };
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 flex flex-col">
       <DropDownInput
         text="Prefix"
         items={["Mr", "Mrs"]}
@@ -108,6 +111,17 @@ const EditProfilePersonalInfo = () => {
           />
         </div>
       </div>
+      <button
+        className=" self-end mt-4 bg-[#17275B] text-white px-4
+        
+        py-2 rounded-lg gap-2 justify-center"
+        onClick={() =>
+          navigate("/admin/directory/add-member/contact-information")
+        }
+      >
+        {/* <RiAddCircleFill className="text-2xl" /> */}
+        <p className="text-lg ">Next</p>
+      </button>
     </div>
   );
 };
