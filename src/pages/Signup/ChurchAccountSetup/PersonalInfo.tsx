@@ -39,6 +39,7 @@ const PersonalInfo = () => {
 
   const handleSelectGender = (selectedItem: string) => {
     setGenderValue(selectedItem);
+    setShowGender(false)
   };
 
   // const { mutate, isPending } = useAddMember();
