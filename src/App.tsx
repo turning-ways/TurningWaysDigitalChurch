@@ -63,7 +63,10 @@ function App() {
           <Route path="/register/phone" element={<RegisterWithPhone />} />
           <Route path="register">
             <Route path="otp-verification" element={<OtpVerification />} />
-            <Route path="phone-otp-verification" element={<PhoneOtpVerification />} />
+            <Route
+              path="phone-otp-verification"
+              element={<PhoneOtpVerification />}
+            />
             <Route path="personalinfo" element={<PersonalInfo />} />
             <Route path="organizationinfo" element={<OrganizationInfo />} />
             <Route path="churchinfo" element={<ChurchInfo />} />
@@ -134,7 +137,7 @@ function App() {
               <Route path="settings" element={<NotBuilt active="Settings" />} />
               <Route path="help" element={<NotBuilt active="Help" />} />
               <Route path="logout" element={<NotBuilt active="Logout" />} />
-              
+
               {/* <Route path={`/admin/overview/dashboard/${churchId}`} element={<Dashboard />} /> */}
             </Route>
           </Route>

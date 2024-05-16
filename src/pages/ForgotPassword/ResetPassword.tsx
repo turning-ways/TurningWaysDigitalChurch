@@ -6,6 +6,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useUpdatePassword from "../../hooks/useUpdatePassword";
+import NextButton from "../../components/Button/NextButton";
 
 const ResetPassword = () => {
   const schema = z.object({
@@ -27,7 +28,7 @@ const ResetPassword = () => {
     resolver: zodResolver(schema),
   });
 
-  const { mutate } = useUpdatePassword();
+  const { mutate, isPending } = useUpdatePassword();
 
   return (
     <>
@@ -65,9 +66,7 @@ const ResetPassword = () => {
                 placeholder="T*********"
               />
             </div>
-            <button className="w-full py-3 text-center bg-[#446DE3] mt-10 text-xl rounded-[10px] lg:rounded-[20px] text-white">
-              Reset Password
-            </button>
+            <NextButton isPending={isPending}/>
           </div>
         </form>
       </AuthContainer>

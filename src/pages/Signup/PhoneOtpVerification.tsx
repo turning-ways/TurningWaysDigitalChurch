@@ -54,6 +54,8 @@ const PhoneOtpVerification = () => {
 
   const {phone} = useUserDetailsStore();
 
+  
+
   useEffect(() => {
     let interval: number;
     if (timerActive) {

@@ -3,13 +3,13 @@ import Header from "../../components/Heading/Header";
 
 import React, { useEffect, useRef, useState } from "react";
 import useVerifyOtp from "../../hooks/ForgotPassword/useVerifyOtp";
-import { useUserIdStore } from "../../stores/user";
+import { useUserDetailsStore } from "../../stores/user";
 import NextButton from "../../components/Button/NextButton";
+import useVerifyEmail from "../../hooks/Signup/useVerifyEmail";
 
 let currentOtpIndex: number = 0;
 
 const ForgotPasswordOtp = () => {
-  const { userId } = useUserIdStore();
 
   const [value, setValue] = useState<boolean>(false);
 
@@ -49,6 +49,8 @@ const ForgotPasswordOtp = () => {
   }, [activeOTPIndex]);
 
   const { mutate, isPending } = useVerifyOtp();
+  const {email} = useUserDetailsStore();
+  const { mutate: sendOtp } = useVerifyEmail();
   return (
     <>
       <AuthContainer center="sm:items-center h-screen">
@@ -91,7 +93,7 @@ const ForgotPasswordOtp = () => {
             Didn't get a code?{" "}
             <span
               className="text-[#CCE9D1] cursor-pointer"
-              onClick={() => console.log(userId)}
+              onClick={() => sendOtp({email})}
             >
               Resend Code
             </span>
