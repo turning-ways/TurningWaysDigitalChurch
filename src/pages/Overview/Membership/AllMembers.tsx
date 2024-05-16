@@ -5,7 +5,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useChurchIdStore } from "../../../stores/churchId";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { ThreeDots } from "react-loader-spinner";
 
@@ -16,7 +16,7 @@ const AllMembers = () => {
 
   const [page, setPage] = useState(1);
 
-  const { data: members, isPending } = useGetAllMembers({ page, pageSize });
+  const { data: members, isPending, refetch } = useGetAllMembers({ page, pageSize });
 
   const [memberCheckboxes, setMemberCheckboxes] = useState(
     Array(members?.length).fill(false)
@@ -85,6 +85,10 @@ const AllMembers = () => {
 
     return paginationNumbers;
   };
+
+  useEffect(() => {
+    refetch()
+  }, [refetch])
 
   return (
     <>
