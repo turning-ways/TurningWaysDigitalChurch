@@ -137,7 +137,10 @@ const PersonalInfo = () => {
 
             <div className="relative">
               <HeaderTwo>Gender</HeaderTwo>
-              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center">
+              <div
+                className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center"
+                onClick={() => setShowGender(!showGender)}
+              >
                 <input
                   className="outline-none w-full h-auto bg-inherit"
                   placeholder="male"
@@ -170,21 +173,22 @@ const PersonalInfo = () => {
                 onChange={(e) => setEmailValue(e.target.value)}
               />
             </div>
-            <div className="mb-2">
-              <HeaderTwo>
-                Date Of birth <span className="text-secondary">*</span>
-              </HeaderTwo>
-              <input
-                type="text"
-                className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
-                placeholder="19-05-2002"
-                value={dateOfBirthValue}
-                onChange={(e) => setDateOfBirthValue(e.target.value)}
-              />
+            <div className=" space-y-1 mb-4">
+              <p className="text-[#727272]">
+                D.O.B <span className="text-[#61BD74]"> *</span>
+              </p>
+              <div className="mb-2">
+                <input
+                  className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
+                  type="date"
+                  value={dateOfBirthValue}
+                  onChange={(e) => setDateOfBirthValue(e.target.value)}
+                />
+              </div>
             </div>
             <div className="relative">
               <HeaderTwo>What is your role in church?</HeaderTwo>
-              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center">
+              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center" onClick={() => setShowRoles(!showRoles)}>
                 <input
                   className="outline-none w-full h-auto bg-inherit"
                   placeholder="Admin"
@@ -207,7 +211,7 @@ const PersonalInfo = () => {
             </div>
             <div className="relative">
               <HeaderTwo>How did you hear about us?</HeaderTwo>
-              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center">
+              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center" onClick={() => setShowHearAbout(!showHearAbout)}>
                 <input
                   className="outline-none w-full h-auto bg-inherit"
                   placeholder="Social Media"
