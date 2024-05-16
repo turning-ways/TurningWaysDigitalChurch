@@ -10,6 +10,7 @@ import Input from "../../../components/Input/Input";
 import PasswordInput from "../../../components/Input/PasswordInput";
 import useLogin from "../../../hooks/useLogin";
 import NextButton from "../../../components/Button/NextButton";
+import { useEffect } from "react";
 const LoginWithEmail = () => {
   const schema = z.object({
     email: z.string().email({ message: "Please enter a valid email" }),
@@ -30,8 +31,11 @@ const LoginWithEmail = () => {
   const navigate = useNavigate();
   const { mutate, isPending } = useLogin();
 
+  useEffect(() => {
+    // Scroll to the top of the page
+    window.scrollTo(0, 0);
+  }, []); 
 
-  
 
   return (
     <>

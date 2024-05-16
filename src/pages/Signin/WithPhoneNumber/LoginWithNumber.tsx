@@ -10,7 +10,7 @@ import EmailButton from "../../../components/Button/EmailButton";
 import GoogleButton from "../../../components/Button/GoogleButton";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PasswordInput from "../../../components/Input/PasswordInput";
 import NextButton from "../../../components/Button/NextButton";
 
@@ -34,6 +34,10 @@ const LoginWithNumber = () => {
   const { mutate, isPending } = useLogin();
 
   const [phoneNumber, setPhoneNumber] = useState("");
+  useEffect(() => {
+    // Scroll to the top of the page
+    window.scrollTo(0, 0);
+  }, []); 
   return (
     <>
       <AuthContainer center="sm:items-center">
