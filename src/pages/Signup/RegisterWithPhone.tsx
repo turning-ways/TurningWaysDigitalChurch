@@ -11,7 +11,7 @@ import NextButton from "../../components/Button/NextButton";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import HeaderTwo from "../../components/Heading/HeaderTwo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useRegisterWithPhone from "../../hooks/Signup/useRegisterWithPhone";
 import EmailButton from "../../components/Button/EmailButton";
 
@@ -45,6 +45,11 @@ const RegisterWithPhone = () => {
   const { mutate, isPending } = useRegisterWithPhone();
 
   const [phoneNumber, setPhoneNumber] = useState("");
+
+  useEffect(() => {
+    // Scroll to the top of the page
+    window.scrollTo(0, 0);
+  }, []); 
   return (
     <>
       <AuthContainer center="sm:items-center">

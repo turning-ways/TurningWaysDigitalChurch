@@ -11,6 +11,7 @@ import PasswordInput from "../../components/Input/PasswordInput";
 import Input from "../../components/Input/Input";
 import NextButton from "../../components/Button/NextButton";
 import PhoneButton from "../../components/Button/PhoneButton";
+import { useEffect } from "react";
 const Register = () => {
   const schema = z.object({
     first_name: z
@@ -42,6 +43,10 @@ const Register = () => {
   const { mutate, isPending } = useRegister();
 
   const { setEmail } = useUserDetailsStore();
+  useEffect(() => {
+    // Scroll to the top of the page
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <AuthContainer center="sm:items-center">
@@ -124,7 +129,7 @@ const Register = () => {
             <div className="w-full h-[1px] bg-[#A0AEC0]" />
           </div>
           <GoogleButton />
-          <PhoneButton onClick={() => navigate('/register/phone')} />
+          <PhoneButton onClick={() => navigate("/register/phone")} />
         </form>
       </AuthContainer>
     </>
