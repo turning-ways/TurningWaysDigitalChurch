@@ -19,10 +19,13 @@ const PersonalInfo = () => {
   const [phone, setPhone] = useState("");
   const [showRoles, setShowRoles] = useState<boolean>(false);
   const [showHearAbout, setShowHearAbout] = useState<boolean>(false);
-
+  const [showGender, setShowGender] = useState<boolean>(false);
   // const { mutate, isPending } = useAddMember();
   const [hear, setHear] = useState("");
   const [roleValue, setRoleValue] = useState("");
+  const [genderValue, setGenderValue] = useState("");
+  const [emailValue, setEmailValue] = useState("");
+  const [dateOfBirthValue, setDateOfBirthValue] = useState("");
 
   const handleSelectHearAbout = (selectedItem: string) => {
     setHear(selectedItem);
@@ -34,9 +37,20 @@ const PersonalInfo = () => {
     setShowRoles(false);
   };
 
+  const handleSelectGender = (selectedItem: string) => {
+    setGenderValue(selectedItem);
+  };
+
   // const { mutate, isPending } = useAddMember();
 
-  const { setPhoneNumber, setHowDidYouHear, setRole } = useMemberStore();
+  const {
+    setPhoneNumber,
+    setHowDidYouHear,
+    setRole,
+    setGender,
+    setEmail,
+    setDateOfBirth,
+  } = useMemberStore();
 
   //navigation
   const navigate = useNavigate();
@@ -47,7 +61,7 @@ const PersonalInfo = () => {
 
   return (
     <>
-      <AuthContainer center={"sm:items-center h-screen"}>
+      <AuthContainer center={" h-screen"}>
         <form
           className=""
           onSubmit={(e) => {
@@ -55,8 +69,18 @@ const PersonalInfo = () => {
             setPhoneNumber({ MainPhone: phone });
             setHowDidYouHear(hear);
             setRole(roleValue);
+            setGender(genderValue);
+            setEmail(emailValue);
+            setDateOfBirth(dateOfBirthValue);
 
-            if (phone !== "" && hear !== "" && roleValue !== "") {
+            if (
+              phone !== "" &&
+              hear !== "" &&
+              roleValue !== "" &&
+              emailValue !== "" &&
+              genderValue !== "" &&
+              dateOfBirthValue !== ""
+            ) {
               // if (isNumeric(phone)) {
               navigate("/register/organizationinfo");
               // } else {
@@ -111,6 +135,53 @@ const PersonalInfo = () => {
               />
             </div>
 
+            <div className="relative">
+              <HeaderTwo>Gender</HeaderTwo>
+              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center">
+                <input
+                  className="outline-none w-full h-auto bg-inherit"
+                  placeholder="male"
+                  value={genderValue}
+                  readOnly={true}
+                  onChange={(e) => setGenderValue(e.target.value)}
+                />
+                <div className="border-l border-l-[#CFD9E0] h-10 mx-3" />
+                <TiArrowSortedDown
+                  className="cursor-pointer text-3xl"
+                  onClick={() => setShowGender(!showGender)}
+                />
+              </div>
+              {showGender && (
+                <DropDownMenu
+                  onSelect={handleSelectGender}
+                  dropdownItems={["male", "female"]}
+                />
+              )}
+            </div>
+            <div className="mb-2">
+              <HeaderTwo>
+                Email Address <span className="text-secondary">*</span>
+              </HeaderTwo>
+              <input
+                type="text"
+                className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
+                placeholder="example@gmail.com"
+                value={emailValue}
+                onChange={(e) => setEmailValue(e.target.value)}
+              />
+            </div>
+            <div className="mb-2">
+              <HeaderTwo>
+                Date Of birth <span className="text-secondary">*</span>
+              </HeaderTwo>
+              <input
+                type="text"
+                className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
+                placeholder="19-05-2002"
+                value={dateOfBirthValue}
+                onChange={(e) => setDateOfBirthValue(e.target.value)}
+              />
+            </div>
             <div className="relative">
               <HeaderTwo>What is your role in church?</HeaderTwo>
               <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center">

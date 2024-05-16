@@ -4,6 +4,9 @@ interface Member {
   phoneNumber: { MainPhone: string };
   role: string;
   howDidYouHear: string;
+  gender:string;
+  email:string;
+  dateOfBirth: string;
   isParentChurch: string;
   churchName: string;
   setPhoneNumber: (phone: { MainPhone: string }) => void;
@@ -11,6 +14,9 @@ interface Member {
   setHowDidYouHear: (about: string) => void;
   setChurchName: (name: string) => void;
   setIsParentChurch: (value: string) => void;
+  setGender: (value: string) => void;
+  setDateOfBirth: (value: string) => void;
+  setEmail: (value: string) => void;
 }
 
 const savedPhoneNumber = localStorage.getItem("phoneNumber");
@@ -25,6 +31,15 @@ const howDidYouHear = savedHowDidYouHear ? JSON.parse(savedHowDidYouHear) : "";
 const savedChurchName = localStorage.getItem("churchName");
 const churchName = savedChurchName ? JSON.parse(savedChurchName) : "";
 
+const savedGender = localStorage.getItem("member_gender");
+const gender = savedGender ? JSON.parse(savedGender) : "";
+
+const savedEmail = localStorage.getItem("member_email");
+const email = savedEmail ? JSON.parse(savedEmail) : "";
+
+const savedDateOfBirth = localStorage.getItem("date_of_birth");
+const dateOfBirth = savedDateOfBirth ? JSON.parse(savedDateOfBirth) : "";
+
 // const savedChurch = localStorage.getItem("church");
 // const church = savedChurch ? JSON.parse(savedChurch) : "";
 
@@ -37,6 +52,9 @@ export const useMemberStore = create<Member>()((set, get) => ({
   phoneNumber,
   role,
   howDidYouHear,
+  gender,
+  email,
+  dateOfBirth,
   churchName,
   isParentChurch,
   setPhoneNumber: (phone) => {
@@ -80,6 +98,39 @@ export const useMemberStore = create<Member>()((set, get) => ({
     localStorage.setItem(
       "isParentChurch",
       JSON.stringify(get().isParentChurch)
+    );
+  },
+  setGender: (gender) => {
+    {
+      set(() => {
+        return { gender };
+      });
+    }
+    localStorage.setItem(
+      "member_gender",
+      JSON.stringify(get().gender)
+    );
+  },
+  setEmail: (email) => {
+    {
+      set(() => {
+        return { email };
+      });
+    }
+    localStorage.setItem(
+      "member_email",
+      JSON.stringify(get().email)
+    );
+  },
+  setDateOfBirth: (dateOfBirth) => {
+    {
+      set(() => {
+        return { dateOfBirth };
+      });
+    }
+    localStorage.setItem(
+      "date_of_birth",
+      JSON.stringify(get().dateOfBirth)
     );
   },
 }));

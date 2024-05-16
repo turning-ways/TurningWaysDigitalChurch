@@ -25,7 +25,7 @@ interface Church {
 
 const useAddChurch = () => {
   const { mutate } = useAddMember();
-  const { role, howDidYouHear, phoneNumber } = useMemberStore();
+  const { role, howDidYouHear, phoneNumber, email, gender, dateOfBirth } = useMemberStore();
   // const navigate = useNavigate();
   // const { setUser } = useUserAuth();
   // const { data: admin } = useAuth();
@@ -55,6 +55,9 @@ const useAddChurch = () => {
         howDidYouHear,
         phone: phoneNumber,
         churchId: res.data.church.id,
+        email,
+        gender,
+        dateOfBirth
       });
 
       // handleRefresh();
