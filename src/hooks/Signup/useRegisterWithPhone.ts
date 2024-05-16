@@ -5,11 +5,11 @@ import { notify } from "../useLogin";
 import { success } from "../useUpdatePassword";
 
 interface User {
-  phoneNumber: string;
-  first_name: string;
-  last_name: string;
-  password: string;
-  passwordConfirm: string;
+  phoneNumber?: string;
+  first_name?: string;
+  last_name?: string;
+  password?: string;
+  passwordConfirm?: string;
 }
 
 const useRegisterWithPhone = () => {

@@ -2,9 +2,10 @@ import AuthContainer from "../../components/Container/AuthContainer";
 import Header from "../../components/Heading/Header";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useUserIdStore } from "../../stores/user";
+import { useUserDetailsStore, useUserIdStore } from "../../stores/user";
 import NextButton from "../../components/Button/NextButton";
 import useVerifyPhoneSignUpOtp from "../../hooks/Signup/useVerifyPhoneSignUpOtp";
+import useRegisterWithPhone from "../../hooks/Signup/useRegisterWithPhone";
 
 let currentOtpIndex: number = 0;
 
@@ -51,6 +52,8 @@ const PhoneOtpVerification = () => {
   const [timer, setTimer] = useState(60);
   const [timerActive, setTimerActive] = useState(true);
 
+  const {phone} = useUserDetailsStore();
+
   useEffect(() => {
     let interval: number;
     if (timerActive) {
@@ -70,6 +73,7 @@ const PhoneOtpVerification = () => {
   }, [timerActive]);
 
   const { mutate, isPending } = useVerifyPhoneSignUpOtp();
+  const {mutate: sendOtp} = useRegisterWithPhone();
   return (
     <>
       <AuthContainer center="sm:items-center h-screen">
@@ -116,6 +120,7 @@ const PhoneOtpVerification = () => {
             onClick={() => {
               setTimerActive(true);
               console.log(userId);
+              sendOtp({phoneNumber: phone})
             }}
           >
             Resend Code

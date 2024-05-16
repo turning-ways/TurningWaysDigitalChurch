@@ -82,7 +82,7 @@ const LandingPage = () => {
               </div>
               <div
                 className="text-[#61BD74] underline underline-offset-[3px] cursor-pointer "
-                onClick={() => navigate("/password-reset/email-entry")}
+                onClick={() => navigate("/forgot-password")}
               >
                 Forgot Password?
               </div>

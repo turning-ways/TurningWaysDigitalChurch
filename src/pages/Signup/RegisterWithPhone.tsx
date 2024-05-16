@@ -14,6 +14,7 @@ import HeaderTwo from "../../components/Heading/HeaderTwo";
 import { useEffect, useState } from "react";
 import useRegisterWithPhone from "../../hooks/Signup/useRegisterWithPhone";
 import EmailButton from "../../components/Button/EmailButton";
+import { useUserDetailsStore } from "../../stores/user";
 
 const RegisterWithPhone = () => {
   const schema = z.object({
@@ -46,6 +47,8 @@ const RegisterWithPhone = () => {
 
   const [phoneNumber, setPhoneNumber] = useState("");
 
+  const {setPhone} = useUserDetailsStore();
+
   useEffect(() => {
     // Scroll to the top of the page
     window.scrollTo(0, 0);
@@ -64,13 +67,7 @@ const RegisterWithPhone = () => {
               passwordConfirm,
               phoneNumber,
             });
-            console.log(
-              first_name,
-              last_name,
-              password,
-              passwordConfirm,
-              phoneNumber
-            );
+            setPhone(phoneNumber);
           })}
           className="bg-white py-10 px-6"
         >

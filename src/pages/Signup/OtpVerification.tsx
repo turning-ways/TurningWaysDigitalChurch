@@ -2,14 +2,14 @@ import AuthContainer from "../../components/Container/AuthContainer";
 import Header from "../../components/Heading/Header";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useUserIdStore } from "../../stores/user";
+import { useUserDetailsStore } from "../../stores/user";
 import NextButton from "../../components/Button/NextButton";
 import useVerifySignUpOtp from "../../hooks/Signup/useVerifySignUpOtp";
+import useVerifyEmail from "../../hooks/Signup/useVerifyEmail";
 
 let currentOtpIndex: number = 0;
 
 const OtpVerification = () => {
-  const { userId } = useUserIdStore();
 
   const [value, setValue] = useState<boolean>(false);
 
@@ -50,6 +50,7 @@ const OtpVerification = () => {
 
   const [timer, setTimer] = useState(60);
   const [timerActive, setTimerActive] = useState(true);
+  const {email} = useUserDetailsStore();
 
   useEffect(() => {
     let interval: number;
@@ -70,6 +71,7 @@ const OtpVerification = () => {
   }, [timerActive]);
 
   const { mutate, isPending } = useVerifySignUpOtp();
+  const { mutate: sendOtp } = useVerifyEmail();
   return (
     <>
       <AuthContainer center="sm:items-center h-screen">
@@ -116,7 +118,7 @@ const OtpVerification = () => {
             disabled={timerActive}
             onClick={() => {
               setTimerActive(true);
-              console.log(userId);
+              sendOtp({email})
             }}
           >
             Resend Code
