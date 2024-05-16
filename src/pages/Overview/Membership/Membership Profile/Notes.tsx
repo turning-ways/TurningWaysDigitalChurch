@@ -53,8 +53,8 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
           openNote ? "flex" : "hidden"
         }`}
       >
-        <div className="absolute bottom-0 mb-10 flex items-center  text-white W-96 flex-col border bg-white px-2">
-          <div className="bg-white p-4 w-[800px]">
+        <div className="absolute bottom-0 top-40 right-10 mb-10 flex justify-between   text-white W-96 flex-col border bg-white px-2">
+          <div className="bg-white p-4 w-[600px]">
             <div className="flex justify-between">
               <p className="text-[#141414] font-azoBold text-2xl self-start ">
                 Comments
@@ -98,14 +98,14 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
                       {/* <p className="text-[#434343]">{note.comment}</p> */}
                       <div className="flex justify-end space-x-2">
                         <FiEdit
-                          className="text-[#141414] text-2xl"
+                          className="text-[#141414] text-2xl cursor-pointer"
                           onClick={() => {
                             console.log(updateNote);
                             setUpdateNote(index);
                           }}
                         />
                         <MdOutlineDelete
-                          className="text-[#F24E1E] text-2xl"
+                          className="text-[#F24E1E] text-2xl cursor-pointer"
                           onClick={() => {
                             memberId && del({ memberId, noteId: note.id });
                           }}

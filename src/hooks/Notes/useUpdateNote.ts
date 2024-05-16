@@ -29,8 +29,6 @@ const useUpdateNote = (noteQuery: Query) => {
     onSuccess: () => {
       success("Note has been added successfully");
       refetch();
-
-      //   navigate("/admin/dashboard");
     },
     onError: () => notify("Couldn't add note at this time"),
   });

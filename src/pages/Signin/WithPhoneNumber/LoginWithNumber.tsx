@@ -11,10 +11,11 @@ import GoogleButton from "../../../components/Button/GoogleButton";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { useState } from "react";
+import PasswordInput from "../../../components/Input/PasswordInput";
+import NextButton from "../../../components/Button/NextButton";
 
 const LoginWithNumber = () => {
   const schema = z.object({
-    email: z.string().email({ message: "Please enter a valid email" }),
     password: z
       .string()
       .min(5, { message: "Password should be atleast 5 characters long" }),
@@ -23,14 +24,14 @@ const LoginWithNumber = () => {
   type FormData = z.infer<typeof schema>;
 
   const {
-    // register,
+    register,
     handleSubmit,
-    // formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
   const navigate = useNavigate();
-  const { mutate } = useLogin();
+  const { mutate, isPending } = useLogin();
 
   const [phoneNumber, setPhoneNumber] = useState("");
   return (
@@ -39,9 +40,10 @@ const LoginWithNumber = () => {
         <form
           className="flex flex-col space-y-4"
           onSubmit={handleSubmit((data) => {
-            const { email, password } = data;
-            mutate({ inputKey: email, password });
+            const { password } = data;
+            mutate({ inputKey: phoneNumber, password });
           })}
+          // onSubmit={(e) => {e.preventDefault(); console.log("dire")}}
         >
           <div>
             <div className=" mb-10">
@@ -87,6 +89,13 @@ const LoginWithNumber = () => {
                 }}
               />
             </div>
+            <PasswordInput
+              name="password"
+              heading="Password"
+              register={register}
+              placeholder=""
+              formError={errors.password?.message}
+            />
             <div className="flex justify-between items-center my-10 text-sm lg:text-base">
               <div className="text-[#718096] flex items-center space-x-2">
                 <input type="checkbox" />
@@ -99,9 +108,7 @@ const LoginWithNumber = () => {
                 Forget Password?
               </div>
             </div>
-            <button className="w-full py-3 text-center bg-[#446DE3] text-xl lg:text-2xl font-medium rounded-[10px] lg:rounded-[20px] text-white">
-              Sign In
-            </button>
+            <NextButton isPending={isPending} />
           </div>
           <div className="">
             <div className="flex items-center my-5 text-[#718096] w-full lg:max-w-[550px]">

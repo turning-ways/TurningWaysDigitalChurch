@@ -6,7 +6,7 @@ import InformationHeader from "../InformationHeader";
 import OverviewContainer from "../../OverviewContainer";
 import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
 import { ThreeDots } from "react-loader-spinner";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Notes from "./Notes";
 
 const MembershipProfile = () => {
@@ -28,18 +28,42 @@ const MembershipProfile = () => {
 
   const [openNote, setOpenNote] = useState<boolean>(false);
 
+  const notesRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (notesRef.current && !notesRef.current.contains(event.target as Node)) {
+        // Click occurred outside the Notes component
+        // Close the Notes component
+        setOpenNote(false);
+        console.log(!notesRef.current.contains(event.target as Node))
+      }
+    };
+
+    // Attach the event listener when the component mounts
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []); // Empty dependency array ensures this effect runs only once when the component mounts
+
+
   return (
     <OverviewContainer active="Directory">
       {!isPending ? (
         <>
           <Header text="Profile Information" />
-          <SubHeader onNoteClick={() => setOpenNote(!openNote)} />
+          <SubHeader onNoteClick={() => setOpenNote(true)} />
           <InformationHeader route={routes} />
           <Outlet />
 
           <AddMember />
-
-          <Notes openNote={openNote} onClose={() => setOpenNote(false)} />
+          <div ref={notesRef}>
+            <Notes openNote={openNote} onClose={() => setOpenNote(false)} />
+          </div>
+          {/* <Notes openNote={openNote} onClose={() => setOpenNote(false)} /> */}
         </>
       ) : (
         <div>
