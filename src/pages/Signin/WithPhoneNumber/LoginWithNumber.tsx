@@ -43,7 +43,6 @@ const LoginWithNumber = () => {
             const { password } = data;
             mutate({ inputKey: phoneNumber, password });
           })}
-          // onSubmit={(e) => {e.preventDefault(); console.log("dire")}}
         >
           <div>
             <div className=" mb-10">
