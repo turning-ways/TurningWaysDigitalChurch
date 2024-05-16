@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useUserIdStore } from "../stores/user";
 import { Bounce, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 interface Password {
   password: string;
@@ -11,7 +12,7 @@ interface Password {
 export const success = (success: string) => {
   toast.success(success, {
     position: "top-right",
-    autoClose: 5000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -24,6 +25,7 @@ export const success = (success: string) => {
 
 const useUpdatePassword = () => {
   const { userId } = useUserIdStore();
+  const navigate = useNavigate();
 
   return useMutation({
     mutationFn: (password: Password) =>
@@ -36,6 +38,7 @@ const useUpdatePassword = () => {
     onSuccess: () => {
       console.log("password has been changed");
       success("Password has been changed");
+      navigate('/login/email')
     },
   });
 };
