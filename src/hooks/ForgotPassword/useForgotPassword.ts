@@ -16,7 +16,7 @@ const useForgotPassword = () => {
           email
         )
         .then((res) => res.data),
-    onSuccess: () => navigate("/password-reset/otp-verification"),
+    onSuccess: () => navigate("/forgot-password/otp-verification"),
     onError: (err) => console.log(err.message),
   });
 };

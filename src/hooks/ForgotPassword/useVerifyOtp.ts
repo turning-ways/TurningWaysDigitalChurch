@@ -27,7 +27,7 @@ const useVerifyOtp = () => {
         .then((res) => res.data),
     onSuccess: (res) => {
       setUserId(res.userId);
-      navigate("/password-reset/set-new-password");
+      navigate("/forgot-password/reset-password");
     },
     onError: () => {
       notify("Invalid OTP");
