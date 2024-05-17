@@ -59,6 +59,10 @@ const InformationHeader: React.FC<InformationHeaderProps> = ({ route }) => {
     if (regexChurch.test(window.location.href)) {
       setActive("ChurchInformation");
     }
+    const regexHistory = /membership-history/;
+    if (regexHistory.test(window.location.href)) {
+      setActive("MembershipHistory");
+    }
   }, [window.location.href]);
   return (
     <ul className="mt-10 flex text-[#8A8989]">
