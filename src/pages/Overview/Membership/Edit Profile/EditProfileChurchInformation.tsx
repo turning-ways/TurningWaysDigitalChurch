@@ -94,7 +94,6 @@ const EditProfileChurchInfo = () => {
         workType: work_type,
       });
     } else notify("Please fill in all required fields");
-    console.log(first_name, last_name, middle_name, suffix, gender);
   };
 
   const navigate = useNavigate();
@@ -123,8 +122,15 @@ const EditProfileChurchInfo = () => {
           className=" flex mt-4 bg-[#17275B] text-white px-4 py-2  rounded-lg gap-2 justify-center "
           onClick={handleAddingMember}
         >
-          {!isPending ? <p className="text-lg ">Save</p> : <ThreeDots height="25" width="50" color="#fff" />} 
+          {!isPending ? (
+            <p className="text-lg ">Save</p>
+          ) : (
+            <ThreeDots height="25" width="50" color="#fff" />
+          )}
         </button>
+        <p>
+          click
+        </p>
       </div>
     </div>
   );

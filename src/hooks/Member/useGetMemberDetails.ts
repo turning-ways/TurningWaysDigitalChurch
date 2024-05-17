@@ -24,6 +24,10 @@ interface Member {
     phone: {
       MainPhone: string;
     };
+    // dateJoined, createdBy and updated at
+    dateJoined: string;
+    createdBy: string;
+    updatedAt: string;
   };
 }
 
@@ -41,7 +45,7 @@ const useGetMemberDetails = () => {
     queryFn: () =>
       axios
         .get(
-          `https://digital-church.onrender.com/api/v1/members/664621f87ea7e1fefc48ca79`,
+          `https://digital-church.onrender.com/api/v1/members/${memberId}`,
           {
             withCredentials: true,
           }

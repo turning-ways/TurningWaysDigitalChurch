@@ -3,6 +3,7 @@ import { DropDownInput } from "../../../../components/DropDownMenu/DropDownInput
 import { useEditPersonalInformationStore } from "../../../../stores/Edit Member/personalinfo";
 import { useEffect } from "react";
 import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
+import { useNavigate } from "react-router-dom";
 
 const UpdatePersonalInfo = () => {
   const {
@@ -21,6 +22,8 @@ const UpdatePersonalInfo = () => {
     dateOfBirth,
     setDateOfBirth,
   } = useEditPersonalInformationStore();
+
+  const navigate = useNavigate();
 
   const information = [
     {
@@ -55,6 +58,10 @@ const UpdatePersonalInfo = () => {
 
   const { data } = useGetMemberDetails();
 
+  const queryParams = new URLSearchParams(location.search);
+
+  const memberId = queryParams.get("id");
+
   useEffect(() => {
     setFirstName(data ? data?.member?.first_name : "");
     setMiddleName(data ? data?.member?.middle_name : "");
@@ -62,10 +69,11 @@ const UpdatePersonalInfo = () => {
     setSuffix(data ? data?.member?.suffix : "");
     setPrefix(data ? data?.member?.prefix : "");
     setDateOfBirth(data ? data?.member?.dateOfBirth : "");
+    setGender(data?.member?.gender ?? "")
   }, []);
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 flex flex-col">
       <DropDownInput
         text="Prefix"
         items={["Mr", "Mrs"]}
@@ -105,6 +113,16 @@ const UpdatePersonalInfo = () => {
           />
         </div>
       </div>
+      <button
+        className=" self-end mt-4 bg-[#17275B] text-white px-4
+        
+        py-2 rounded-lg gap-2 justify-center"
+        onClick={() =>
+          navigate(`/admin/directory/update-member/contact-information?id=${memberId}`)
+        }
+      >
+        <p className="text-lg ">Next</p>
+      </button>
     </div>
   );
 };

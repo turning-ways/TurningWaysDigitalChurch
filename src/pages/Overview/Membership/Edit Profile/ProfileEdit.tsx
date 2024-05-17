@@ -13,11 +13,9 @@ const ProfileEdit = () => {
     churchInfo: "/admin/directory/add-member/church-information",
   };
 
-  
-  
   return (
     <OverviewContainer active="Directory">
-      <Header text="Membership" />
+      <Header text="Add Profile" />
       <SubHeader />
       <AddUpdateInfoHeader route={routes} />
       <Outlet />

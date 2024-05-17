@@ -25,25 +25,25 @@ const savedPrefix = localStorage.getItem("edit_prefix");
 const prefix = savedPrefix && savedPrefix !== "undefined" ? JSON.parse(savedPrefix) : "";
 //first name
 const savedFirstName = localStorage.getItem("edit_first_name");
-const first_name = savedFirstName ? JSON.parse(savedFirstName) : "";
+const first_name = savedFirstName && savedFirstName !== "undefined" ? JSON.parse(savedFirstName) : "";
 //middle name
 const savedMiddleName = localStorage.getItem("edit_middle_name");
-const middle_name = savedMiddleName ? JSON.parse(savedMiddleName) : "";
+const middle_name = savedMiddleName && savedMiddleName !== "undefined" ? JSON.parse(savedMiddleName) : "";
 //last name
 const savedLastName = localStorage.getItem("edit_last_name");
-const last_name = savedLastName ? JSON.parse(savedLastName) : "";
+const last_name = savedLastName && savedLastName !== "undefined" ? JSON.parse(savedLastName) : "";
 //suffix
 const savedSuffix = localStorage.getItem("edit_suffix");
-const suffix = savedSuffix ? JSON.parse(savedSuffix) : "";
+const suffix = savedSuffix && savedSuffix !== "undefined" ? JSON.parse(savedSuffix) : "";
 //gender
 const savedGender = localStorage.getItem("edit_gender");
-const gender = savedGender ? JSON.parse(savedGender) : "";
+const gender = savedGender && savedGender !== "undefined" ? JSON.parse(savedGender) : "";
 //dateOfBirth
 const savedDateOfBirth = localStorage.getItem("dateOfBirth");
-const dateOfBirth = savedDateOfBirth ? JSON.parse(savedDateOfBirth) : "";
+const dateOfBirth = savedDateOfBirth && savedDateOfBirth !== "undefined" ? JSON.parse(savedDateOfBirth) : "";
 //anniversary
 const savedAnniversary = localStorage.getItem("anniversary");
-const anniversary = savedAnniversary ? JSON.parse(savedAnniversary) : "";
+const anniversary = savedAnniversary && savedAnniversary !== "undefined" ? JSON.parse(savedAnniversary) : "";
 
 export const useEditPersonalInformationStore = create<PersonalInfo>()(
   (set, get) => ({

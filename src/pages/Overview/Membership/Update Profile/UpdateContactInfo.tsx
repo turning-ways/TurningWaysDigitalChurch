@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import HeaderTwo from "../../../../components/Heading/HeaderTwo";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
+import { useNavigate } from "react-router-dom";
 
 const UpdateContactInfo = () => {
   const {
@@ -16,12 +17,18 @@ const UpdateContactInfo = () => {
     contact_phone,
   } = useEditContactInformationStore();
 
+  const navigate = useNavigate();
+
   const information = [
     { name: "Email", set: setContactEmail, value: contact_email },
     { name: "Home Address", set: setContactAddress, value: contact_address },
   ];
 
   const { data } = useGetMemberDetails();
+
+  const queryParams = new URLSearchParams(location.search);
+
+  const memberId = queryParams.get("id");
 
   useEffect(() => {
     setContactEmail(data ? data?.member?.email : "");
@@ -71,6 +78,26 @@ const UpdateContactInfo = () => {
             },
           }}
         />
+      </div>
+
+      <div className="flex justify-between">
+        <button
+          className=" flex mt-4 bg-[#17275B] text-white px-4 py-2  rounded-lg gap-2 justify-center "
+          onClick={() =>
+            navigate(`/admin/directory/update-member/personal-information?id=${memberId}`)
+          }
+        >
+          <p className="text-lg ">Previous</p>
+        </button>
+        <button
+          className=" flex mt-4 bg-[#17275B] text-white px-4 py-2  rounded-lg gap-2 justify-center "
+          onClick={() =>
+            navigate(`/admin/directory/update-member/church-information?id=${memberId}`)
+          }
+        >
+          {/* <RiAddCircleFill className="text-2xl" /> */}
+          <p className="text-lg ">Next</p>
+        </button>
       </div>
 
     </div>

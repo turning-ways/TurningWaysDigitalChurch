@@ -109,7 +109,7 @@ const AllMembers = () => {
             <div className="">Gender</div>
           </div>
 
-          {churchId && members && members?.length !== 0 ? (
+          {members && members?.length !== 0 ? (
             members.map((item: any, index: number) => (
               <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] border-b py-4  text-[#636363] gap-4 w-full items-center">
                 <div className="flex space-x-2 items-center">

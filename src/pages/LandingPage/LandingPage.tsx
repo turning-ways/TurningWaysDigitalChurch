@@ -96,7 +96,7 @@ const LandingPage = () => {
             <GoogleButton />
             <div
               className="border border-[#CBD5E0] py-3 rounded-[20px] space-x-1 flex  px-6 items-center w-full lg:max-w-[550px] cursor-pointer mt-5"
-              onClick={() => navigate("/login-with-number")}
+              onClick={() => navigate("/register")}
             >
               <img src="/assets/images/twsymbol.svg" className="" alt="" />
               <p className=" text-center text-[#67728A] text-lg lg:text-md font-medium w-full ">
@@ -105,7 +105,6 @@ const LandingPage = () => {
             </div>
           </form>
           <div className="place-self-center justify-self-center pr-10 relative">
-            {/* <img src="../../../public/assets/images/DashboardLaptop.png" alt="" /> */}
             <img src="/assets/images/Dashboard.svg" alt="" />
             <img
               src="/assets/images/DashboardMobile.svg"

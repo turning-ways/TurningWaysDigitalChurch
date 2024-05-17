@@ -268,11 +268,11 @@ const ChurchInfo = () => {
                 maxLength={6}
               />
             </div>
-            <div className="relative">
+            <div  className="relative">
               <HeaderTwo>
                 Country of Operation <span className="text-secondary">*</span>
               </HeaderTwo>
-              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center mb-6">
+              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center mb-6" onClick={() => {setShowCountry(!showCountry);}}>
                 <input
                   className="outline-none w-full h-auto bg-inherit"
                   placeholder="Nigeria"
@@ -283,10 +283,6 @@ const ChurchInfo = () => {
                 <div className="border-l border-l-[#CFD9E0] h-10 mx-3" />
                 <TiArrowSortedDown
                   className="cursor-pointer text-3xl"
-                  onClick={() => {
-                    setShowCountry(!showCountry);
-                    // getCountries();
-                  }}
                 />
               </div>
               {showCountry && (

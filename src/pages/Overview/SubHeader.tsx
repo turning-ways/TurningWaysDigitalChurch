@@ -32,6 +32,10 @@ const SubHeader: React.FC<SubHeaderProps> = ({onNoteClick}) => {
 
   const [openNote, setOpenNote] = useState<boolean>(false);
 
+  function capitalizeFirstLetter(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
   return (
     <div className="flex justify-between mt-10 items-center relative">
       <div
@@ -48,7 +52,7 @@ const SubHeader: React.FC<SubHeaderProps> = ({onNoteClick}) => {
         <div className="flex flex-col space-y-3">
           <div className="flex space-x-3 items-center">
             <p className="text-[32px] text-[#5B5A5A] ">
-              {data && data.member.first_name + " " + data.member.last_name}
+              {data && capitalizeFirstLetter(data.member.first_name) + " " + capitalizeFirstLetter(data.member.last_name)}
             </p>
             <div className="bg-[#E7E6E6] p-2 rounded-[8px]">Member</div>
           </div>

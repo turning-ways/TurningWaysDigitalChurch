@@ -12,13 +12,13 @@ interface PersonalInfo {
 
 //email
 const savedContactEmail = localStorage.getItem("edit_contact_email");
-const contact_email = savedContactEmail ? JSON.parse(savedContactEmail) : "";
+const contact_email = savedContactEmail && savedContactEmail !== "undefined" ? JSON.parse(savedContactEmail) : "";
 //phone number
 const savedContactPhone = localStorage.getItem("edit_contact_phone");
-const contact_phone = savedContactPhone ? JSON.parse(savedContactPhone) : "";
+const contact_phone = savedContactPhone && savedContactPhone !== "undefined" ? JSON.parse(savedContactPhone) : "";
 //home address
 const savedContactAddress = localStorage.getItem("edit_contact_address");
-const contact_address = savedContactAddress ? JSON.parse(savedContactAddress) : "";
+const contact_address = savedContactAddress && savedContactAddress !== "undefined" ? JSON.parse(savedContactAddress) : "";
 
 export const useEditContactInformationStore = create<PersonalInfo>()(
   (set, get) => ({

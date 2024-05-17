@@ -1,15 +1,10 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { useUserAuth } from "../../../../stores/user";
-
-// interface SubHeaderProps {
-//   btnText: string;
-// }
 
 const SubHeader = () => {
   const navigate = useNavigate();
 
-  const { user } = useUserAuth();
+
 
   return (
     <div className="flex justify-center flex-col mt-10 items-center relative">
@@ -20,10 +15,11 @@ const SubHeader = () => {
         <IoIosArrowBack className=" text-2xl w-auto text-[#6C6C6D]" />
       </div>
       <div className="border border-black w-32 h-32 rounded-full mb-5 flex justify-center items-center text-5xl">
-        {user
+        {/* {user
           ? user?.first_name.charAt(0).toUpperCase() +
             user?.last_name.charAt(0).toUpperCase()
-          : "P"}
+          : "P"} */}
+          P
       </div>
       {/* <div className="bg-[#17275B] text-[#ffffff] border border-[#BFBFBF] px-6 py-3 font-medium h-fit">
         {btnText}

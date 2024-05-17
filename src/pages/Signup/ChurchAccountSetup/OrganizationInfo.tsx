@@ -55,7 +55,7 @@ const OrganizationInfo = () => {
             </div>
             <div className="relative">
               <HeaderTwo>Is this a parent church?</HeaderTwo>
-              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center">
+              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center" onClick={() => setShow(!show)}>
                 <input
                   className="outline-none w-full h-auto bg-inherit"
                   placeholder="Yes / No"
@@ -64,10 +64,7 @@ const OrganizationInfo = () => {
                   onChange={(e) => setIsParentChurchValue(e.target.value)}
                 />
                 <div className="border-l border-l-[#CFD9E0] h-10 mx-3" />
-                <TiArrowSortedDown
-                  className="cursor-pointer text-3xl"
-                  onClick={() => setShow(!show)}
-                />
+                <TiArrowSortedDown className="cursor-pointer text-3xl" />
               </div>
               {show && (
                 <DropDownMenu
