@@ -11,7 +11,7 @@ import { useUserDetailsStore } from "../../stores/user";
 
 const ForgotPassword = () => {
   const schema = z.object({
-    email: z.string().email({ message: "Please enter a valid email" }),
+    inputKey: z.string(),
   });
 
   type FormData = z.infer<typeof schema>;
@@ -33,9 +33,9 @@ const ForgotPassword = () => {
       <AuthContainer center="sm:items-center h-screen ">
         <form
           onSubmit={handleSubmit((data) => {
-            const { email } = data;
-            setEmail(email);
-            mutate({ email });
+            const { inputKey } = data;
+            setEmail(inputKey);
+            mutate({ inputKey });
           })}
         >
           <div className="space-y-2 mb-10">
@@ -51,7 +51,7 @@ const ForgotPassword = () => {
           <div className="mb-6 w-auto">
             <HeaderTwo>E-mail</HeaderTwo>
             <input
-              {...register("email")}
+              {...register("inputKey")}
               type="text"
               className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full p-3 outline-none placeholder-[#4A5568]"
               placeholder="example@gmail.com"

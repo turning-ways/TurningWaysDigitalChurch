@@ -4,18 +4,18 @@ import { useNavigate } from "react-router-dom";
 import { notify } from "../useLogin";
 import { success } from "../useUpdatePassword";
 
-interface Email {
-  email: string;
+interface InputKey {
+  inputKey: string;
 }
 
 const useForgotPassword = () => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: (email: Email) =>
+    mutationFn: (inputKey: InputKey) =>
       axios
-        .patch<Email>(
+        .patch<InputKey>(
           "https://digital-church.onrender.com/api/v1/users/forgot-password",
-          email
+          inputKey
         )
         .then((res) => res.data),
     onSuccess: () => {
