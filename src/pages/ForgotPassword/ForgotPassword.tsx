@@ -45,7 +45,7 @@ const ForgotPassword = () => {
             <Header> Reset your Password</Header>
 
             <p className="text-[#949995]">
-              Kindly enter the email address you used to register
+              Kindly enter the email address or phone number you used to register
             </p>
           </div>
           <div className="mb-6 w-auto">
@@ -54,7 +54,7 @@ const ForgotPassword = () => {
               {...register("inputKey")}
               type="text"
               className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full p-3 outline-none placeholder-[#4A5568]"
-              placeholder="example@gmail.com"
+              placeholder="example@gmail.com or +2340000000000"
             />
           </div>
           <NextButton isPending={isPending} />
