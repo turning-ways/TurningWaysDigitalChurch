@@ -3,7 +3,6 @@
 import AddMemberBtn from "../AddMemberBtn";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useChurchIdStore } from "../../../stores/churchId";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
@@ -11,7 +10,6 @@ import { ThreeDots } from "react-loader-spinner";
 
 const AllMembers = () => {
   const navigate = useNavigate();
-  const { churchId } = useChurchIdStore();
   const pageSize = 10;
 
   const [page, setPage] = useState(1);
