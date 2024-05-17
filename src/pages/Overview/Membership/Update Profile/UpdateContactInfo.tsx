@@ -27,7 +27,7 @@ const UpdateContactInfo = () => {
     setContactEmail(data ? data?.member?.email : "");
     setContactAddress(data ? data?.member?.address?.HomeAddress : "");
     setContactPhone(data ? data?.member?.phone?.MainPhone : "");
-  }, []);
+  }, [data, setContactAddress, setContactEmail, setContactPhone, ]);
 
   return (
     <div className="mt-5">

@@ -11,40 +11,43 @@ interface Member {
     workType: string;
     ServiceUnit: string;
     first_name: string;
-    last_name:string;
-    middle_name:string;
-    prefix:string;
-    suffix:string;
-    gender:string;
-    dateOfBirth:string;
-    email:string;
-    address:{
-      HomeAddress:string;
-    }
+    last_name: string;
+    middle_name: string;
+    prefix: string;
+    suffix: string;
+    gender: string;
+    dateOfBirth: string;
+    email: string;
+    address: {
+      HomeAddress: string;
+    };
     phone: {
-      MainPhone:string;
-    }
+      MainPhone: string;
+    };
   };
 }
 
 const useGetMemberDetails = () => {
   // const { churchId } = useChurchIdStore();
-  const {user} = useUserAuth();
-  
+  const { user } = useUserAuth();
+
   const queryParams = new URLSearchParams(location.search);
 
-  useEffect(() => {
-  }, [])
+  useEffect(() => {}, []);
 
   const memberId = queryParams.get("id");
   return useQuery<Member>({
     queryKey: ["church", user?.churchId?._id, "member", memberId],
     queryFn: () =>
       axios
-        .get(`https://digital-church.onrender.com/api/v1/members/${memberId}`, {
-          withCredentials: true,
-        })
-        .then((res) => res.data),
+        .get(
+          `https://digital-church.onrender.com/api/v1/members/664621f87ea7e1fefc48ca79`,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => res.data)
+        .catch(() => console.log("there was an error fetching")),
   });
 };
 

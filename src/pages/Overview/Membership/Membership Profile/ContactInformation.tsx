@@ -1,41 +1,70 @@
-import { useQuery } from "@tanstack/react-query";
-import { useChurchIdStore } from "../../../../stores/churchId";
-import InformationInput from "./InformationField";
-import axios from "axios";
+import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
 
 const ContactInformation = () => {
-  const queryParams = new URLSearchParams(location.search);
+  // const { data } = useQuery({
+  //   queryKey: ["church", churchId, "member", memberId],
+  //   queryFn: () =>
+  //     axios
+  //       .get(`https://digital-church.onrender.com/api/v1/members/${memberId}`, {
+  //         withCredentials: true,
+  //       })
+  //       .then((res) => res.data),
+  // });
 
-  const memberId = queryParams.get("id");
+  const { data } = useGetMemberDetails();
 
-  const { churchId } = useChurchIdStore();
+  if (!data) {
+    return <div>Loading...</div>;
+  }
 
-  const { data } = useQuery({
-    queryKey: ["church", churchId, "member", memberId],
-    queryFn: () =>
-      axios
-        .get(`https://digital-church.onrender.com/api/v1/members/${memberId}`, {
-          withCredentials: true,
-        })
-        .then((res) => res.data),
-  });
+  // const information = [
+  //   {
+  //     name: "Email",
+  //     value: data.member.email ?? "",
+  //   },
+  //   { name: "Phone Number", value: data.member.phone.MainPhone ?? "" },
+  //   { name: "Address", value: data.member.address.HomeAddress ?? "" },
+  // ];
 
-  const information = [
-    {
-      name: "Email",
-      value: data && data.member && data.member.email && data.member.email,
-    },
-    { name: "Phone Number", value: data && data.member && data.member.phone && data.member.phone.MainPhone && data.member.phone.MainPhone },
-    { name: "Address", value: data && data.member && data.member.address.HomeAddress && data.member.address.HomeAddress && data.member.address.HomeAddress },
-  ];
+  // useEffect(() => console.log(information), []);
 
   return (
-    <div className="mt-5">
-      {information.map((item) => (
-        <InformationInput text={item.name} subText={item.value} />
-      ))}
+    <div className="mt-10">
+      {data && (
+        <div>
+          <div className="px-5 pt-6 pb-2 border-b space-y-2">
+            <p className="text-[#727272]">Email</p>
+            <p className="outline-none text-[#434343] text-lg w-full">
+              {data?.member?.email}
+            </p>
+          </div>
+          <div className="px-5 pt-6 pb-2 border-b space-y-2">
+            <p className="text-[#727272]">Phone Number</p>
+            <p className="outline-none text-[#434343] text-lg w-full">
+              {data?.member?.phone?.MainPhone}
+            </p>
+          </div>
+          <div className="px-5 pt-6 pb-2 border-b space-y-2">
+            <p className="text-[#727272]">Address</p>
+            <p className="outline-none text-[#434343] text-lg w-full">
+              {data?.member?.address?.HomeAddress}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default ContactInformation;
+
+// return (
+//   <div>
+//     <div className="mt-5">
+//       {information.map((item) => (
+//         <InformationInput text={item.name} subText={item.value} />
+//       ))}
+//     </div>
+//     <p>dire</p>
+//   </div>
+// );
