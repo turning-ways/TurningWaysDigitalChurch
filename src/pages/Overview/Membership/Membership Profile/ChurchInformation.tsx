@@ -12,7 +12,6 @@ const ChurchInformation = () => {
 
   const { data } = useQuery<{
     member: {
-      accessPermission: string;
       memberStatus: string;
       workType: string;
       ServiceUnit: string;
@@ -28,13 +27,6 @@ const ChurchInformation = () => {
   });
 
   const information = [
-    {
-      name: "Access Permission",
-      value:
-        data &&
-        data?.member?.accessPermission?.slice(0, 1).toUpperCase() +
-          data?.member?.accessPermission?.slice(1),
-    },
     {
       name: "Member Status",
       value:

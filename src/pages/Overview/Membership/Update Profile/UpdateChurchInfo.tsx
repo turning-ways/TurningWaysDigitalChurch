@@ -11,11 +11,9 @@ import { useUserAuth } from "../../../../stores/user";
 
 const UpdateChurchInfo = () => {
   const {
-    setAccessPermission,
     setMemberStatus,
     setWorkType,
     setServiceUnit,
-    access_permission,
     member_status,
     work_type,
     service_unit,
@@ -26,19 +24,12 @@ const UpdateChurchInfo = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setAccessPermission(data ? data.member.accessPermission : "");
     setMemberStatus(data ? data.member.memberStatus : "");
     setWorkType(data ? data.member.workType : "");
     setServiceUnit(data ? data.member.ServiceUnit : "");
   }, []);
 
   const dropDown = [
-    {
-      text: "Access Permission",
-      items: ["Admin", "Member"],
-      onSelect: (value: string) => setAccessPermission(value),
-      value: access_permission,
-    },
     {
       text: "Member Status",
       items: ["Inactive", "Active"],
