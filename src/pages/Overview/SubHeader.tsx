@@ -10,6 +10,7 @@ import useDeleteMember from "../../hooks/Member/useDeleteMember";
 import useGetMemberDetails from "../../hooks/Member/useGetMemberDetails";
 import { useState } from "react";
 import Modal from "../../components/Modal/Modal";
+import { useSmsRecepientStore } from "../../stores/smsRecepient";
 
 interface SubHeaderProps {
   onNoteClick: () => void;
@@ -31,6 +32,8 @@ const SubHeader: React.FC<SubHeaderProps> = ({onNoteClick}) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const [openNote, setOpenNote] = useState<boolean>(false);
+
+  const {addRecepients} = useSmsRecepientStore();
 
   function capitalizeFirstLetter(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -61,8 +64,8 @@ const SubHeader: React.FC<SubHeaderProps> = ({onNoteClick}) => {
               <IoCallOutline className="text-xl" />
               <p>Call</p>
             </li>
-            <li className="flex items-center space-x-1 cursor-pointer">
-              <AiOutlineMessage className="text-xl" />
+            <li className="flex items-center space-x-1 cursor-pointer" onClick={() => {navigate('/admin/directory/sms'); addRecepients(data?.member ? [data?.member] : [])}}>
+              <AiOutlineMessage className="text-xl"/>
               <p>Text</p>
             </li>
             <li className="flex items-center space-x-1 cursor-pointer">

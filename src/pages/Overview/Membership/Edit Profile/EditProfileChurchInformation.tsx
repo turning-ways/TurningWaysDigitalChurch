@@ -10,24 +10,15 @@ import { ThreeDots } from "react-loader-spinner";
 
 const EditProfileChurchInfo = () => {
   const {
-    setAccessPermission,
     setMemberStatus,
     setWorkType,
     setServiceUnit,
     work_type,
     service_unit,
     member_status,
-    access_permission,
   } = useChurchInformationSore();
 
   const dropDown = [
-    {
-      text: "Access Permission",
-      items: ["admin", "member"],
-      onSelect: (value: string) => setAccessPermission(value),
-      value: access_permission,
-      onChange: setAccessPermission,
-    },
     {
       text: "Member Status",
       items: ["active", "inactive"],
@@ -88,7 +79,6 @@ const EditProfileChurchInfo = () => {
         gender,
         dateOfBirth,
         anniversary,
-        accessPermission: access_permission,
         memberStatus: member_status,
         ServiceUnit: service_unit,
         workType: work_type,
@@ -128,9 +118,6 @@ const EditProfileChurchInfo = () => {
             <ThreeDots height="25" width="50" color="#fff" />
           )}
         </button>
-        <p>
-          click
-        </p>
       </div>
     </div>
   );

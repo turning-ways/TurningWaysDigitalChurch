@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FiPlusCircle } from "react-icons/fi";
 import { HiQuestionMarkCircle } from "react-icons/hi2";
 import { RiDeleteBin4Line } from "react-icons/ri";
@@ -10,6 +10,7 @@ import useSendSms from "../../../hooks/Member/useSendSms";
 import Subject from "./Subject";
 import Body from "./Body";
 import { useSmsRecepientStore } from "../../../stores/smsRecepient";
+import { ThreeDots } from "react-loader-spinner";
 
 interface RecipientsProp {
   onOpen: () => void;
@@ -44,10 +45,13 @@ interface RecipientsProp {
 const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
   const [open, setOpen] = useState<boolean>(false);
   const { data: members } = useGetAllMembers({ page: 1, pageSize: 10000 });
-  const { mutate } = useSendSms();
+  const { mutate, isPending } = useSendSms();
   const [message, setMessage] = useState<string>("");
-  const {recepients, removeAllRecepients, removeRecepientById, addRecepients} =useSmsRecepientStore();
-  useEffect(() => removeAllRecepients(),[removeAllRecepients])
+  const {
+    recepients,
+    removeRecepientById,
+    addRecepients,
+  } = useSmsRecepientStore();
   return (
     <>
       <Subject title="Sender's ID" placeholder="Winners Chapel Magodo" />
@@ -78,23 +82,6 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
             Quick Actions
           </button>
         )}
-       
-            {/* <div className="flex items-center justify-center space-x-5 mt-6 font-azeret">
-              <FaLeftLong />
-              <p>Previous</p>
-              <p>1</p>
-              <p>2</p>
-              <p>3</p>
-              <p>...</p>
-              <p>100</p>
-              <p>Next</p>
-              <FaRightLong />
-              <div className="h-5 w-1 bg-[#AAAAAA] " />
-              <p>Go to Page</p>
-              <div className="w-5 h-5 border rounded-[4px] border-[#555555]" />
-            </div> */}
-
-
         {recepients.length !== 0 && (
           <div>
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -110,41 +97,30 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
                   </div>
                   <div className="flex items-center space-x-6">
                     <p>{item.phone.MainPhone}</p>
-                    <RiDeleteBin4Line className="text-[#F24E1E] text-xl cursor-pointer" onClick={() => removeRecepientById(item.id)} />
+                    <RiDeleteBin4Line
+                      className="text-[#F24E1E] text-xl cursor-pointer"
+                      onClick={() => removeRecepientById(item.id)}
+                    />
                   </div>
                 </div>
               ))}
           </div>
         )}
 
-        {/* <div className="mt-10">
-          <p>
-            Send SMS at <span className="text-secondary">*</span>
-          </p>
-          <div className="flex space-x-8">
-            <div className="flex space-x-2">
-              <input type="checkbox" />
-              <p>Immediately</p>
-            </div>
-            <div className="flex space-x-2">
-              <input type="checkbox" />
-              <p>Later</p>
-            </div>
-          </div>
-        </div> */}
-
         <button
-          className="mt-10 bg-[#446DE3] text-white w-full p-4 rounded-[8px]"
+          className="mt-10 bg-[#446DE3] text-white w-full p-4 rounded-[8px] flex justify-center"
           onClick={() => {
             mutate({
               message,
-              members:
-                recepients &&
-                recepients.map((member) => member.id),
+              members: recepients && recepients.map((member) => member.id),
             });
           }}
         >
-          Send SMS
+          {!isPending ? (
+            <p>Send SMS</p>
+          ) : (
+            <ThreeDots height="25" width="50" color="#fff" />
+          )}
         </button>
 
         {open && (
