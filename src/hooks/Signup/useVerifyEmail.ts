@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { notify } from "../useLogin";
 
 interface Email {
   email: string;
@@ -14,6 +15,9 @@ const useVerifyEmail = () => {
           email
         )
         .then((res) => res.data),
+    onSuccess: () => {
+      notify("Otp has been sent to email")
+    }
   });
 };
 
