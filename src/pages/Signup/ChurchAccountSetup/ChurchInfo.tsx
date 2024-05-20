@@ -17,7 +17,7 @@ import "react-international-phone/style.css";
 
 const ChurchInfo = () => {
   const [postalCode, setPostalCode] = useState<string>("");
-  const [country, setCountry] = useState<string>("");
+  const [country, setCountry] = useState<string>("Nigeria");
   const [state, setState] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [address, setAddress] = useState<string>("");
