@@ -49,7 +49,7 @@ const SubHeader: React.FC<SubHeaderProps> = ({onNoteClick}) => {
       </div>
       <div className="flex space-x-5 items-center ml-20">
         <div className="h-24 relative">
-          <div className="bg-red-100 w-24 h-full rounded-full " />
+          {data?.member.photo ? (<img src={data.member.photo} className="w-24 h-full rounded-full" alt="profile picture"/>) : <div className="bg-red-100 w-24 h-full rounded-full " />} 
           <MdVerified className="absolute bottom-1 left-[70px] text-2xl text-[#61BD74]" />
         </div>
         <div className="flex flex-col space-y-3">

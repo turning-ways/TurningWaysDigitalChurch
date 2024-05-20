@@ -28,6 +28,7 @@ interface Member {
     dateJoined: string;
     createdBy: string;
     updatedAt: string;
+    photo: string;
   };
 }
 

@@ -69,7 +69,7 @@ const UpdatePersonalInfo = () => {
     setSuffix(data ? data?.member?.suffix : "");
     setPrefix(data ? data?.member?.prefix : "");
     setDateOfBirth(data ? data?.member?.dateOfBirth : "");
-    setGender(data?.member?.gender ?? "")
+    setGender(data?.member?.gender ?? "");
   }, []);
 
   return (
@@ -88,7 +88,9 @@ const UpdatePersonalInfo = () => {
             onChange={(e) => {
               item.set(e.target.value);
             }}
-            value={item?.value?.slice(0, 1).toUpperCase() + item?.value?.slice(1)}
+            value={
+              item?.value?.slice(0, 1).toUpperCase() + item?.value?.slice(1)
+            }
           />
         </div>
       ))}
@@ -108,7 +110,7 @@ const UpdatePersonalInfo = () => {
           <input
             className="outline-none text-[#434343] text-lg w-full"
             type="date"
-            value={dateOfBirth.split('T')[0]}
+            value={dateOfBirth.split("T")[0]}
             onChange={(e) => setDateOfBirth(e.target.value)}
           />
         </div>
@@ -118,7 +120,9 @@ const UpdatePersonalInfo = () => {
         
         py-2 rounded-lg gap-2 justify-center"
         onClick={() =>
-          navigate(`/admin/directory/update-member/contact-information?id=${memberId}`)
+          navigate(
+            `/admin/directory/update-member/contact-information?id=${memberId}`
+          )
         }
       >
         <p className="text-lg ">Next</p>
