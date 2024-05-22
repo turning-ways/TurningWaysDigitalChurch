@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-// import { useChurchIdStore } from "../../stores/churchId";
-import { useEffect } from "react";
 import { useUserAuth } from "../../stores/user";
 
 interface Member {
@@ -37,8 +35,6 @@ const useGetMemberDetails = () => {
   const { user } = useUserAuth();
 
   const queryParams = new URLSearchParams(location.search);
-
-  useEffect(() => {}, []);
 
   const memberId = queryParams.get("id");
   return useQuery<Member>({

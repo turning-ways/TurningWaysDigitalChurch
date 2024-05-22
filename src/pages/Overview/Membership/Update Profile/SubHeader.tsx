@@ -11,6 +11,10 @@ const SubHeader = () => {
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  const queryParams = new URLSearchParams(location.search);
+
+  const memberId = queryParams.get("id");
+
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -21,7 +25,7 @@ const SubHeader = () => {
 
       try {
         const response = await fetch(
-          "https://digital-church.onrender.com/api/v1/members/upload/6647256452f2fd4a49279207",
+          `https://digital-church.onrender.com/api/v1/members/upload/${memberId}`,
           {
             method: "POST",
             body: formData,
