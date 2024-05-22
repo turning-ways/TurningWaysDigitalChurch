@@ -1,12 +1,8 @@
 import { Link } from "react-router-dom";
-import { RxDashboard } from "react-icons/rx";
-import { BsPeople } from "react-icons/bs";
-import { FaWpforms } from "react-icons/fa6";
-import { GoWorkflow } from "react-icons/go";
-import { IoSettingsOutline } from "react-icons/io5";
-import { IoIosLogOut, IoMdHelpCircleOutline } from "react-icons/io";
+import { IoIosLogOut } from "react-icons/io";
 import { useUserAuth } from "../../stores/user";
 import { success } from "../../hooks/useUpdatePassword";
+import { navList } from "./navlist";
 
 interface NavBarProps {
   active?: string;
@@ -36,47 +32,8 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
     }
   };
 
-  const navList = [
-    {
-      source: "../../../public/assets/images/Navbar/MembershipIcon.svg",
-      title: "Dashboard",
-      icon: <RxDashboard className="text-2xl" />,
-      route: `/admin/dashboard`,
-    },
-    {
-      source: "../../../public/assets/images/Navbar/MembershipIcon.svg",
-      title: "Directory",
-      route: `/admin/directory`,
-      icon: <BsPeople className="text-2xl" />,
-    },
-    {
-      source: "../../../public/assets/images/Navbar/FormsIcon.svg",
-      title: "Forms",
-      route: "/admin/forms",
-      icon: <FaWpforms className="text-2xl" />,
-    },
-    {
-      source: "../../../public/assets/images/Navbar/WorkflowIcon.svg",
-      title: "Soul Tracker",
-      route: "/admin/workflow",
-      icon: <GoWorkflow className="text-2xl" />,
-    },
-    {
-      source: "../../../public/assets/images/Navbar/SettingsIcon.svg",
-      title: "Settings",
-      route: "/admin/settings",
-      icon: <IoSettingsOutline className="text-2xl" />,
-    },
-    {
-      source: "../../../public/assets/images/Navbar/HelpIcon.svg",
-      title: "Help",
-      route: "/admin/help",
-      icon: <IoMdHelpCircleOutline className="text-2xl" />,
-    },
-  ];
-
   return (
-    <nav className="px-8 pt-16 inline-flex flex-col bg-DarkBlue text-[#99A0B7] text-[18px] h-screen font-azo font-medium sticky top-0 justify-between">
+    <nav className="px-4 pt-16 inline-flex flex-col bg-DarkBlue text-[#99A0B7] h-screen font-azo font-medium sticky top-0 justify-between">
       <div>
         <div className="flex items-center space-x-2 mb-10 pl-5 ">
           <img
@@ -90,7 +47,7 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
           {navList.map((item) => (
             <Link
               to={item.route}
-              className={` hover:bg-DarkBlueHover hover:text-white py-2 pl-5 pr-10 rounded-[10px] cursor-pointer ${
+              className={` hover:bg-DarkBlueHover hover:text-white py-2 pl-5 pr-6 rounded-[10px] cursor-pointer ${
                 // location.pathname === item.route && "bg-DarkBlueHover text-white"
                 active === item.title && "bg-DarkBlueHover text-white"
               }`}

@@ -43,6 +43,8 @@ import Members from "./pages/Members";
 import LoginWithEmail from "./pages/Signin/WithEmail/LoginWithEmail";
 import LoginWithNumber from "./pages/Signin/WithPhoneNumber/LoginWithNumber";
 import MembershipHistory from "./pages/Overview/Membership/Membership Profile/MembershipHistory";
+import Contacts from "./pages/Overview/Contacts/Contacts";
+import ContactDetails from "./pages/Overview/Contacts/ContactDetails";
 
 function App() {
   return (
@@ -133,7 +135,13 @@ function App() {
                 <Route path="sms" element={<SmsMessage />} />
               </Route>
               <Route path="forms" element={<NotBuilt active="Forms" />} />
-              <Route path="workflow" element={<NotBuilt active="Workflow" />} />
+              <Route path="contacts" element={<Contacts/>} />
+              <Route path="contacts">
+                  <Route
+                    path="detail"
+                    element={<ContactDetails />}
+                  />
+              </Route>
               <Route path="settings" element={<NotBuilt active="Settings" />} />
               <Route path="help" element={<NotBuilt active="Help" />} />
               <Route path="logout" element={<NotBuilt active="Logout" />} />

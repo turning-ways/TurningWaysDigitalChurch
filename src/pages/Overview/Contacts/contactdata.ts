@@ -1,0 +1,38 @@
+export const memberDetails = [
+    {
+      name: "dire",
+      phone: "09073210998",
+      assignedTo: "olumide",
+      label: "will attend service",
+      status: "soul lost",
+      modified: "10th July 2024",
+      id: 1,
+    },
+    {
+      name: "dire",
+      phone: "09073210998",
+      assignedTo: "olumide",
+      label: "will attend service",
+      status: "soul lost",
+      modified: "10th July 2024",
+      id: 2,
+    },
+    {
+      name: "dire",
+      phone: "09073210998",
+      assignedTo: "olumide",
+      label: "will attend service",
+      status: "soul lost",
+      modified: "10th July 2024",
+      id: 3,
+    },
+    {
+      name: "dire",
+      phone: "09073210998",
+      assignedTo: "olumide",
+      label: "will attend service",
+      status: "soul lost",
+      modified: "10th July 2024",
+      id: 4,
+    },
+  ];

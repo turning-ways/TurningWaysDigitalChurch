@@ -11,3 +11,8 @@
   font-family: azosansBold;
   src: url(/assets/fonts/AzoSans-Bold.ttf);
 }
+
+@font-face {
+  font-family: azosansSemiBold;
+  src: url(/assets/fonts/AzoSans-Medium.ttf);
+}

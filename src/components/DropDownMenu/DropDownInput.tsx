@@ -7,8 +7,8 @@ interface DropDownInputProps {
   items: string[];
   placeholder?: string;
   compulsory?: string;
-  value?:string;
-  onChange?: (e:string) => void;
+  value?: string;
+  onChange?: (e: string) => void;
   onSelect: (selectedItem: string) => void;
 }
 
@@ -32,19 +32,20 @@ export const DropDownInput: React.FC<DropDownInputProps> = ({
   return (
     <div className={"relative space-y-1 mb-4"}>
       <p className="text-[#727272]">
-        {text} <span className="text-[#61BD74]">{compulsory ? compulsory : ""}</span>
+        {text}{" "}
+        <span className="text-[#61BD74]">{compulsory ? compulsory : ""}</span>
       </p>
       <div
-        className="border border-[#EBEFF9] bg-[#ffffff] rounded-lg w-full px-3 py-1 flex items-center"
+        className="border border-[#D9D9D9] rounded-lg w-full px-3 py-1 flex items-center"
         onClick={() => setShowDropDownList(!showDropDownList)}
       >
         <input
-          className="outline-none w-full h-auto bg-inherit"
+          className="outline-none w-full h-auto bg-transparent"
           placeholder={placeholder}
           value={value}
           readOnly={true}
         />
-        <div className="border-l border-l-[#CFD9E0] h-10 mx-3" />
+        <div className="border-l border-l-[#D9D9D9] h-10 mx-3" />
         <TiArrowSortedDown className="cursor-pointer text-3xl" />
       </div>
       {showDropDownList && (

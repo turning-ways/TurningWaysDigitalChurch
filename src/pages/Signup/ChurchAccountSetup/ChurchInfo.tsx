@@ -1,7 +1,3 @@
-// import { z } from "zod";
-// import { useForm } from "react-hook-form";
-// import { zodResolver } from "@hookform/resolvers/zod";
-
 import AuthContainer from "../../../components/Container/AuthContainer";
 import Header from "../../../components/Heading/Header";
 import HeaderTwo from "../../../components/Heading/HeaderTwo";
