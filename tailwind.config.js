@@ -16,6 +16,7 @@ export default {
       azeret: ["Azeret Mono", "sans-serif"],
       azoBold: ["azosansBold", "sans-serif"],
       azo: ["azosans", "sans-serif"],
+      azoSemiBold: ["azosansSemiBold", "sans-serif"],
     },
     // screens: {
     //   sm: "500px",
