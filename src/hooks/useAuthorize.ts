@@ -10,6 +10,7 @@ interface AuthResponse {
         _id: string;
         name: string;
       };
+      photo:string;
     };
   };
 }

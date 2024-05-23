@@ -109,12 +109,14 @@ interface UserAuth {
     first_name: string;
     last_name: string;
     churchId: { _id: string; name: string };
+    photo:string;
   } | null;
   setUser: (
     user: {
       first_name: string;
       last_name: string;
       churchId: { _id: string; name: string };
+      photo:string;
     } | null
   ) => void;
 }
