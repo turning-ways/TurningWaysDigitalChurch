@@ -14,7 +14,11 @@ const AllMembers = () => {
 
   const [page, setPage] = useState(1);
 
-  const { data: members, isPending, refetch } = useGetAllMembers({ page, pageSize });
+  const {
+    data: members,
+    isPending,
+    refetch,
+  } = useGetAllMembers({ page, pageSize });
 
   const [memberCheckboxes, setMemberCheckboxes] = useState(
     Array(members?.length).fill(false)
@@ -85,8 +89,8 @@ const AllMembers = () => {
   };
 
   useEffect(() => {
-    refetch()
-  }, [refetch])
+    refetch();
+  }, [refetch]);
 
   return (
     <>
@@ -116,7 +120,16 @@ const AllMembers = () => {
                     checked={memberCheckboxes[index]}
                     onChange={() => handleMemberCheckboxChange(index)}
                   />
-                  <p>pic</p>
+                  {item.photo ? (
+                    <img
+                      src={item.photo}
+                      className="rounded-full w-10 h-10f"
+                    />
+                  ) : (
+                    <div className="bg-red-200 w-10 flex justify-center items-center">
+                      P
+                    </div>
+                  )}
                 </div>
                 <div>{item.first_name}</div>
                 <div>{item.email}</div>
