@@ -2,6 +2,7 @@
 import { useState } from "react";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import * as XLSX from "xlsx";
+import MemberTable from "../../../components/Table/MemberTable";
 
 const MemberList = () => {
   const { data: members } = useGetAllMembers({ page: 1, pageSize: 100000 });
@@ -65,15 +66,18 @@ const MemberList = () => {
 
   return (
     <>
-      <button onClick={() => console.log(members)}>click</button>
       <div className="flex justify-between font-medium mt-10">
-        <ul className="border flex border-[#CBCBCB] text-[#636363] rounded-[5px]">
+        <ul className="border flex border-[#CBCBCB] text-[#636363] rounded-[5px] sm:w-auto ">
           {items.map((item: { name: string }, index: number) => (
             <li
               className={`p-3 ${
                 items.length - 1 !== index && "border-r"
-              } cursor-pointer ${
+              } cursor-pointer text-sm sm:text-base w-full sm:w-auto ${
                 active === item.name && "bg-[#E3F2FE] text-[#268DE9]"
+              } ${item.name === "Upcoming Anniversary" && "hidden sm:block"} ${
+                (item.name === "Upcoming Birthday" ||
+                  item.name === "First Timers") &&
+                "whitespace-nowrap"
               }`}
               onClick={() => {
                 setActive(item.name);
@@ -85,7 +89,7 @@ const MemberList = () => {
           ))}
         </ul>
         <button
-          className="bg-[#758CD7] text-white  px-4 py-2 rounded-md"
+          className="bg-[#758CD7] text-white  px-4 py-2 rounded-md hidden md:block"
           onClick={handleOnExport}
         >
           Export Data
@@ -94,15 +98,16 @@ const MemberList = () => {
       </div>
       {/* component 5 closed */}
       <div>
-        <div className="grid grid-cols-9 gap-4 border mt-10 border-b-0 py-3 text-[#A3AED0] pl-2">
+        <div className="sm:grid grid-cols-9 gap-4 border mt-10 border-b-0 py-3 text-[#A3AED0] hidden pl-2">
           <div className="col-span-2">Name</div>
           <div className="col-span-1">Gender</div>
           <div className="col-span-2">Phone Number</div>
-          <div className="col-span-2">Email</div>
-          <div className="col-span-1">DOB</div>
+          <div className="col-span-3 xl:col-span-2">Email</div>
+          <div className="col-span-1 hidden xl:block">DOB</div>
           <div className="col-span-1">Marital Status</div>
           {/* Example data */}
         </div>
+        <div className="border-t mt-4 border-[#BDBDBD] sm:hidden" />
         {active === "All" &&
           members?.map(
             (
@@ -116,72 +121,22 @@ const MemberList = () => {
               },
               index: number
             ) => (
-              <div
-                className={`grid grid-cols-9 gap-4 border-r border-l border-t py-3 pl-2 ${
-                  members.length - 1 === index && "border-b"
-                }`}
-              >
-                <div className="col-span-2">{item.first_name}</div>
-                <div className="col-span-1">{item.gender}</div>
-                <div className="col-span-2">{item.phone.MainPhone}</div>
-                <div className="col-span-2">{item.email}</div>
-                <div className="col-span-1">
-                  {item.dateOfBirth?.slice(0, 10)}
-                </div>
-                <div className="col-span-1">Single</div>
-              </div>
+            
+               <MemberTable length={members.length} index={index} first_name={item.first_name} dateOfBirth={item.dateOfBirth.slice(0,10)} gender={item.gender} email={item.email} phone={item.phone.MainPhone} />
+      
             )
           )}
         {active === "First Timers" &&
-          firstTimers?.map((first_timer: any, index: number) => (
-            <div
-              className={`grid grid-cols-8 gap-4 border-r border-l border-t py-3 pl-2 ${
-                firstTimers.length - 1 === index && "border-b"
-              }`}
-            >
-              <div className="col-span-2">{first_timer.fullname}</div>
-              <div className="col-span-1">{first_timer.gender}</div>
-              <div className="col-span-1">{}</div>
-              <div className="col-span-2">{first_timer.email}</div>
-              <div className="col-span-1">
-                {first_timer.dateOfBirth?.slice(0, 10)}
-              </div>
-              <div className="col-span-1">Single</div>
-            </div>
+          firstTimers?.map((item: any, index: number) => (
+            <MemberTable length={firstTimers.length} index={index} first_name={item.first_name} dateOfBirth={item.dateOfBirth.slice(0,10)} gender={item.gender} email={item.email} phone={item.phone.MainPhone} />
           ))}
         {active === "Upcoming Birthday" &&
-          birthdayCelebrants?.map((celebrants: any, index: number) => (
-            <div
-              className={`grid grid-cols-8 gap-4 border-r border-l border-t py-3 pl-2 ${
-                birthdayCelebrants.length - 1 === index && "border-b"
-              }`}
-            >
-              <div className="col-span-2">{celebrants.fullname}</div>
-              <div className="col-span-1">{celebrants.gender}</div>
-              <div className="col-span-1">{celebrants.phone.MainPhone}</div>
-              <div className="col-span-2">{celebrants.email}</div>
-              <div className="col-span-1">
-                {celebrants.dateOfBirth?.slice(0, 10)}
-              </div>
-              <div className="col-span-1">Single</div>
-            </div>
+          birthdayCelebrants?.map((item: any, index: number) => (
+            <MemberTable length={birthdayCelebrants.length} index={index} first_name={item.first_name} dateOfBirth={item.dateOfBirth.slice(0,10)} gender={item.gender} email={item.email} phone={item.phone.MainPhone} />
           ))}
         {active === "Upcoming Anniversary" &&
-          upcomingAnniversary?.map((celebrants: any, index: number) => (
-            <div
-              className={`grid grid-cols-8 gap-4 border-r border-l border-t py-3 pl-2 ${
-                upcomingAnniversary.length - 1 === index && "border-b"
-              }`}
-            >
-              <div className="col-span-2">{celebrants.fullname}</div>
-              <div className="col-span-1">{celebrants.gender}</div>
-              <div className="col-span-1">{celebrants.phone.MainPhone}</div>
-              <div className="col-span-2">{celebrants.email}</div>
-              <div className="col-span-1">
-                {celebrants.dateOfBirth?.slice(0, 10)}
-              </div>
-              <div className="col-span-1">Single</div>
-            </div>
+          upcomingAnniversary?.map((item: any, index: number) => (
+            <MemberTable length={upcomingAnniversary.length} index={index} first_name={item.first_name} dateOfBirth={item.dateOfBirth.slice(0,10)} gender={item.gender} email={item.email} phone={item.phone.MainPhone} />
           ))}
       </div>
     </>

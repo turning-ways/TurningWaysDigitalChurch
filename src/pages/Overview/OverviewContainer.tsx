@@ -11,9 +11,9 @@ const OverviewContainer: React.FC<OverviewContainerProps> = ({
   active,
 }) => {
   return (
-    <div className="flex relative">
+    <div className="lg:flex relative max-w-[1440px] lg:mx-auto">
       <Navbar active={active} />
-      <div className="p-10 flex-grow font-azo h-screen overflow-y-scroll bg-[#FFFDFD] flex flex-col">
+      <div className=" p-5 sm:p-10 flex-grow font-azo h-screen overflow-y-scroll bg-[#FFFDFD] flex flex-col">
         {children}
       </div>
     </div>
