@@ -131,9 +131,7 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
             {user?.photo ? (
               <img src={user.photo} className="w-10 h-10 rounded-full" />
             ) : (
-              <div
-                className="border-black border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer z-50"
-              >
+              <div className="border-black border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer z-50">
                 {first_name && first_name?.charAt(0) + last_name?.charAt(0)}
               </div>
             )}
@@ -149,11 +147,13 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
         }`}
       >
         <div className="flex space-x-2 items-center">
-          <div className="border-black border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer">
-            <p className="text-[#2A2A2A]">
+          {user?.photo ? (
+            <img src={user.photo} className="w-10 h-10 rounded-full" />
+          ) : (
+            <div className="border-black border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer z-50">
               {first_name && first_name?.charAt(0) + last_name?.charAt(0)}
-            </p>
-          </div>
+            </div>
+          )}
           <div>
             <p>Administrator</p>
             <p className="text-sm text-[#555555]">
