@@ -121,7 +121,7 @@ const LandingPage = () => {
                 className="w-4 lg:w-fit"
                 alt=""
               />
-              <p className=" lg:text-center text-[#67728A] text-sm lg:text-lg lg:text-md font-medium lg:w-full ">
+              <p className=" lg:text-center text-[#67728A] text-sm lg:text-base font-medium lg:w-full ">
                 New to TurningWays, Join Now
               </p>
             </div>

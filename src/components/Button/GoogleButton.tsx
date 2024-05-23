@@ -5,7 +5,7 @@ const GoogleButton = () => {
       href="https://digital-church.onrender.com/api/v1/users/auth/google/admin"
     >
       <img src="/assets/images/Google.svg" alt="" className="w-4 lg:w-fit" />
-      <p className=" lg:text-center lg:w-full text-[#67728A] text-sm lg:text-lg font-medium">
+      <p className=" lg:text-center lg:w-full text-[#67728A] text-sm lg:text-base font-medium">
         Continue with google
       </p>
     </a>
