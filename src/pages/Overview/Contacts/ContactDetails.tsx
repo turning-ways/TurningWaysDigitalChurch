@@ -1,11 +1,13 @@
 import { IoIosArrowBack } from "react-icons/io";
 import Header from "../Header";
 import OverviewContainer from "../OverviewContainer";
-import { BiSend, BiSolidDownArrow } from "react-icons/bi";
+import { BiSend } from "react-icons/bi";
 import { DropDownInput } from "../../../components/DropDownMenu/DropDownInput";
 import { useState } from "react";
 import Heading from "./Heading";
 import { IoIosAddCircle, IoIosClose } from "react-icons/io";
+import Information from "./Information";
+import { useNavigate } from "react-router-dom";
 
 const ContactDetails = () => {
   const [membership, setMembership] = useState("");
@@ -18,27 +20,18 @@ const ContactDetails = () => {
   };
 
   const [background, setBackGround] = useState<number | null>(null);
+
+  const navigate = useNavigate();
   return (
     <OverviewContainer active="Contacts">
       <Header text="Contacts" />
-      <div className="bg-[#F1F0F3] rounded-lg p-2 w-fit cursor-pointer h-fit my-6">
+      <button
+        className="bg-[#F1F0F3] rounded-lg p-2 w-fit cursor-pointer h-fit my-6"
+        onClick={() => navigate("/admin/contacts")}
+      >
         <IoIosArrowBack className=" text-2xl w-auto text-[#6C6C6D]" />
-      </div>
-      <Heading text="Contact Information" />
-      <h2 className="mt-4">Ikeokwu Somtochi Purity</h2>
-      <div className="flex justify-between items-center">
-        <p className="text-sm text-[#A1A0A0]">
-          Created: 12th May 2024 | Last Modified: 12th May 2024
-        </p>
-        <div className="flex space-x-4">
-          <button className="bg-[#A561BD] text-white flex items-center py-2 px-6 rounded-lg space-x-1">
-            <span>Open</span> <BiSolidDownArrow />
-          </button>
-          <button className="border border-[#17275B] text-[#17275B] px-4 rounded-lg">
-            Edit Contact
-          </button>
-        </div>
-      </div>
+      </button>
+      <Information />
       <div className="grid grid-cols-2 gap-x-4 ">
         <DropDownInput
           text="Membership:"

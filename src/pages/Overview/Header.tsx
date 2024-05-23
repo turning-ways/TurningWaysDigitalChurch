@@ -59,8 +59,6 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
     }
   };
 
-  
-
   return (
     <div className="space-y-5 font-azo flex flex-col relative">
       <div className="flex items-center gap-x-2">
@@ -157,9 +155,7 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
             </p>
           </div>
         </div>
-        <h1
-          className="text-[#7F7F7F] hover:text-[#555555] cursor-pointer"
-        >
+        <h1 className="text-[#7F7F7F] hover:text-[#555555] cursor-pointer">
           Profile
         </h1>
         <h1 className="text-[#7F7F7F] hover:text-[#555555] cursor-pointer">

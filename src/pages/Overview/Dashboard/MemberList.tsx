@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
-import * as XLSX from 'xlsx';
+import * as XLSX from "xlsx";
 
 const MemberList = () => {
-  const { data: members } = useGetAllMembers({page:1, pageSize: 100000});
+  const { data: members } = useGetAllMembers({ page: 1, pageSize: 100000 });
   const items = [
     { name: "All" },
     { name: "First Timers" },
@@ -65,6 +65,7 @@ const MemberList = () => {
 
   return (
     <>
+      <button onClick={() => console.log(members)}>click</button>
       <div className="flex justify-between font-medium mt-10">
         <ul className="border flex border-[#CBCBCB] text-[#636363] rounded-[5px]">
           {items.map((item: { name: string }, index: number) => (
