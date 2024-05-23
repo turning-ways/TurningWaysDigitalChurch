@@ -135,12 +135,9 @@ function App() {
                 <Route path="sms" element={<SmsMessage />} />
               </Route>
               <Route path="forms" element={<NotBuilt active="Forms" />} />
-              <Route path="contacts" element={<Contacts/>} />
+              <Route path="contacts" element={<Contacts />} />
               <Route path="contacts">
-                  <Route
-                    path="detail"
-                    element={<ContactDetails />}
-                  />
+                <Route path="detail" element={<ContactDetails />} />
               </Route>
               <Route path="settings" element={<NotBuilt active="Settings" />} />
               <Route path="help" element={<NotBuilt active="Help" />} />

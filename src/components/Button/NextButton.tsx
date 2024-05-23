@@ -7,7 +7,7 @@ interface NextButtonProps {
 
 const NextButton: React.FC<NextButtonProps> = ({ isPending, text }) => {
   return (
-    <button className="w-full py-3 bg-primaryDark hover:bg-primary text-md lg:text-xl font-medium rounded-[10px] lg:rounded-[20px] text-white flex justify-center">
+    <button className="w-full py-3 bg-primaryDark hover:bg-primary text-md text-sm lg:text-xl font-medium rounded-[10px] lg:rounded-[20px] text-white flex justify-center">
       {!isPending ? (
         <p>{text ? text : "Next"}</p>
       ) : (
