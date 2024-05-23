@@ -29,7 +29,7 @@ const LandingPage = () => {
   const { mutate, isPending } = useLogin();
   return (
     <div className="flex justify-center">
-      <div className="px-10 md:px-20 lg:px-10 py-6 max-w-[1440px]">
+      <div className="px-10 md:px-20 py-6 max-w-[1440px]">
         <nav className="flex justify-between items-center">
           <img
             src="/assets/images/turningwayslogo.svg"
@@ -50,7 +50,7 @@ const LandingPage = () => {
             </li>
           </ul>
         </nav>
-        <main className="lg:grid grid-cols-[1fr,1fr]  mt-5  gap-x-10">
+        <main className="lg:grid grid-cols-[1fr,1fr] xl:grid-cols-[500px,1fr]  mt-5  gap-x-10">
           <form
             onSubmit={handleSubmit((data) => {
               const { inputKey, password } = data;
@@ -106,7 +106,7 @@ const LandingPage = () => {
               </div>
             </div>
             <NextButton text="Sign In" isPending={isPending} />
-            <div className="flex items-center mt-3 text-[#718096] w-full lg:max-w-[550px]">
+            <div className="flex items-center mt-3 text-[#718096] w-full">
               <div className="w-full h-[1px] bg-[#A0AEC0]" />
               <h2 className="mx-5 text-[#718096] text-xs">OR</h2>
               <div className="w-full h-[1px] bg-[#A0AEC0]" />
@@ -126,7 +126,7 @@ const LandingPage = () => {
               </p>
             </div>
           </form>
-          <div className="hidden lg:flex items-center justify-center p-8">
+          <div className="hidden lg:flex items-center justify-center ">
             <div className="relative">
               <img
                 src="/assets/images/Dashboard.svg"
