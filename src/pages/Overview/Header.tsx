@@ -124,19 +124,21 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
             }
           />
           <IoMdNotificationsOutline style={{ fontSize: "45px" }} />
-          <div className="flex space-x-2 items-center">
+          <div
+            className="flex space-x-2 items-center"
+            onClick={() => setShowProfile(!showProfile)}
+          >
             {user?.photo ? (
               <img src={user.photo} className="w-10 h-10 rounded-full" />
             ) : (
               <div
                 className="border-black border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer z-50"
-                onClick={() => setShowProfile(!showProfile)}
               >
                 {first_name && first_name?.charAt(0) + last_name?.charAt(0)}
               </div>
             )}
             <div>
-              <p onClick={() => console.log(user)}>Admin</p>
+              <p>Admin</p>
             </div>
           </div>
         </div>
