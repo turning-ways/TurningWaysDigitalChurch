@@ -19,16 +19,16 @@ export   const navList = [
     icon: <BsPeople className="text-2xl" />,
   },
   {
-    source: "../../../public/assets/images/Navbar/FormsIcon.svg",
-    title: "Forms",
-    route: "/admin/forms",
-    icon: <FaWpforms className="text-2xl" />,
-  },
-  {
     source: "../../../public/assets/images/Navbar/WorkflowIcon.svg",
     title: "Contacts",
     route: "/admin/contacts",
     icon: <GoWorkflow className="text-2xl" />,
+  },
+  {
+    source: "../../../public/assets/images/Navbar/FormsIcon.svg",
+    title: "Forms",
+    route: "/admin/forms",
+    icon: <FaWpforms className="text-2xl" />,
   },
   {
     source: "../../../public/assets/images/Navbar/SettingsIcon.svg",
