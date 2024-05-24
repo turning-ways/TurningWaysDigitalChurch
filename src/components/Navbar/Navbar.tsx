@@ -39,7 +39,7 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
   return (
     <>
       <m.div
-        className="cursor-pointer  flex flex-col lg:hidden px-5 sm:px-10 py-5"
+        className="cursor-pointer  flex flex-col lg:hidden px-5 sm:px-10 py-5 fixed z-50"
         onClick={() => setIsOpen(!isOpen)}
         initial={{ rotate: 0, opacity: 1 }}
         transition={{ ease: "easeInOut", duration: 0.3 }}
@@ -63,7 +63,11 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
           transition={{ ease: "easeInOut", duration: 0.3 }}
         />
       </m.div>
-      <nav className="hidden px-4 pt-16 lg:inline-flex flex-col bg-DarkBlue text-[#99A0B7] h-screen font-azo font-medium sticky top-0 justify-between">
+      <nav
+        className={`${
+          isOpen ? "w-1/2 fixed z-20" : "hidden"
+        }   lg:w-auto px-4 pt-16 lg:inline-flex flex-col bg-DarkBlue text-[#99A0B7] h-screen font-azo font-medium lg:sticky top-0 justify-between`}
+      >
         <div>
           <div className="flex items-center space-x-2 mb-10 pl-5 mx-auto">
             <img
