@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import AddMemberBtn from "../AddMemberBtn";
+import AddMemberBtn from "../../../components/Button/AddMemberBtn";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { ThreeDots } from "react-loader-spinner";
+import { SlArrowRight } from "react-icons/sl";
 
 const AllMembers = () => {
   const navigate = useNavigate();
@@ -76,7 +77,7 @@ const AllMembers = () => {
           onClick={() => setPage(i)}
           className={
             i === page
-              ? "active bg-[#AAA9A9] rounded-full w-12 h-12 text-white flex items-center justify-center"
+              ? "active bg-[#AAA9A9] rounded-full w-8 h-8 md:w-12 md:h-12 text-white flex items-center justify-center"
               : ""
           }
         >
@@ -96,8 +97,8 @@ const AllMembers = () => {
     <>
       {!isPending ? (
         <div className="flex flex-col items-center">
-          <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] gap-4 border-b py-2  w-full">
-            <div className="flex space-x-1 items-center">
+          <div className="md:grid grid-cols-[70px,1fr,1fr,1fr,1fr,100px] gap-4 gap-x-6 border-b py-2  w-full hidden">
+            <div className="flex space-x-3 items-center">
               <input
                 type="checkbox"
                 checked={selectAll}
@@ -107,50 +108,68 @@ const AllMembers = () => {
             </div>
             <div className="">Name</div>
             <div className="">Email</div>
-            <div className="">Phone Number</div>
+            <div className="">
+              Phone <span className="hidden lg:inline-block">Number</span>
+            </div>
             <div className="">Gender</div>
           </div>
 
+          <div className="border-b w-full border-[#BDBDBD] md:hidden" />
+
           {members && members?.length !== 0 ? (
             members.map((item: any, index: number) => (
-              <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] border-b py-4  text-[#636363] gap-4 w-full items-center">
-                <div className="flex space-x-2 items-center">
-                  <input
-                    type="checkbox"
-                    checked={memberCheckboxes[index]}
-                    onChange={() => handleMemberCheckboxChange(index)}
-                  />
-                  {item.photo ? (
-                    <img
-                      src={item.photo}
-                      className="rounded-full w-10 h-10"
+              <>
+                <div className="md:grid grid-cols-[70px,1fr,1fr,1fr,1fr,100px] border-b py-4  text-[#636363] gap-4 gap-x-6 w-full items-center hidden">
+                  <div className="flex space-x-3 items-center">
+                    <input
+                      type="checkbox"
+                      checked={memberCheckboxes[index]}
+                      onChange={() => handleMemberCheckboxChange(index)}
                     />
-                  ) : (
-                    <div className="bg-red-200 w-10 flex justify-center items-center">
-                      P
+                    {item.photo ? (
+                      <img
+                        src={item.photo}
+                        className="rounded-full w-10 h-10"
+                      />
+                    ) : (
+                      <div className="bg-red-200 w-10 flex justify-center items-center">
+                        P
+                      </div>
+                    )}
+                  </div>
+                  <div className="truncate ">{item.fullname}</div>
+                  <div className="truncate">{item.email}</div>
+                  <div className="truncate">{item.phone?.MainPhone}</div>
+                  <div>{item.gender}</div>
+                  <div
+                    className="flex items-center gap-x-2 text-secondary cursor-pointer whitespace-nowrap justify-end"
+                    onClick={() => {
+                      navigate(
+                        `/admin/directory/member/personal-information?id=${item._id}`
+                      );
+                    }}
+                  >
+                    <p>View more</p> <FaArrowRight />
+                  </div>
+                </div>
+                <div className="w-full md:hidden">
+                  <div className="border-b border-[#BDBDBD]  flex py-2 text-[#555454] px-3 justify-between items-center">
+                    <div className="flex space-x-2">
+                      <input type="checkbox" />
+                      <div>
+                        <p className="font-azoSemiBold">Temidire Owoeye</p>
+                        <p>09073210998</p>
+                      </div>
                     </div>
-                  )}
+                    <SlArrowRight />
+                  </div>
                 </div>
-                <div>{item.first_name}</div>
-                <div>{item.email}</div>
-                <div>{item.phone?.MainPhone}</div>
-                <div>{item.gender}</div>
-                <div
-                  className="flex items-center gap-x-2 text-secondary cursor-pointer"
-                  onClick={() => {
-                    navigate(
-                      `/admin/directory/member/personal-information?id=${item._id}`
-                    );
-                  }}
-                >
-                  <p>View more</p> <FaArrowRight />
-                </div>
-              </div>
+              </>
             ))
           ) : (
             <div>There's no member</div>
           )}
-          <div className="flex justify-center items-center space-x-10 absolute bottom-10 ">
+          <div className="flex justify-center items-center space-x-10 absolute bottom-14 text-sm md:text-base lg:bottom-10">
             <button
               className="flex items-center space-x-3 cursor-pointer"
               onClick={() => setPage((page) => page - 1)}

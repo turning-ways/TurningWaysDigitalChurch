@@ -56,7 +56,7 @@ const MembershipProfile = () => {
     <OverviewContainer active="Directory">
       {!isPending ? (
         <>
-          <Header text="Profile Information" />
+          <Header text="Profile" />
           <SubHeader onNoteClick={() => setOpenNote(true)} />
           <InformationHeader route={routes} />
           <Outlet />

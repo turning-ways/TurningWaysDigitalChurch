@@ -53,7 +53,7 @@ const ChurchInformation = () => {
 
   const navigate = useNavigate();
   return (
-    <div className="mt-5">
+    <div className="">
       {information.map((item) => (
         <InformationInput text={item.name} subText={item.value} />
       ))}

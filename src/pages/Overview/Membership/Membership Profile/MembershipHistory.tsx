@@ -12,7 +12,7 @@ const MembershipHistory = () => {
   const memberId = queryParams.get("id");
 
   return (
-    <div className="mt-10">
+    <div className="">
       {data && (
         <div>
           <div className="px-5 pt-6 pb-2 border-b space-y-2">

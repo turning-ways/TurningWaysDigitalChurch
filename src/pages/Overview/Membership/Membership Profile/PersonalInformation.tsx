@@ -1,4 +1,4 @@
-import { IoIosArrowForward } from "react-icons/io";
+// import { IoIosArrowForward } from "react-icons/io";
 import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
 import { useNavigate } from "react-router-dom";
 
@@ -20,35 +20,35 @@ const PersonalInformation = () => {
 
   const navigate = useNavigate();
   return (
-    <div className="mt-10">
+    <div className="">
       {data && (
         <div className=" flex flex-col">
-          <div className="flex p-5 bg-[#F3F1F1] justify-between items-center ">
+          {/* <div className="flex p-5 bg-[#F3F1F1] justify-between items-center ">
             <p className="font-medium text-[#414040]">Household</p>
             <IoIosArrowForward className="text-[28px]" />
-          </div>
-          <div className="px-5 pt-6 pb-2 border-b space-y-2">
+          </div> */}
+          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
             <p className="text-[#727272]">First Name</p>
             <p className="outline-none text-[#434343] text-lg w-full">
               {data?.member?.first_name?.slice(0, 1).toUpperCase() +
                 data?.member?.first_name?.slice(1)}
             </p>
           </div>
-          <div className="px-5 pt-6 pb-2 border-b space-y-2">
+          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
             <p className="text-[#727272]">Last Name</p>
             <p className="outline-none text-[#434343] text-lg w-full">
               {data.member?.last_name?.slice(0, 1).toUpperCase() +
                 data.member?.last_name?.slice(1)}
             </p>
           </div>
-          <div className="px-5 pt-6 pb-2 border-b space-y-2">
+          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
             <p className="text-[#727272]">Middle Name</p>
             <p className="outline-none text-[#434343] text-lg w-full">
               {data?.member?.middle_name?.slice(0, 1).toUpperCase() +
                 data?.member?.middle_name?.slice(1)}
             </p>
           </div>
-          <div className="px-5 pt-6 pb-2 border-b space-y-2">
+          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
             <p className="text-[#727272]">Prefix</p>
             <p className="outline-none text-[#434343] text-lg w-full">
               {data.member.prefix
@@ -57,7 +57,7 @@ const PersonalInformation = () => {
                 : ""}
             </p>
           </div>
-          <div className="px-5 pt-6 pb-2 border-b space-y-2">
+          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
             <p className="text-[#727272]">Suffix</p>
             <p className="outline-none text-[#434343] text-lg w-full">
               {data.member.suffix
@@ -66,14 +66,14 @@ const PersonalInformation = () => {
                 : ""}
             </p>
           </div>
-          <div className="px-5 pt-6 pb-2 border-b space-y-2">
+          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
             <p className="text-[#727272]">Gender</p>
             <p className="outline-none text-[#434343] text-lg w-full">
               {data?.member?.gender?.slice(0, 1).toUpperCase() +
                 data?.member?.gender?.slice(1)}
             </p>
           </div>
-          <div className="px-5 pt-6 pb-2 border-b space-y-2">
+          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
             <p className="text-[#727272]">Date of Birth</p>
             <p className="outline-none text-[#434343] text-lg w-full">
               {formatDate(data?.member?.dateOfBirth)}

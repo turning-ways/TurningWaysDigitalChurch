@@ -26,7 +26,7 @@ const MemberTable: React.FC<MemberTableProps> = ({
           length - 1 === index && "border-b"
         }`}
       >
-        <div className="col-span-2">{first_name}</div>
+        <div className="col-span-2 truncate">{first_name}</div>
         <div className="col-span-1">{gender}</div>
         <div className="col-span-2 truncate">{phone}</div>
         <div className="col-span-3 xl:col-span-2 truncate">{email}</div>

@@ -22,12 +22,14 @@ const QuickActions = () => {
   const navigate = useNavigate();
   const { data: members } = useGetAllMembers({ page: 1, pageSize: 10000000 });
   return (
-    <div className="flex justify-between my-10">
-      <p className="text-xl">{members ? members.length : "..."} Persons</p>
-      <ul className="flex space-x-6 text-[18px] text-[#8A8989] ">
+    <div className="flex justify-between my-10 flex-col space-y-3 lg:flex-row lg:space-y-0">
+      <p className="lg:text-lg text-[#7F7E7E] text-base">
+        {members ? members.length : "..."} Persons
+      </p>
+      <ul className="flex space-x-6 text-[18px] text-[#8A8989] overflow-x-scroll scrollbar-hide">
         {items.map((item) => (
           <li
-            className="flex items-center space-x-1 p-2 cursor-pointer hover:text-[#555555]"
+            className="flex items-center space-x-1 p-2 cursor-pointer hover:text-[#555555] whitespace-nowrap "
             onClick={() => {
               if (item.name === "Send Bulk Message") setOpen(!open);
             }}
@@ -39,7 +41,7 @@ const QuickActions = () => {
       </ul>
       {open && (
         <Modal>
-          <div className="bg-white px-[26px] py-[37px] rounded-2xl text-lg flex flex-col gap-6">
+          <div className="bg-white px-[26px] py-[37px] rounded-2xl lg:text-lg flex flex-col gap-6">
             <ul className="text-[#7F7F7F] flex flex-col gap-6 w-[334px]">
               <li
                 className="flex space-x-3 items-center cursor-pointer hover:text-[#555555]"

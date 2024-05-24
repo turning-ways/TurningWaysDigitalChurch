@@ -71,10 +71,8 @@ const Dashboard = () => {
                 ? "border-b-[#446DE3] text-[#446DE3]"
                 : "border-b-[#B6B5B5] text-[#B6B5B5]"
             } items-center cursor-pointer ${
-              item.id === "lastQuarter" || item.id === "ytd"
-                ? "hidden sm:flex"
-                : "flex "
-            }`}
+              item.id === "ytd" ? "hidden md:flex" : "flex "
+            } ${item.id === "lastQuarter" ? "hidden sm:flex" : "flex "}`}
             key={i}
             onClick={() => {
               setActive(item.id);
@@ -89,7 +87,7 @@ const Dashboard = () => {
       {/* component 3 */}
       <div
         className="mt-10 grid gap-6 text-[#999DA4] 
-  grid-cols-[200px,200px] sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 justify-center"
+  grid-cols-[130px,130px] min-[420px]:grid-cols-[130px,130px,130px] max-[600px]: sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 px-2 justify-center"
       >
         <div className="flex rounded-[10px] overflow-hidden custom-box-shadow">
           <div className="w-2 bg-[#F2CCCC]" />

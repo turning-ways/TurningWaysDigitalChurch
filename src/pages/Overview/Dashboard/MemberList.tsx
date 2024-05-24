@@ -2,7 +2,7 @@
 import { useState } from "react";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import * as XLSX from "xlsx";
-import MemberTable from "../../../components/Table/MemberTable";
+import MemberTable from "../../../components/Table/DashboardTable";
 
 const MemberList = () => {
   const { data: members } = useGetAllMembers({ page: 1, pageSize: 100000 });
@@ -104,7 +104,7 @@ const MemberList = () => {
           <div className="col-span-2">Phone Number</div>
           <div className="col-span-3 xl:col-span-2">Email</div>
           <div className="col-span-1 hidden xl:block">DOB</div>
-          <div className="col-span-1">Marital Status</div>
+          <div className="col-span-1">Status</div>
           {/* Example data */}
         </div>
         <div className="border-t mt-4 border-[#BDBDBD] sm:hidden" />
