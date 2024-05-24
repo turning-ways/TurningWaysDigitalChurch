@@ -157,8 +157,8 @@ const AllMembers = () => {
                     <div className="flex space-x-2">
                       <input type="checkbox" />
                       <div>
-                        <p className="font-azoSemiBold">Temidire Owoeye</p>
-                        <p>09073210998</p>
+                        <p className="font-azoSemiBold">{item.fullname}</p>
+                        <p>{item.phone.MainPhone}</p>
                       </div>
                     </div>
                     <SlArrowRight />

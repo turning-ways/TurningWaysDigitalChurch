@@ -25,7 +25,7 @@ const OrganizationInfo = () => {
 
   return (
     <>
-      <AuthContainer center="sm:items-center h-screen">
+      <AuthContainer center="sm:items-center h-screen pt-16 md:pt-0">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -55,7 +55,10 @@ const OrganizationInfo = () => {
             </div>
             <div className="relative">
               <HeaderTwo>Is this a parent church?</HeaderTwo>
-              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center" onClick={() => setShow(!show)}>
+              <div
+                className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center"
+                onClick={() => setShow(!show)}
+              >
                 <input
                   className="outline-none w-full h-auto bg-inherit"
                   placeholder="Yes / No"

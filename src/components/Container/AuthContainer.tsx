@@ -8,11 +8,13 @@ interface AuthContainerProps {
 const AuthContainer: React.FC<AuthContainerProps> = ({ children, center }) => {
   return (
     <div className="relative bg-[#FFFDFD]">
-      <div
-        className="bg-[#F5F7FD] fixed m-6 p-2 cursor-pointer rounded-full"
-        onClick={() => window.history.back()}
-      >
-        <MdOutlineKeyboardArrowLeft className="text-4xl text-[#162966]" />
+      <div className="bg-white w-full p-6 fixed md:w-fit md:bg-transparent z-50">
+        <div
+          className="bg-[#F5F7FD] w-fit  p-2 cursor-pointer rounded-full top-0"
+          onClick={() => window.history.back()}
+        >
+          <MdOutlineKeyboardArrowLeft className="text-4xl text-[#162966]" />
+        </div>
       </div>
       <div className={`h-full overflow-y-scroll px-8 lg:px-0 flex ${center}`}>
         <div className="flex flex-col py-10 w-full overflow-y-scroll max-w-[550px] mx-auto scrollbar-hide">

@@ -39,7 +39,7 @@ const PersonalInfo = () => {
 
   const handleSelectGender = (selectedItem: string) => {
     setGenderValue(selectedItem);
-    setShowGender(false)
+    setShowGender(false);
   };
 
   // const { mutate, isPending } = useAddMember();
@@ -62,7 +62,7 @@ const PersonalInfo = () => {
 
   return (
     <>
-      <AuthContainer center={" h-screen"}>
+      <AuthContainer center={" h-screen pt-16 md:pt-0"}>
         <form
           className=""
           onSubmit={(e) => {
@@ -189,7 +189,10 @@ const PersonalInfo = () => {
             </div>
             <div className="relative">
               <HeaderTwo>What is your role in church?</HeaderTwo>
-              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center" onClick={() => setShowRoles(!showRoles)}>
+              <div
+                className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center"
+                onClick={() => setShowRoles(!showRoles)}
+              >
                 <input
                   className="outline-none w-full h-auto bg-inherit"
                   placeholder="Admin"
@@ -212,7 +215,10 @@ const PersonalInfo = () => {
             </div>
             <div className="relative">
               <HeaderTwo>How did you hear about us?</HeaderTwo>
-              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center" onClick={() => setShowHearAbout(!showHearAbout)}>
+              <div
+                className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center"
+                onClick={() => setShowHearAbout(!showHearAbout)}
+              >
                 <input
                   className="outline-none w-full h-auto bg-inherit"
                   placeholder="Social Media"

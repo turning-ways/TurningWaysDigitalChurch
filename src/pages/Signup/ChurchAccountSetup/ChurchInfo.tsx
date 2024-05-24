@@ -74,7 +74,7 @@ const ChurchInfo = () => {
   }, []);
   return (
     <>
-      <AuthContainer center="sm:items-center pb-10">
+      <AuthContainer center="pt-16 pb-10">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -224,8 +224,8 @@ const ChurchInfo = () => {
               />
             </div>
 
-            <div className="lg:flex gap-6">
-              <div className="mb-2 w-1/2 lg:mb-0">
+            <div className="flex gap-6 flex-col lg:flex-row">
+              <div className="mb-2 w-full lg:w-1/2 lg:mb-0">
                 <HeaderTwo>
                   City <span className="text-secondary">*</span>
                 </HeaderTwo>
@@ -237,7 +237,7 @@ const ChurchInfo = () => {
                   onChange={(e) => setCity(e.target.value)}
                 />
               </div>
-              <div className="mb-2 lg:mb-0 w-1/2">
+              <div className="mb-2 lg:mb-0 w-full lg:w-1/2">
                 <HeaderTwo>
                   State <span className="text-secondary">*</span>
                 </HeaderTwo>
@@ -264,11 +264,16 @@ const ChurchInfo = () => {
                 maxLength={6}
               />
             </div>
-            <div  className="relative">
+            <div className="relative">
               <HeaderTwo>
                 Country of Operation <span className="text-secondary">*</span>
               </HeaderTwo>
-              <div className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center mb-6" onClick={() => {setShowCountry(!showCountry);}}>
+              <div
+                className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center mb-6"
+                onClick={() => {
+                  setShowCountry(!showCountry);
+                }}
+              >
                 <input
                   className="outline-none w-full h-auto bg-inherit"
                   placeholder="Nigeria"
@@ -277,9 +282,7 @@ const ChurchInfo = () => {
                   onChange={(e) => setCountry(e.target.value)}
                 />
                 <div className="border-l border-l-[#CFD9E0] h-10 mx-3" />
-                <TiArrowSortedDown
-                  className="cursor-pointer text-3xl"
-                />
+                <TiArrowSortedDown className="cursor-pointer text-3xl" />
               </div>
               {showCountry && (
                 <DropDownMenu
