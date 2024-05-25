@@ -1,6 +1,6 @@
 export const memberDetails = [
     {
-      name: "dire",
+      name: "Temidire Owoeye",
       phone: "09073210998",
       assignedTo: "olumide",
       label: "will attend service",
@@ -9,7 +9,7 @@ export const memberDetails = [
       id: 1,
     },
     {
-      name: "dire",
+      name: "Daniel King",
       phone: "09073210998",
       assignedTo: "olumide",
       label: "will attend service",
@@ -18,7 +18,7 @@ export const memberDetails = [
       id: 2,
     },
     {
-      name: "dire",
+      name: "Yagami Light",
       phone: "09073210998",
       assignedTo: "olumide",
       label: "will attend service",
@@ -27,7 +27,7 @@ export const memberDetails = [
       id: 3,
     },
     {
-      name: "dire",
+      name: "Tanjiro Kamado",
       phone: "09073210998",
       assignedTo: "olumide",
       label: "will attend service",

@@ -161,7 +161,13 @@ const AllMembers = () => {
                         <p>{item.phone.MainPhone}</p>
                       </div>
                     </div>
-                    <SlArrowRight />
+                    <SlArrowRight
+                      onClick={() => {
+                        navigate(
+                          `/admin/directory/member/personal-information?id=${item._id}`
+                        );
+                      }}
+                    />
                   </div>
                 </div>
               </>

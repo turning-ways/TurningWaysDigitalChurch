@@ -15,19 +15,19 @@ const Contacts = () => {
   return (
     <OverviewContainer active="Contacts">
       <Header text="Contacts" />
-      <QuickActions />
+      <QuickActions display="hidden md:flex" />
       {/* SOME COMPONENT */}
-      <div className="flex justify-between mb-10">
+      <div className="md:flex justify-between mb-10">
         <button
-          className="rounded-[15px] border border-[#17275B] px-5 py-3 space-x-2 text-[#17275B] flex items-center"
+          className="rounded-[15px] border border-[#17275B] px-5 py-3 space-x-2 text-[#17275B] flex items-center my-10 md:my-0"
           onClick={() => navigate("/admin/contacts/detail")}
         >
           <HiMiniPlusCircle className="text-[21px]" />
           <p className="font-medium">Add Contact</p>
         </button>
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 w-full md:w-fit">
           <button
-            className={`flex space-x-2 items-center  rounded-sm py-2 px-3 ${
+            className={`flex space-x-2 items-center justify-center text-sm md:text-base  rounded-sm py-2 px-3 w-1/2 md:w-fit ${
               activeView === "list"
                 ? "text-white text-lg bg-[#041E71] "
                 : "text-[#041E71] bg-white text-lg border border-[#041E71]"
@@ -38,7 +38,7 @@ const Contacts = () => {
             <p>List View</p>
           </button>
           <button
-            className={`flex space-x-2 items-center  rounded-sm py-2 px-3 ${
+            className={`flex space-x-2 items-center justify-center text-sm md:text-base rounded-sm py-2 px-3 w-1/2 md:w-fit ${
               activeView === "gallery"
                 ? "text-white text-lg bg-[#041E71] "
                 : "text-[#041E71] bg-white text-lg border border-[#041E71]"

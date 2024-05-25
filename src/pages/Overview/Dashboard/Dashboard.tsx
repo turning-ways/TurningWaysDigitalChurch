@@ -87,7 +87,7 @@ const Dashboard = () => {
       {/* component 3 */}
       <div
         className="mt-10 grid gap-6 text-[#999DA4] 
-  grid-cols-[130px,130px] min-[420px]:grid-cols-[130px,130px,130px] max-[600px]: sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 px-2 justify-center"
+  grid-cols-[130px,130px] min-[480px]:grid-cols-[130px,130px,130px] max-[600px]: sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 px-2 justify-center"
       >
         <div className="flex rounded-[10px] overflow-hidden custom-box-shadow">
           <div className="w-2 bg-[#F2CCCC]" />

@@ -6,7 +6,7 @@ import ContactsModal from "./ContactsModal";
 const AllContactsGallery = () => {
   const [show, setShow] = useState<number | null>(null);
   return (
-    <div className="grid grid-cols-2 gap-x-4 gap-y-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
       {memberDetails.map((member) => (
         <div className="text-[#2A2A2A] border border-[#2A2A2A] w-full rounded-2xl p-4 relative flex flex-col">
           <div className="flex items-center justify-between ">

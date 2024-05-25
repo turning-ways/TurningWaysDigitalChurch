@@ -10,7 +10,11 @@ import useGetAllMembers from "../../hooks/Member/useGetAllMembers";
 import { CiExport, CiFilter, CiImport, CiMail } from "react-icons/ci";
 import { useState } from "react";
 
-const QuickActions = () => {
+interface QuickActionsProps {
+  display?: string;
+}
+
+const QuickActions:React.FC<QuickActionsProps> = ({display}) => {
   const items = [
     { name: "Filter", icon: <CiFilter /> },
     { name: "Send Bulk Message", icon: <CiMail /> },
@@ -22,7 +26,7 @@ const QuickActions = () => {
   const navigate = useNavigate();
   const { data: members } = useGetAllMembers({ page: 1, pageSize: 10000000 });
   return (
-    <div className="flex justify-between my-10 flex-col space-y-3 lg:flex-row lg:space-y-0">
+    <div className={`flex justify-between my-10 flex-col space-y-3 lg:flex-row lg:space-y-0 ${display}`}>
       <p className="lg:text-lg text-[#7F7E7E] text-base">
         {members ? members.length : "..."} Persons
       </p>

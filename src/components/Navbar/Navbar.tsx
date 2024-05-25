@@ -39,7 +39,9 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
   return (
     <>
       <m.div
-        className="cursor-pointer  flex flex-col lg:hidden px-5 sm:px-10 py-5 fixed z-50 w-full bg-white"
+        className={`cursor-pointer  flex flex-col lg:hidden px-5 sm:px-10 py-5 fixed z-50 w-full ${
+          isOpen ? "bg-inherit" : "bg-white"
+        }`}
         onClick={() => setIsOpen(!isOpen)}
         initial={{ rotate: 0, opacity: 1 }}
         transition={{ ease: "easeInOut", duration: 0.3 }}
