@@ -35,7 +35,7 @@ const ResetPassword = () => {
       <AuthContainer center="sm:items-center h-screen pt-16 md:pt-0">
         <form
           onSubmit={handleSubmit((data) => {
-            const { password, passwordConfirm } = data; 
+            const { password, passwordConfirm } = data;
             mutate({ password, passwordConfirm });
             console.log("clicked");
           })}
