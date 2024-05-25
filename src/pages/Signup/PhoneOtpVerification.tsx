@@ -78,7 +78,7 @@ const PhoneOtpVerification = () => {
   const {mutate: sendOtp} = useRegisterWithPhone();
   return (
     <>
-      <AuthContainer center="sm:items-center h-screen">
+      <AuthContainer center="sm:items-center h-screen pt-16 md:pt-0">
         <form
           onSubmit={(e) => {
             e.preventDefault();

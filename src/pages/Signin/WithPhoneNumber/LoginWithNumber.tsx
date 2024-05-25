@@ -40,7 +40,7 @@ const LoginWithNumber = () => {
   }, []); 
   return (
     <>
-      <AuthContainer center="sm:items-center">
+      <AuthContainer center="sm:items-center pt-16 md:pt-0">
         <form
           className="flex flex-col space-y-4"
           onSubmit={handleSubmit((data) => {

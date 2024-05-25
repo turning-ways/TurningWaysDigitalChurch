@@ -55,7 +55,7 @@ const RegisterWithPhone = () => {
   }, []); 
   return (
     <>
-      <AuthContainer center="sm:items-center">
+      <AuthContainer center="sm:items-center pt-16 md:pt-0">
         <form
           onSubmit={handleSubmit((data) => {
             const { first_name, last_name, password, passwordConfirm } = data;
