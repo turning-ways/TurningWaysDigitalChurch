@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 interface ContactsModalProps {
-  show: number | null;
-  id: number;
+  show: string | null;
+  id: string;
   onClose: () => void;
 }
 
 const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
+  const navigate = useNavigate();
   return (
     <div
       className={`modal bg-white rounded-2xl w-[280px] px-6 py-4 space-y-6 border self-end absolute top-12 z-50 ${
@@ -12,7 +15,7 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
       }`}
     >
       <ul className="text-[#555555]  space-y-2">
-        <li className="hover:text-[#A0D7AC] cursor-pointer">View More</li>
+        <li className="hover:text-[#A0D7AC] cursor-pointer" onClick={() => navigate(`/admin/contacts/detail?id=${id}`)}>View More</li>
         <li className="hover:text-[#A0D7AC] cursor-pointer">Update Contact</li>
         <li className="hover:text-[#A0D7AC] cursor-pointer">Delete Contact</li>
         <li className="hover:text-[#A0D7AC] cursor-pointer">Confirm Member</li>

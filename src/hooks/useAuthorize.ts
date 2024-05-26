@@ -6,6 +6,7 @@ interface AuthResponse {
     user: {
       first_name: string;
       last_name: string;
+      _id:string;
       churchId: {
         _id: string;
         name: string;

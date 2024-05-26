@@ -7,11 +7,11 @@ import { PiListDashesBold } from "react-icons/pi";
 import AllContactsList from "./AllContactsList";
 import AllContactsGallery from "./AllContactsGallery";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import AddContact from "./AddContact";
 
 const Contacts = () => {
   const [activeView, setActiveView] = useState("list");
-  const navigate = useNavigate();
+  const[openAddContact, setOpenAddContact] = useState(false);
   return (
     <OverviewContainer active="Contacts">
       <Header text="Contacts" />
@@ -20,7 +20,7 @@ const Contacts = () => {
       <div className="md:flex justify-between mb-10">
         <button
           className="rounded-[15px] border border-[#17275B] px-5 py-3 space-x-2 text-[#17275B] flex items-center my-10 md:my-0"
-          onClick={() => navigate("/admin/contacts/detail")}
+          onClick={() => setOpenAddContact(!openAddContact)}
         >
           <HiMiniPlusCircle className="text-[21px]" />
           <p className="font-medium">Add Contact</p>
@@ -53,6 +53,7 @@ const Contacts = () => {
       {/* ANOTHER COMPONENT */}
 
       {activeView === "list" ? <AllContactsList /> : <AllContactsGallery />}
+      {openAddContact && <AddContact onClose={() => setOpenAddContact(!openAddContact)}/>}
     </OverviewContainer>
   );
 };

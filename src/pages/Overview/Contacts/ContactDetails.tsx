@@ -3,11 +3,12 @@ import Header from "../Header";
 import OverviewContainer from "../OverviewContainer";
 import { BiSend } from "react-icons/bi";
 import { DropDownInput } from "../../../components/DropDownMenu/DropDownInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Heading from "./Heading";
 import { IoIosAddCircle, IoIosClose } from "react-icons/io";
 import Information from "./Information";
 import { useNavigate } from "react-router-dom";
+import useGetContacts from "../../../hooks/Contacts/useGetContact";
 
 const ContactDetails = () => {
   const [membership, setMembership] = useState("");
@@ -22,6 +23,13 @@ const ContactDetails = () => {
   const [background, setBackGround] = useState<number | null>(null);
 
   const navigate = useNavigate();
+
+  const { data: contact } = useGetContacts();
+  useEffect(() => {
+    if (contact) {
+      setMaturity(contact.maturity);
+    }
+  }, []);
   return (
     <OverviewContainer active="Contacts">
       <Header text="Contacts" />
@@ -32,7 +40,7 @@ const ContactDetails = () => {
         <IoIosArrowBack className=" text-2xl w-auto text-[#6C6C6D]" />
       </button>
       <Information />
-      <div className="grid grid-cols-2 gap-x-4 ">
+      <div className="md:grid md:grid-cols-2 gap-x-4 ">
         <DropDownInput
           text="Membership:"
           items={["In progress", "Completed"]}
@@ -49,13 +57,13 @@ const ContactDetails = () => {
           value={maturity}
           onChange={(value) => setMaturity(value)}
         />
-        <div className=" space-y-1">
+        <div className=" space-y-1 mb-4 md:mb-0">
           <p className="text-[#727272]">Phone Number</p>
           <div className="border border-[#D9D9D9] rounded-lg p-2 ">
             <input
               className="outline-none text-[#434343] text-lg w-full bg-transparent"
               readOnly={true}
-              value={"09073210998"}
+              value={contact ? contact.phoneNumber : ""}
             />
           </div>
         </div>
@@ -75,7 +83,7 @@ const ContactDetails = () => {
             <input
               className="outline-none text-[#434343] text-lg w-full bg-transparent"
               readOnly={true}
-              value={"Ojodu Berger"}
+              value={contact ? contact.address : ""}
             />
           </div>
         </div>
@@ -140,7 +148,7 @@ const ContactDetails = () => {
         </button>
       </div>
       <div className="flex w-full space-x-4 mt-4">
-        <div className="bg-[#D9D9D9] text-[#707070] flex justify-center items-center p-3 rounded-full ">
+        <div className="bg-[#D9D9D9] text-[#707070] flex justify-center items-center p-3 rounded-full w-10 h-10">
           BO
         </div>
         <div className="w-full">

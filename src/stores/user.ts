@@ -108,6 +108,7 @@ interface UserAuth {
   user: {
     first_name: string;
     last_name: string;
+    _id:string;
     churchId: { _id: string; name: string };
     photo:string;
   } | null;
@@ -115,6 +116,7 @@ interface UserAuth {
     user: {
       first_name: string;
       last_name: string;
+      _id:string;
       churchId: { _id: string; name: string };
       photo:string;
     } | null
