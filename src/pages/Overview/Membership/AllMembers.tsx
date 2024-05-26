@@ -115,67 +115,68 @@ const AllMembers = () => {
           </div>
 
           <div className="border-b w-full border-[#BDBDBD] md:hidden" />
-
-          {members && members?.length !== 0 ? (
-            members.map((item: any, index: number) => (
-              <>
-                <div className="md:grid grid-cols-[70px,1fr,1fr,1fr,1fr,100px] border-b py-4  text-[#636363] gap-4 gap-x-6 w-full items-center hidden">
-                  <div className="flex space-x-3 items-center">
-                    <input
-                      type="checkbox"
-                      checked={memberCheckboxes[index]}
-                      onChange={() => handleMemberCheckboxChange(index)}
-                    />
-                    {item.photo ? (
-                      <img
-                        src={item.photo}
-                        className="rounded-full w-10 h-10"
+          <div className="mb-10 w-full">
+            {members && members?.length !== 0 ? (
+              members.map((item: any, index: number) => (
+                <>
+                  <div className="md:grid grid-cols-[70px,1fr,1fr,1fr,1fr,100px] border-b py-4  text-[#636363] gap-4 gap-x-6 w-full items-center hidden">
+                    <div className="flex space-x-3 items-center">
+                      <input
+                        type="checkbox"
+                        checked={memberCheckboxes[index]}
+                        onChange={() => handleMemberCheckboxChange(index)}
                       />
-                    ) : (
-                      <div className="bg-red-200 w-10 flex justify-center items-center">
-                        P
-                      </div>
-                    )}
-                  </div>
-                  <div className="truncate ">{item.fullname}</div>
-                  <div className="truncate">{item.email}</div>
-                  <div className="truncate">{item.phone?.MainPhone}</div>
-                  <div>{item.gender}</div>
-                  <div
-                    className="flex items-center gap-x-2 text-secondary cursor-pointer whitespace-nowrap justify-end"
-                    onClick={() => {
-                      navigate(
-                        `/admin/directory/member/personal-information?id=${item._id}`
-                      );
-                    }}
-                  >
-                    <p>View more</p> <FaArrowRight />
-                  </div>
-                </div>
-                <div className="w-full md:hidden">
-                  <div className="border-b border-[#BDBDBD]  flex py-2 text-[#555454] px-3 justify-between items-center">
-                    <div className="flex space-x-2">
-                      <input type="checkbox" />
-                      <div>
-                        <p className="font-azoSemiBold">{item.fullname}</p>
-                        <p>{item.phone.MainPhone}</p>
-                      </div>
+                      {item.photo ? (
+                        <img
+                          src={item.photo}
+                          className="rounded-full w-10 h-10"
+                        />
+                      ) : (
+                        <div className="bg-red-200 w-10 flex justify-center items-center">
+                          P
+                        </div>
+                      )}
                     </div>
-                    <SlArrowRight
+                    <div className="truncate ">{item.fullname}</div>
+                    <div className="truncate">{item.email}</div>
+                    <div className="truncate">{item.phone?.MainPhone}</div>
+                    <div>{item.gender}</div>
+                    <div
+                      className="flex items-center gap-x-2 text-secondary cursor-pointer whitespace-nowrap justify-end"
                       onClick={() => {
                         navigate(
                           `/admin/directory/member/personal-information?id=${item._id}`
                         );
                       }}
-                    />
+                    >
+                      <p>View more</p> <FaArrowRight />
+                    </div>
                   </div>
-                </div>
-              </>
-            ))
-          ) : (
-            <div>There's no member</div>
-          )}
-          <div className="flex justify-center items-center space-x-10 absolute bottom-14 text-sm md:text-base lg:bottom-10">
+                  <div className="w-full md:hidden">
+                    <div className="border-b border-[#BDBDBD]  flex py-2 text-[#555454] px-3 justify-between items-center">
+                      <div className="flex space-x-2">
+                        <input type="checkbox" />
+                        <div>
+                          <p className="font-azoSemiBold">{item.fullname}</p>
+                          <p>{item.phone.MainPhone}</p>
+                        </div>
+                      </div>
+                      <SlArrowRight
+                        onClick={() => {
+                          navigate(
+                            `/admin/directory/member/personal-information?id=${item._id}`
+                          );
+                        }}
+                      />
+                    </div>
+                  </div>
+                </>
+              ))
+            ) : (
+              <div>There's no member</div>
+            )}
+          </div>
+          <div className="flex justify-center items-center space-x-10 fixed bottom-14 text-sm md:text-base lg:bottom-2">
             <button
               className="flex items-center space-x-3 cursor-pointer"
               onClick={() => setPage((page) => page - 1)}
