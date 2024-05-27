@@ -37,12 +37,12 @@ const LandingPage = () => {
             className="w-36"
           />
           <ul className="flex text-[#6181E7] space-x-5 sm:space-x-10 items-center font-azo text-base sm:text-lg">
-            <li className="hidden sm:block">
+            <li className="">
               <button onClick={() => navigate("/register")}>Sign up</button>
             </li>
             <li>
               <button
-                className="border rounded-[22px] py-1 px-8 border-[#3A62E1]"
+                className="border rounded-[22px] py-1 px-8 border-[#3A62E1] hidden sm:block"
                 onClick={() => navigate("/login/email")}
               >
                 Login
