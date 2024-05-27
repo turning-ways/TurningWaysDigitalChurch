@@ -3,19 +3,27 @@ import { useChurchIdStore } from "../../stores/churchId";
 import axios from "axios";
 import { useUserAuth } from "../../stores/user";
 
+interface Notes {
+  date: string;
+  recordedBy: string;
+  note: string;
+}
+
 interface Contact {
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  address: number;
+  address: string;
   maturity: string;
   createdBy: string;
   createdAt: string;
   ModifiedDate:string;
+  membershipStatus: string;
   status:string;
   _id:string;
   assignedTo: [];
-  labels: []
+  labels: [];
+  Notes: Notes[];
 }
 
 const useGetContacts = () => {

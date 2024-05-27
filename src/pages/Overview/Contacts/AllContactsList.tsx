@@ -50,7 +50,7 @@ const AllContactsList = () => {
 
         <div className="border-t xl:hidden border-[#BDBDBD]" />
 
-        {contacts ?
+        {Array.isArray(contacts) && contacts.length > 0 ?
           contacts.map((contact) => (
             <>
               <div className="xl:flex flex-col relative hidden">

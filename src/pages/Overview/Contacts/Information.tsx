@@ -2,40 +2,109 @@ import { BiSolidDownArrow } from "react-icons/bi";
 import Heading from "./Heading";
 import { IoIosClose } from "react-icons/io";
 import InformationInput from "../Membership/Edit Profile/InformationInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PhoneNumber from "../../../components/Input/PhoneNumber";
 import Modal from "../../../components/Modal/Modal";
+import useGetContacts from "../../../hooks/Contacts/useGetContact";
+import useUpdateContactStatus from "../../../hooks/Contacts/useUpdateContactStatus";
+import useUpdateContact from "../../../hooks/Contacts/useUpdateContact";
+import { ThreeDots } from "react-loader-spinner";
 
 const Information = () => {
-  const [first_name, setFirstName] = useState("");
-  const [last_name, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
   const [maturity, setMaturity] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const [open, setOpen] = useState<boolean>(false);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
 
-  const [status, setStatus] = useState<string>("Open");
+  const { data: contact } = useGetContacts();
+
+  useEffect(() => {
+    if (contact) {
+      setStatus(contact.status);
+    }
+  }, [contact]);
+  const [status, setStatus] = useState<string | null>(null);
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+
+    const getOrdinalSuffix = (day: number) => {
+      if (day > 3 && day < 21) return "th";
+      switch (day % 10) {
+        case 1:
+          return "st";
+        case 2:
+          return "nd";
+        case 3:
+          return "rd";
+        default:
+          return "th";
+      }
+    };
+
+    const day = date.getUTCDate();
+    const ordinalSuffix = getOrdinalSuffix(day);
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getUTCFullYear();
+
+    return `${day}${ordinalSuffix} ${month} ${year}`;
+  };
+
+  const { mutate } = useUpdateContactStatus();
+
+  const { mutate: update, isPending } = useUpdateContact();
+
+  const handleEdit = () => {
+    update({
+      firstName,
+      lastName,
+      address,
+      maturity,
+      phoneNumber,
+    });
+    // setOpen(false);
+  };
+
+  useEffect(() => {
+    if (contact) {
+      setFirstName(contact.firstName);
+      setLastName(contact.lastName);
+      setAddress(contact.address);
+      setMaturity(contact.maturity);
+      setPhoneNumber(contact.phoneNumber);
+    }
+  }, [contact]);
 
   return (
     <div className="relative">
       <Heading text="Contact Information" />
-      <h2 className="md:mt-4">Ikeokwu Somtochi Purity</h2>
+      <h2 className="md:mt-4">
+        {contact && contact.firstName && contact.lastName
+          ? contact.firstName + " " + contact.lastName
+          : "NA"}
+      </h2>
       <div className="md:flex justify-between items-center space-y-2 md:space-y-0 mb-8 md:mb-0">
         <p className="text-sm text-[#A1A0A0] mb-4 md:mb-0">
-          Created: 12th May 2024 | Last Modified: 12th May 2024
+          {contact && contact.createdAt && contact.ModifiedDate
+            ? `Created: ${formatDate(
+                contact.createdAt
+              )} | Last Modified: ${formatDate(contact.ModifiedDate)}`
+            : "NA"}
         </p>
         <div className="flex space-x-4 relative">
           <button
             className={` text-white flex items-center py-2 px-6 rounded-lg space-x-1 ${
-              status === "Open" && "bg-[#A561BD]"
-            } ${status === "Not Started" && "bg-[#555555]"} ${
-              status === "Soul Won" && "bg-[#61BD74]"
-            } ${status === "Soul Lost" && "bg-[#BD6161]"}`}
+              status === "new" && "bg-[#A561BD]"
+            } ${status === "contacted" && "bg-[#555555]"} ${
+              status === "won" && "bg-[#61BD74]"
+            } ${status === "lost" && "bg-[#BD6161]"}`}
             onClick={() => setOpenStatus(!openStatus)}
           >
-            <span>{status}</span> <BiSolidDownArrow />
+            <span>{status}</span> <BiSolidDownArrow className="text-[10px]" />
           </button>
           <button
             className="border border-[#17275B] text-[#17275B] px-4 rounded-lg"
@@ -52,37 +121,41 @@ const Information = () => {
                   className="text-[#555555] cursor-pointer"
                   onClick={() => {
                     setOpenStatus(false);
-                    setStatus("Not Started");
+                    setStatus("contacted");
+                    mutate({ status: "contacted" });
                   }}
                 >
-                  Not Started
+                  contacted
                 </li>
                 <li
                   className="text-[#B061BD] cursor-pointer"
                   onClick={() => {
                     setOpenStatus(false);
-                    setStatus("Open");
+                    setStatus("new");
+                    mutate({ status: "new" });
                   }}
                 >
-                  Open
+                  new
                 </li>
                 <li
                   className="text-[#61BD74] cursor-pointer"
                   onClick={() => {
                     setOpenStatus(false);
-                    setStatus("Soul Won");
+                    setStatus("won");
+                    mutate({ status: "won" });
                   }}
                 >
-                  Soul Won
+                  won
                 </li>
                 <li
                   className="text-[#BD6161] cursor-pointer"
                   onClick={() => {
                     setOpenStatus(false);
-                    setStatus("Soul Lost");
+                    setStatus("lost");
+                    mutate({ status: "lost" });
                   }}
                 >
-                  Soul Lost
+                  lost
                 </li>
               </ul>
               <button
@@ -97,7 +170,13 @@ const Information = () => {
       </div>
       {open && (
         <Modal>
-          <div className="w-[450px] md:w-[605px] bg-white px-6 py-6 border rounded-2xl flex flex-col">
+          <form
+            className="w-[450px] md:w-[605px] bg-white px-6 py-6 border rounded-2xl flex flex-col"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleEdit();
+            }}
+          >
             <div className="flex justify-between items-center mb-4">
               <h1 className="text-2xl">Edit Contact</h1>
               <IoIosClose
@@ -110,17 +189,20 @@ const Information = () => {
               onChange={(e) => {
                 setFirstName(e.target.value);
               }}
-              value={first_name}
+              value={firstName}
             />
             <InformationInput
               text={"Last Name"}
               onChange={(e) => {
                 setLastName(e.target.value);
               }}
-              value={last_name}
+              value={lastName}
               notCompulsory={" "}
             />
-            <PhoneNumber value={phone} setValue={(value) => setPhone(value)} />
+            <PhoneNumber
+              value={phoneNumber}
+              setValue={(value) => setPhoneNumber(value)}
+            />
             <InformationInput
               text={"Address"}
               onChange={(e) => {
@@ -138,9 +220,13 @@ const Information = () => {
               notCompulsory={" "}
             />
             <button className="self-end border border-[#414141] px-20 py-2 rounded-lg text-[#141414]">
-              Save
+              {!isPending ? (
+                <p>Save</p>
+              ) : (
+                <ThreeDots height="25" width="50" color="#141414" />
+              )}
             </button>
-          </div>
+          </form>
         </Modal>
       )}
     </div>

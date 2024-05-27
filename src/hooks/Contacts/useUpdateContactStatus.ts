@@ -3,30 +3,24 @@ import axios from "axios";
 import { success } from "../useUpdatePassword";
 import { notify } from "../useLogin";
 import { useUserAuth } from "../../stores/user";
-import useGetContacts from "./useGetContact";
 
 interface Contact {
-  firstName?: string;
-  lastName?: string;
-  phoneNumber?: string;
-  address?: string;
-  maturity?: string;
-  createdBy?: string;
+  status?: string;
+  membershipStatus?: string;
+  modifiedBy?: string;
 }
 
-const useUpdateContact = () => {
+const useUpdateContactStatus = () => {
   const { user } = useUserAuth();
   const queryParams = new URLSearchParams(location.search);
 
   const contactId = queryParams.get("id");
 
-  const { refetch } = useGetContacts();
-
   return useMutation({
     mutationFn: (contact: Contact) =>
       axios
         .patch(
-          `https://digital-church.onrender.com/api/v1/churches/${user?.churchId._id}/contact/${contactId}`,
+          `https://digital-church.onrender.com/api/v1/churches/${user?.churchId._id}/contact/${contactId}/status`,
           contact,
           {
             withCredentials: true,
@@ -36,7 +30,6 @@ const useUpdateContact = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: () => {
       success("Contact has been updated successfully");
-      refetch();
     },
     onError: () => {
       notify("Couldn't update contact at this moment");
@@ -44,4 +37,4 @@ const useUpdateContact = () => {
   });
 };
 
-export default useUpdateContact;
+export default useUpdateContactStatus;

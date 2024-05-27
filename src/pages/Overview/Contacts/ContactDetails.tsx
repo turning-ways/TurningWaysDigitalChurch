@@ -9,27 +9,43 @@ import { IoIosAddCircle, IoIosClose } from "react-icons/io";
 import Information from "./Information";
 import { useNavigate } from "react-router-dom";
 import useGetContacts from "../../../hooks/Contacts/useGetContact";
+import useUpdateContactStatus from "../../../hooks/Contacts/useUpdateContactStatus";
+import useUpdateContact from "../../../hooks/Contacts/useUpdateContact";
+import useAddContactComment from "../../../hooks/Contacts/useAddContactComment";
+import { useUserAuth } from "../../../stores/user";
+import { formatTheDate } from "./formatDate";
 
 const ContactDetails = () => {
-  const [membership, setMembership] = useState("");
-  const handleMembership = (value: string) => {
-    setMembership(value);
+  const { mutate } = useUpdateContactStatus();
+  const { mutate: update } = useUpdateContact();
+  const [membershipStatus, setMembershipStatus] = useState("");
+  const handleMembershipStatus = (value: string) => {
+    setMembershipStatus(value);
+    mutate({ membershipStatus: value });
   };
   const [maturity, setMaturity] = useState("");
   const handleMaturity = (value: string) => {
     setMaturity(value);
+    update({ maturity: value });
   };
 
   const [background, setBackGround] = useState<number | null>(null);
 
   const navigate = useNavigate();
 
+  const [comment, setComment] = useState("");
+
   const { data: contact } = useGetContacts();
   useEffect(() => {
     if (contact) {
       setMaturity(contact.maturity);
+      setMembershipStatus(contact.membershipStatus);
     }
-  }, []);
+  }, [contact]);
+
+  const { mutate: addComment } = useAddContactComment();
+
+  const { user } = useUserAuth();
   return (
     <OverviewContainer active="Contacts">
       <Header text="Contacts" />
@@ -43,15 +59,15 @@ const ContactDetails = () => {
       <div className="md:grid md:grid-cols-2 gap-x-4 ">
         <DropDownInput
           text="Membership:"
-          items={["In progress", "Completed"]}
+          items={["in progress", "potential", "confirmed", "cancelled"]}
           placeholder="In Progress"
-          onSelect={handleMembership}
-          value={membership}
-          onChange={(value) => setMembership(value)}
+          onSelect={handleMembershipStatus}
+          value={membershipStatus}
+          onChange={(value) => setMembershipStatus(value)}
         />
         <DropDownInput
           text="Maturity:"
-          items={["Adult", "Child"]}
+          items={["adult", "child", "teen"]}
           placeholder="Adult"
           onSelect={handleMaturity}
           value={maturity}
@@ -141,26 +157,38 @@ const ContactDetails = () => {
           type="text"
           className="flex-grow text-black p-2 outline-none shadow-md"
           style={{ boxShadow: "0px 0px 4px 0px #00000040" }}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
           placeholder="Type your comment here"
         />
-        <button className=" bg-[#17275B] text-white px-3 flex items-center">
+        <button
+          className=" bg-[#17275B] text-white px-3 flex items-center"
+          onClick={(e) => {
+            e.preventDefault();
+            addComment({ note: comment, recordedBy: user ? user._id : "" });
+          }}
+        >
           <BiSend />
         </button>
       </div>
-      <div className="flex w-full space-x-4 mt-4">
-        <div className="bg-[#D9D9D9] text-[#707070] flex justify-center items-center p-3 rounded-full w-10 h-10">
-          BO
-        </div>
-        <div className="w-full">
-          <div className="text-[#7F7E7E] flex justify-between ">
-            <p>Bolu Olamide</p>
-            <p>21st May 2024 21:00</p>
+      {Array.isArray(contact?.Notes) && contact.Notes.length > 0 ? (
+        contact.Notes.map((item) => (
+          <div className="flex w-full space-x-4 mt-4">
+            <div className="bg-[#D9D9D9] text-[#707070] flex justify-center items-center p-3 rounded-full w-10 h-10">
+              {contact.firstName.charAt(0).toUpperCase() + contact.lastName.charAt(0).toUpperCase()}
+            </div>
+            <div className="w-full">
+              <div className="text-[#7F7E7E] flex justify-between ">
+                <p>{contact.firstName + " " + contact.lastName}</p>
+                <p>{formatTheDate(item.date)}</p>
+              </div>
+              <p className="text-[#555454]">{item.note}</p>
+            </div>
           </div>
-          <p className="text-[#555454]">
-            Somto said that she is a member of another church
-          </p>
-        </div>
-      </div>
+        ))
+      ) : (
+        <p>dire</p>
+      )}
     </OverviewContainer>
   );
 };
