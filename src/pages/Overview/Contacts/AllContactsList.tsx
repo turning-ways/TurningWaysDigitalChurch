@@ -50,7 +50,7 @@ const AllContactsList = () => {
 
         <div className="border-t xl:hidden border-[#BDBDBD]" />
 
-        {Array.isArray(contacts) && contacts.length > 0 ?
+        {Array.isArray(contacts) && contacts.length > 0 ? (
           contacts.map((contact) => (
             <>
               <div className="xl:flex flex-col relative hidden">
@@ -62,9 +62,9 @@ const AllContactsList = () => {
                     </p>
                   </div>
                   <div className="">{contact.phoneNumber}</div>
-                  <div className="">
+                  <div className="trncate">
                     {contact.assignedTo.map((assigned) => (
-                      <p>{assigned}</p>
+                      <p className="max-w-full truncate">{assigned.first_name + " " + assigned.last_name}</p>
                     ))}
                   </div>
                   <div className="">
@@ -90,14 +90,17 @@ const AllContactsList = () => {
               <div className="xl:hidden">
                 <div className="border-b border-[#BDBDBD]  flex py-2 text-[#555454] px-3 justify-between items-center">
                   <div>
-                    <p>{contact.firstName + " " + contact.lastName }</p>
+                    <p>{contact.firstName + " " + contact.lastName}</p>
                     <p>{formatDate(contact.createdAt)}</p>
                   </div>
                   <SlArrowRight />
                 </div>
               </div>
             </>
-          )) : <p>No contacts have been added yet</p>}
+          ))
+        ) : (
+          <p>No contacts have been added yet</p>
+        )}
       </div>
     </>
   );

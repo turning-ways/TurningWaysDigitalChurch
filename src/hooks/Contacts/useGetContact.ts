@@ -9,6 +9,16 @@ interface Notes {
   note: string;
 }
 
+interface AssignedTo {
+  first_name: string;
+  last_name: string;
+}
+
+interface Labels {
+  label: string;
+  label_type: string;
+}
+
 interface Contact {
   firstName: string;
   lastName: string;
@@ -17,12 +27,12 @@ interface Contact {
   maturity: string;
   createdBy: string;
   createdAt: string;
-  ModifiedDate:string;
+  ModifiedDate: string;
   membershipStatus: string;
-  status:string;
-  _id:string;
-  assignedTo: [];
-  labels: [];
+  status: string;
+  _id: string;
+  assignedTo: AssignedTo[];
+  labels: Labels[];
   Notes: Notes[];
 }
 

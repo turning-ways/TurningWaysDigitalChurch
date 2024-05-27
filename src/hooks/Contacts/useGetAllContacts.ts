@@ -3,6 +3,11 @@ import { useChurchIdStore } from "../../stores/churchId";
 import axios from "axios";
 import { useUserAuth } from "../../stores/user";
 
+interface AssignedTo {
+  first_name: string;
+  last_name:string;
+}
+
 interface Contacts {
   firstName: string;
   lastName: string;
@@ -14,7 +19,7 @@ interface Contacts {
   ModifiedDate:string;
   status:string;
   _id:string;
-  assignedTo: [];
+  assignedTo: AssignedTo[];
   labels: []
 }
 

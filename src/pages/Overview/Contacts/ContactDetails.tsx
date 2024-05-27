@@ -14,8 +14,18 @@ import useUpdateContact from "../../../hooks/Contacts/useUpdateContact";
 import useAddContactComment from "../../../hooks/Contacts/useAddContactComment";
 import { useUserAuth } from "../../../stores/user";
 import { formatTheDate } from "./formatDate";
+import { action, labels } from "../../../constants/constants";
+import Modal from "../../../components/Modal/Modal";
+import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
+import useAssignMember from "../../../hooks/Contacts/useAssignMember";
+import useAddLabel from "../../../hooks/Contacts/useAddLabel";
+import useDeleteLabel from "../../../hooks/Contacts/useDeleteLabel";
 
 const ContactDetails = () => {
+  const [showActions, setShowActions] = useState<boolean>(false);
+  const [showMembers, setShowMembers] = useState<boolean>(false);
+  const [showLabels, setShowLabels] = useState<boolean>(false);
+  const { data: members } = useGetAllMembers({ page: 1, pageSize: 100000 });
   const { mutate } = useUpdateContactStatus();
   const { mutate: update } = useUpdateContact();
   const [membershipStatus, setMembershipStatus] = useState("");
@@ -29,7 +39,9 @@ const ContactDetails = () => {
     update({ maturity: value });
   };
 
-  const [background, setBackGround] = useState<number | null>(null);
+  const { mutate: addLabel } = useAddLabel();
+
+  // const [background, setBackGround] = useState<number | null>(null);
 
   const navigate = useNavigate();
 
@@ -45,7 +57,11 @@ const ContactDetails = () => {
 
   const { mutate: addComment } = useAddContactComment();
 
+  const { mutate: assignMember } = useAssignMember();
+
   const { user } = useUserAuth();
+
+  const {mutate: deleteLabel} = useDeleteLabel();
   return (
     <OverviewContainer active="Contacts">
       <Header text="Contacts" />
@@ -105,16 +121,51 @@ const ContactDetails = () => {
         </div>
       </div>
       <Heading text="Label" />
-      <div className="flex space-x-3 items-center">
-        <IoIosAddCircle className="text-5xl text-[#444343]" />
-        <div className="border border-[#923863] rounded-md bg-[#E6A5B4] text-[#141414] flex items-center px-2 py-1">
-          <p>Will attend Service</p>
-          <IoIosClose className="text-3xl cursor-pointer" />
+      <div className="flex space-x-3 items-center w-full">
+        <IoIosAddCircle
+          className="text-5xl text-[#444343] cursor-pointer"
+          onClick={() => setShowLabels(!showLabels)}
+        />
+        <div className="overflow-x-scroll flex space-x-3 scrollbar-hide">
+          {contact && contact.labels && 
+            contact.labels.length > 0 &&
+            contact.labels.map((item) => (
+              <div
+                className={`border border-[${item.label_type}] rounded-md bg-${item.label_type}-600 text-[#141414] w-full flex items-center px-2 py-1 whitespace-nowrap`}
+              >
+                <p>{item.label}</p>
+                <IoIosClose className="text-3xl cursor-pointer" onClick={() => deleteLabel(item.label)}/>
+              </div>
+            ))}
         </div>
+        {showLabels && (
+          <Modal>
+            <div
+              className={`w-[400px] bg-white px-6 py-6 border rounded-2xl flex flex-col space-y-4`}
+            >
+              {labels.map((item) => (
+                <ul className="text-[#555555]">
+                  <li
+                    className="cursor-pointer"
+                    onClick={() => addLabel({ label: item, labelType: "blue" })}
+                  >
+                    {item}
+                  </li>
+                </ul>
+              ))}
+              <button
+                className="px-10 w-fit bg-[#F3F3F3] text-[#7A7A7A] self-center rounded-[14px] py-2"
+                onClick={() => setShowLabels(!showLabels)}
+              >
+                Cancel
+              </button>
+            </div>
+          </Modal>
+        )}
       </div>
       <Heading text="Action checklist" />
       <ul className="space-y-2">
-        <li className="flex space-x-2">
+        {/* <li className="flex space-x-2">
           <div
             className={`border-2 border-[#2A2A2A] w-5 h-5 rounded-full cursor-pointer ${
               background === 1 && "bg-blue-500"
@@ -131,25 +182,81 @@ const ContactDetails = () => {
             onClick={() => setBackGround(2)}
           />
           <p>Call every Saturday</p>
-        </li>
-        <li className="flex space-x-2">
-          <div
-            className={`border-2 border-[#2A2A2A] w-5 h-5 rounded-full cursor-pointer ${
-              background === 3 && "bg-blue-500"
-            }`}
-            onClick={() => setBackGround(3)}
-          />
+        </li> */}
+        <button
+          className="py-1 px-4 rounded-lg border border-[#17275B] text-[#17275B]"
+          onClick={() => setShowActions(!showActions)}
+        >
           <p>Add an Item</p>
-        </li>
+        </button>
       </ul>
+      {showActions && (
+        <Modal>
+          <div
+            className={`w-[400px] bg-white px-6 py-6 border rounded-2xl flex flex-col space-y-4`}
+          >
+            {action.map((item) => (
+              <ul className="text-[#555555]">
+                <li className="cursor-pointer">{item}</li>
+              </ul>
+            ))}
+            <button
+              className="px-10 w-fit bg-[#F3F3F3] text-[#7A7A7A] self-center rounded-[14px] py-2"
+              onClick={() => setShowActions(!showActions)}
+            >
+              Cancel
+            </button>
+          </div>
+        </Modal>
+      )}
       <Heading text="Assigned To" />
       <div className="flex space-x-3">
-        <IoIosAddCircle className="text-5xl text-[#444343]" />
-        {Array.from({ length: 3 }, () => (
+        <IoIosAddCircle
+          className="text-5xl text-[#444343]"
+          onClick={() => setShowMembers(!showMembers)}
+        />
+        {/* {Array.from({ length: 3 }, () => (
           <div className="bg-[#7F7E7E] text-white rounded-full h-full w-12 flex items-center justify-center">
             OF
           </div>
-        ))}
+        ))} */}
+        {contact && contact.assignedTo &&
+          contact.assignedTo.length > 0 &&
+          contact.assignedTo.map((item) => (
+            <div className="bg-[#7F7E7E] text-white rounded-full h-full w-12 flex items-center justify-center">
+              {item.first_name.charAt(0).toUpperCase() +
+                item.last_name.charAt(0).toUpperCase()}
+            </div>
+          ))}
+        {showMembers && (
+          <Modal>
+            <div
+              className={`w-[400px] bg-white px-6 py-6 border rounded-2xl flex flex-col space-y-4`}
+            >
+              {members ? (
+                members.map((member, i) => (
+                  <ul className="text-[#555555]">
+                    <li
+                      key={i}
+                      className="cursor-pointer"
+                      onClick={() => assignMember(member._id)}
+                    >
+                      {member.first_name + " " + member.last_name}
+                    </li>
+                  </ul>
+                ))
+              ) : (
+                <p>There are no members present</p>
+              )}
+              <button
+                className="px-10 w-fit bg-[#F3F3F3] text-[#7A7A7A] self-center rounded-[14px] py-2"
+                onClick={() => setShowMembers(!showMembers)}
+              >
+                Cancel
+              </button>
+            </div>
+          </Modal>
+        )}
       </div>
       <Heading text="Comments" />
       <div className="bg-white w-full flex mb-2 items-stretch">
@@ -175,12 +282,15 @@ const ContactDetails = () => {
         contact.Notes.map((item) => (
           <div className="flex w-full space-x-4 mt-4">
             <div className="bg-[#D9D9D9] text-[#707070] flex justify-center items-center p-3 rounded-full w-10 h-10">
-              {contact.firstName.charAt(0).toUpperCase() + contact.lastName.charAt(0).toUpperCase()}
+              {contact.firstName.charAt(0).toUpperCase() +
+                contact.lastName.charAt(0).toUpperCase()}
             </div>
             <div className="w-full">
-              <div className="text-[#7F7E7E] flex justify-between ">
-                <p>{contact.firstName + " " + contact.lastName}</p>
-                <p>{formatTheDate(item.date)}</p>
+              <div className="text-[#7F7E7E] flex justify-between items-center">
+                <p className="text-sm sm:text-base">
+                  {contact.firstName + " " + contact.lastName}
+                </p>
+                <p className="text-xs sm:text-sm">{formatTheDate(item.date)}</p>
               </div>
               <p className="text-[#555454]">{item.note}</p>
             </div>

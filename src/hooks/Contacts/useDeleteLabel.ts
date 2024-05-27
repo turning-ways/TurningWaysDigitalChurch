@@ -3,39 +3,37 @@ import axios from "axios";
 import { success } from "../useUpdatePassword";
 import { notify } from "../useLogin";
 import { useUserAuth } from "../../stores/user";
+import useGetContacts from "./useGetContact";
 
-interface Label {
-  label: string;
-  labelType: string;
-}
-
-const useAddLabel = () => {
+const useDeleteLabel = () => {
   const { user } = useUserAuth();
 
   const queryParams = new URLSearchParams(location.search);
 
   const contactId = queryParams.get("id");
 
+  const {refetch} = useGetContacts();
+
 
   return useMutation({ 
-    mutationFn: (labels: Label) =>
+    mutationFn: (label_name: string) =>
       axios
-        .patch(
-          `https://digital-church.onrender.com/api/v1/churches/${user?.churchId._id}/contact/${contactId}/label`,
-          labels,
+        .delete(
+          `https://digital-church.onrender.com/api/v1/churches/${user?.churchId._id}/contact/${contactId}/label?label=${label_name}`,
           {
-            withCredentials: true,
+            withCredentials: true
           }
         )
         .then((res) => res.data),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: () => {
-      success("Label has been added successfully");
+      success("Label has been deleted successfully");
+      refetch();
     },
     onError: () => {
-      notify("Couldn't add label at this moment");
+      notify("Couldn't delete label at this moment");
     },
   });
 };
 
-export default useAddLabel;
+export default useDeleteLabel;
