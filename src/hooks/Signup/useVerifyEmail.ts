@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { notify } from "../useLogin";
+import { success } from "../useUpdatePassword";
 
 interface Email {
   email: string;
@@ -16,8 +16,8 @@ const useVerifyEmail = () => {
         )
         .then((res) => res.data),
     onSuccess: () => {
-      notify("Otp has been sent to email")
-    }
+      success("Otp has been sent to email");
+    },
   });
 };
 

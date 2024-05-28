@@ -10,7 +10,6 @@ import useVerifyEmail from "../../hooks/Signup/useVerifyEmail";
 let currentOtpIndex: number = 0;
 
 const ForgotPasswordOtp = () => {
-
   const [value, setValue] = useState<boolean>(false);
 
   //
@@ -47,7 +46,6 @@ const ForgotPasswordOtp = () => {
   const [timer, setTimer] = useState(60);
   const [timerActive, setTimerActive] = useState(true);
 
-
   useEffect(() => {
     let interval: number;
     if (timerActive) {
@@ -71,7 +69,7 @@ const ForgotPasswordOtp = () => {
   }, [activeOTPIndex]);
 
   const { mutate, isPending } = useVerifyOtp();
-  const {email} = useUserDetailsStore();
+  const { email } = useUserDetailsStore();
   const { mutate: sendOtp } = useVerifyEmail();
   return (
     <>
@@ -87,10 +85,9 @@ const ForgotPasswordOtp = () => {
             <p>
               <span className="text-[#446DE3] text-2xl">2</span> of 3
             </p>
-            <Header>Check your email</Header>
+            <Header>Verify your account</Header>
             <p className="text-[#949995]">
-              Kindly enter the verification code (OTP) sent to your email
-              address
+              Kindly enter the verification code (OTP) that was sent to you
             </p>
           </div>
           <div className="mb-6 flex justify-between max-w-[550px] space-x-4">
@@ -120,7 +117,7 @@ const ForgotPasswordOtp = () => {
             disabled={timerActive}
             onClick={() => {
               setTimerActive(true);
-              sendOtp({email})
+              sendOtp({ email });
             }}
           >
             Resend Code

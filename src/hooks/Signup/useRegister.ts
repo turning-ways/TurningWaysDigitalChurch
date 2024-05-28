@@ -38,10 +38,10 @@ const useRegister = () => {
         message ===
         "User validation failed: passwordConfirm: The passwords do not match!!"
       ) {
-        notify(`Passwords don't match`);
-      } else if (message.includes("duplicate")) {
-        notify(`An account with this email already exists`);
-      }
+        notify(`Passwords don't match`);}
+      // } else if (message.includes("duplicate")) {
+      //   notify(`An account with this email already exists`);
+      // }
     },
   });
 };

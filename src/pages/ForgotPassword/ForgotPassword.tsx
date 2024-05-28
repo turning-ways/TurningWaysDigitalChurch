@@ -55,7 +55,7 @@ const ForgotPassword = () => {
               {...register("inputKey")}
               type="text"
               className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full p-3 outline-none placeholder-[#4A5568]"
-              placeholder="example@gmail.com or 23 40000000000"
+              placeholder="example@gmail.com or 2340000000000"
             />
           </div>
           <NextButton isPending={isPending} />
