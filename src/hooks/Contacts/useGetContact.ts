@@ -34,6 +34,7 @@ interface Contact {
   assignedTo: AssignedTo[];
   labels: Labels[];
   Notes: Notes[];
+  email: string;
 }
 
 const useGetContacts = () => {

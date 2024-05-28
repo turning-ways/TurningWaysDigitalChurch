@@ -19,6 +19,7 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [maturity, setMaturity] = useState("");
+  const [email, setEmail] = useState("");
   return (
     <Modal>
       <form
@@ -33,6 +34,7 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
               phoneNumber,
               maturity,
               createdBy: user?._id,
+              email
             });
         }}
       >
@@ -46,6 +48,7 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
             setFirstName(e.target.value);
           }}
           value={firstName}
+          notCompulsory={" "}
         />
         <InformationInput
           text={"Last Name"}
@@ -58,6 +61,14 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
         <PhoneNumber
           value={phoneNumber}
           setValue={(value) => setPhoneNumber(value)}
+        />
+        <InformationInput
+          text={"Email"}
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+          value={email}
+          notCompulsory={" "}
         />
         <InformationInput
           text={"Address"}

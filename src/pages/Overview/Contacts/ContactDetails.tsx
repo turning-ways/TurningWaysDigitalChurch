@@ -105,7 +105,7 @@ const ContactDetails = () => {
             <input
               className="outline-none text-[#434343] text-lg w-full bg-transparent"
               readOnly={true}
-              value={"@yahoo.com"}
+              value={contact ? contact.email : ""}
             />
           </div>
         </div>
@@ -215,11 +215,6 @@ const ContactDetails = () => {
           className="text-5xl text-[#444343]"
           onClick={() => setShowMembers(!showMembers)}
         />
-        {/* {Array.from({ length: 3 }, () => (
-          <div className="bg-[#7F7E7E] text-white rounded-full h-full w-12 flex items-center justify-center">
-            OF
-          </div>
-        ))} */}
         {contact && contact.assignedTo &&
           contact.assignedTo.length > 0 &&
           contact.assignedTo.map((item) => (

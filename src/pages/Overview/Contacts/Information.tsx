@@ -14,6 +14,7 @@ const Information = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
   const [maturity, setMaturity] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -65,8 +66,8 @@ const Information = () => {
       address,
       maturity,
       phoneNumber,
+      email,
     });
-    // setOpen(false);
   };
 
   useEffect(() => {
@@ -76,6 +77,7 @@ const Information = () => {
       setAddress(contact.address);
       setMaturity(contact.maturity);
       setPhoneNumber(contact.phoneNumber);
+      setEmail(contact.email);
     }
   }, [contact]);
 
@@ -202,6 +204,14 @@ const Information = () => {
             <PhoneNumber
               value={phoneNumber}
               setValue={(value) => setPhoneNumber(value)}
+            />
+            <InformationInput
+              text={"Email"}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              value={email}
+              notCompulsory={" "}
             />
             <InformationInput
               text={"Address"}

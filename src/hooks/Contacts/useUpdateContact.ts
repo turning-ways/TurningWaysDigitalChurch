@@ -12,6 +12,7 @@ interface Contact {
   address?: string;
   maturity?: string;
   createdBy?: string;
+  email?:string;
 }
 
 const useUpdateContact = () => {
