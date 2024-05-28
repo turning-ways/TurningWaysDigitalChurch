@@ -24,7 +24,7 @@ const ForgotPassword = () => {
     resolver: zodResolver(schema),
   });
 
-  const {setEmail} = useUserDetailsStore();
+  const { setEmail } = useUserDetailsStore();
 
   const { mutate, isPending } = useForgotPassword();
 
@@ -34,7 +34,7 @@ const ForgotPassword = () => {
         <form
           onSubmit={handleSubmit((data) => {
             const { inputKey } = data;
-            setEmail(inputKey);
+            setEmail(inputKey.replace("+", ""));
             mutate({ inputKey });
           })}
         >
@@ -45,16 +45,17 @@ const ForgotPassword = () => {
             <Header> Reset your Password</Header>
 
             <p className="text-[#949995]">
-              Kindly enter the email address or phone number you used to register
+              Kindly enter the email address or phone number you used to
+              register
             </p>
           </div>
           <div className="mb-6 w-auto">
-            <HeaderTwo>E-mail</HeaderTwo>
+            <HeaderTwo>E-mail or Phone number</HeaderTwo>
             <input
               {...register("inputKey")}
               type="text"
               className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full p-3 outline-none placeholder-[#4A5568]"
-              placeholder="example@gmail.com or +2340000000000"
+              placeholder="example@gmail.com or 23 40000000000"
             />
           </div>
           <NextButton isPending={isPending} />
