@@ -20,6 +20,7 @@ import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import useAssignMember from "../../../hooks/Contacts/useAssignMember";
 import useAddLabel from "../../../hooks/Contacts/useAddLabel";
 import useDeleteLabel from "../../../hooks/Contacts/useDeleteLabel";
+import Color from "color";
 
 const ContactDetails = () => {
   const [showActions, setShowActions] = useState<boolean>(false);
@@ -61,7 +62,11 @@ const ContactDetails = () => {
 
   const { user } = useUserAuth();
 
-  const {mutate: deleteLabel} = useDeleteLabel();
+  const { mutate: deleteLabel } = useDeleteLabel();
+
+  const getDarkerShade = (color: string, amount: number = 0.2): string => {
+    return Color(color).darken(amount).hex();
+  };
   return (
     <OverviewContainer active="Contacts">
       <Header text="Contacts" />
@@ -127,14 +132,22 @@ const ContactDetails = () => {
           onClick={() => setShowLabels(!showLabels)}
         />
         <div className="overflow-x-scroll flex space-x-3 scrollbar-hide">
-          {contact && contact.labels && 
+          {contact &&
+            contact.labels &&
             contact.labels.length > 0 &&
             contact.labels.map((item) => (
               <div
-                className={`border border-[${item.label_type}] rounded-md bg-${item.label_type}-600 text-[#141414] w-full flex items-center px-2 py-1 whitespace-nowrap`}
+                style={{
+                  backgroundColor: getDarkerShade(item.label_type, -0.7),
+                  borderColor: getDarkerShade(item.label_type, 0.3),
+                }}
+                className={`border border-[${item.label_type}] rounded-md text-[#141414] w-full flex items-center px-2 py-1 whitespace-nowrap`}
               >
                 <p>{item.label}</p>
-                <IoIosClose className="text-3xl cursor-pointer" onClick={() => deleteLabel(item.label)}/>
+                <IoIosClose
+                  className="text-3xl cursor-pointer"
+                  onClick={() => deleteLabel(item.label)}
+                />
               </div>
             ))}
         </div>
@@ -147,7 +160,22 @@ const ContactDetails = () => {
                 <ul className="text-[#555555]">
                   <li
                     className="cursor-pointer"
-                    onClick={() => addLabel({ label: item, labelType: "blue" })}
+                    onClick={() => {
+                      const colors = [
+                        "red",
+                        "green",
+                        "yellow",
+                        "blue",
+                        "purple",
+                        "orange",
+                        "grey",
+                      ];
+                      const randomIndex = Math.floor(
+                        Math.random() * colors.length
+                      );
+                      const color = colors[randomIndex];
+                      addLabel({ label: item, labelType: color });
+                    }}
                   >
                     {item}
                   </li>
@@ -215,7 +243,8 @@ const ContactDetails = () => {
           className="text-5xl text-[#444343]"
           onClick={() => setShowMembers(!showMembers)}
         />
-        {contact && contact.assignedTo &&
+        {contact &&
+          contact.assignedTo &&
           contact.assignedTo.length > 0 &&
           contact.assignedTo.map((item) => (
             <div className="bg-[#7F7E7E] text-white rounded-full h-full w-12 flex items-center justify-center">

@@ -3,6 +3,7 @@ import axios from "axios";
 import { success } from "../useUpdatePassword";
 import { notify } from "../useLogin";
 import { useUserAuth } from "../../stores/user";
+import useGetContacts from "./useGetContact";
 
 interface Label {
   label: string;
@@ -16,8 +17,9 @@ const useAddLabel = () => {
 
   const contactId = queryParams.get("id");
 
+  const { refetch } = useGetContacts();
 
-  return useMutation({ 
+  return useMutation({
     mutationFn: (labels: Label) =>
       axios
         .patch(
@@ -31,6 +33,7 @@ const useAddLabel = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: () => {
       success("Label has been added successfully");
+      refetch();
     },
     onError: () => {
       notify("Couldn't add label at this moment");
