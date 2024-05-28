@@ -52,9 +52,7 @@ const PhoneOtpVerification = () => {
   const [timer, setTimer] = useState(60);
   const [timerActive, setTimerActive] = useState(true);
 
-  const {phone} = useUserDetailsStore();
-
-  
+  const { phone } = useUserDetailsStore();
 
   useEffect(() => {
     let interval: number;
@@ -75,7 +73,7 @@ const PhoneOtpVerification = () => {
   }, [timerActive]);
 
   const { mutate, isPending } = useVerifyPhoneSignUpOtp();
-  const {mutate: sendOtp} = useRegisterWithPhone();
+  const { mutate: sendOtp } = useRegisterWithPhone();
   return (
     <>
       <AuthContainer center="sm:items-center h-screen pt-16 md:pt-0">
@@ -117,12 +115,16 @@ const PhoneOtpVerification = () => {
         <p className="mt-3">
           Didn't get a code?{" "}
           <button
-            className="text-[#CCE9D1] "
+            className={`text-[#CCE9D1]  ${
+              timerActive
+                ? "cursor-not-allowed"
+                : "cursor-pointer hover:text-[#61BD74]"
+            }`}
             disabled={timerActive}
             onClick={() => {
               setTimerActive(true);
               console.log(userId);
-              sendOtp({phoneNumber: phone})
+              sendOtp({ phoneNumber: phone });
             }}
           >
             Resend Code
