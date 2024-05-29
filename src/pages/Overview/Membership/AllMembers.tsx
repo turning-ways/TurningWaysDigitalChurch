@@ -5,21 +5,21 @@ import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import { useEffect, useState } from "react";
-import { FaArrowLeft } from "react-icons/fa6";
+// import { FaArrowLeft } from "react-icons/fa6";
 import { ThreeDots } from "react-loader-spinner";
 import { SlArrowRight } from "react-icons/sl";
 
 const AllMembers = () => {
   const navigate = useNavigate();
-  const pageSize = 10;
+  // const pageSize = 10;
 
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
 
   const {
     data: members,
     isPending,
     refetch,
-  } = useGetAllMembers({ page, pageSize });
+  } = useGetAllMembers({ page:1, pageSize:10000 });
 
   const [memberCheckboxes, setMemberCheckboxes] = useState(
     Array(members?.length).fill(false)
@@ -63,31 +63,31 @@ const AllMembers = () => {
     }
   };
 
-  const totalPages = members ? Math.ceil(members?.length / pageSize) : 0;
-  const renderPaginationNumbers = () => {
-    const pagesToShow = 5;
-    const startPage = Math.max(1, page - Math.floor(pagesToShow / 2));
-    const endPage = Math.min(totalPages, startPage + pagesToShow - 1);
+  // const totalPages = members ? Math.ceil(members?.length / pageSize) : 0;
+  // const renderPaginationNumbers = () => {
+  //   const pagesToShow = 5;
+  //   const startPage = Math.max(1, page - Math.floor(pagesToShow / 2));
+  //   const endPage = Math.min(totalPages, startPage + pagesToShow - 1);
 
-    const paginationNumbers = [];
-    for (let i = startPage; i <= endPage; i++) {
-      paginationNumbers.push(
-        <span
-          key={i}
-          onClick={() => setPage(i)}
-          className={
-            i === page
-              ? "active bg-[#AAA9A9] rounded-full w-8 h-8 md:w-12 md:h-12 text-white flex items-center justify-center"
-              : ""
-          }
-        >
-          <p className="w-4 cursor-pointer text-center">{i}</p>
-        </span>
-      );
-    }
+  //   const paginationNumbers = [];
+  //   for (let i = startPage; i <= endPage; i++) {
+  //     paginationNumbers.push(
+  //       <span
+  //         key={i}
+  //         onClick={() => setPage(i)}
+  //         className={
+  //           i === page
+  //             ? "active bg-[#AAA9A9] rounded-full w-8 h-8 md:w-12 md:h-12 text-white flex items-center justify-center"
+  //             : ""
+  //         }
+  //       >
+  //         <p className="w-4 cursor-pointer text-center">{i}</p>
+  //       </span>
+  //     );
+  //   }
 
-    return paginationNumbers;
-  };
+  //   return paginationNumbers;
+  // };
 
   useEffect(() => {
     refetch();
@@ -176,7 +176,7 @@ const AllMembers = () => {
               <div>There's no member</div>
             )}
           </div>
-          <div className="flex justify-center items-center space-x-10 fixed bottom-14 text-sm md:text-base lg:bottom-2">
+          {/* <div className="flex justify-center items-center space-x-10 fixed bottom-14 text-sm md:text-base lg:bottom-2">
             <button
               className="flex items-center space-x-3 cursor-pointer"
               onClick={() => setPage((page) => page - 1)}
@@ -194,7 +194,7 @@ const AllMembers = () => {
               <p className="text-[#7F7E7E]">Next</p>
               <FaArrowRight className="text-[#555545]" />
             </button>
-          </div>
+          </div> */}
           <AddMemberBtn />
         </div>
       ) : (
