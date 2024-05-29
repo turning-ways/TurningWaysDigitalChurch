@@ -2,7 +2,7 @@ import AuthContainer from "../../components/Container/AuthContainer";
 import Header from "../../components/Heading/Header";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useUserDetailsStore, useUserIdStore } from "../../stores/user";
+import { useUserDetailsStore } from "../../stores/user";
 import NextButton from "../../components/Button/NextButton";
 import useVerifyPhoneSignUpOtp from "../../hooks/Signup/useVerifyPhoneSignUpOtp";
 import useRegisterWithPhone from "../../hooks/Signup/useRegisterWithPhone";
@@ -10,7 +10,6 @@ import useRegisterWithPhone from "../../hooks/Signup/useRegisterWithPhone";
 let currentOtpIndex: number = 0;
 
 const PhoneOtpVerification = () => {
-  const { userId } = useUserIdStore();
 
   const [value, setValue] = useState<boolean>(false);
 
@@ -123,7 +122,6 @@ const PhoneOtpVerification = () => {
             disabled={timerActive}
             onClick={() => {
               setTimerActive(true);
-              console.log(userId);
               sendOtp({ phoneNumber: phone });
             }}
           >

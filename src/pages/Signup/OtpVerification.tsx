@@ -114,7 +114,11 @@ const OtpVerification = () => {
         <p className="mt-3">
           Didn't get a code?{" "}
           <button
-            className="text-[#CCE9D1]"
+            className={`text-[#CCE9D1]  ${
+              timerActive
+                ? "cursor-not-allowed"
+                : "cursor-pointer hover:text-[#61BD74]"
+            }`}
             disabled={timerActive}
             onClick={() => {
               setTimerActive(true);
