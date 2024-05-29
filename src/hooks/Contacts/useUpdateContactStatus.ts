@@ -10,17 +10,14 @@ interface Contact {
   modifiedBy?: string;
 }
 
-const useUpdateContactStatus = () => {
+const useUpdateContactStatus = (id:string | null) => {
   const { user } = useUserAuth();
-  const queryParams = new URLSearchParams(location.search);
-
-  const contactId = queryParams.get("id");
 
   return useMutation({
     mutationFn: (contact: Contact) =>
       axios
         .patch(
-          `https://digital-church.onrender.com/api/v1/churches/${user?.churchId._id}/contact/${contactId}/status`,
+          `https://digital-church.onrender.com/api/v1/churches/${user?.churchId._id}/contact/${id}/status`,
           contact,
           {
             withCredentials: true,

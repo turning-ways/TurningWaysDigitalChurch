@@ -27,7 +27,10 @@ const ContactDetails = () => {
   const [showMembers, setShowMembers] = useState<boolean>(false);
   const [showLabels, setShowLabels] = useState<boolean>(false);
   const { data: members } = useGetAllMembers({ page: 1, pageSize: 100000 });
-  const { mutate } = useUpdateContactStatus();
+  const queryParams = new URLSearchParams(location.search);
+
+  const contactId = queryParams.get("id");
+  const { mutate } = useUpdateContactStatus(contactId);
   const { mutate: update } = useUpdateContact();
   const [membershipStatus, setMembershipStatus] = useState("");
   const handleMembershipStatus = (value: string) => {
