@@ -62,17 +62,29 @@ const AllContactsList = () => {
                     </p>
                   </div>
                   <div className="">{contact.phoneNumber}</div>
-                  <div className="trncate">
-                    {contact.assignedTo.map((assigned) => (
-                      <p className="max-w-full truncate">{assigned.first_name + " " + assigned.last_name}</p>
-                    ))}
+                  <div className="tuncate">
+                    <p className="max-w-full truncate">
+                      {contact.assignedTo && contact.assignedTo.length > 0
+                        ? `${contact.assignedTo[0].first_name} ${contact.assignedTo[0].last_name}`
+                        : "No assigned member"}
+                    </p>
                   </div>
                   <div className="">
-                    {contact.labels.map((item) => (
-                      <p>{item.label}</p>
-                    ))}
+                    <p className="max-w-full truncate">
+                      {contact.labels && contact.labels.length > 0
+                        ? `${contact.labels[0].label} `
+                        : "NIL"}
+                    </p>
                   </div>
-                  <div className={`text-[#61BD74] ${contact.status === "not started" && "text-[#555555]"} ${contact.status === "open" && "text-[#B061BD]"} ${contact.status === "won" && "text-[#61BD74]"} ${contact.status === "lost" && "text-[#BD6161]"}`} >{contact.status}</div>
+                  <div
+                    className={`text-[#61BD74] ${
+                      contact.status === "not started" && "text-[#555555]"
+                    } ${contact.status === "open" && "text-[#B061BD]"} ${
+                      contact.status === "won" && "text-[#61BD74]"
+                    } ${contact.status === "lost" && "text-[#BD6161]"}`}
+                  >
+                    {contact.status}
+                  </div>
                   <div className="flex items-center justify-between">
                     <p>{formatDate(contact.createdAt)}</p>
                     <PiDotsThreeCircleVertical
