@@ -31,7 +31,7 @@ const ContactDetails = () => {
 
   const contactId = queryParams.get("id");
   const { mutate } = useUpdateContactStatus(contactId);
-  const { mutate: update } = useUpdateContact();
+  const { mutate: update } = useUpdateContact({});
   const [membershipStatus, setMembershipStatus] = useState("");
   const handleMembershipStatus = (value: string) => {
     setMembershipStatus(value);

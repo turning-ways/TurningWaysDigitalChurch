@@ -14,7 +14,7 @@ interface AddContactProps {
 
 const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
   const { user } = useUserAuth();
-  const { mutate, isPending } = useAddContact();
+  const { mutate, isPending } = useAddContact({onClose: onClose});
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");

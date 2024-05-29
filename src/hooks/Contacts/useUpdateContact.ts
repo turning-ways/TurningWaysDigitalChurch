@@ -15,7 +15,11 @@ interface Contact {
   email?:string;
 }
 
-const useUpdateContact = () => {
+interface ContactProps {
+  onClose?: () => void;
+}
+
+const useUpdateContact = ({onClose}: ContactProps) => {
   const { user } = useUserAuth();
   const queryParams = new URLSearchParams(location.search);
 
@@ -38,6 +42,7 @@ const useUpdateContact = () => {
     onSuccess: () => {
       success("Contact has been updated successfully");
       refetch();
+      onClose && onClose();
     },
     onError: () => {
       notify("Couldn't update contact at this moment");

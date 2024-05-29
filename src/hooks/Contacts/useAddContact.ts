@@ -15,7 +15,11 @@ interface Contact {
   email: string;
 }
 
-const useAddContact = () => {
+interface ContactPros{
+  onClose: () => void;
+}
+
+const useAddContact = ({onClose}: ContactPros) => {
   const { user } = useUserAuth();
   const { refetch } = useGetAllContacts();
 
@@ -34,6 +38,7 @@ const useAddContact = () => {
     onSuccess: () => {
       success("Contact has been created successfully");
       refetch();
+      onClose();
     },
     onError: () => {
       notify("Couldn't create contact at this moment");

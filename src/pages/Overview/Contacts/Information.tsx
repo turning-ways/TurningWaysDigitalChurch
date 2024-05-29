@@ -45,7 +45,11 @@ const Information = () => {
     return `${day}${ordinalSuffix} ${month} ${year}`;
   };
 
-  const { mutate } = useUpdateContactStatus();
+  const queryParams = new URLSearchParams(location.search);
+
+  const contactId = queryParams.get("id");
+
+  const { mutate } = useUpdateContactStatus(contactId);
 
   
 

@@ -22,7 +22,7 @@ const UpdateContact: React.FC<UpdateContactProps> = ({
   const [maturity, setMaturity] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const { mutate: update, isPending } = useUpdateContact();
+  const { mutate: update, isPending } = useUpdateContact({onClose: onClose});
 
   const { data: contact } = useGetContacts();
 

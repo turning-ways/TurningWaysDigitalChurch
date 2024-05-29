@@ -109,6 +109,7 @@ const MemberList = () => {
         </div>
         <div className="border-t mt-4 border-[#BDBDBD] sm:hidden" />
         {active === "All" &&
+          members &&
           members?.map(
             (
               item: {
@@ -121,22 +122,55 @@ const MemberList = () => {
               },
               index: number
             ) => (
-            
-               <MemberTable length={members.length} index={index} first_name={item.first_name} dateOfBirth={item.dateOfBirth.slice(0,10)} gender={item.gender} email={item.email} phone={item.phone.MainPhone} />
-      
+              <MemberTable
+                length={members.length}
+                index={index}
+                first_name={item.first_name}
+                dateOfBirth={item.dateOfBirth?.slice(0, 10)}
+                gender={item.gender}
+                email={item.email}
+                phone={item.phone.MainPhone}
+              />
             )
           )}
         {active === "First Timers" &&
+          firstTimers &&
           firstTimers?.map((item: any, index: number) => (
-            <MemberTable length={firstTimers.length} index={index} first_name={item.first_name} dateOfBirth={item.dateOfBirth.slice(0,10)} gender={item.gender} email={item.email} phone={item.phone.MainPhone} />
+            <MemberTable
+              length={firstTimers.length}
+              index={index}
+              first_name={item.first_name}
+              dateOfBirth={item.dateOfBirth?.slice(0, 10)}
+              gender={item.gender}
+              email={item.email}
+              phone={item.phone.MainPhone}
+            />
           ))}
         {active === "Upcoming Birthday" &&
+          birthdayCelebrants &&
           birthdayCelebrants?.map((item: any, index: number) => (
-            <MemberTable length={birthdayCelebrants.length} index={index} first_name={item.first_name} dateOfBirth={item.dateOfBirth.slice(0,10)} gender={item.gender} email={item.email} phone={item.phone.MainPhone} />
+            <MemberTable
+              length={birthdayCelebrants.length}
+              index={index}
+              first_name={item.first_name}
+              dateOfBirth={item.dateOfBirth?.slice(0, 10)}
+              gender={item.gender}
+              email={item.email}
+              phone={item.phone.MainPhone}
+            />
           ))}
         {active === "Upcoming Anniversary" &&
+          upcomingAnniversary &&
           upcomingAnniversary?.map((item: any, index: number) => (
-            <MemberTable length={upcomingAnniversary.length} index={index} first_name={item.first_name} dateOfBirth={item.dateOfBirth.slice(0,10)} gender={item.gender} email={item.email} phone={item.phone.MainPhone} />
+            <MemberTable
+              length={upcomingAnniversary.length}
+              index={index}
+              first_name={item.first_name}
+              dateOfBirth={item.dateOfBirth?.slice(0, 10)}
+              gender={item.gender}
+              email={item.email}
+              phone={item.phone.MainPhone}
+            />
           ))}
       </div>
     </>
