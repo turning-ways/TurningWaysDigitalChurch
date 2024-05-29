@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import useVerifyOtp from "../../hooks/ForgotPassword/useVerifyOtp";
 import { useUserDetailsStore } from "../../stores/user";
 import NextButton from "../../components/Button/NextButton";
-import useVerifyEmail from "../../hooks/Signup/useVerifyEmail";
+import useForgotPassword from "../../hooks/ForgotPassword/useForgotPassword";
 
 let currentOtpIndex: number = 0;
 
@@ -70,7 +70,7 @@ const ForgotPasswordOtp = () => {
 
   const { mutate, isPending } = useVerifyOtp();
   const { email } = useUserDetailsStore();
-  const { mutate: sendOtp } = useVerifyEmail();
+  const { mutate: sendOtp } = useForgotPassword();
   return (
     <>
       <AuthContainer center="sm:items-center h-screen pt-16 md:pt-0">
@@ -121,7 +121,7 @@ const ForgotPasswordOtp = () => {
             disabled={timerActive}
             onClick={() => {
               setTimerActive(true);
-              sendOtp({ email });
+              sendOtp({ inputKey: email });
             }}
           >
             Resend Code
