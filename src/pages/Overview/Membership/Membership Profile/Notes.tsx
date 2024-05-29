@@ -47,6 +47,13 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
     }));
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      mutate({ note: value });
+      refetch();
+    }
+  };
+
   return (
     <>
       <div
@@ -124,6 +131,7 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
               className="flex-grow text-black p-2 outline-none shadow-md"
               placeholder="Type your comment here"
               onChange={(e) => setValue(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
             <button
               className=" bg-[#17275B] text-white px-3 flex items-center"
