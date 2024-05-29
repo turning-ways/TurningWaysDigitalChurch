@@ -26,6 +26,7 @@ import useAssignMember from "../../../hooks/Contacts/useAssignMember";
 import useAddLabel from "../../../hooks/Contacts/useAddLabel";
 import useDeleteLabel from "../../../hooks/Contacts/useDeleteLabel";
 import useAddActionItem from "../../../hooks/Contacts/useAddActionItem";
+import { Puff, ThreeDots } from "react-loader-spinner";
 
 const ContactDetails = () => {
   const [showActions, setShowActions] = useState<boolean>(false);
@@ -51,7 +52,7 @@ const ContactDetails = () => {
     update({ maturity: value });
   };
 
-  const { mutate: addLabel } = useAddLabel();
+  const { mutate: addLabel, isPending: pendingLabel } = useAddLabel();
 
   // const [background, setBackGround] = useState<number | null>(null);
 
@@ -67,15 +68,15 @@ const ContactDetails = () => {
     }
   }, [contact]);
 
-  const { mutate: addComment } = useAddContactComment();
+  const { mutate: addComment, isPending: pendingComment } = useAddContactComment();
 
-  const { mutate: assignMember } = useAssignMember();
+  const { mutate: assignMember, isPending: pendingAssign } = useAssignMember();
 
   const { user } = useUserAuth();
 
   const { mutate: deleteLabel } = useDeleteLabel();
 
-  const { mutate: addAction } = useAddActionItem();
+  const { mutate: addAction, isPending: pendingAction } = useAddActionItem();
 
   return (
     <OverviewContainer active="Contacts">
@@ -307,7 +308,11 @@ const ContactDetails = () => {
             addComment({ note: comment, recordedBy: user ? user._id : "" });
           }}
         >
-          <BiSend />
+          {!pendingComment ? (
+                <BiSend />
+              ) : (
+                <Puff height="25" width="18" color="#ffffff" />
+              )}
         </button>
       </div>
       {Array.isArray(contact?.Notes) && contact.Notes.length > 0 ? (
@@ -330,6 +335,11 @@ const ContactDetails = () => {
         ))
       ) : (
         <p>dire</p>
+      )}
+      {pendingLabel || pendingAssign || pendingAction && (
+        <Modal>
+          <ThreeDots color="black" />
+        </Modal>
       )}
     </OverviewContainer>
   );

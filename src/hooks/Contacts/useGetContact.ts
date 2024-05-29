@@ -22,6 +22,7 @@ interface Labels {
 interface Action {
   actionLabel: string,
   checked: boolean
+  _id: string,
 }
 
 interface Contact {
