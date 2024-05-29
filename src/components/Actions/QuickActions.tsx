@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import useGetAllMembers from "../../hooks/Member/useGetAllMembers";
 import { CiExport, CiFilter, CiImport, CiMail } from "react-icons/ci";
 import { useState } from "react";
+import * as XLSX from "xlsx";
 
 interface QuickActionsProps {
   display?: string;
@@ -25,6 +26,27 @@ const QuickActions:React.FC<QuickActionsProps> = ({display}) => {
   const [open, setOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const { data: members } = useGetAllMembers({ page: 1, pageSize: 10000000 });
+
+  const handleOnExport = () => {
+    const selectedMembers = members ? members.map(member => ({
+      ServiceUnit: member.ServiceUnit,
+      WorkerStatus: member.WorkerStatus,
+      accessPermission: member.accessPermission,
+      age: member.age,
+      anniversary: member.anniversary,
+      dateJoined: member.dateJoined,
+      dateOfBirth: member.dateOfBirth,
+      email: member.email,
+      first_name: member.first_name,
+      fullname: member.fullname,
+      gender: member.gender
+  })) : [{}];
+
+    const wb = XLSX.utils.book_new(),
+    ws = XLSX.utils.json_to_sheet(selectedMembers);
+    XLSX.utils.book_append_sheet(wb, ws, "My Sheet !");
+    XLSX.writeFile(wb, "MyExcel.xlsx");
+  };
   return (
     <div className={`flex justify-between my-10 flex-col space-y-3 lg:flex-row lg:space-y-0 ${display}`}>
       <p className="lg:text-lg text-[#7F7E7E] text-base">
@@ -36,6 +58,7 @@ const QuickActions:React.FC<QuickActionsProps> = ({display}) => {
             className="flex items-center space-x-1 p-2 cursor-pointer hover:text-[#555555] whitespace-nowrap "
             onClick={() => {
               if (item.name === "Send Bulk Message") setOpen(!open);
+              if (item.name === "Export Data") handleOnExport();
             }}
           >
             <div>{item.icon}</div>

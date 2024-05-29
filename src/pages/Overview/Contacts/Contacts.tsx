@@ -1,5 +1,4 @@
 import { RxDashboard } from "react-icons/rx";
-import QuickActions from "../../../components/Actions/QuickActions";
 import Header from "../Header";
 import OverviewContainer from "../OverviewContainer";
 import { HiMiniPlusCircle } from "react-icons/hi2";
@@ -8,14 +7,15 @@ import AllContactsList from "./AllContactsList";
 import AllContactsGallery from "./AllContactsGallery";
 import { useState } from "react";
 import AddContact from "./AddContact";
+import QuickActionsContact from "../../../components/Actions/QuickActionsContact";
 
 const Contacts = () => {
   const [activeView, setActiveView] = useState("list");
-  const[openAddContact, setOpenAddContact] = useState(false);
+  const [openAddContact, setOpenAddContact] = useState(false);
   return (
     <OverviewContainer active="Contacts">
       <Header text="Contacts" />
-      <QuickActions display="hidden md:flex" />
+      <QuickActionsContact display="hidden md:flex" />
       {/* SOME COMPONENT */}
       <div className="md:flex justify-between mb-10">
         <button
@@ -53,7 +53,9 @@ const Contacts = () => {
       {/* ANOTHER COMPONENT */}
 
       {activeView === "list" ? <AllContactsList /> : <AllContactsGallery />}
-      {openAddContact && <AddContact onClose={() => setOpenAddContact(!openAddContact)}/>}
+      {openAddContact && (
+        <AddContact onClose={() => setOpenAddContact(!openAddContact)} />
+      )}
     </OverviewContainer>
   );
 };
