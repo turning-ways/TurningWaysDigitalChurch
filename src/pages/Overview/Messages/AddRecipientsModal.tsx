@@ -9,11 +9,9 @@ interface AddRecipientsModalProps {
   onClose: () => void;
 }
 
-const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({
-  onClose,
-}) => {
+const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({ onClose }) => {
   const { data: members } = useGetAllMembers({ page: 1, pageSize: 10000 });
-  const {addRecepients, recepients} = useSmsRecepientStore();
+  const { addRecepients, recepients } = useSmsRecepientStore();
 
   const [selectAll, setSelectAll] = useState(false);
   const [memberCheckboxes, setMemberCheckboxes] = useState(
@@ -65,7 +63,11 @@ const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({
 
   useEffect(() => {
     if (members) {
-      setMemberCheckboxes(members.map(member => recepients.some(recipient => recipient.id === member.id)));
+      setMemberCheckboxes(
+        members.map((member) =>
+          recepients.some((recipient) => recipient.id === member.id)
+        )
+      );
     }
   }, [members, recepients]);
 
@@ -102,13 +104,19 @@ const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({
 
           {members?.map((item: any, index: number) => (
             <div className="grid grid-cols-[100px,210px,280px,150px,150px,auto] gap-4 border-b p-4  ">
-              <div className="flex space-x-1 items-center">
+              <div className="flex space-x-3 items-center">
                 <input
                   type="checkbox"
                   checked={memberCheckboxes[index]}
                   onChange={() => handleMemberCheckboxChange(index)}
                 />
-                <p>pic</p>
+                {item.photo ? (
+                  <img src={item.photo} className="rounded-full w-10 h-10" />
+                ) : (
+                  <div className="bg-red-200 w-10 flex justify-center items-center">
+                    P
+                  </div>
+                )}
               </div>
               <div className="">{item.first_name + " " + item.last_name}</div>
               <div className="">{item.email}</div>
