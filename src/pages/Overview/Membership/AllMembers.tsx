@@ -19,7 +19,7 @@ const AllMembers = () => {
     data: members,
     isPending,
     refetch,
-  } = useGetAllMembers({ page:1, pageSize:10000 });
+  } = useGetAllMembers({ page: 1, pageSize: 10000 });
 
   const [memberCheckboxes, setMemberCheckboxes] = useState(
     Array(members?.length).fill(false)
@@ -153,7 +153,14 @@ const AllMembers = () => {
                     </div>
                   </div>
                   <div className="w-full md:hidden">
-                    <div className="border-b border-[#BDBDBD]  flex py-2 text-[#555454] px-3 justify-between items-center">
+                    <div
+                      className="border-b border-[#BDBDBD]  flex py-2 text-[#555454] px-3 justify-between items-center"
+                      onClick={() => {
+                        navigate(
+                          `/admin/directory/member/personal-information?id=${item._id}`
+                        );
+                      }}
+                    >
                       <div className="flex space-x-2">
                         <input type="checkbox" />
                         <div>
@@ -161,13 +168,7 @@ const AllMembers = () => {
                           <p>{item.phone.MainPhone}</p>
                         </div>
                       </div>
-                      <SlArrowRight
-                        onClick={() => {
-                          navigate(
-                            `/admin/directory/member/personal-information?id=${item._id}`
-                          );
-                        }}
-                      />
+                      <SlArrowRight />
                     </div>
                   </div>
                 </>

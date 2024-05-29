@@ -48,7 +48,7 @@ const SubHeader: React.FC<SubHeaderProps> = ({ onNoteClick }) => {
         <IoIosArrowBack className=" text-2xl w-auto text-[#6C6C6D]" />
       </div>
       <div className="flex md:space-x-5 items-center md:ml-20 flex-col md:flex-row w-full space-y-5 md:space-y-0">
-        <div className="h-40 md:h-24 relative md:w-28">
+        <div className="h-40 w-40 md:h-24 relative md:w-28">
           {data?.member.photo ? (
             <img
               src={data.member.photo}
