@@ -60,7 +60,7 @@ const EditProfilePersonalInfo = () => {
     <div className="mt-5 flex flex-col">
       <DropDownInput
         text="Prefix"
-        items={["Mr", "Mrs"]}
+        items={["Mr", "Mrs", "Madam", "Lady", "Sir", "Jr.", "Sr.", "Ms.", "Dr", "Lady"]}
         value={prefix}
         onChange={(prefix) => setPrefix(prefix)}
         placeholder=""
