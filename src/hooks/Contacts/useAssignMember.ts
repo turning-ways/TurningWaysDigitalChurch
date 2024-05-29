@@ -5,7 +5,7 @@ import { notify } from "../useLogin";
 import { useUserAuth } from "../../stores/user";
 import useGetContacts from "./useGetContact";
 
-const useAssignMember = () => {
+const useAssignMember = (onClose: () => void) => {
   const {user} = useUserAuth();
 
   const queryParams = new URLSearchParams(location.search);
@@ -28,6 +28,7 @@ const useAssignMember = () => {
     onSuccess: () => {
       success("Member has been assigned successfully");
       refetch();
+      onClose();
     },
     onError: () => notify("Member couldn't be assigned at this moment"),
   });

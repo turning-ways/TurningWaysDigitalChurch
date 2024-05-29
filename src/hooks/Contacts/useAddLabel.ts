@@ -10,7 +10,7 @@ interface Label {
   labelType: string;
 }
 
-const useAddLabel = () => {
+const useAddLabel = (onClose: () => void) => {
   const { user } = useUserAuth();
 
   const queryParams = new URLSearchParams(location.search);
@@ -34,6 +34,7 @@ const useAddLabel = () => {
     onSuccess: () => {
       success("Label has been added successfully");
       refetch();
+      onClose();
     },
     onError: () => {
       notify("Couldn't add label at this moment");

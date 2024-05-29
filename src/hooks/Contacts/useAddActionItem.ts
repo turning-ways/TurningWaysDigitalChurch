@@ -10,7 +10,7 @@ interface Action {
   checked: boolean;
 }
 
-const useAddActionItem = () => {
+const useAddActionItem = (onClose: () => void) => {
   const { user } = useUserAuth();
   const { refetch } = useGetContacts();
 
@@ -33,6 +33,7 @@ const useAddActionItem = () => {
     onSuccess: () => {
       success("Action has been added successfully");
       refetch();
+      onClose();
     },
     onError: () => {
       notify("Couldn't add action at this moment");

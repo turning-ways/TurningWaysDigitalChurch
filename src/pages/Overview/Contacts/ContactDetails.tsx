@@ -52,7 +52,7 @@ const ContactDetails = () => {
     update({ maturity: value });
   };
 
-  const { mutate: addLabel, isPending: pendingLabel } = useAddLabel();
+  const { mutate: addLabel, isPending: pendingLabel } = useAddLabel(() => setShowLabels(!showLabels));
 
   // const [background, setBackGround] = useState<number | null>(null);
 
@@ -70,13 +70,13 @@ const ContactDetails = () => {
 
   const { mutate: addComment, isPending: pendingComment } = useAddContactComment();
 
-  const { mutate: assignMember, isPending: pendingAssign } = useAssignMember();
+  const { mutate: assignMember, isPending: pendingAssign } = useAssignMember(() => setShowMembers(!showMembers));
 
   const { user } = useUserAuth();
 
   const { mutate: deleteLabel } = useDeleteLabel();
 
-  const { mutate: addAction, isPending: pendingAction } = useAddActionItem();
+  const { mutate: addAction, isPending: pendingAction } = useAddActionItem(() => setShowActions(!showActions));
 
   return (
     <OverviewContainer active="Contacts">
@@ -336,7 +336,7 @@ const ContactDetails = () => {
       ) : (
         <p>dire</p>
       )}
-      {pendingLabel || pendingAssign || pendingAction && (
+      {(pendingLabel || pendingAssign || pendingAction) && (
         <Modal>
           <ThreeDots color="black" />
         </Modal>
