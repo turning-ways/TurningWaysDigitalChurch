@@ -118,10 +118,12 @@ const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({ onClose }) => {
                   </div>
                 )}
               </div>
-              <div className="">{item.first_name + " " + item.last_name}</div>
-              <div className="">{item.email}</div>
-              <div className="">{item.phone.MainPhone}</div>
-              <div className="">{item.gender}</div>
+              <div className="flex items-center">
+                {item.first_name + " " + item.last_name}
+              </div>
+              <div className="flex items-center">{item.email}</div>
+              <div className="flex items-center">{item.phone.MainPhone}</div>
+              <div className="flex items-center">{item.gender}</div>
             </div>
           ))}
         </div>
