@@ -8,6 +8,7 @@ import { useState } from "react";
 import { formatDate } from "./PersonalInformation";
 import useDeleteNote from "../../../../hooks/Notes/useDeleteNote";
 import { IoClose } from "react-icons/io5";
+import { Puff } from "react-loader-spinner";
 
 interface NotesProps {
   openNote: boolean;
@@ -28,7 +29,7 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
   const queryParams = new URLSearchParams(location.search);
   const memberId = queryParams.get("id");
   const [value, setValue] = useState<string>("");
-  const { mutate } = useAddNote(memberId ?? "");
+  const { mutate, isPending } = useAddNote(memberId ?? "");
   const { data } = useGetMemberDetails();
   const { data: notes, refetch } = useGetNote(memberId ?? "");
   const { mutate: del } = useDeleteNote(memberId ?? "");
@@ -132,7 +133,11 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
               }}
               //   onClick={() => console.log(notes)}
             >
-              <BiSend />
+              {!isPending ? (
+                <BiSend />
+              ) : (
+                <Puff height="25" width="18" color="#ffffff" />
+              )}
             </button>
           </div>
         </div>
