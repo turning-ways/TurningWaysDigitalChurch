@@ -36,11 +36,11 @@ const ContactDetails = () => {
   const queryParams = new URLSearchParams(location.search);
 
   const contactId = queryParams.get("id");
-  const { mutate } = useUpdateContactStatus({
+  const { mutate, isPending: pendingStatusUpdate } = useUpdateContactStatus({
     id: contactId,
     onClose: () => console.log("status updated"),
   });
-  const { mutate: update } = useUpdateContact({});
+  const { mutate: update, isPending: pendingContactUpdate } = useUpdateContact({});
   const [membershipStatus, setMembershipStatus] = useState("");
   const handleMembershipStatus = (value: string) => {
     setMembershipStatus(value);
@@ -91,7 +91,7 @@ const ContactDetails = () => {
       <div className="md:grid md:grid-cols-2 gap-x-4 ">
         <DropDownInput
           text="Membership:"
-          items={["in progress", "potential", "confirmed", "cancelled"]}
+          items={["potential", "confirmed", "cancelled"]}
           placeholder="In Progress"
           onSelect={handleMembershipStatus}
           value={membershipStatus}
@@ -300,6 +300,9 @@ const ContactDetails = () => {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           placeholder="Type your comment here"
+          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Enter") addComment({ note: comment, recordedBy: user ? user._id : "" });
+          }}
         />
         <button
           className=" bg-[#17275B] text-white px-3 flex items-center"
@@ -336,7 +339,7 @@ const ContactDetails = () => {
       ) : (
         <p>dire</p>
       )}
-      {(pendingLabel || pendingAssign || pendingAction) && (
+      {(pendingLabel || pendingAssign || pendingAction || pendingStatusUpdate || pendingContactUpdate) && (
         <Modal>
           <ThreeDots color="black" />
         </Modal>
