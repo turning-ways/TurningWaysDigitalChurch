@@ -42,6 +42,9 @@ const useRegister = () => {
       // } else if (message.includes("duplicate")) {
       //   notify(`An account with this email already exists`);
       // }
+      else {
+        notify("An account with this email already exists")
+      }
     },
   });
 };

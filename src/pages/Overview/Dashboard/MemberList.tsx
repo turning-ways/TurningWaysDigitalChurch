@@ -59,7 +59,7 @@ const MemberList = () => {
 
   const handleOnExport = () => {
     const wb = XLSX.utils.book_new(),
-      ws = XLSX.utils.json_to_sheet(members ? members : [{}]);
+    ws = XLSX.utils.json_to_sheet(members ? members : [{}]);
     XLSX.utils.book_append_sheet(wb, ws, "My Sheet !");
     XLSX.writeFile(wb, "MyExcel.xlsx");
   };
