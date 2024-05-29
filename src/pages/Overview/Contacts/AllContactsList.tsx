@@ -72,7 +72,7 @@ const AllContactsList = () => {
                       <p>{label}</p>
                     ))}
                   </div>
-                  <div className="text-[#61BD74]">{contact.status}</div>
+                  <div className={`text-[#61BD74] ${contact.status === "not started" && "text-[#555555]"} ${contact.status === "open" && "text-[#B061BD]"} ${contact.status === "won" && "text-[#61BD74]"} ${contact.status === "lost" && "text-[#BD6161]"}`} >{contact.status}</div>
                   <div className="flex items-center justify-between">
                     <p>{formatDate(contact.createdAt)}</p>
                     <PiDotsThreeCircleVertical

@@ -6,6 +6,7 @@ import { useState } from "react";
 import useAddContact from "../../../hooks/Contacts/useAddContact";
 import { useUserAuth } from "../../../stores/user";
 import { ThreeDots } from "react-loader-spinner";
+import { DropDownInput } from "../../../components/DropDownMenu/DropDownInput";
 
 interface AddContactProps {
   onClose: () => void;
@@ -32,7 +33,7 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
               lastName,
               address,
               phoneNumber,
-              maturity,
+              maturity: maturity.toLowerCase(),
               createdBy: user?._id,
               email
             });
@@ -62,6 +63,15 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
           value={phoneNumber}
           setValue={(value) => setPhoneNumber(value)}
         />
+          <DropDownInput
+         text="Maturity"
+         items={["Child", "Adult", "Teen"]}
+         placeholder="Child, Adult or Teen"
+         compulsory="*"
+         onSelect={(value) => setMaturity(value)}
+         value={maturity}
+         onChange={(maturity) => setMaturity(maturity)}
+       />
         <InformationInput
           text={"Email"}
           onChange={(e) => {
@@ -76,14 +86,6 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
             setAddress(e.target.value);
           }}
           value={address}
-          notCompulsory={" "}
-        />
-        <InformationInput
-          text={"Maturity"}
-          onChange={(e) => {
-            setMaturity(e.target.value);
-          }}
-          value={maturity}
           notCompulsory={" "}
         />
         <button className="self-end border border-[#414141] px-20 py-2 rounded-lg text-[#141414]">

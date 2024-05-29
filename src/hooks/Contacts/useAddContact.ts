@@ -3,6 +3,7 @@ import axios from "axios";
 import { success } from "../useUpdatePassword";
 import { notify } from "../useLogin";
 import { useUserAuth } from "../../stores/user";
+import useGetAllContacts from "./useGetAllContacts";
 
 interface Contact {
   firstName: string;
@@ -16,6 +17,7 @@ interface Contact {
 
 const useAddContact = () => {
   const { user } = useUserAuth();
+  const { refetch } = useGetAllContacts();
 
   return useMutation({
     mutationFn: (contact: Contact) =>
@@ -31,6 +33,7 @@ const useAddContact = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: () => {
       success("Contact has been created successfully");
+      refetch();
     },
     onError: () => {
       notify("Couldn't create contact at this moment");
