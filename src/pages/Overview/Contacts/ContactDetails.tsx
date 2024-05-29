@@ -25,6 +25,7 @@ import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import useAssignMember from "../../../hooks/Contacts/useAssignMember";
 import useAddLabel from "../../../hooks/Contacts/useAddLabel";
 import useDeleteLabel from "../../../hooks/Contacts/useDeleteLabel";
+import useAddActionItem from "../../../hooks/Contacts/useAddActionItem";
 
 const ContactDetails = () => {
   const [showActions, setShowActions] = useState<boolean>(false);
@@ -73,6 +74,8 @@ const ContactDetails = () => {
   const { user } = useUserAuth();
 
   const { mutate: deleteLabel } = useDeleteLabel();
+
+  const { mutate: addAction } = useAddActionItem();
 
   return (
     <OverviewContainer active="Contacts">
@@ -199,24 +202,16 @@ const ContactDetails = () => {
       </div>
       <Heading text="Action checklist" />
       <ul className="space-y-2">
-        {/* <li className="flex space-x-2">
-          <div
-            className={`border-2 border-[#2A2A2A] w-5 h-5 rounded-full cursor-pointer ${
-              background === 1 && "bg-blue-500"
-            }`}
-            onClick={() => setBackGround(1)}
-          />
-          <p>Visit at home</p>
-        </li>
-        <li className="flex space-x-2">
-          <div
-            className={`border-2 border-[#2A2A2A] w-5 h-5 rounded-full cursor-pointer ${
-              background === 2 && "bg-blue-500"
-            }`}
-            onClick={() => setBackGround(2)}
-          />
-          <p>Call every Saturday</p>
-        </li> */}
+        {contact &&
+          contact.actions &&
+          Array.isArray(contact.actions) &&
+          contact.actions.length > 0 &&
+          contact.actions.map((item) => (
+            <li className="flex space-x-2">
+              <input type="checkbox" checked={item.checked} />
+              <p>{item.actionLabel}</p>
+            </li>
+          ))}
         <button
           className="py-1 px-4 rounded-lg border border-[#17275B] text-[#17275B]"
           onClick={() => setShowActions(!showActions)}
@@ -231,7 +226,12 @@ const ContactDetails = () => {
           >
             {action.map((item) => (
               <ul className="text-[#555555]">
-                <li className="cursor-pointer hover:text-[#A0D7AC]">{item}</li>
+                <li
+                  className="cursor-pointer hover:text-[#A0D7AC]"
+                  onClick={() => addAction({ action: item, checked: false })}
+                >
+                  {item}
+                </li>
               </ul>
             ))}
             <button

@@ -56,7 +56,7 @@ const AllContactsList = () => {
               <div className="xl:flex flex-col relative hidden">
                 <div className="grid grid-cols-[120px,150px,150px,150px,100px,auto] gap-4 py-2 px-3  w-full border-b border-x text-[#636363]">
                   <div className="flex space-x-2 items-center truncate">
-                    <input type="checkbox" />
+                    {/* <input type="checkbox" /> */}
                     <p className="truncate max-w-full">
                       {contact.firstName + " " + contact.lastName}
                     </p>

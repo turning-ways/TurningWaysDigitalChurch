@@ -19,6 +19,11 @@ interface Labels {
   label_type: string;
 }
 
+interface Action {
+  actionLabel: string,
+  checked: boolean
+}
+
 interface Contact {
   firstName: string;
   lastName: string;
@@ -35,6 +40,7 @@ interface Contact {
   labels: Labels[];
   Notes: Notes[];
   email: string;
+  actions: Action[];
 }
 
 const useGetContacts = () => {
