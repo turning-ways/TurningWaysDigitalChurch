@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../../components/Modal/Modal";
 import useUpdateContactStatus from "../../../hooks/Contacts/useUpdateContactStatus";
+import { ThreeDots } from "react-loader-spinner";
+import UpdateContact from "./UpdateContact";
 
 interface ContactsModalProps {
   show: string | null;
@@ -13,7 +15,11 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
-  const { mutate: update } = useUpdateContactStatus(id);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const { mutate: update, isPending } = useUpdateContactStatus({
+    id,
+    onClose: () => setOpenConfirm(!openConfirm),
+  });
   return (
     <>
       <div
@@ -28,7 +34,7 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
           >
             View More
           </li>
-          <li className="hover:text-[#A0D7AC] cursor-pointer">
+          <li className="hover:text-[#A0D7AC] cursor-pointer" onClick={() => setOpenUpdate(!openUpdate)}>
             Update Contact
           </li>
           <li
@@ -93,20 +99,22 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
                 No
               </button>
               <button
-                className="bg-[#F4F4F4] text-[#7B7B7B] rounded-[14px] w-full py-2 px-4 hover:bg-[#17275B] hover:text-white"
+                className="bg-[#F4F4F4] text-[#7B7B7B] rounded-[14px] w-full py-2 px-4 hover:bg-[#17275B] hover:text-white flex justify-center"
                 onClick={() => {
                   update({ membershipStatus: "confirmed" });
-                  setTimeout(() => {
-                    setOpenConfirm(!openConfirm);
-                  }, 500);
                 }}
               >
-                Yes
+                {!isPending ? (
+                  <p>Yes</p>
+                ) : (
+                  <ThreeDots height="25" width="50" color="#141414" />
+                )}
               </button>
             </div>
           </div>
         </Modal>
       )}
+      {openUpdate && <UpdateContact onClose={() => setOpenUpdate(!openUpdate)}/>}
     </>
   );
 };

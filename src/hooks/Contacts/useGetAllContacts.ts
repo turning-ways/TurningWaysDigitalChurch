@@ -8,6 +8,11 @@ interface AssignedTo {
   last_name:string;
 }
 
+interface Label {
+  label: string;
+  label_type: string;
+}
+
 interface Contacts {
   firstName: string;
   lastName: string;
@@ -20,7 +25,7 @@ interface Contacts {
   status:string;
   _id:string;
   assignedTo: AssignedTo[];
-  labels: []
+  labels: Label[];
 }
 
 const useGetAllContacts = () => {

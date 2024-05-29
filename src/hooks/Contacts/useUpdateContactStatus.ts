@@ -10,14 +10,19 @@ interface Contact {
   modifiedBy?: string;
 }
 
-const useUpdateContactStatus = (id:string | null) => {
+interface ContactProps {
+  id: string | null,
+  onClose: () => void,
+}
+
+const useUpdateContactStatus = (props: ContactProps) => {
   const { user } = useUserAuth();
 
   return useMutation({
     mutationFn: (contact: Contact) =>
       axios
         .patch(
-          `https://digital-church.onrender.com/api/v1/churches/${user?.churchId._id}/contact/${id}/status`,
+          `https://digital-church.onrender.com/api/v1/churches/${user?.churchId._id}/contact/${props.id}/status`,
           contact,
           {
             withCredentials: true,
@@ -27,6 +32,7 @@ const useUpdateContactStatus = (id:string | null) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: () => {
       success("Contact has been updated successfully");
+      props.onClose();
     },
     onError: () => {
       notify("Couldn't update contact at this moment");

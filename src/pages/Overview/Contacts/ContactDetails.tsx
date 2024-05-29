@@ -14,13 +14,17 @@ import useUpdateContact from "../../../hooks/Contacts/useUpdateContact";
 import useAddContactComment from "../../../hooks/Contacts/useAddContactComment";
 import { useUserAuth } from "../../../stores/user";
 import { formatTheDate } from "./formatDate";
-import { action, labels } from "../../../constants/constants";
+import {
+  action,
+  capitalizeFirstLetters,
+  getDarkerShade,
+  labels,
+} from "../../../constants/constants";
 import Modal from "../../../components/Modal/Modal";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import useAssignMember from "../../../hooks/Contacts/useAssignMember";
 import useAddLabel from "../../../hooks/Contacts/useAddLabel";
 import useDeleteLabel from "../../../hooks/Contacts/useDeleteLabel";
-import Color from "color";
 
 const ContactDetails = () => {
   const [showActions, setShowActions] = useState<boolean>(false);
@@ -30,7 +34,10 @@ const ContactDetails = () => {
   const queryParams = new URLSearchParams(location.search);
 
   const contactId = queryParams.get("id");
-  const { mutate } = useUpdateContactStatus(contactId);
+  const { mutate } = useUpdateContactStatus({
+    id: contactId,
+    onClose: () => console.log("status updated"),
+  });
   const { mutate: update } = useUpdateContact({});
   const [membershipStatus, setMembershipStatus] = useState("");
   const handleMembershipStatus = (value: string) => {
@@ -67,9 +74,6 @@ const ContactDetails = () => {
 
   const { mutate: deleteLabel } = useDeleteLabel();
 
-  const getDarkerShade = (color: string, amount: number = 0.2): string => {
-    return Color(color).darken(amount).hex();
-  };
   return (
     <OverviewContainer active="Contacts">
       <Header text="Contacts" />
@@ -137,7 +141,6 @@ const ContactDetails = () => {
         <div className="overflow-x-scroll flex space-x-3 scrollbar-hide">
           {contact &&
             contact.labels &&
-            contact.labels.length > 0 &&
             contact.labels.map((item) => (
               <div
                 style={{
@@ -228,7 +231,7 @@ const ContactDetails = () => {
           >
             {action.map((item) => (
               <ul className="text-[#555555]">
-                <li className="cursor-pointer">{item}</li>
+                <li className="cursor-pointer hover:text-[#A0D7AC]">{item}</li>
               </ul>
             ))}
             <button
@@ -243,7 +246,7 @@ const ContactDetails = () => {
       <Heading text="Assigned To" />
       <div className="flex space-x-3">
         <IoIosAddCircle
-          className="text-5xl text-[#444343]"
+          className="text-5xl text-[#444343] cursor-pointer"
           onClick={() => setShowMembers(!showMembers)}
         />
         {contact &&
@@ -262,13 +265,15 @@ const ContactDetails = () => {
             >
               {members ? (
                 members.map((member, i) => (
-                  <ul className="text-[#555555]">
+                  <ul className="text-[#555555] hover:text-[#A0D7AC]">
                     <li
                       key={i}
                       className="cursor-pointer"
                       onClick={() => assignMember(member._id)}
                     >
-                      {member.first_name + " " + member.last_name}
+                      {capitalizeFirstLetters(member.first_name) +
+                        " " +
+                        capitalizeFirstLetters(member.last_name)}
                     </li>
                   </ul>
                 ))

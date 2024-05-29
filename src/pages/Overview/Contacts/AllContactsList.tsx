@@ -50,7 +50,7 @@ const AllContactsList = () => {
 
         <div className="border-t xl:hidden border-[#BDBDBD]" />
 
-        {Array.isArray(contacts) && contacts.length > 0 ? (
+        {contacts && Array.isArray(contacts) ? (
           contacts.map((contact) => (
             <>
               <div className="xl:flex flex-col relative hidden">
@@ -68,8 +68,8 @@ const AllContactsList = () => {
                     ))}
                   </div>
                   <div className="">
-                    {contact.labels.map((label) => (
-                      <p>{label}</p>
+                    {contact.labels.map((item) => (
+                      <p>{item.label}</p>
                     ))}
                   </div>
                   <div className={`text-[#61BD74] ${contact.status === "not started" && "text-[#555555]"} ${contact.status === "open" && "text-[#B061BD]"} ${contact.status === "won" && "text-[#61BD74]"} ${contact.status === "lost" && "text-[#BD6161]"}`} >{contact.status}</div>

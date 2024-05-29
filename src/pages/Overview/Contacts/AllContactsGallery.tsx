@@ -2,6 +2,7 @@ import { PiDotsThreeCircleLight } from "react-icons/pi";
 import { useState } from "react";
 import ContactsModal from "./ContactsModal";
 import useGetAllContacts from "../../../hooks/Contacts/useGetAllContacts";
+import { getDarkerShade } from "../../../constants/constants";
 
 const AllContactsGallery = () => {
   const [show, setShow] = useState<string | null>(null);
@@ -36,7 +37,7 @@ const AllContactsGallery = () => {
   };
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
-      {contacts ?
+      {contacts ? (
         contacts.map((contact) => (
           <div className="text-[#2A2A2A] border border-[#2A2A2A] w-full rounded-2xl p-4 relative flex flex-col">
             <div className="flex items-center justify-between ">
@@ -50,15 +51,36 @@ const AllContactsGallery = () => {
             </div>
             <div className="flex items-center justify-between mt-2">
               <p>{contact.phoneNumber}</p>
-              <p className="text-[#A33B3B]">{contact.status}</p>
+              <p
+                className={`${
+                  contact.status === "contacted" && "text-[#555555]"
+                } ${contact.status === "open" && "text-[#B061BD]"} ${
+                  contact.status === "new" && "text-[#61BD74]"
+                } ${contact.status === "lost" && "text-[#BD6161]"}`}
+              >
+                {contact.status}
+              </p>
             </div>
             <div className="flex mt-4 space-x-4">
-              <div className="bg-[#EEECEC] rounded-lg px-[10px] py-3 text-sm">
-                label_1
-              </div>
-              <div className="bg-[#EBCAF9] rounded-lg px-[10px] py-3 text-sm">
-                label_two
-              </div>
+              {contact.labels &&
+              Array.isArray(contact.labels) &&
+              contact.labels.length > 0 ? (
+                contact.labels.map(
+                  (item: { label: string; label_type: string }) => (
+                    <div
+                      style={{
+                        backgroundColor: getDarkerShade(item.label_type, -0.7),
+                        borderColor: getDarkerShade(item.label_type, 0.3),
+                      }}
+                      className="rounded-lg px-[10px] py-3 text-sm border"
+                    >
+                      {item.label}
+                    </div>
+                  )
+                )
+              ) : (
+                <p className="text-[#c2c0c0] py-3">No labels have been added</p>
+              )}
             </div>
             <hr className="my-8 " />
             <div className="flex justify-between">
@@ -74,7 +96,10 @@ const AllContactsGallery = () => {
               onClose={() => setShow(null)}
             />
           </div>
-        )) : <p>No Contacts have been added yet</p>}
+        ))
+      ) : (
+        <p>No Contacts have been added yet</p>
+      )}
     </div>
   );
 };

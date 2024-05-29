@@ -49,7 +49,7 @@ const Information = () => {
 
   const contactId = queryParams.get("id");
 
-  const { mutate } = useUpdateContactStatus(contactId);
+  const { mutate } = useUpdateContactStatus({id: contactId, onClose: () => console.log("status changed")});
 
   
 

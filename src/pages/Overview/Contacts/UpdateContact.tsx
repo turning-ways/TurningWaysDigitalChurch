@@ -59,7 +59,6 @@ const UpdateContact: React.FC<UpdateContactProps> = ({
       >
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl">Edit Contact</h1>
-
           <IoIosClose className="text-5xl cursor-pointer" onClick={onClose} />
         </div>
         <InformationInput
