@@ -12,9 +12,7 @@ interface UpdateContactProps {
   onClose: () => void;
 }
 
-const UpdateContact: React.FC<UpdateContactProps> = ({
-  onClose,
-}) => {
+const UpdateContact: React.FC<UpdateContactProps> = ({ onClose }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -22,7 +20,7 @@ const UpdateContact: React.FC<UpdateContactProps> = ({
   const [maturity, setMaturity] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const { mutate: update, isPending } = useUpdateContact({onClose: onClose});
+  const { mutate: update, isPending } = useUpdateContact({ onClose: onClose });
 
   const { data: contact } = useGetContacts();
 

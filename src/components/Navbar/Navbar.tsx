@@ -97,7 +97,7 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
           </ul>
         </div>
         <div
-          className={` hover:bg-DarkBlueHover hover:text-white py-2 pl-5 pr-10 rounded-[10px] cursor-pointer mb-10 ${
+          className={` hover:bg-DarkBlueHover absolute bottom-0 lg:block hover:text-white py-2 pl-5 pr-10 rounded-[10px] cursor-pointer mb-10 ${
             active === "Logout" && "bg-DarkBlueHover text-white"
           }`}
           onClick={() => {

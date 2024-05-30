@@ -32,7 +32,7 @@ const ContactDetails = () => {
   const [showActions, setShowActions] = useState<boolean>(false);
   const [showMembers, setShowMembers] = useState<boolean>(false);
   const [showLabels, setShowLabels] = useState<boolean>(false);
-  const { data: members, isPending: pendingMembers } = useGetAllMembers({
+  const { data: members } = useGetAllMembers({
     page: 1,
     pageSize: 100000,
   });
@@ -67,7 +67,7 @@ const ContactDetails = () => {
 
   const [comment, setComment] = useState("");
 
-  const { data: contact, isPending: pendingContacts } = useGetContacts();
+  const { data: contact } = useGetContacts();
   useEffect(() => {
     if (contact) {
       setMaturity(contact.maturity);
@@ -89,12 +89,6 @@ const ContactDetails = () => {
   const { mutate: addAction, isPending: pendingAction } = useAddActionItem(() =>
     setShowActions(!showActions)
   );
-
-  // useEffect(() => {
-  //   if () {
-
-  //   }
-  // }, [])
 
   return (
     <OverviewContainer active="Contacts">
@@ -362,9 +356,7 @@ const ContactDetails = () => {
         pendingAssign ||
         pendingAction ||
         pendingStatusUpdate ||
-        pendingContactUpdate ||
-        pendingContacts ||
-        pendingMembers) && (
+        pendingContactUpdate ) && (
         <Modal>
           <ThreeDots color="black" />
         </Modal>

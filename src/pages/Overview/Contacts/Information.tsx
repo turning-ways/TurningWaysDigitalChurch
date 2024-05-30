@@ -6,8 +6,6 @@ import useUpdateContactStatus from "../../../hooks/Contacts/useUpdateContactStat
 import UpdateContact from "./UpdateContact";
 
 const Information = () => {
-
-
   const [open, setOpen] = useState<boolean>(false);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
 
@@ -58,21 +56,25 @@ const Information = () => {
     <div className="relative">
       <Heading text="Contact Information" />
       <h2 className="md:mt-4">
-        {contact && contact.firstName && contact.lastName
-          ? contact.firstName + " " + contact.lastName
-          : "NA"}
+        {contact && contact.firstName && contact.lastName ? (
+          contact.firstName + " " + contact.lastName
+        ) : (
+          <span className="skeleton skeleton-text w-60"></span>
+        )}
       </h2>
       <div className="md:flex justify-between items-center space-y-2 md:space-y-0 mb-8 md:mb-0">
         <p className="text-sm text-[#A1A0A0] mb-4 md:mb-0">
-          {contact && contact.createdAt && contact.ModifiedDate
-            ? `Created: ${formatDate(
-                contact.createdAt
-              )} | Last Modified: ${formatDate(contact.ModifiedDate)}`
-            : "NA"}
+          {contact && contact.createdAt && contact.ModifiedDate ? (
+            `Created: ${formatDate(
+              contact.createdAt
+            )} | Last Modified: ${formatDate(contact.ModifiedDate)}`
+          ) : (
+            <span className="skeleton skeleton-text w-96"></span>
+          )}
         </p>
         <div className="flex space-x-4 relative">
           <button
-            className={` text-white flex items-center py-2 px-6 rounded-lg space-x-1 ${
+            className={` text-white flex items-center py-2 px-6 rounded-lg space-x-1 min-w-20 ${
               status === "new" && "bg-[#A561BD]"
             } ${status === "contacted" && "bg-[#555555]"} ${
               status === "won" && "bg-[#61BD74]"
@@ -82,7 +84,7 @@ const Information = () => {
             <span>{status}</span> <BiSolidDownArrow className="text-[10px]" />
           </button>
           <button
-            className="border border-[#17275B] text-[#17275B] px-4 rounded-lg"
+            className="border border-[#17275B] text-[#17275B] px-4 py-2 rounded-lg"
             onClick={() => setOpen(!open)}
           >
             Edit Contact
@@ -143,9 +145,7 @@ const Information = () => {
           )}
         </div>
       </div>
-      {open && (
-        <UpdateContact onClose={() => setOpen(!open)}/>
-      )}
+      {open && <UpdateContact onClose={() => setOpen(!open)} />}
     </div>
   );
 };
