@@ -4,6 +4,7 @@ import ContactsModal from "./ContactsModal";
 
 import { SlArrowRight } from "react-icons/sl";
 import useGetAllContacts from "../../../hooks/Contacts/useGetAllContacts";
+import { useNavigate } from "react-router-dom";
 
 const AllContactsList = () => {
   const [show, setShow] = useState<string | null>(null);
@@ -36,6 +37,8 @@ const AllContactsList = () => {
 
     return `${day} ${month} ${year} ${formattedTime}`;
   };
+
+  const navigate = useNavigate();
   return (
     <>
       <div className="flex flex-col">
@@ -100,7 +103,7 @@ const AllContactsList = () => {
                 />
               </div>
               <div className="xl:hidden">
-                <div className="border-b border-[#BDBDBD]  flex py-2 text-[#555454] px-3 justify-between items-center">
+                <div className="border-b border-[#BDBDBD]  flex py-2 text-[#555454] px-3 justify-between items-center" onClick={() => navigate(`/admin/contacts/detail?id=${contact._id}`)}>
                   <div>
                     <p>{contact.firstName + " " + contact.lastName}</p>
                     <p>{formatDate(contact.createdAt)}</p>

@@ -36,7 +36,7 @@ const Search: React.FC<SearchProps> = ({ size }) => {
         onBlur={() => setShowFilteredMembers(false)}
       />
       {showFilteredMembers && filteredMembers?.length !== 0 && (
-        <ul className="absolute bg-white border border-black w-full top-14 left-0  rounded-xl z-50 max-h-52 overflow-y-scroll">
+        <ul className="absolute bg-white border border-gray-200 w-full top-14 left-0 shadow-2xl rounded-md z-50 max-h-60 overflow-y-scroll">
           {filteredMembers?.map(
             (
               member: {

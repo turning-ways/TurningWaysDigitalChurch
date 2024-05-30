@@ -32,7 +32,10 @@ const ContactDetails = () => {
   const [showActions, setShowActions] = useState<boolean>(false);
   const [showMembers, setShowMembers] = useState<boolean>(false);
   const [showLabels, setShowLabels] = useState<boolean>(false);
-  const { data: members } = useGetAllMembers({ page: 1, pageSize: 100000 });
+  const { data: members, isPending: pendingMembers } = useGetAllMembers({
+    page: 1,
+    pageSize: 100000,
+  });
   const queryParams = new URLSearchParams(location.search);
 
   const contactId = queryParams.get("id");
@@ -40,7 +43,9 @@ const ContactDetails = () => {
     id: contactId,
     onClose: () => console.log("status updated"),
   });
-  const { mutate: update, isPending: pendingContactUpdate } = useUpdateContact({});
+  const { mutate: update, isPending: pendingContactUpdate } = useUpdateContact(
+    {}
+  );
   const [membershipStatus, setMembershipStatus] = useState("");
   const handleMembershipStatus = (value: string) => {
     setMembershipStatus(value);
@@ -52,7 +57,9 @@ const ContactDetails = () => {
     update({ maturity: value });
   };
 
-  const { mutate: addLabel, isPending: pendingLabel } = useAddLabel(() => setShowLabels(!showLabels));
+  const { mutate: addLabel, isPending: pendingLabel } = useAddLabel(() =>
+    setShowLabels(!showLabels)
+  );
 
   // const [background, setBackGround] = useState<number | null>(null);
 
@@ -60,7 +67,7 @@ const ContactDetails = () => {
 
   const [comment, setComment] = useState("");
 
-  const { data: contact } = useGetContacts();
+  const { data: contact, isPending: pendingContacts } = useGetContacts();
   useEffect(() => {
     if (contact) {
       setMaturity(contact.maturity);
@@ -68,15 +75,26 @@ const ContactDetails = () => {
     }
   }, [contact]);
 
-  const { mutate: addComment, isPending: pendingComment } = useAddContactComment();
+  const { mutate: addComment, isPending: pendingComment } =
+    useAddContactComment();
 
-  const { mutate: assignMember, isPending: pendingAssign } = useAssignMember(() => setShowMembers(!showMembers));
+  const { mutate: assignMember, isPending: pendingAssign } = useAssignMember(
+    () => setShowMembers(!showMembers)
+  );
 
   const { user } = useUserAuth();
 
   const { mutate: deleteLabel } = useDeleteLabel();
 
-  const { mutate: addAction, isPending: pendingAction } = useAddActionItem(() => setShowActions(!showActions));
+  const { mutate: addAction, isPending: pendingAction } = useAddActionItem(() =>
+    setShowActions(!showActions)
+  );
+
+  // useEffect(() => {
+  //   if () {
+
+  //   }
+  // }, [])
 
   return (
     <OverviewContainer active="Contacts">
@@ -301,7 +319,8 @@ const ContactDetails = () => {
           onChange={(e) => setComment(e.target.value)}
           placeholder="Type your comment here"
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (e.key === "Enter") addComment({ note: comment, recordedBy: user ? user._id : "" });
+            if (e.key === "Enter")
+              addComment({ note: comment, recordedBy: user ? user._id : "" });
           }}
         />
         <button
@@ -312,10 +331,10 @@ const ContactDetails = () => {
           }}
         >
           {!pendingComment ? (
-                <BiSend />
-              ) : (
-                <Puff height="25" width="18" color="#ffffff" />
-              )}
+            <BiSend />
+          ) : (
+            <Puff height="25" width="18" color="#ffffff" />
+          )}
         </button>
       </div>
       {Array.isArray(contact?.Notes) && contact.Notes.length > 0 ? (
@@ -339,7 +358,13 @@ const ContactDetails = () => {
       ) : (
         <p>dire</p>
       )}
-      {(pendingLabel || pendingAssign || pendingAction || pendingStatusUpdate || pendingContactUpdate) && (
+      {(pendingLabel ||
+        pendingAssign ||
+        pendingAction ||
+        pendingStatusUpdate ||
+        pendingContactUpdate ||
+        pendingContacts ||
+        pendingMembers) && (
         <Modal>
           <ThreeDots color="black" />
         </Modal>

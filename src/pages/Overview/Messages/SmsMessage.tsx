@@ -22,10 +22,10 @@ const SmsMessage = () => {
         >
           <IoIosArrowBack className=" text-2xl w-auto text-[#6C6C6D]" />
         </div>
-        <div className="px-16 text-[#555454] space-y-6">
+        <div className="md:px-16 text-[#555454] space-y-6">
           {/* <Subject title="Sender's ID" placeholder="Winners Chapel Magodo" />
           <Body title="Text Message" placeholder="Enter text messsage here" /> */}
-          <Recipients onOpen={() => setOpen(!open)}/>
+          <Recipients onOpen={() => setOpen(!open)} />
         </div>
       </div>
       {open && <AddRecipientsModal onClose={() => setOpen(!open)} />}

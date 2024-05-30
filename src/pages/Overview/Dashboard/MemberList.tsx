@@ -133,6 +133,7 @@ const MemberList = () => {
                 email: string;
                 first_name: string;
                 dateOfBirth: string;
+                _id: string;
               },
               index: number
             ) => (
@@ -144,6 +145,7 @@ const MemberList = () => {
                 gender={item.gender}
                 email={item.email}
                 phone={item.phone.MainPhone}
+                id={item._id}
               />
             )
           )}
@@ -158,6 +160,7 @@ const MemberList = () => {
               gender={item.gender}
               email={item.email}
               phone={item.phone.MainPhone}
+              id={item._id}
             />
           ))}
         {active === "Upcoming Birthday" &&
@@ -171,6 +174,7 @@ const MemberList = () => {
               gender={item.gender}
               email={item.email}
               phone={item.phone.MainPhone}
+              id={item._id}
             />
           ))}
         {active === "Upcoming Anniversary" &&
@@ -184,6 +188,7 @@ const MemberList = () => {
               gender={item.gender}
               email={item.email}
               phone={item.phone.MainPhone}
+              id={item._id}
             />
           ))}
       </div>

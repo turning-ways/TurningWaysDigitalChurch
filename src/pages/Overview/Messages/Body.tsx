@@ -9,14 +9,14 @@ interface BodyProps {
 
 const Body: React.FC<BodyProps> = ({ title, placeholder, onMessageChange }) => {
   const [message, setMessage] = useState<string>("");
-  
+
   return (
     <div>
-      <div className="flex justify-between items-center mb-1">
+      <div className="flex justify-between items-center mb-2">
         <p>
           {title} <span className="">*</span>
         </p>
-        <button className="bg-[#D9D9D9] px-6 py-2 rounded-lg">Preview</button>
+        {/* <button className="bg-[#D9D9D9] px-6 py-2 rounded-lg">Preview</button> */}
       </div>
       <div className="border p-4 rounded-2xl h-96 relative bg-white">
         <textarea
