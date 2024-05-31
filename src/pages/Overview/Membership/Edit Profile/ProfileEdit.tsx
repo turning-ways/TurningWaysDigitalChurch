@@ -15,7 +15,7 @@ const ProfileEdit = () => {
 
   return (
     <OverviewContainer active="Directory">
-      <Header text="Add Profile" />
+      <Header text="New Member Profile" />
       <SubHeader />
       <AddUpdateInfoHeader route={routes} />
       <Outlet />
