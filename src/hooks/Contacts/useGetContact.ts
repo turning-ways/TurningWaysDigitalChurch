@@ -7,6 +7,7 @@ interface Notes {
   date: string;
   recordedBy: string;
   note: string;
+  _id:string;
 }
 
 interface AssignedTo {
@@ -20,9 +21,9 @@ interface Labels {
 }
 
 interface Action {
-  actionLabel: string,
-  checked: boolean
-  _id: string,
+  actionLabel: string;
+  checked: boolean;
+  _id: string;
 }
 
 interface Contact {
@@ -42,6 +43,11 @@ interface Contact {
   Notes: Notes[];
   email: string;
   actions: Action[];
+  church: {
+    _id: string;
+    name: string;
+    id: string;
+  };
 }
 
 const useGetContacts = () => {

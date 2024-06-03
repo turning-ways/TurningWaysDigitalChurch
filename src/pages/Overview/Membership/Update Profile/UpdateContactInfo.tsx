@@ -1,7 +1,5 @@
 import InformationInput from "../Edit Profile/InformationInput";
 import { useEditContactInformationStore } from "../../../../stores/Edit Member/contactinfo";
-import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
-import { useEffect } from "react";
 import HeaderTwo from "../../../../components/Heading/HeaderTwo";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
@@ -24,17 +22,10 @@ const UpdateContactInfo = () => {
     { name: "Home Address", set: setContactAddress, value: contact_address },
   ];
 
-  const { data } = useGetMemberDetails();
 
   const queryParams = new URLSearchParams(location.search);
 
   const memberId = queryParams.get("id");
-
-  useEffect(() => {
-    setContactEmail(data ? data?.member?.email : "");
-    setContactAddress(data ? data?.member?.address?.HomeAddress : "");
-    setContactPhone(data ? data?.member?.phone?.MainPhone : "");
-  }, [data, setContactAddress, setContactEmail, setContactPhone, ]);
 
   return (
     <div className="mt-5">

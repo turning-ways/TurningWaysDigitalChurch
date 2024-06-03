@@ -1,4 +1,4 @@
-import { HiQuestionMarkCircle } from "react-icons/hi2";
+// import { HiQuestionMarkCircle } from "react-icons/hi2";
 
 interface SubjectProps{
     title: string;
@@ -15,7 +15,7 @@ const Subject: React.FC<SubjectProps> = ({title, placeholder}) => {
           className="w-full outline-none"
           placeholder={placeholder}
         />
-        <HiQuestionMarkCircle className="text-3xl text-[#7F7F7F]" />
+        {/* <HiQuestionMarkCircle className="text-3xl text-[#7F7F7F]" /> */}
       </div>
     </div>
   );

@@ -27,6 +27,8 @@ interface Member {
     createdBy: string;
     updatedAt: string;
     photo: string;
+    role: string;
+    workerType: string;
   };
 }
 

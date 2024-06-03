@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { HiQuestionMarkCircle } from "react-icons/hi2";
+// import { HiQuestionMarkCircle } from "react-icons/hi2";
 
 interface BodyProps {
   title: string;
@@ -30,7 +30,7 @@ const Body: React.FC<BodyProps> = ({ title, placeholder, onMessageChange }) => {
             onMessageChange(e.target.value);
           }}
         ></textarea>
-        <HiQuestionMarkCircle className="text-3xl text-[#7F7F7F] absolute bottom-0 right-0 m-2" />
+        {/* <HiQuestionMarkCircle className="text-3xl text-[#7F7F7F] absolute bottom-0 right-0 m-2" /> */}
       </div>
     </div>
   );

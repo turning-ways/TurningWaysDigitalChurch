@@ -1,8 +1,6 @@
 import InformationInput from "../Edit Profile/InformationInput";
 import { DropDownInput } from "../../../../components/DropDownMenu/DropDownInput";
 import { useEditPersonalInformationStore } from "../../../../stores/Edit Member/personalinfo";
-import { useEffect } from "react";
-import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
 import { useNavigate } from "react-router-dom";
 
 const UpdatePersonalInfo = () => {
@@ -56,21 +54,12 @@ const UpdatePersonalInfo = () => {
     setGender(value);
   };
 
-  const { data } = useGetMemberDetails();
 
   const queryParams = new URLSearchParams(location.search);
 
   const memberId = queryParams.get("id");
 
-  useEffect(() => {
-    setFirstName(data ? data?.member?.first_name : "");
-    setMiddleName(data ? data?.member?.middle_name : "");
-    setLastName(data ? data?.member?.last_name : "");
-    setSuffix(data ? data?.member?.suffix : "");
-    setPrefix(data ? data?.member?.prefix : "");
-    setDateOfBirth(data ? data?.member?.dateOfBirth : "");
-    setGender(data?.member?.gender ?? "");
-  }, []);
+  
 
   return (
     <div className="mt-5 flex flex-col">

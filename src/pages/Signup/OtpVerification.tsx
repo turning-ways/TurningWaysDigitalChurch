@@ -53,7 +53,7 @@ const OtpVerification = () => {
   const {email} = useUserDetailsStore();
 
   useEffect(() => {
-    let interval: number;
+    let interval: NodeJS.Timeout;
     if (timerActive) {
       interval = setInterval(() => {
         setTimer((prevTimer) => {

@@ -44,8 +44,8 @@ const PersonalInformation = () => {
           <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
             <p className="text-[#727272]">Middle Name</p>
             <p className="outline-none text-[#434343] text-lg w-full">
-              {data?.member?.middle_name?.slice(0, 1).toUpperCase() +
-                data?.member?.middle_name?.slice(1)}
+              {data?.member?.middle_name ? data?.member?.middle_name?.slice(0, 1).toUpperCase() +
+                data?.member?.middle_name?.slice(1) : ""}
             </p>
           </div>
           <div className="px-5 pt-6 pb-2 border-b md:space-y-2">

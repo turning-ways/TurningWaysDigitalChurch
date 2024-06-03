@@ -70,7 +70,7 @@ const SubHeader: React.FC<SubHeaderProps> = ({ onNoteClick }) => {
                     capitalizeFirstLetter(data.member.last_name)}
               </p>
               <div className="bg-[#E7E6E6] p-2 rounded-[8px] text-[14px] text-[#505050]">
-                Member
+                {data?.member?.role}
               </div>
             </div>
             <ul className="flex justify-between text-[#727171] gap-x-4">

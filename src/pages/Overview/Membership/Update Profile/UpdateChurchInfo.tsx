@@ -1,13 +1,11 @@
-import { useEffect } from "react";
 import { DropDownInput } from "../../../../components/DropDownMenu/DropDownInput";
-import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
-import { useChurchInformationSore } from "../../../../stores/Add Member/churchInformation";
 import { ThreeDots } from "react-loader-spinner";
 import useUpdateMember from "../../../../hooks/Member/useUpdateMember";
 import { useEditPersonalInformationStore } from "../../../../stores/Edit Member/personalinfo";
 import { useEditContactInformationStore } from "../../../../stores/Edit Member/contactinfo";
 import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../../../../stores/user";
+import { useEditChurchInformationStore } from "../../../../stores/Edit Member/churchinfo";
 
 const UpdateChurchInfo = () => {
   const {
@@ -17,17 +15,9 @@ const UpdateChurchInfo = () => {
     member_status,
     work_type,
     service_unit,
-  } = useChurchInformationSore();
-
-  const { data } = useGetMemberDetails();
+  } = useEditChurchInformationStore();
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setMemberStatus(data ? data.member.memberStatus : "");
-    setWorkType(data ? data.member.workType : "");
-    setServiceUnit(data ? data.member.ServiceUnit : "");
-  }, []);
 
   const dropDown = [
     {
@@ -37,13 +27,13 @@ const UpdateChurchInfo = () => {
       value: member_status,
     },
     {
-      text: "Work Type",
+      text: "Worker Type",
       items: ["Pastor", "Reverend"],
       onSelect: (value: string) => setWorkType(value),
       value: work_type,
     },
     {
-      text: "Service Unit/Department",
+      text: "Service Unit/Group",
       items: ["Usher", "Attendance"],
       onSelect: (value: string) => setServiceUnit(value),
       value: service_unit,
@@ -74,9 +64,13 @@ const UpdateChurchInfo = () => {
       phone: { MainPhone: contact_phone },
       churchId: user?.churchId._id ? user?.churchId._id : "",
       gender,
+      memberStatus: member_status,
+      workerType: work_type,
+      ServiceUnit: service_unit,
     });
-    console.log(first_name, last_name, middle_name, suffix, gender);
+    // console.log(member_status, work_type, service_unit);
   };
+
 
   return (
     <div className="mt-5">

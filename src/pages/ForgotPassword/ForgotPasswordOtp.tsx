@@ -47,7 +47,7 @@ const ForgotPasswordOtp = () => {
   const [timerActive, setTimerActive] = useState(true);
 
   useEffect(() => {
-    let interval: number;
+    let interval: NodeJS.Timeout;
     if (timerActive) {
       interval = setInterval(() => {
         setTimer((prevTimer) => {

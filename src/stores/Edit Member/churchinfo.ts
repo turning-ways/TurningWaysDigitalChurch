@@ -14,18 +14,18 @@ interface PersonalInfo {
 
 //email
 const savedAccessPermission = localStorage.getItem("edit_access_permission");
-const access_permission = savedAccessPermission ? JSON.parse(savedAccessPermission) : "";
+const access_permission = savedAccessPermission && savedAccessPermission !== "undefined" ? JSON.parse(savedAccessPermission) : "";
 //phone number
 const savedMemberStatus = localStorage.getItem("edit_member_status");
-const member_status = savedMemberStatus ? JSON.parse(savedMemberStatus) : "";
+const member_status = savedMemberStatus && savedMemberStatus !== "undefined" ? JSON.parse(savedMemberStatus) : "";
 //home address
 const savedWorkType = localStorage.getItem("edit_work_type");
-const work_type = savedWorkType ? JSON.parse(savedWorkType) : "";
+const work_type = savedWorkType && savedWorkType !== "undefined" ? JSON.parse(savedWorkType) : "";
 
 const savedServiceUnit = localStorage.getItem("edit_service_unit");
-const service_unit = savedServiceUnit ? JSON.parse(savedServiceUnit) : "";
+const service_unit = savedServiceUnit && savedServiceUnit !== "undefined" ? JSON.parse(savedServiceUnit) : "";
 
-export const useEditChurchInformationSore = create<PersonalInfo>()(
+export const useEditChurchInformationStore = create<PersonalInfo>()(
   (set, get) => ({
     access_permission,
     member_status,

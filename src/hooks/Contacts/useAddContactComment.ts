@@ -10,7 +10,7 @@ interface Comment {
   recordedBy: string;
 }
 
-const useAddContactComment = () => {
+const useAddContactComment = (emptyComment: () => void) => {
   const {user} = useUserAuth();
 
   const queryParams = new URLSearchParams(location.search);
@@ -33,6 +33,7 @@ const useAddContactComment = () => {
     onSuccess: () => {
       success("Comment has been added successfully");
       refetch();
+      emptyComment();
     },
     onError: () => notify("Couldn't add comment at this time"),
   });

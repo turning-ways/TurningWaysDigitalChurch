@@ -15,7 +15,7 @@ import useAddContactComment from "../../../hooks/Contacts/useAddContactComment";
 import { useUserAuth } from "../../../stores/user";
 import { formatTheDate } from "./formatDate";
 import {
-  action,
+  // action,
   capitalizeFirstLetters,
   getDarkerShade,
   labels,
@@ -27,6 +27,9 @@ import useAddLabel from "../../../hooks/Contacts/useAddLabel";
 import useDeleteLabel from "../../../hooks/Contacts/useDeleteLabel";
 import useAddActionItem from "../../../hooks/Contacts/useAddActionItem";
 import { Puff, ThreeDots } from "react-loader-spinner";
+import { MdOutlineDelete } from "react-icons/md";
+import useDeleteContactComment from "../../../hooks/Contacts/useDeleteContactComment";
+// import { FaArrowUp } from "react-icons/fa6";
 
 const ContactDetails = () => {
   const [showActions, setShowActions] = useState<boolean>(false);
@@ -49,7 +52,7 @@ const ContactDetails = () => {
   const [membershipStatus, setMembershipStatus] = useState("");
   const handleMembershipStatus = (value: string) => {
     setMembershipStatus(value);
-    mutate({ membershipStatus: value });
+    mutate({ membershipStatus: value, modifiedBy: user?._id });
   };
   const [maturity, setMaturity] = useState("");
   const handleMaturity = (value: string) => {
@@ -76,7 +79,7 @@ const ContactDetails = () => {
   }, [contact]);
 
   const { mutate: addComment, isPending: pendingComment } =
-    useAddContactComment();
+    useAddContactComment(() => setComment(""));
 
   const { mutate: assignMember, isPending: pendingAssign } = useAssignMember(
     () => setShowMembers(!showMembers)
@@ -89,6 +92,13 @@ const ContactDetails = () => {
   const { mutate: addAction, isPending: pendingAction } = useAddActionItem(() =>
     setShowActions(!showActions)
   );
+
+  const [actionValue, setActionValue] = useState("");
+
+  const { mutate: deleteComment, isPending: pendingDeletion } =
+    useDeleteContactComment();
+
+  
 
   return (
     <OverviewContainer active="Contacts">
@@ -237,7 +247,12 @@ const ContactDetails = () => {
           <div
             className={`w-[400px] bg-white px-6 py-6 border rounded-2xl flex flex-col space-y-4`}
           >
-            {action.map((item) => (
+            <input
+              className="outline-none px-2 py-3 border rounded-lg"
+              value={actionValue}
+              onChange={(e) => setActionValue(e.target.value)}
+            />
+            {/* {action.map((item) => (
               <ul className="text-[#555555]">
                 <li
                   className="cursor-pointer hover:text-[#A0D7AC]"
@@ -246,13 +261,24 @@ const ContactDetails = () => {
                   {item}
                 </li>
               </ul>
-            ))}
-            <button
-              className="px-10 w-fit bg-[#F3F3F3] text-[#7A7A7A] self-center rounded-[14px] py-2"
-              onClick={() => setShowActions(!showActions)}
-            >
-              Cancel
-            </button>
+            ))} */}
+            <div className="flex justify-between">
+              <button
+                className="w-32 bg-[#F3F3F3] text-[#7A7A7A] hover:text-secondary self-center rounded-[14px] py-2"
+                onClick={() => setShowActions(!showActions)}
+              >
+                Cancel
+              </button>
+              <button
+                className="w-32 bg-[#F3F3F3] text-[#7A7A7A] hover:text-secondary self-center rounded-[14px] py-2"
+                onClick={() => {
+                  addAction({ action: actionValue, checked: false });
+                  setTimeout(() => setActionValue(""), 5000);
+                }}
+              >
+                Add
+              </button>
+            </div>
           </div>
         </Modal>
       )}
@@ -331,9 +357,14 @@ const ContactDetails = () => {
           )}
         </button>
       </div>
+
+      {/* <div className="flex justify-end">
+        <FaArrowUp className="text-2xl cursor-pointer" />
+      </div> */}
+
       {Array.isArray(contact?.Notes) && contact.Notes.length > 0 ? (
-        contact.Notes.map((item) => (
-          <div className="flex w-full space-x-4 mt-4">
+        [...contact.Notes].reverse().map((item) => (
+          <div className="flex w-full space-x-4 mt-4" key={item._id}>
             <div className="bg-[#D9D9D9] text-[#707070] flex justify-center items-center p-3 rounded-full w-10 h-10">
               {contact.firstName.charAt(0).toUpperCase() +
                 contact.lastName.charAt(0).toUpperCase()}
@@ -345,18 +376,33 @@ const ContactDetails = () => {
                 </p>
                 <p className="text-xs sm:text-sm">{formatTheDate(item.date)}</p>
               </div>
-              <p className="text-[#555454]">{item.note}</p>
+              <div className="flex justify-between items-center">
+                <p className="text-[#555454]">{item.note}</p>
+                <MdOutlineDelete
+                  className="text-2xl text-red-500 cursor-pointer"
+                  onClick={() =>
+                    deleteComment({
+                      contactId: contact._id ?? "",
+                      memberId: user?._id ?? "",
+                      commentId: item._id,
+                      churchId: contact.church.id ?? "",
+                    })
+                  }
+                />
+              </div>
             </div>
           </div>
         ))
       ) : (
-        <p>dire</p>
+        <p>No comments</p>
       )}
+
       {(pendingLabel ||
         pendingAssign ||
         pendingAction ||
         pendingStatusUpdate ||
-        pendingContactUpdate ) && (
+        pendingContactUpdate ||
+        pendingDeletion) && (
         <Modal>
           <ThreeDots color="black" />
         </Modal>

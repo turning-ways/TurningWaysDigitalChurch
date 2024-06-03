@@ -27,14 +27,14 @@ const EditProfileChurchInfo = () => {
       onChange: setMemberStatus,
     },
     {
-      text: "Work Type",
+      text: "Worker Type",
       items: ["pastor", "reverend"],
       onSelect: (value: string) => setWorkType(value),
       value: work_type,
       onChange: setWorkType,
     },
     {
-      text: "Service Unit/Department",
+      text: "Service Unit/Group",
       items: ["usher", "attendance"],
       onSelect: (value: string) => setServiceUnit(value),
       value: service_unit,

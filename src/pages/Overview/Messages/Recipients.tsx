@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { FiPlusCircle } from "react-icons/fi";
-import { HiQuestionMarkCircle } from "react-icons/hi2";
+// import { HiQuestionMarkCircle } from "react-icons/hi2";
 import { RiDeleteBin4Line } from "react-icons/ri";
 import Modal from "../../../components/Modal/Modal";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
@@ -47,11 +47,14 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
   const { data: members } = useGetAllMembers({ page: 1, pageSize: 10000 });
   const { mutate, isPending } = useSendSms();
   const [message, setMessage] = useState<string>("");
-  const {
-    recepients,
-    removeRecepientById,
-    addRecepients,
-  } = useSmsRecepientStore();
+  const { recepients, removeRecepientById, addRecepients } =
+    useSmsRecepientStore();
+  const capitalizeFirstLetter = (sentence: string): string => {
+      return sentence
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    };
   return (
     <>
       <Subject title="Sender's ID" placeholder="Winners Chapel Magodo" />
@@ -70,7 +73,7 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
               className="text-2xl text-[#7F7F7F] cursor-pointer"
               onClick={onOpen}
             />
-            <HiQuestionMarkCircle className="text-[28px] text-[#7F7F7F] cursor-pointer" />
+            {/* <HiQuestionMarkCircle className="text-[28px] text-[#7F7F7F] cursor-pointer" /> */}
           </div>
         </div>
 
@@ -93,7 +96,7 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
                   }`}
                 >
                   <div className="flex items-center space-x-2">
-                    <p>{item.first_name}</p>
+                    <p>{capitalizeFirstLetter(item.fullname)}</p>
                   </div>
                   <div className="flex items-center space-x-6">
                     <p>{item.phone.MainPhone}</p>

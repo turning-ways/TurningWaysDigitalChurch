@@ -23,6 +23,10 @@ interface Member {
   };
   title?: string;
   dateOfBirth?: string;
+  workerType: string;
+  ServiceUnit: string;
+  memberStatus: string;
+
   MarriageStatus?: string;
 }
 

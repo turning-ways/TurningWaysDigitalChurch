@@ -16,7 +16,7 @@ export const formatTheDate = (dateString: string): string => {
     const month = date.toLocaleString("default", { month: "long" });
     const year = date.getUTCFullYear();
 
-    let hours = date.getUTCHours();
+    let hours = date.getUTCHours() + 1;
     const minutes = date.getUTCMinutes().toString().padStart(2, "0");
     const ampm = hours >= 12 ? "PM" : "AM";
     hours = hours % 12;

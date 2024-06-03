@@ -16,6 +16,7 @@ const ChurchInformation = () => {
       memberStatus: string;
       workType: string;
       ServiceUnit: string;
+      workerType: string;
     };
   }>({
     queryKey: ["church", churchId, "member", memberId],
@@ -31,23 +32,24 @@ const ChurchInformation = () => {
     {
       name: "Member Status",
       value:
-        data &&
+        data && data?.member?.memberStatus ? 
         data?.member?.memberStatus?.slice(0, 1).toUpperCase() +
-          data?.member?.memberStatus?.slice(1),
+          data?.member?.memberStatus?.slice(1) : "Undefined",
     },
     {
-      name: "Work Type",
+      name: "Worker Type",
       value:
-        data &&
-        data?.member?.workType?.slice(0, 1).toUpperCase() +
-          data?.member?.workType?.slice(1),
+        data && data?.member?.workerType
+          ? data?.member?.workerType?.slice(0, 1).toUpperCase() +
+            data?.member?.workerType?.slice(1)
+          : "Undefined",
     },
     {
-      name: "Service Unit or Department",
+      name: "Service Unit/Group",
       value:
-        data &&
+        data && data?.member?.ServiceUnit ?
         data?.member?.ServiceUnit?.slice(0, 1).toUpperCase() +
-          data?.member?.ServiceUnit?.slice(1),
+          data?.member?.ServiceUnit?.slice(1) : "Undefined",
     },
   ];
 
