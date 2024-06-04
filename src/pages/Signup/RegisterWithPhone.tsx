@@ -16,6 +16,8 @@ import { useEffect, useState } from "react";
 import useRegisterWithPhone from "../../hooks/Signup/useRegisterWithPhone";
 import EmailButton from "../../components/Button/EmailButton";
 import { useUserDetailsStore } from "../../stores/user";
+import TermsAndPrivacyPolicy from "../../components/Agreement/TermsAndPrivacyPolicy";
+import { notify } from "../../hooks/useLogin";
 // import { success } from "../../hooks/useUpdatePassword";
 
 declare global {
@@ -62,6 +64,8 @@ const RegisterWithPhone = () => {
     // Scroll to the top of the page
     window.scrollTo(0, 0);
   }, []); 
+
+  const [checked, setChecked] = useState(false);
   return (
     <>
       <AuthContainer center="sm:items-center pt-16 md:pt-0">
@@ -69,13 +73,17 @@ const RegisterWithPhone = () => {
           onSubmit={handleSubmit((data) => {
             const { first_name, last_name, password, passwordConfirm } = data;
             // setEmail(email);
-            mutate({
+            if (checked ){ mutate({
               first_name,
               last_name,
               password,
               passwordConfirm,
               phoneNumber,
-            });
+            });}
+            else {
+              notify("Please agree to our terms of service and privacy policy")
+              console.log(phoneNumber.length)
+            }
             setPhone(phoneNumber);
           })}
           className="bg-white py-10 px-6"
@@ -154,12 +162,8 @@ const RegisterWithPhone = () => {
             formError={errors.passwordConfirm?.message}
           />
           <div className="text-[#718096] flex items-center space-x-2 my-8">
-            <input type="checkbox" />
-            <p>
-              I agree to the{" "}
-              <span className="text-secondary">Terms of Service</span> and the{" "}
-              <span className="text-secondary">Privacy Policy</span>
-            </p>
+            <input type="checkbox" checked={checked} onChange={(e) => setChecked(e.target.checked)}/>
+            <TermsAndPrivacyPolicy />
           </div>
           <NextButton isPending={isPending} />
           <div className="flex items-center my-5 text-[#718096] w-full lg:max-w-[550px]">

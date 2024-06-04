@@ -11,8 +11,9 @@ import PasswordInput from "../../components/Input/PasswordInput";
 import Input from "../../components/Input/Input";
 import NextButton from "../../components/Button/NextButton";
 import PhoneButton from "../../components/Button/PhoneButton";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import TermsAndPrivacyPolicy from "../../components/Agreement/TermsAndPrivacyPolicy";
+import { notify } from "../../hooks/useLogin";
 const Register = () => {
   const schema = z.object({
     first_name: z
@@ -48,6 +49,8 @@ const Register = () => {
     // Scroll to the top of the page
     window.scrollTo(0, 0);
   }, []);
+
+  const [checked, setChecked] = useState(false);
   return (
     <>
       <AuthContainer center="sm:items-center pt-16 md:pt-0">
@@ -56,14 +59,10 @@ const Register = () => {
             const { first_name, last_name, email, password, passwordConfirm } =
               data;
             setEmail(email);
-            mutate({ first_name, last_name, email, password, passwordConfirm });
-            console.log(
-              first_name,
-              last_name,
-              email,
-              password,
-              passwordConfirm
-            );
+            if (checked) {mutate({ first_name, last_name, email, password, passwordConfirm })
+          }else {
+        notify("Please agree to our terms of service and privacy policy")
+        }
           })}
           className="bg-white py-10 px-6"
         >
@@ -116,7 +115,7 @@ const Register = () => {
             formError={errors.passwordConfirm?.message}
           />
           <div className="text-[#718096] flex items-center space-x-2 my-8">
-            <input type="checkbox" />
+            <input type="checkbox" checked={checked} onChange={(e) => setChecked(e.target.checked)}/>
             <TermsAndPrivacyPolicy />
           </div>
           <NextButton isPending={isPending} />
