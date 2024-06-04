@@ -71,7 +71,6 @@ const UpdateChurchInfo = () => {
     // console.log(member_status, work_type, service_unit);
   };
 
-
   return (
     <div className="mt-5">
       {dropDown.map((item) => (
@@ -84,7 +83,7 @@ const UpdateChurchInfo = () => {
       ))}
       <div className="flex justify-between">
         <button
-          className=" flex mt-4 bg-[#17275B] text-white px-4 py-2  rounded-lg gap-2 justify-center "
+          className=" flex mt-4 bg-[#17275B] text-white w-28 py-2  rounded-lg gap-2 justify-center "
           onClick={() =>
             navigate(
               `/admin/directory/update-member/contact-information?id=${memberId}`

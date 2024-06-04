@@ -9,31 +9,30 @@ import { useChurchInformationSore } from "../../stores/Add Member/churchInformat
 
 interface Member {
   first_name: string;
-  middle_name: string;
-  suffix: string;
-  email: string;
+  middle_name?: string;
+  suffix?: string;
+  email?: string;
   last_name: string;
   churchId: string;
-  gender?: string;
+  gender: string;
   phone: {
     MainPhone: string;
     workPhone?: string;
     otherPhone?: string[];
   };
-  address: {
-    HomeAddress: string;
+  address?: {
+    HomeAddress?: string;
     workAddress?: string;
   };
   title?: string;
-  dateOfBirth?: string;
+  dateOfBirth: string;
   MarriageStatus?: string;
   anniversary?: string;
   memberStatus: string;
   workType: string;
   ServiceUnit: string;
+  prefix?: string;
 }
-
-
 
 const useAddRegularMember = () => {
   const {
@@ -48,7 +47,8 @@ const useAddRegularMember = () => {
   } = usePersonalInformationStore();
   const { setContactEmail } = useContactInformationStore();
   const { setContactAddress, setContactPhone } = useContactInformationStore();
-  const {setAccessPermission, setMemberStatus, setServiceUnit, setWorkType} = useChurchInformationSore();
+  const { setAccessPermission, setMemberStatus, setServiceUnit, setWorkType } =
+    useChurchInformationSore();
   const navigate = useNavigate();
   const resetForm = () => {
     setFirstName("");

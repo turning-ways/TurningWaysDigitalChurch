@@ -29,6 +29,7 @@ import useAddActionItem from "../../../hooks/Contacts/useAddActionItem";
 import { Puff, ThreeDots } from "react-loader-spinner";
 import { MdOutlineDelete } from "react-icons/md";
 import useDeleteContactComment from "../../../hooks/Contacts/useDeleteContactComment";
+import { FiEdit } from "react-icons/fi";
 // import { FaArrowUp } from "react-icons/fa6";
 
 const ContactDetails = () => {
@@ -97,8 +98,6 @@ const ContactDetails = () => {
 
   const { mutate: deleteComment, isPending: pendingDeletion } =
     useDeleteContactComment();
-
-  
 
   return (
     <OverviewContainer active="Contacts">
@@ -378,17 +377,23 @@ const ContactDetails = () => {
               </div>
               <div className="flex justify-between items-center">
                 <p className="text-[#555454]">{item.note}</p>
-                <MdOutlineDelete
-                  className="text-2xl text-red-500 cursor-pointer"
-                  onClick={() =>
-                    deleteComment({
-                      contactId: contact._id ?? "",
-                      memberId: user?._id ?? "",
-                      commentId: item._id,
-                      churchId: contact.church.id ?? "",
-                    })
-                  }
-                />
+                <div className="flex space-x-3 items-center">
+                  <FiEdit
+                    className="text-[#141414] text-xl cursor-pointer"
+                    // onClick={() => handleEditClick(index)}
+                  />
+                  <MdOutlineDelete
+                    className="text-2xl text-red-500 cursor-pointer"
+                    onClick={() =>
+                      deleteComment({
+                        contactId: contact._id ?? "",
+                        memberId: user?._id ?? "",
+                        commentId: item._id,
+                        churchId: contact.church.id ?? "",
+                      })
+                    }
+                  />
+                </div>
               </div>
             </div>
           </div>

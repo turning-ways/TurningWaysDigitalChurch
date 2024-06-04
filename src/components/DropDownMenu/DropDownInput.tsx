@@ -29,6 +29,7 @@ export const DropDownInput: React.FC<DropDownInputProps> = ({
     onChange && onChange(selectedItem);
   };
 
+
   return (
     <div className={"relative space-y-1 mb-4"}>
       <p className="text-[#727272]">
@@ -49,7 +50,10 @@ export const DropDownInput: React.FC<DropDownInputProps> = ({
         <TiArrowSortedDown className="cursor-pointer text-3xl" />
       </div>
       {showDropDownList && (
-        <DropDownMenu onSelect={handleSelectList} dropdownItems={items} />
+        <DropDownMenu
+          onSelect={handleSelectList}
+          dropdownItems={items}
+        />
       )}
     </div>
   );

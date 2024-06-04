@@ -31,6 +31,7 @@ const EditProfileContactInfo = () => {
             item.set(e.target.value);
           }}
           value={item.value}
+          notCompulsory=" "
         />
       ))}
       <div className="mb-2">

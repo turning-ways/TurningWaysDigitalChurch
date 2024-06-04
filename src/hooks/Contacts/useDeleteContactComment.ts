@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { notify } from "../useLogin";
 import useGetContacts from "./useGetContact";
+import { success } from "../useUpdatePassword";
 
 interface Comment {
   memberId: string;
@@ -24,7 +25,7 @@ const useDeleteContactComment = () => {
         .then((res) => res.data),
     onSuccess: () => {
       refetch();
-      //   navigate("/admin/dashboard");
+      success("Deleted Successfully")
     },
     onError: () => notify("Couldn't delete note at this time"),
   });
