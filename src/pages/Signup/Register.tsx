@@ -12,6 +12,7 @@ import Input from "../../components/Input/Input";
 import NextButton from "../../components/Button/NextButton";
 import PhoneButton from "../../components/Button/PhoneButton";
 import { useEffect } from "react";
+import TermsAndPrivacyPolicy from "../../components/Agreement/TermsAndPrivacyPolicy";
 const Register = () => {
   const schema = z.object({
     first_name: z
@@ -116,11 +117,7 @@ const Register = () => {
           />
           <div className="text-[#718096] flex items-center space-x-2 my-8">
             <input type="checkbox" />
-            <p>
-              I agree to the{" "}
-              <span className="text-secondary">Terms of Service</span> and the{" "}
-              <span className="text-secondary">Privacy Policy</span>
-            </p>
+            <TermsAndPrivacyPolicy />
           </div>
           <NextButton isPending={isPending} />
           <div className="flex items-center my-5 text-[#718096] w-full lg:max-w-[550px]">

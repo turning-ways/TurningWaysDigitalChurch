@@ -60,7 +60,18 @@ const EditProfilePersonalInfo = () => {
     <div className="mt-5 flex flex-col">
       <DropDownInput
         text="Prefix"
-        items={["Mr", "Mrs", "Madam", "Lady", "Sir", "Jr.", "Sr.", "Ms.", "Dr", "Lady"]}
+        items={[
+          "Mr",
+          "Mrs",
+          "Madam",
+          "Lady",
+          "Sir",
+          "Jr.",
+          "Sr.",
+          "Ms.",
+          "Dr",
+          "Lady",
+        ]}
         value={prefix}
         onChange={(prefix) => setPrefix(prefix)}
         placeholder=""
@@ -74,7 +85,9 @@ const EditProfilePersonalInfo = () => {
               item.set(e.target.value);
             }}
             value={item.value}
-            notCompulsory={item.name === "Suffix" ? " " : "*"}
+            notCompulsory={
+              item.name === "Suffix" || item.name === "Middle Name" ? " " : "*"
+            }
           />
         </div>
       ))}
