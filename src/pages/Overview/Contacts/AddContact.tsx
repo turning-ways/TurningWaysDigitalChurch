@@ -76,6 +76,7 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
             setEmail(e.target.value);
           }}
           value={email}
+          notCompulsory=" "
         />
         <InformationInput
           text={"Address"}
@@ -83,6 +84,7 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
             setAddress(e.target.value);
           }}
           value={address}
+          notCompulsory=" "
         />
         <button className="self-end border border-[#414141] px-20 py-2 rounded-lg text-[#141414]">
           {!isPending ? (

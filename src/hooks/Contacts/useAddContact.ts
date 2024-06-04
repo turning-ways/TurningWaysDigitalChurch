@@ -9,17 +9,25 @@ interface Contact {
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  address: string;
+  address?: string;
   maturity: string;
   createdBy: string;
-  email: string;
+  email?: string;
 }
 
-interface ContactPros{
+interface Error {
+  response: {
+    data: {
+      stack: string;
+    }
+  }
+}
+
+interface ContactPros {
   onClose: () => void;
 }
 
-const useAddContact = ({onClose}: ContactPros) => {
+const useAddContact = ({ onClose }: ContactPros) => {
   const { user } = useUserAuth();
   const { refetch } = useGetAllContacts();
 
@@ -40,8 +48,13 @@ const useAddContact = ({onClose}: ContactPros) => {
       refetch();
       onClose();
     },
-    onError: () => {
-      notify("Couldn't create contact at this moment");
+    onError: (err: Error) => {
+      if (err.response.data.stack.includes("duplicate")) {
+        notify("Contact already exists");
+      } else {
+        notify("Fill in all compulsory fields");
+        console.log(err)
+      }
     },
   });
 };
