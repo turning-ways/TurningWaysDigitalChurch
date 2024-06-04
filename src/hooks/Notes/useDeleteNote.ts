@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { notify } from "../useLogin";
 import useGetNote from "./useGetNote";
+import { success } from "../useUpdatePassword";
 
 interface Note {
   memberId: string;
@@ -22,7 +23,7 @@ const useDeleteNote = (memberId: string) => {
         .then((res) => res.data),
     onSuccess: () => {
       refetch();
-      //   navigate("/admin/dashboard");
+      success("Deleted successfully");
     },
     onError: () => notify("Couldn't delete note at this time"),
   });

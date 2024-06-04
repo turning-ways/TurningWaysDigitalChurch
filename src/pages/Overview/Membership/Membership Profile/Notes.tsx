@@ -4,11 +4,13 @@ import { MdOutlineDelete } from "react-icons/md";
 import useAddNote from "../../../../hooks/Notes/useAddNote";
 import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
 import useGetNote from "../../../../hooks/Notes/useGetNote";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { formatDate } from "./PersonalInformation";
 import useDeleteNote from "../../../../hooks/Notes/useDeleteNote";
 import { IoClose } from "react-icons/io5";
-import { Puff } from "react-loader-spinner";
+import { Puff, ThreeDots } from "react-loader-spinner";
+import useUpdateNote from "../../../../hooks/Notes/useUpdateNote";
+import Modal from "../../../../components/Modal/Modal";
 
 interface NotesProps {
   openNote: boolean;
@@ -32,7 +34,9 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
   const { mutate, isPending } = useAddNote(memberId ?? "");
   const { data } = useGetMemberDetails();
   const { data: notes, refetch } = useGetNote(memberId ?? "");
-  const { mutate: del } = useDeleteNote(memberId ?? "");
+  const { mutate: del, isPending: pendingDelete } = useDeleteNote(
+    memberId ?? ""
+  );
 
   const [editedComments, setEditedComments] = useState<{
     [key: string]: string;
@@ -48,9 +52,31 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       mutate({ note: value });
       refetch();
+    }
+  };
+
+  const { mutate: mutateNote, isPending: pendingUpdate } = useUpdateNote({
+    memberId: memberId ?? "",
+  });
+
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  useEffect(() => {
+    if (updateNote !== null && inputRefs.current[updateNote]) {
+      inputRefs.current[updateNote]?.focus();
+    }
+  }, [updateNote]);
+
+  const handleEditClick = (index: number) => {
+    if (updateNote === index) {
+      // Reset and focus again
+      setUpdateNote(null);
+      setTimeout(() => setUpdateNote(index), 0);
+    } else {
+      setUpdateNote(index);
     }
   };
 
@@ -94,23 +120,33 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
                         </p>
                       </div>
                       <input
+                        ref={(el) => (inputRefs.current[index] = el)}
                         type="text"
                         readOnly={index !== updateNote}
                         // value={note.comment}
-                        className="text-[#434343] w-full outline-none"
+                        className="text-[#434343] w-full border border-slate-400 rounded-md outline-none px-3 py-2"
                         value={editedComments[note.id] ?? note.comment} // Use the edited comment if available, otherwise use the original comment
                         onChange={(e) =>
                           handleEditComment(note.id, e.target.value)
                         }
+                        onKeyDown={(
+                          e: React.KeyboardEvent<HTMLInputElement>
+                        ) => {
+                          if (e.key === "Enter") {
+                            mutateNote({
+                              note: editedComments[note.id] ?? note.comment,
+                              memberId: memberId ?? "",
+                              noteId: note.id,
+                            });
+                            setUpdateNote(null);
+                          }
+                        }}
                       />
                       {/* <p className="text-[#434343]">{note.comment}</p> */}
                       <div className="flex justify-end space-x-2">
                         <FiEdit
                           className="text-[#141414] text-2xl cursor-pointer"
-                          onClick={() => {
-                            console.log(updateNote);
-                            setUpdateNote(index);
-                          }}
+                          onClick={() => handleEditClick(index)}
                         />
                         <MdOutlineDelete
                           className="text-[#F24E1E] text-2xl cursor-pointer"
@@ -150,6 +186,11 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
           </div>
         </div>
       </div>
+      {(pendingDelete || pendingUpdate) && (
+        <Modal>
+          <ThreeDots color="black" />
+        </Modal>
+      )}
     </>
   );
 };

@@ -6,11 +6,12 @@ import useGetNote from "./useGetNote";
 
 interface Query {
   memberId: string;
-  noteId: string;
 }
 
 interface Note {
   note: string;
+  memberId: string;
+  noteId: string;
 }
 
 const useUpdateNote = (noteQuery: Query) => {
@@ -19,18 +20,18 @@ const useUpdateNote = (noteQuery: Query) => {
     mutationFn: (note: Note) =>
       axios
         .patch<Note>(
-          `https://digital-church.onrender.com/api/v1/members/${noteQuery.memberId}/notes/${noteQuery.noteId}`,
-          note,
+          `https://digital-church.onrender.com/api/v1/members/${note.memberId}/notes/${note.noteId}`,
+          {note: note.note},
           {
             withCredentials: true,
           }
         )
         .then((res) => res.data),
     onSuccess: () => {
-      success("Note has been added successfully");
+      success("Note has been updated successfully");
       refetch();
     },
-    onError: () => notify("Couldn't add note at this time"),
+    onError: () => notify("Couldn't update note at this time"),
   });
 };
 
