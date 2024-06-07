@@ -3,7 +3,7 @@ import Header from "../Header";
 import OverviewContainer from "../OverviewContainer";
 import { BiSend } from "react-icons/bi";
 import { DropDownInput } from "../../../components/DropDownMenu/DropDownInput";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Heading from "./Heading";
 import { IoIosAddCircle, IoIosClose } from "react-icons/io";
 import Information from "./Information";
@@ -30,6 +30,7 @@ import { Puff, ThreeDots } from "react-loader-spinner";
 import { MdOutlineDelete } from "react-icons/md";
 import useDeleteContactComment from "../../../hooks/Contacts/useDeleteContactComment";
 import { FiEdit } from "react-icons/fi";
+import useUpdateContactComment from "../../../hooks/Contacts/useUpdateContactComment";
 // import { FaArrowUp } from "react-icons/fa6";
 
 const ContactDetails = () => {
@@ -98,6 +99,41 @@ const ContactDetails = () => {
 
   const { mutate: deleteComment, isPending: pendingDeletion } =
     useDeleteContactComment();
+
+  const [editedComments, setEditedComments] = useState<{
+    [key: string]: string;
+  }>({});
+
+  const handleEditComment = (noteId: string, comment: string) => {
+    // Update the edited comment for the specific note id
+    setEditedComments((prevComments) => ({
+      ...prevComments,
+      [noteId]: comment,
+    }));
+  };
+
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  const [updateComment, setUpdateComment] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (updateComment !== null && inputRefs.current[updateComment]) {
+      inputRefs.current[updateComment]?.focus();
+    }
+  }, [updateComment]);
+
+  const handleEditClick = (index: number) => {
+    if (updateComment === index) {
+      // Reset and focus again
+      setUpdateComment(null);
+      setTimeout(() => setUpdateComment(index), 0);
+    } else {
+      setUpdateComment(index);
+    }
+  };
+
+  const { mutate: mutateComment, isPending: pendingUpdate } =
+    useUpdateContactComment();
 
   return (
     <OverviewContainer active="Contacts">
@@ -362,7 +398,7 @@ const ContactDetails = () => {
       </div> */}
 
       {Array.isArray(contact?.Notes) && contact.Notes.length > 0 ? (
-        [...contact.Notes].reverse().map((item) => (
+        [...contact.Notes].reverse().map((item, index) => (
           <div className="flex w-full space-x-4 mt-4" key={item._id}>
             <div className="bg-[#D9D9D9] text-[#707070] flex justify-center items-center p-3 rounded-full w-10 h-10">
               {contact.firstName.charAt(0).toUpperCase() +
@@ -376,11 +412,32 @@ const ContactDetails = () => {
                 <p className="text-xs sm:text-sm">{formatTheDate(item.date)}</p>
               </div>
               <div className="flex justify-between items-center">
-                <p className="text-[#555454]">{item.note}</p>
+                <input
+                  ref={(el) => (inputRefs.current[index] = el)}
+                  type="text"
+                  readOnly={index !== updateComment}
+                  // value={note.comment}
+                  className={`text-[#434343] w-[500px] ${
+                    index === updateComment &&
+                    "border border-slate-400 rounded-md px-3"
+                  } outline-none  py-2`}
+                  value={editedComments[item._id] ?? item.note} // Use the edited comment if available, otherwise use the original comment
+                  onChange={(e) => handleEditComment(item._id, e.target.value)}
+                  onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                    if (e.key === "Enter") {
+                      mutateComment({
+                        note: editedComments[item._id] ?? item.note,
+                        noteId: item._id,
+                        recordedBy: user?._id ?? "",
+                      });
+                      setUpdateComment(null);
+                    }
+                  }}
+                />
                 <div className="flex space-x-3 items-center">
                   <FiEdit
                     className="text-[#141414] text-xl cursor-pointer"
-                    // onClick={() => handleEditClick(index)}
+                    onClick={() => handleEditClick(index)}
                   />
                   <MdOutlineDelete
                     className="text-2xl text-red-500 cursor-pointer"
@@ -407,6 +464,7 @@ const ContactDetails = () => {
         pendingAction ||
         pendingStatusUpdate ||
         pendingContactUpdate ||
+        pendingUpdate ||
         pendingDeletion) && (
         <Modal>
           <ThreeDots color="black" />

@@ -103,7 +103,12 @@ const AllContactsList = () => {
                 />
               </div>
               <div className="xl:hidden">
-                <div className="border-b border-[#BDBDBD]  flex py-2 text-[#555454] px-3 justify-between items-center" onClick={() => navigate(`/admin/contacts/detail?id=${contact._id}`)}>
+                <div
+                  className="border-b border-[#BDBDBD]  flex py-2 text-[#555454] px-3 justify-between items-center cursor-pointer"
+                  onClick={() =>
+                    navigate(`/admin/contacts/detail?id=${contact._id}`)
+                  }
+                >
                   <div>
                     <p>{contact.firstName + " " + contact.lastName}</p>
                     <p>{formatDate(contact.createdAt)}</p>
