@@ -280,6 +280,7 @@ const ContactDetails = () => {
             <li className="flex space-x-2">
               <input
                 type="checkbox"
+                checked={item.checked}
                 onChange={() => handleCheckboxChange(index)}
               />
               <p>{item.actionLabel}</p>
