@@ -31,6 +31,7 @@ import { MdOutlineDelete } from "react-icons/md";
 import useDeleteContactComment from "../../../hooks/Contacts/useDeleteContactComment";
 import { FiEdit } from "react-icons/fi";
 import useUpdateContactComment from "../../../hooks/Contacts/useUpdateContactComment";
+import useUpdateActionItem from "../../../hooks/Contacts/useUpdateActionItem";
 // import { FaArrowUp } from "react-icons/fa6";
 
 const ContactDetails = () => {
@@ -94,6 +95,17 @@ const ContactDetails = () => {
   const { mutate: addAction, isPending: pendingAction } = useAddActionItem(() =>
     setShowActions(!showActions)
   );
+
+  const { mutate: updateActionItem } = useUpdateActionItem();
+
+  const [actions, setActions] = useState(contact?.actions);
+
+  const newActions = actions ? actions : [];
+  const handleCheckboxChange = (index: number) => {
+    newActions[index].checked = !newActions[index].checked;
+    setActions(newActions);
+    updateActionItem(newActions[index]);
+  };
 
   const [actionValue, setActionValue] = useState("");
 
@@ -264,9 +276,12 @@ const ContactDetails = () => {
           contact.actions &&
           Array.isArray(contact.actions) &&
           contact.actions.length > 0 &&
-          contact.actions.map((item) => (
+          contact.actions.map((item, index) => (
             <li className="flex space-x-2">
-              <input type="checkbox" checked={item.checked} />
+              <input
+                type="checkbox"
+                onChange={() => handleCheckboxChange(index)}
+              />
               <p>{item.actionLabel}</p>
             </li>
           ))}
