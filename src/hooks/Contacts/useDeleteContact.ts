@@ -8,18 +8,14 @@ import useGetContacts from "./useGetContact";
 const useDeleteContact = () => {
   const { user } = useUserAuth();
 
-  const queryParams = new URLSearchParams(location.search);
-
-  const contactId = queryParams.get("id");
-
   const {refetch} = useGetContacts();
 
 
   return useMutation({ 
-    mutationFn: (label_name: string) =>
+    mutationFn: (contact_id: string) =>
       axios
         .delete(
-          `https://digital-church.onrender.com/api/v1/churches/${user?.churchId._id}/contact/${contactId}/label?label=${label_name}`,
+          `https://digital-church.onrender.com/api/v1/churches/${user?.churchId._id}/contact/${contact_id}`,
           {
             withCredentials: true
           }
@@ -27,11 +23,11 @@ const useDeleteContact = () => {
         .then((res) => res.data),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: () => {
-      success("Label has been deleted successfully");
+      success("Contact has been deleted successfully");
       refetch();
     },
     onError: () => {
-      notify("Couldn't delete label at this moment");
+      notify("Couldn't delete contact at this moment");
     },
   });
 };

@@ -4,6 +4,7 @@ import Modal from "../../../components/Modal/Modal";
 import useUpdateContactStatus from "../../../hooks/Contacts/useUpdateContactStatus";
 import { ThreeDots } from "react-loader-spinner";
 import UpdateContact from "./UpdateContact";
+import useDeleteContact from "../../../hooks/Contacts/useDeleteContact";
 
 interface ContactsModalProps {
   show: string | null;
@@ -20,6 +21,7 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
     id,
     onClose: () => setOpenConfirm(!openConfirm),
   });
+  const {mutate: deleteContact} = useDeleteContact();
   return (
     <>
       <div
@@ -74,7 +76,7 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
               >
                 No
               </button>
-              <button className="bg-[#F4F4F4] text-[#7B7B7B] rounded-[14px] w-full py-2 px-4 hover:bg-[#17275B] hover:text-white">
+              <button className="bg-[#F4F4F4] text-[#7B7B7B] rounded-[14px] w-full py-2 px-4 hover:bg-[#17275B] hover:text-white" onClick={() => deleteContact(id)}>
                 Yes
               </button>
             </div>
