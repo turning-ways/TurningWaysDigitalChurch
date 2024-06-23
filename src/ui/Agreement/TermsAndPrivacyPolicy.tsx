@@ -25,7 +25,7 @@ const TermsAndPrivacyPolicy = () => {
               TERMS OF USE
             </header>
             <section className="md:grid md:grid-cols-[350px,1fr] gap-x-4 text-[#1C1C1C] p-4">
-              <ul className="space-y-2 hidden md:block">
+              <ul className="space-y-2 hidden md:block sticky top-16 h-fit">
                 {termList.map((item) => (
                   <li className={`${active === item.name && "font-azoBold"}`}>
                     <a
