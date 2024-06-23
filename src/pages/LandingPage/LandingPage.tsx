@@ -1,12 +1,12 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Input from "../../components/Input/Input";
-import PasswordInput from "../../components/Input/PasswordInput";
+import Input from "../../ui/Input/Input";
+import PasswordInput from "../../ui/Input/PasswordInput";
 import { useNavigate } from "react-router-dom";
-import NextButton from "../../components/Button/NextButton";
-import GoogleButton from "../../components/Button/GoogleButton";
-import useLogin from "../../hooks/useLogin";
+import NextButton from "../../ui/Button/NextButton";
+import GoogleButton from "../../ui/Button/GoogleButton";
+import { useLogin } from "../../hooks/useAuthData";
 
 const LandingPage = () => {
   const schema = z.object({
@@ -26,7 +26,7 @@ const LandingPage = () => {
     resolver: zodResolver(schema),
   });
   const navigate = useNavigate();
-  const { mutate, isPending } = useLogin();
+  const loginQuery = useLogin();
   return (
     <div className="flex justify-center">
       <div className="px-10 md:px-20 py-6 max-w-[1440px]">
@@ -54,7 +54,7 @@ const LandingPage = () => {
           <form
             onSubmit={handleSubmit((data) => {
               const { inputKey, password } = data;
-              mutate({ inputKey, password });
+              loginQuery.mutate({ inputKey, password });
             })}
           >
             <h1 className="text-[#555454] text-[36px] lg:text-5xl font-azoBold lg:leading-[60px] lg:mb-4 text-center lg:text-start">
@@ -105,7 +105,7 @@ const LandingPage = () => {
                 Forgot Password?
               </div>
             </div>
-            <NextButton text="Sign In" isPending={isPending} />
+            <NextButton text="Sign In" isPending={loginQuery.isPending} />
             <div className="flex items-center mt-3 text-[#718096] w-full">
               <div className="w-full h-[1px] bg-[#A0AEC0]" />
               <h2 className="mx-5 text-[#718096] text-xs">OR</h2>

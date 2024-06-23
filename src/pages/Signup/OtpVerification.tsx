@@ -1,16 +1,14 @@
-import AuthContainer from "../../components/Container/AuthContainer";
-import Header from "../../components/Heading/Header";
+import AuthContainer from "../../ui/Container/AuthContainer";
+import Header from "../../ui/Heading/Header";
 
 import React, { useEffect, useRef, useState } from "react";
 import { useUserDetailsStore } from "../../stores/user";
-import NextButton from "../../components/Button/NextButton";
-import useVerifySignUpOtp from "../../hooks/Signup/useVerifySignUpOtp";
-import useVerifyEmail from "../../hooks/Signup/useVerifyEmail";
+import NextButton from "../../ui/Button/NextButton";
+import { useVerifySignUpOtp, useVerifyEmail } from "../../hooks/useAuthData";
 
 let currentOtpIndex: number = 0;
 
 const OtpVerification = () => {
-
   const [value, setValue] = useState<boolean>(false);
 
   //
@@ -50,7 +48,7 @@ const OtpVerification = () => {
 
   const [timer, setTimer] = useState(60);
   const [timerActive, setTimerActive] = useState(true);
-  const {email} = useUserDetailsStore();
+  const { email } = useUserDetailsStore();
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -122,7 +120,7 @@ const OtpVerification = () => {
             disabled={timerActive}
             onClick={() => {
               setTimerActive(true);
-              sendOtp({email})
+              sendOtp({ email });
             }}
           >
             Resend Code

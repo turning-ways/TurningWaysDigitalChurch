@@ -12,6 +12,8 @@ import AgeDistrBar from "./BarChart/AgeDistrBar";
 import { PieChart } from "./PieChart/PieChart";
 import MemberList from "./MemberList";
 import { useState } from "react";
+import { useGetAllContacts } from "../../../hooks/useContact";
+// import useMemberStats from "../../../hooks/Member/useMemberStats";
 
 const Dashboard = () => {
   const { data: members } = useGetAllMembers({ page: 1, pageSize: 100000 });
@@ -58,6 +60,9 @@ const Dashboard = () => {
 
   const [active, setActive] = useState<string>("");
 
+  const { data: contacts } = useGetAllContacts();
+
+  // const { data: memberCount } = useMemberStats(active);
   return (
     <OverviewContainer active="Dashboard">
       <Header text="Dashboard" />
@@ -115,15 +120,17 @@ const Dashboard = () => {
         <div className="flex rounded-[10px] overflow-hidden custom-box-shadow">
           <div className="w-2 bg-[#F8F8CC]" />
           <div className="py-3 px-3 flex flex-col justify-center items-center flex-grow space-y-1">
-            <p className="text-sm lg:text-base text-center">Church Workers</p>
+            <p className="text-sm lg:text-base text-center">Active Members</p>
             <p className="text-2xl lg:text-3xl text-[#0F123F]">0</p>
           </div>
         </div>
         <div className="flex rounded-[10px] overflow-hidden custom-box-shadow">
           <div className="w-2 bg-[#E2CCE2]" />
           <div className="py-3 px-3 flex flex-col justify-center items-center flex-grow space-y-1">
-            <p className="text-sm lg:text-base text-center">Household</p>
-            <p className="text-2xl lg:text-3xl text-[#0F123F]">0</p>
+            <p className="text-sm lg:text-base text-center">Contacts</p>
+            <p className="text-2xl lg:text-3xl text-[#0F123F]">
+              {contacts?.length}
+            </p>
           </div>
         </div>
       </div>

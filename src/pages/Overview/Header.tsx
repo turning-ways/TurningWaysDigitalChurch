@@ -5,9 +5,9 @@ import {
 } from "react-icons/io";
 import { useUserAuth } from "../../stores/user";
 import { useNavigate } from "react-router-dom";
-import Modal from "../../components/Modal/Modal";
-import { success } from "../../hooks/useUpdatePassword";
-import Search from "../../components/Search";
+import Modal from "../../ui/Modal/Modal";
+import { success } from "../../hooks/useAuthData";
+import Search from "../../ui/Search";
 
 interface HeaderProps {
   text: string;
@@ -118,7 +118,7 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
           Logout
         </h1>
         {active === "logout" && (
-          <Modal>
+          <Modal onClose={() => setActive("")}>
             <div className="bg-white px-[26px] py-[37px] rounded-2xl text-lg flex flex-col gap-6">
               <p>Are you sure you want to log out</p>
 

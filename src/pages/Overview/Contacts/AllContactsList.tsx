@@ -3,7 +3,7 @@ import { PiDotsThreeCircleVertical } from "react-icons/pi";
 import ContactsModal from "./ContactsModal";
 
 import { SlArrowRight } from "react-icons/sl";
-import useGetAllContacts from "../../../hooks/Contacts/useGetAllContacts";
+import { useGetAllContacts } from "../../../hooks/useContact";
 import { useNavigate } from "react-router-dom";
 
 const AllContactsList = () => {

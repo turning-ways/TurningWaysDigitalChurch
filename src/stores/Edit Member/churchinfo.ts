@@ -14,16 +14,28 @@ interface PersonalInfo {
 
 //email
 const savedAccessPermission = localStorage.getItem("edit_access_permission");
-const access_permission = savedAccessPermission && savedAccessPermission !== "undefined" ? JSON.parse(savedAccessPermission) : "";
+const access_permission =
+  savedAccessPermission && savedAccessPermission !== "undefined"
+    ? JSON.parse(savedAccessPermission)
+    : "";
 //phone number
 const savedMemberStatus = localStorage.getItem("edit_member_status");
-const member_status = savedMemberStatus && savedMemberStatus !== "undefined" ? JSON.parse(savedMemberStatus) : "";
+const member_status =
+  savedMemberStatus && savedMemberStatus !== "undefined"
+    ? JSON.parse(savedMemberStatus)
+    : "";
 //home address
 const savedWorkType = localStorage.getItem("edit_work_type");
-const work_type = savedWorkType && savedWorkType !== "undefined" ? JSON.parse(savedWorkType) : "";
+const work_type =
+  savedWorkType && savedWorkType !== "undefined"
+    ? JSON.parse(savedWorkType)
+    : "";
 
 const savedServiceUnit = localStorage.getItem("edit_service_unit");
-const service_unit = savedServiceUnit && savedServiceUnit !== "undefined" ? JSON.parse(savedServiceUnit) : "";
+const service_unit =
+  savedServiceUnit && savedServiceUnit !== "undefined"
+    ? JSON.parse(savedServiceUnit)
+    : "";
 
 export const useEditChurchInformationStore = create<PersonalInfo>()(
   (set, get) => ({
@@ -59,15 +71,12 @@ export const useEditChurchInformationStore = create<PersonalInfo>()(
           return { work_type: work };
         });
       }
-      localStorage.setItem(
-        "edit_work_type",
-        JSON.stringify(get().work_type)
-      );
+      localStorage.setItem("edit_work_type", JSON.stringify(get().work_type));
     },
     setServiceUnit: (service) => {
       {
         set(() => {
-          return { service_unit: service};
+          return { service_unit: service };
         });
       }
       localStorage.setItem(

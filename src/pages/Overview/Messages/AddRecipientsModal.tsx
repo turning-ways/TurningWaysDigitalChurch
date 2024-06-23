@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Modal from "../../../components/Modal/Modal";
+import Modal from "../../../ui/Modal/Modal";
 import { IoFilter } from "react-icons/io5";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import { useEffect, useState } from "react";
@@ -72,7 +72,7 @@ const AddRecipientsModal: React.FC<AddRecipientsModalProps> = ({ onClose }) => {
   }, [members, recepients]);
 
   return (
-    <Modal>
+    <Modal  onClose={() => console.log("Do nothing")}>
       <div className="bg-white p-6 rounded-xl m-10 max-h-screen overflow-y-scroll">
         <div className="p-4 flex justify-between items-center">
           <div className="flex space-x-2 text-[#7F7F7F]">

@@ -1,16 +1,16 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import AuthContainer from "../../../components/Container/AuthContainer";
+import AuthContainer from "../../../ui/Container/AuthContainer";
 import { useNavigate } from "react-router-dom";
-import Header from "../../../components/Heading/Header";
-import GoogleButton from "../../../components/Button/GoogleButton";
-import PhoneButton from "../../../components/Button/PhoneButton";
-import Input from "../../../components/Input/Input";
-import PasswordInput from "../../../components/Input/PasswordInput";
-import useLogin from "../../../hooks/useLogin";
-import NextButton from "../../../components/Button/NextButton";
+import Header from "../../../ui/Heading/Header";
+import GoogleButton from "../../../ui/Button/GoogleButton";
+import PhoneButton from "../../../ui/Button/PhoneButton";
+import Input from "../../../ui/Input/Input";
+import PasswordInput from "../../../ui/Input/PasswordInput";
+import NextButton from "../../../ui/Button/NextButton";
 import { useEffect } from "react";
+import { useLogin } from "../../../hooks/useAuthData";
 const LoginWithEmail = () => {
   const schema = z.object({
     email: z.string().email({ message: "Please enter a valid email" }),
@@ -34,8 +34,7 @@ const LoginWithEmail = () => {
   useEffect(() => {
     // Scroll to the top of the page
     window.scrollTo(0, 0);
-  }, []); 
-
+  }, []);
 
   return (
     <>
@@ -93,7 +92,7 @@ const LoginWithEmail = () => {
           </div>
 
           <GoogleButton />
-          <PhoneButton onClick={() => navigate('/login/phone')}/>
+          <PhoneButton onClick={() => navigate("/login/phone")} />
         </form>
       </AuthContainer>
     </>

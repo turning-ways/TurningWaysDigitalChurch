@@ -2,11 +2,9 @@ import Header from "../Header";
 import OverviewContainer from "../OverviewContainer";
 import AllMembers from "./AllMembers";
 
-import QuickActions from "../../../components/Actions/QuickActions";
+import QuickActions from "../../../ui/Actions/QuickActions";
 
 const Membership = () => {
-
-
   return (
     <OverviewContainer active="Directory">
       <Header text="Directory" />
@@ -14,7 +12,7 @@ const Membership = () => {
       <QuickActions />
       {/* componentClosed */}
 
-      <AllMembers/>
+      <AllMembers />
     </OverviewContainer>
   );
 };

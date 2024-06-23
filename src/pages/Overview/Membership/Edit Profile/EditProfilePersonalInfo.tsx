@@ -1,6 +1,6 @@
 import InformationInput from "./InformationInput";
 import { usePersonalInformationStore } from "../../../../stores/Add Member/personalinformation";
-import { DropDownInput } from "../../../../components/DropDownMenu/DropDownInput";
+import { DropDownInput } from "../../../../ui/DropDownMenu/DropDownInput";
 import { useNavigate } from "react-router-dom";
 
 const EditProfilePersonalInfo = () => {

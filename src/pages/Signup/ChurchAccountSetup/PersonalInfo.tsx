@@ -1,19 +1,20 @@
-import AuthContainer from "../../../components/Container/AuthContainer";
-import Header from "../../../components/Heading/Header";
-import HeaderTwo from "../../../components/Heading/HeaderTwo";
+import AuthContainer from "../../../ui/Container/AuthContainer";
+import Header from "../../../ui/Heading/Header";
+import HeaderTwo from "../../../ui/Heading/HeaderTwo";
 import { TiArrowSortedDown } from "react-icons/ti";
 
 import { useState } from "react";
-import NextButton from "../../../components/Button/NextButton";
-import DropDownMenu from "../../../components/DropDownMenu/DropDownMenu";
+import NextButton from "../../../ui/Button/NextButton";
+import DropDownMenu from "../../../ui/DropDownMenu/DropDownMenu";
 import { roles, hearAboutUs } from "../../../constants/constants";
 import { useMemberStore } from "../../../stores/member";
 import { useNavigate } from "react-router-dom";
-import { notify } from "../../../hooks/useLogin";
+
 // import useAddMember from "../../../hooks/AddMember/useAddMember";
 
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
+import { notify } from "../../../hooks/useAuthData";
 
 const PersonalInfo = () => {
   const [phone, setPhone] = useState("");

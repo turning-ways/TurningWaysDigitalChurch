@@ -1,12 +1,12 @@
-import AuthContainer from "../../components/Container/AuthContainer";
-import Header from "../../components/Heading/Header";
+import AuthContainer from "../../ui/Container/AuthContainer";
+import Header from "../../ui/Heading/Header";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useUpdatePassword from "../../hooks/useUpdatePassword";
-import NextButton from "../../components/Button/NextButton";
-import PasswordInput from "../../components/Input/PasswordInput";
+import { useResetPassword } from "../../hooks/useAuthData";
+import NextButton from "../../ui/Button/NextButton";
+import PasswordInput from "../../ui/Input/PasswordInput";
 
 const ResetPassword = () => {
   const schema = z.object({
@@ -28,7 +28,7 @@ const ResetPassword = () => {
     resolver: zodResolver(schema),
   });
 
-  const { mutate, isPending } = useUpdatePassword();
+  const { mutate, isPending } = useResetPassword();
 
   return (
     <>
@@ -48,11 +48,23 @@ const ResetPassword = () => {
               <Header>Set a new password</Header>
               <p className="text-[#949995]">Kindly enter your new password</p>
             </div>
-              <PasswordInput heading="Password" name="password" register={register} placeholder="********" formError={errors.password?.message}/>
+            <PasswordInput
+              heading="Password"
+              name="password"
+              register={register}
+              placeholder="********"
+              formError={errors.password?.message}
+            />
 
-              <PasswordInput heading="Re-Enter Password" name="passwordConfirm" register={register} placeholder="********" formError={errors.passwordConfirm?.message} />
-              
-            <NextButton isPending={isPending}/>
+            <PasswordInput
+              heading="Re-Enter Password"
+              name="passwordConfirm"
+              register={register}
+              placeholder="********"
+              formError={errors.passwordConfirm?.message}
+            />
+
+            <NextButton isPending={isPending} />
           </div>
         </form>
       </AuthContainer>

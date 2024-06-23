@@ -2,7 +2,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { LuCamera } from "react-icons/lu";
 import { useRef } from "react";
-import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
+import useGetMemberDetails from "../../../../hooks/Member/member-service/useGetMemberDetails";
 
 const SubHeader = () => {
   const navigate = useNavigate();
@@ -33,8 +33,8 @@ const SubHeader = () => {
         );
 
         if (response.ok) {
-          console.log(response); 
-          refetch();//  Assuming the server returns the URL of the uploaded image
+          console.log(response);
+          refetch(); //  Assuming the server returns the URL of the uploaded image
         } else {
           console.error("Failed to upload image:", response.statusText);
         }
@@ -52,7 +52,11 @@ const SubHeader = () => {
     <div className="flex justify-center flex-col mt-10 items-center relative">
       <div
         className="bg-[#F1F0F3] rounded-lg p-2 w-fit cursor-pointer h-fit absolute top-0 left-0"
-        onClick={() => navigate(`/admin/directory`)}
+        onClick={() =>
+          navigate(
+            `/admin/directory/member/personal-information?id=${memberId}`
+          )
+        }
       >
         <IoIosArrowBack className=" text-2xl w-auto text-[#6C6C6D]" />
       </div>

@@ -1,6 +1,6 @@
-import { DropDownInput } from "../../../../components/DropDownMenu/DropDownInput";
+import { DropDownInput } from "../../../../ui/DropDownMenu/DropDownInput";
 import { ThreeDots } from "react-loader-spinner";
-import useUpdateMember from "../../../../hooks/Member/useUpdateMember";
+import useUpdateMember from "../../../../hooks/Member/member-service/useUpdateMember";
 import { useEditPersonalInformationStore } from "../../../../stores/Edit Member/personalinfo";
 import { useEditContactInformationStore } from "../../../../stores/Edit Member/contactinfo";
 import { useNavigate } from "react-router-dom";
@@ -78,7 +78,11 @@ const UpdateChurchInfo = () => {
           text={item.text}
           items={item.items}
           onSelect={item.onSelect}
-          value={item?.value?.slice(0, 1).toUpperCase() + item?.value?.slice(1)}
+          value={
+            item.value
+              ? item?.value?.slice(0, 1).toUpperCase() + item?.value?.slice(1)
+              : "undefined"
+          }
         />
       ))}
       <div className="flex justify-between">

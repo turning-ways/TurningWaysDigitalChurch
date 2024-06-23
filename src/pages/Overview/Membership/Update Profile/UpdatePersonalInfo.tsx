@@ -1,8 +1,8 @@
 import InformationInput from "../Edit Profile/InformationInput";
-import { DropDownInput } from "../../../../components/DropDownMenu/DropDownInput";
+import { DropDownInput } from "../../../../ui/DropDownMenu/DropDownInput";
 import { useEditPersonalInformationStore } from "../../../../stores/Edit Member/personalinfo";
 import { useNavigate } from "react-router-dom";
-import useUpdateMember from "../../../../hooks/Member/useUpdateMember";
+import useUpdateMember from "../../../../hooks/Member/member-service/useUpdateMember";
 import { useEditContactInformationStore } from "../../../../stores/Edit Member/contactinfo";
 import { useEditChurchInformationStore } from "../../../../stores/Edit Member/churchinfo";
 import { useUserAuth } from "../../../../stores/user";
@@ -97,7 +97,7 @@ const UpdatePersonalInfo = () => {
         text="Prefix"
         items={["Mr", "Mrs"]}
         placeholder="Mr/Mrs"
-        value={prefix}
+        value={prefix ?? "undefined"}
         onSelect={handleSelectValue}
       />
       {information.map((item, index) => (
@@ -108,7 +108,9 @@ const UpdatePersonalInfo = () => {
               item.set(e.target.value);
             }}
             value={
-              item?.value?.slice(0, 1).toUpperCase() + item?.value?.slice(1)
+              item.value
+                ? item?.value?.slice(0, 1).toUpperCase() + item?.value?.slice(1)
+                : "undefined"
             }
             notCompulsory={
               item.name === "Suffix" || item.name === "Middle Name" ? " " : "*"

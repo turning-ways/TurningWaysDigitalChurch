@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import useAuth from "./hooks/useAuthorize";
-import { notify } from "./hooks/useLogin";
+
+import { notify } from "./hooks/useAuthData";
 import { useUserAuth } from "./stores/user";
+import { useAuth } from "./hooks/useAuthData";
 
 const ProtectedRoutes = () => {
   const { isError, isPending, data: admin } = useAuth();

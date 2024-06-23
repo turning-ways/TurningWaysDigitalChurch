@@ -7,7 +7,7 @@ import AllContactsList from "./AllContactsList";
 import AllContactsGallery from "./AllContactsGallery";
 import { useState } from "react";
 import AddContact from "./AddContact";
-import QuickActionsContact from "../../../components/Actions/QuickActionsContact";
+import QuickActionsContact from "../../../ui/Actions/QuickActionsContact";
 
 const Contacts = () => {
   const [activeView, setActiveView] = useState("list");

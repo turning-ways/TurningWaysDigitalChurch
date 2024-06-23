@@ -2,7 +2,7 @@ import InformationInput from "./InformationInput";
 import { useContactInformationStore } from "../../../../stores/Add Member/contactInformation";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
-import HeaderTwo from "../../../../components/Heading/HeaderTwo";
+import HeaderTwo from "../../../../ui/Heading/HeaderTwo";
 import { useNavigate } from "react-router-dom";
 
 const EditProfileContactInfo = () => {

@@ -2,7 +2,7 @@ import { BiSend } from "react-icons/bi";
 import { FiEdit } from "react-icons/fi";
 import { MdOutlineDelete } from "react-icons/md";
 import useAddNote from "../../../../hooks/Notes/useAddNote";
-import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
+import useGetMemberDetails from "../../../../hooks/Member/member-service/useGetMemberDetails";
 import useGetNote from "../../../../hooks/Notes/useGetNote";
 import { useEffect, useRef, useState } from "react";
 import { formatDate } from "./PersonalInformation";
@@ -10,7 +10,7 @@ import useDeleteNote from "../../../../hooks/Notes/useDeleteNote";
 import { IoClose } from "react-icons/io5";
 import { Puff, ThreeDots } from "react-loader-spinner";
 import useUpdateNote from "../../../../hooks/Notes/useUpdateNote";
-import Modal from "../../../../components/Modal/Modal";
+import Modal from "../../../../ui/Modal/Modal";
 
 interface NotesProps {
   openNote: boolean;
@@ -187,7 +187,7 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
         </div>
       </div>
       {(pendingDelete || pendingUpdate) && (
-        <Modal>
+        <Modal onClose={() => console.log("Do nothing")}>
           <ThreeDots color="black" />
         </Modal>
       )}

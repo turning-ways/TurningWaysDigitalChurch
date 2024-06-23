@@ -1,9 +1,9 @@
 import { BiSolidDownArrow } from "react-icons/bi";
 import Heading from "./Heading";
 import { useEffect, useState } from "react";
-import useGetContacts from "../../../hooks/Contacts/useGetContact";
-import useUpdateContactStatus from "../../../hooks/Contacts/useUpdateContactStatus";
+import { useGetContacts, useUpdateContactStatus } from "../../../hooks/useContact";
 import UpdateContact from "./UpdateContact";
+import { useUserAuth } from "../../../stores/user";
 
 const Information = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -49,7 +49,7 @@ const Information = () => {
 
   const { mutate } = useUpdateContactStatus({id: contactId, onClose: () => console.log("status changed")});
 
-  
+  const { user } = useUserAuth();
 
   
   return (
@@ -99,7 +99,7 @@ const Information = () => {
                   onClick={() => {
                     setOpenStatus(false);
                     setStatus("contacted");
-                    mutate({ status: "contacted" });
+                    mutate({ status: "contacted", modifiedBy: user?._id });
                   }}
                 >
                   contacted
@@ -109,7 +109,7 @@ const Information = () => {
                   onClick={() => {
                     setOpenStatus(false);
                     setStatus("new");
-                    mutate({ status: "new" });
+                    mutate({ status: "new", modifiedBy: user?._id });
                   }}
                 >
                   new
@@ -119,7 +119,7 @@ const Information = () => {
                   onClick={() => {
                     setOpenStatus(false);
                     setStatus("won");
-                    mutate({ status: "won" });
+                    mutate({ status: "won", modifiedBy: user?._id });
                   }}
                 >
                   won
@@ -129,7 +129,7 @@ const Information = () => {
                   onClick={() => {
                     setOpenStatus(false);
                     setStatus("lost");
-                    mutate({ status: "lost" });
+                    mutate({ status: "lost", modifiedBy: user?._id });
                   }}
                 >
                   lost

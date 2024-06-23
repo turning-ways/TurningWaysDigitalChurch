@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
+import useGetMemberDetails from "../../../../hooks/Member/member-service/useGetMemberDetails";
 
 const ContactInformation = () => {
   const { data } = useGetMemberDetails();

@@ -1,11 +1,11 @@
-import AuthContainer from "../../components/Container/AuthContainer";
-import Header from "../../components/Heading/Header";
+import AuthContainer from "../../ui/Container/AuthContainer";
+import Header from "../../ui/Heading/Header";
 
 import React, { useEffect, useRef, useState } from "react";
-import useVerifyOtp from "../../hooks/ForgotPassword/useVerifyOtp";
+import { useVerifyOtp } from "../../hooks/usePassword";
 import { useUserDetailsStore } from "../../stores/user";
-import NextButton from "../../components/Button/NextButton";
-import useForgotPassword from "../../hooks/ForgotPassword/useForgotPassword";
+import NextButton from "../../ui/Button/NextButton";
+import { useForgotPassword } from "../../hooks/usePassword";
 
 let currentOtpIndex: number = 0;
 

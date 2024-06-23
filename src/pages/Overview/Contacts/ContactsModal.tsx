@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Modal from "../../../components/Modal/Modal";
-import useUpdateContactStatus from "../../../hooks/Contacts/useUpdateContactStatus";
+import Modal from "../../../ui/Modal/Modal";
+import {
+  useUpdateContactStatus,
+  useDeleteContact,
+} from "../../../hooks/useContact";
 import { ThreeDots } from "react-loader-spinner";
 import UpdateContact from "./UpdateContact";
-import useDeleteContact from "../../../hooks/Contacts/useDeleteContact";
 
 interface ContactsModalProps {
   show: string | null;
@@ -21,7 +23,7 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
     id,
     onClose: () => setOpenConfirm(!openConfirm),
   });
-  const {mutate: deleteContact} = useDeleteContact();
+  const { mutate: deleteContact } = useDeleteContact();
   return (
     <>
       <div
@@ -36,7 +38,10 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
           >
             View More
           </li>
-          <li className="hover:text-[#A0D7AC] cursor-pointer" onClick={() => setOpenUpdate(!openUpdate)}>
+          <li
+            className="hover:text-[#A0D7AC] cursor-pointer"
+            onClick={() => setOpenUpdate(!openUpdate)}
+          >
             Update Contact
           </li>
           <li
@@ -60,7 +65,7 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
         </button>
       </div>
       {open && (
-        <Modal>
+        <Modal onClose={() => setOpen(false)}>
           <div className="bg-white flex flex-col space-y-3 p-4 rounded-[16px]">
             <h1 className="text-lg text-[#555555]">Delete Contact</h1>
             <p className="text-[#7F7F7F] text-lg">
@@ -76,7 +81,10 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
               >
                 No
               </button>
-              <button className="bg-[#F4F4F4] text-[#7B7B7B] rounded-[14px] w-full py-2 px-4 hover:bg-[#17275B] hover:text-white" onClick={() => deleteContact(id)}>
+              <button
+                className="bg-[#F4F4F4] text-[#7B7B7B] rounded-[14px] w-full py-2 px-4 hover:bg-[#17275B] hover:text-white"
+                onClick={() => deleteContact(id)}
+              >
                 Yes
               </button>
             </div>
@@ -84,7 +92,7 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
         </Modal>
       )}
       {openConfirm && (
-        <Modal>
+        <Modal onClose={() => setOpenConfirm(false)}>
           <div className="bg-white flex flex-col space-y-3 p-4 rounded-[16px]">
             <h1 className="text-lg text-[#555555]">Confirm Member</h1>
             <p className="text-[#7F7F7F] text-lg">
@@ -116,7 +124,9 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
           </div>
         </Modal>
       )}
-      {openUpdate && <UpdateContact onClose={() => setOpenUpdate(!openUpdate)}/>}
+      {openUpdate && (
+        <UpdateContact onClose={() => setOpenUpdate(!openUpdate)} />
+      )}
     </>
   );
 };

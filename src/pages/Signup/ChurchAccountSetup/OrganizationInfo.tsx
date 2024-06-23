@@ -1,11 +1,11 @@
 // import { IoIosArrowBack } from "react-icons/io";
-import AuthContainer from "../../../components/Container/AuthContainer";
-import Header from "../../../components/Heading/Header";
-import HeaderTwo from "../../../components/Heading/HeaderTwo";
+import AuthContainer from "../../../ui/Container/AuthContainer";
+import Header from "../../../ui/Heading/Header";
+import HeaderTwo from "../../../ui/Heading/HeaderTwo";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { useMemberStore } from "../../../stores/member";
 import { useState } from "react";
-import DropDownMenu from "../../../components/DropDownMenu/DropDownMenu";
+import DropDownMenu from "../../../ui/DropDownMenu/DropDownMenu";
 import { useNavigate } from "react-router-dom";
 
 const OrganizationInfo = () => {

@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { success } from "../useUpdatePassword";
-import { notify } from "../useLogin";
+import { success, notify } from "../useAuthData";
 import useGetNote from "./useGetNote";
 
 interface Query {
@@ -21,7 +20,7 @@ const useUpdateNote = (noteQuery: Query) => {
       axios
         .patch<Note>(
           `https://digital-church.onrender.com/api/v1/members/${note.memberId}/notes/${note.noteId}`,
-          {note: note.note},
+          { note: note.note },
           {
             withCredentials: true,
           }

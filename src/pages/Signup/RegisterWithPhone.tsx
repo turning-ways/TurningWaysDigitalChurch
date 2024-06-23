@@ -2,22 +2,21 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import AuthContainer from "../../components/Container/AuthContainer";
+import AuthContainer from "../../ui/Container/AuthContainer";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/Heading/Header";
-import GoogleButton from "../../components/Button/GoogleButton";
-import PasswordInput from "../../components/Input/PasswordInput";
-import Input from "../../components/Input/Input";
-import NextButton from "../../components/Button/NextButton";
+import Header from "../../ui/Heading/Header";
+import GoogleButton from "../../ui/Button/GoogleButton";
+import PasswordInput from "../../ui/Input/PasswordInput";
+import Input from "../../ui/Input/Input";
+import NextButton from "../../ui/Button/NextButton";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
-import HeaderTwo from "../../components/Heading/HeaderTwo";
+import HeaderTwo from "../../ui/Heading/HeaderTwo";
 import { useEffect, useState } from "react";
-import useRegisterWithPhone from "../../hooks/Signup/useRegisterWithPhone";
-import EmailButton from "../../components/Button/EmailButton";
+import { useRegisterWithPhone, notify } from "../../hooks/useAuthData";
 import { useUserDetailsStore } from "../../stores/user";
-import TermsAndPrivacyPolicy from "../../components/Agreement/TermsAndPrivacyPolicy";
-import { notify } from "../../hooks/useLogin";
+import TermsAndPrivacyPolicy from "../../ui/Agreement/TermsAndPrivacyPolicy";
+import EmailButton from "../../ui/Button/EmailButton";
 // import { success } from "../../hooks/useUpdatePassword";
 
 declare global {
@@ -58,12 +57,12 @@ const RegisterWithPhone = () => {
 
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const {setPhone} = useUserDetailsStore();
+  const { setPhone } = useUserDetailsStore();
 
   useEffect(() => {
     // Scroll to the top of the page
     window.scrollTo(0, 0);
-  }, []); 
+  }, []);
 
   const [checked, setChecked] = useState(false);
   return (
@@ -73,16 +72,17 @@ const RegisterWithPhone = () => {
           onSubmit={handleSubmit((data) => {
             const { first_name, last_name, password, passwordConfirm } = data;
             // setEmail(email);
-            if (checked ){ mutate({
-              first_name,
-              last_name,
-              password,
-              passwordConfirm,
-              phoneNumber,
-            });}
-            else {
-              notify("Please agree to our terms of service and privacy policy")
-              console.log(phoneNumber.length)
+            if (checked) {
+              mutate({
+                first_name,
+                last_name,
+                password,
+                passwordConfirm,
+                phoneNumber,
+              });
+            } else {
+              notify("Please agree to our terms of service and privacy policy");
+              console.log(phoneNumber.length);
             }
             setPhone(phoneNumber);
           })}
@@ -162,7 +162,11 @@ const RegisterWithPhone = () => {
             formError={errors.passwordConfirm?.message}
           />
           <div className="text-[#718096] flex items-center space-x-2 my-8">
-            <input type="checkbox" checked={checked} onChange={(e) => setChecked(e.target.checked)}/>
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={(e) => setChecked(e.target.checked)}
+            />
             <TermsAndPrivacyPolicy />
           </div>
           <NextButton isPending={isPending} />

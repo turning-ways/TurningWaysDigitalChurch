@@ -1,9 +1,9 @@
-import { DropDownInput } from "../../../../components/DropDownMenu/DropDownInput";
+import { DropDownInput } from "../../../../ui/DropDownMenu/DropDownInput";
 import { useChurchInformationSore } from "../../../../stores/Add Member/churchInformation";
 import useAddRegularMember from "../../../../hooks/Member/useAddRegularMember";
 import { usePersonalInformationStore } from "../../../../stores/Add Member/personalinformation";
 import { useContactInformationStore } from "../../../../stores/Add Member/contactInformation";
-import { notify } from "../../../../hooks/useLogin";
+import { notify } from "../../../../hooks/useAuthData";
 import { useUserAuth } from "../../../../stores/user";
 import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
@@ -60,12 +60,9 @@ const EditProfileChurchInfo = () => {
     if (
       first_name &&
       last_name &&
-      middle_name &&
-      contact_email &&
       contact_phone !== "" &&
       dateOfBirth !== "" &&
-      gender !== "" &&
-      contact_address !== ""
+      gender !== ""
     ) {
       mutate({
         first_name,

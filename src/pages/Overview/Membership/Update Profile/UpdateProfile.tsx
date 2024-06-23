@@ -7,7 +7,7 @@ import { Outlet } from "react-router-dom";
 import AddUpdateInfoHeader from "../AddUpdateInfoHeader";
 import { useEffect } from "react";
 import { useEditPersonalInformationStore } from "../../../../stores/Edit Member/personalinfo";
-import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
+import useGetMemberDetails from "../../../../hooks/Member/member-service/useGetMemberDetails";
 import OverviewContainer from "../../OverviewContainer";
 import { useEditContactInformationStore } from "../../../../stores/Edit Member/contactinfo";
 import { useEditChurchInformationStore } from "../../../../stores/Edit Member/churchinfo";
@@ -34,16 +34,10 @@ const UpdateProfile = () => {
     setGender,
     setDateOfBirth,
   } = useEditPersonalInformationStore();
-  const {
-    setContactEmail,
-    setContactAddress,
-    setContactPhone,
-  } = useEditContactInformationStore();
-  const {
-    setMemberStatus,
-    setWorkType,
-    setServiceUnit,
-  } = useEditChurchInformationStore();
+  const { setContactEmail, setContactAddress, setContactPhone } =
+    useEditContactInformationStore();
+  const { setMemberStatus, setWorkType, setServiceUnit } =
+    useEditChurchInformationStore();
   useEffect(() => {
     setFirstName(data ? data?.member?.first_name : "");
     setMiddleName(data ? data?.member?.middle_name : "");

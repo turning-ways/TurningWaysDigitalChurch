@@ -1,12 +1,12 @@
 import { IoIosClose } from "react-icons/io";
-import Modal from "../../../components/Modal/Modal";
+import Modal from "../../../ui/Modal/Modal";
 import InformationInput from "../Membership/Edit Profile/InformationInput";
-import PhoneNumber from "../../../components/Input/PhoneNumber";
+import PhoneNumber from "../../../ui/Input/PhoneNumber";
 import { useState } from "react";
-import useAddContact from "../../../hooks/Contacts/useAddContact";
+import { useAddContact } from "../../../hooks/useContact";
 import { useUserAuth } from "../../../stores/user";
 import { ThreeDots } from "react-loader-spinner";
-import { DropDownInput } from "../../../components/DropDownMenu/DropDownInput";
+import { DropDownInput } from "../../../ui/DropDownMenu/DropDownInput";
 
 interface AddContactProps {
   onClose: () => void;
@@ -14,17 +14,23 @@ interface AddContactProps {
 
 const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
   const { user } = useUserAuth();
-  const { mutate, isPending } = useAddContact({onClose: onClose});
+  const { mutate, isPending } = useAddContact({ onClose: onClose });
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [maturity, setMaturity] = useState("");
   const [email, setEmail] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [gender, setGender] = useState("");
+
+  const handleGender = (value: string) => {
+    setGender(value);
+  };
   return (
-    <Modal>
+    <Modal onClose={onClose}>
       <form
-        className={`w-[450px] md:w-[605px] bg-white px-6 py-6 border rounded-2xl flex flex-col`}
+        className={`w-[450px] md:w-[605px] bg-white px-6 py-6 border rounded-2xl flex flex-col max-h-[700px] overflow-y-scroll`}
         onSubmit={(e) => {
           e.preventDefault();
           user?._id &&
@@ -35,7 +41,7 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
               phoneNumber,
               maturity: maturity.toLowerCase(),
               createdBy: user?._id,
-              email
+              email,
             });
         }}
       >
@@ -61,15 +67,15 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
           value={phoneNumber}
           setValue={(value) => setPhoneNumber(value)}
         />
-          <DropDownInput
-         text="Maturity"
-         items={["Child", "Adult", "Teen"]}
-         placeholder="Child, Adult or Teen"
-         compulsory="*"
-         onSelect={(value) => setMaturity(value)}
-         value={maturity}
-         onChange={(maturity) => setMaturity(maturity)}
-       />
+        <DropDownInput
+          text="Maturity"
+          items={["Child", "Adult", "Teen"]}
+          placeholder="Child, Adult or Teen"
+          compulsory="*"
+          onSelect={(value) => setMaturity(value)}
+          value={maturity}
+          onChange={(maturity) => setMaturity(maturity)}
+        />
         <InformationInput
           text={"Email"}
           onChange={(e) => {
@@ -77,6 +83,28 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
           }}
           value={email}
           notCompulsory=" "
+        />
+        <div className=" space-y-1 mb-4">
+          <p className="text-[#727272]">
+            D.O.B <span className="text-[#61BD74]"> *</span>
+          </p>
+          <div className="border rounded-lg p-2">
+            <input
+              className="outline-none text-[#434343] text-lg w-full"
+              type="date"
+              value={dateOfBirth}
+              onChange={(e) => setDateOfBirth(e.target.value)}
+            />
+          </div>
+        </div>
+        <DropDownInput
+          text="Gender"
+          items={["male", "female"]}
+          placeholder="Male"
+          compulsory="*"
+          onSelect={handleGender}
+          value={gender}
+          onChange={(gender) => setGender(gender)}
         />
         <InformationInput
           text={"Address"}

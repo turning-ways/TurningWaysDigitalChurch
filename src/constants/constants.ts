@@ -15,8 +15,11 @@ export const action = [
 
 
 export const labels = [
+  "Undefined",
   "Will attend service",
   "Unreachable",
+  "Wrong number",
+  "Visiting"
 ];
 
 export const getDarkerShade = (color: string, amount: number = 0.2): string => {

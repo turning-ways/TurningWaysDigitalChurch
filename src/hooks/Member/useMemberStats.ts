@@ -29,7 +29,7 @@ const useMemberStats = (timeLine: string) => {
     queryFn: () =>
       axios
         .get<DataType>(
-          `https://digital-church.onrender.com/api/v1/churches/${user?.churchId?._id}/member-stats?dataparam=${timeLine}`,
+          `https://digital-church.onrender.com/api/v1/churches/${user?.churchId?._id}/member-stats?dateparam=${timeLine}`,
           {
             withCredentials: true,
           }

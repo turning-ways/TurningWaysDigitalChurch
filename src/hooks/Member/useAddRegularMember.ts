@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-import { success } from "../useUpdatePassword";
-import { notify } from "../useLogin";
+import { success, notify } from "../useAuthData";
 import { useNavigate } from "react-router-dom";
 import { usePersonalInformationStore } from "../../stores/Add Member/personalinformation";
 import { useContactInformationStore } from "../../stores/Add Member/contactInformation";
 import { useChurchInformationSore } from "../../stores/Add Member/churchInformation";
+import ApiClient from "../../services/api-client";
+import { useUserAuth } from "../../stores/user";
 
 interface Member {
   first_name: string;
@@ -68,17 +68,12 @@ const useAddRegularMember = () => {
     setWorkType("");
   };
 
+  const churchId = useUserAuth((auth) => auth?.user?.churchId?._id);
+
+  const apiClient = new ApiClient("/api/v1/members/" + churchId + "/add");
+
   return useMutation({
-    mutationFn: (memberDetails: Member) =>
-      axios
-        .post<Member>(
-          "https://digital-church.onrender.com/api/v1/members/member",
-          memberDetails,
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => res.data),
+    mutationFn: (memberDetails: Member) => apiClient.post(memberDetails),
     onSuccess: () => {
       success("Member has been added successfully");
       navigate("/admin/dashboard");

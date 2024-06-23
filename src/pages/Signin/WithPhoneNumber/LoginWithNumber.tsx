@@ -1,18 +1,19 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import AuthContainer from "../../../components/Container/AuthContainer";
+import AuthContainer from "../../../ui/Container/AuthContainer";
 import { useNavigate } from "react-router-dom";
-import useLogin from "../../../hooks/useLogin";
-import Header from "../../../components/Heading/Header";
-import HeaderTwo from "../../../components/Heading/HeaderTwo";
-import EmailButton from "../../../components/Button/EmailButton";
-import GoogleButton from "../../../components/Button/GoogleButton";
+
+import Header from "../../../ui/Heading/Header";
+import HeaderTwo from "../../../ui/Heading/HeaderTwo";
+import EmailButton from "../../../ui/Button/EmailButton";
+import GoogleButton from "../../../ui/Button/GoogleButton";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { useEffect, useState } from "react";
-import PasswordInput from "../../../components/Input/PasswordInput";
-import NextButton from "../../../components/Button/NextButton";
+import PasswordInput from "../../../ui/Input/PasswordInput";
+import NextButton from "../../../ui/Button/NextButton";
+import { useLogin } from "../../../hooks/useAuthData";
 
 const LoginWithNumber = () => {
   const schema = z.object({
@@ -37,7 +38,7 @@ const LoginWithNumber = () => {
   useEffect(() => {
     // Scroll to the top of the page
     window.scrollTo(0, 0);
-  }, []); 
+  }, []);
   return (
     <>
       <AuthContainer center="sm:items-center pt-16 md:pt-0">

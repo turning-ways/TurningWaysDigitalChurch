@@ -1,19 +1,19 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import AuthContainer from "../../components/Container/AuthContainer";
+import AuthContainer from "../../ui/Container/AuthContainer";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/Heading/Header";
+import Header from "../../ui/Heading/Header";
 import { useUserDetailsStore } from "../../stores/user";
-import useRegister from "../../hooks/Signup/useRegister";
-import GoogleButton from "../../components/Button/GoogleButton";
-import PasswordInput from "../../components/Input/PasswordInput";
-import Input from "../../components/Input/Input";
-import NextButton from "../../components/Button/NextButton";
-import PhoneButton from "../../components/Button/PhoneButton";
+import { useRegister } from "../../hooks/useAuthData";
+import GoogleButton from "../../ui/Button/GoogleButton";
+import PasswordInput from "../../ui/Input/PasswordInput";
+import Input from "../../ui/Input/Input";
+import NextButton from "../../ui/Button/NextButton";
+import PhoneButton from "../../ui/Button/PhoneButton";
 import { useEffect, useState } from "react";
-import TermsAndPrivacyPolicy from "../../components/Agreement/TermsAndPrivacyPolicy";
-import { notify } from "../../hooks/useLogin";
+import TermsAndPrivacyPolicy from "../../ui/Agreement/TermsAndPrivacyPolicy";
+import { notify } from "../../hooks/useAuthData";
 const Register = () => {
   const schema = z.object({
     first_name: z
@@ -59,10 +59,17 @@ const Register = () => {
             const { first_name, last_name, email, password, passwordConfirm } =
               data;
             setEmail(email);
-            if (checked) {mutate({ first_name, last_name, email, password, passwordConfirm })
-          }else {
-        notify("Please agree to our terms of service and privacy policy")
-        }
+            if (checked) {
+              mutate({
+                first_name,
+                last_name,
+                email,
+                password,
+                passwordConfirm,
+              });
+            } else {
+              notify("Please agree to our terms of service and privacy policy");
+            }
           })}
           className="bg-white py-10 px-6"
         >
@@ -115,7 +122,11 @@ const Register = () => {
             formError={errors.passwordConfirm?.message}
           />
           <div className="text-[#718096] flex items-center space-x-2 my-8">
-            <input type="checkbox" checked={checked} onChange={(e) => setChecked(e.target.checked)}/>
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={(e) => setChecked(e.target.checked)}
+            />
             <TermsAndPrivacyPolicy />
           </div>
           <NextButton isPending={isPending} />

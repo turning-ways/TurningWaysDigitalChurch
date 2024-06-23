@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import Modal from "../../../components/Modal/Modal";
-import useUpdateContact from "../../../hooks/Contacts/useUpdateContact";
-import useGetContacts from "../../../hooks/Contacts/useGetContact";
+import Modal from "../../../ui/Modal/Modal";
+import { useUpdateContact, useGetContacts } from "../../../hooks/useContact";
 import InformationInput from "../Membership/Edit Profile/InformationInput";
-import PhoneNumber from "../../../components/Input/PhoneNumber";
+import PhoneNumber from "../../../ui/Input/PhoneNumber";
 import { IoIosClose } from "react-icons/io";
 import { ThreeDots } from "react-loader-spinner";
-import { DropDownInput } from "../../../components/DropDownMenu/DropDownInput";
+import { DropDownInput } from "../../../ui/DropDownMenu/DropDownInput";
 
 interface UpdateContactProps {
   onClose: () => void;
@@ -47,7 +46,7 @@ const UpdateContact: React.FC<UpdateContactProps> = ({ onClose }) => {
   }, [contact]);
 
   return (
-    <Modal>
+    <Modal onClose={() => console.log("close")}>
       <form
         className="w-[450px] md:w-[605px] bg-white px-6 py-6 border rounded-2xl flex flex-col"
         onSubmit={(e) => {

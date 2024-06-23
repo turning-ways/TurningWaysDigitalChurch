@@ -1,10 +1,10 @@
 import InformationInput from "../Edit Profile/InformationInput";
 import { useEditContactInformationStore } from "../../../../stores/Edit Member/contactinfo";
-import HeaderTwo from "../../../../components/Heading/HeaderTwo";
+import HeaderTwo from "../../../../ui/Heading/HeaderTwo";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { useNavigate } from "react-router-dom";
-import useUpdateMember from "../../../../hooks/Member/useUpdateMember";
+import useUpdateMember from "../../../../hooks/Member/member-service/useUpdateMember";
 import { useEditPersonalInformationStore } from "../../../../stores/Edit Member/personalinfo";
 import { useEditChurchInformationStore } from "../../../../stores/Edit Member/churchinfo";
 import { useUserAuth } from "../../../../stores/user";
@@ -65,7 +65,7 @@ const UpdateContactInfo = () => {
           onChange={(e) => {
             item.set(e.target.value);
           }}
-          value={item.value}
+          value={item.value ?? "undefined"}
           notCompulsory=" "
         />
       ))}

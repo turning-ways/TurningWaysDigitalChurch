@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 // import AddMember from "../../AddMemberBtn";
 import InformationHeader from "../InformationHeader";
 import OverviewContainer from "../../OverviewContainer";
-import useGetMemberDetails from "../../../../hooks/Member/useGetMemberDetails";
+import useGetMemberDetails from "../../../../hooks/Member/member-service/useGetMemberDetails";
 import { ThreeDots } from "react-loader-spinner";
 import { useEffect, useRef, useState } from "react";
 import Notes from "./Notes";

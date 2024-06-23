@@ -6,10 +6,10 @@ import { MdVerified } from "react-icons/md";
 import { SlNote } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
 import { RiDeleteBin4Line } from "react-icons/ri";
-import useDeleteMember from "../../hooks/Member/useDeleteMember";
-import useGetMemberDetails from "../../hooks/Member/useGetMemberDetails";
+import useDeleteMember from "../../hooks/Member/member-service/useDeleteMember";
+import useGetMemberDetails from "../../hooks/Member/member-service/useGetMemberDetails";
 import { useState } from "react";
-import Modal from "../../components/Modal/Modal";
+import Modal from "../../ui/Modal/Modal";
 import { useSmsRecepientStore } from "../../stores/smsRecepient";
 
 interface SubHeaderProps {
@@ -123,7 +123,7 @@ const SubHeader: React.FC<SubHeaderProps> = ({ onNoteClick }) => {
         </div>
       </div>
       {open && (
-        <Modal>
+        <Modal  onClose={() => setOpen(false)}>
           <div className="bg-white p-5 max-w-64 rounded-lg space-y-6">
             <p className="text-center">
               Are you sure you'd like to delete this profile?

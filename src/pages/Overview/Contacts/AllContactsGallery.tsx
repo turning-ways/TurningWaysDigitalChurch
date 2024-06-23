@@ -1,7 +1,7 @@
 import { PiDotsThreeCircleLight } from "react-icons/pi";
 import { useState } from "react";
 import ContactsModal from "./ContactsModal";
-import useGetAllContacts from "../../../hooks/Contacts/useGetAllContacts";
+import { useGetAllContacts } from "../../../hooks/useContact";
 import { getDarkerShade } from "../../../constants/constants";
 
 const AllContactsGallery = () => {

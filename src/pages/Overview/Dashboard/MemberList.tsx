@@ -2,7 +2,7 @@
 import { useState } from "react";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import * as XLSX from "xlsx";
-import MemberTable from "../../../components/Table/DashboardTable";
+import MemberTable from "../../../ui/Table/DashboardTable";
 
 const MemberList = () => {
   const { data: members } = useGetAllMembers({ page: 1, pageSize: 100000 });
@@ -58,22 +58,24 @@ const MemberList = () => {
   );
 
   const handleOnExport = () => {
-    const selectedMembers = members ? members.map(member => ({
-      ServiceUnit: member.ServiceUnit,
-      WorkerStatus: member.WorkerStatus,
-      accessPermission: member.accessPermission,
-      age: member.age,
-      anniversary: member.anniversary,
-      dateJoined: member.dateJoined,
-      dateOfBirth: member.dateOfBirth,
-      email: member.email,
-      first_name: member.first_name,
-      fullname: member.fullname,
-      gender: member.gender
-  })) : [{}];
+    const selectedMembers = members
+      ? members.map((member) => ({
+          ServiceUnit: member.ServiceUnit,
+          WorkerStatus: member.WorkerStatus,
+          accessPermission: member.accessPermission,
+          age: member.age,
+          anniversary: member.anniversary,
+          dateJoined: member.dateJoined,
+          dateOfBirth: member.dateOfBirth,
+          email: member.email,
+          first_name: member.first_name,
+          fullname: member.fullname,
+          gender: member.gender,
+        }))
+      : [{}];
 
     const wb = XLSX.utils.book_new(),
-    ws = XLSX.utils.json_to_sheet(selectedMembers);
+      ws = XLSX.utils.json_to_sheet(selectedMembers);
     XLSX.utils.book_append_sheet(wb, ws, "My Sheet !");
     XLSX.writeFile(wb, "MyExcel.xlsx");
   };

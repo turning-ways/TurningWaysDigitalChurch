@@ -9,6 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import useMemberStats from "../../../../hooks/Member/useMemberStats";
+import { useEffect } from "react";
 
 ChartJS.register(
   CategoryScale,
@@ -24,7 +25,7 @@ interface BarProps {
 }
 
 const AgeDistrBar: React.FC<BarProps> = ({ timeLine }) => {
-  const { data } = useMemberStats(timeLine);
+  const { data, refetch } = useMemberStats(timeLine);
   const filteredKeys =
     data && data.ageRanges
       ? Object.keys(data.ageRanges).filter(
@@ -32,7 +33,15 @@ const AgeDistrBar: React.FC<BarProps> = ({ timeLine }) => {
         )
       : [];
 
-  const values = filteredKeys?.map((key) => data?.ageRanges[key as keyof typeof data.ageRanges]);
+  const values = filteredKeys?.map(
+    (key) => data?.ageRanges[key as keyof typeof data.ageRanges]
+  );
+
+  useEffect(() => {
+    if (timeLine !== null) {
+      refetch();
+    }
+  }, [timeLine, refetch]);
 
   return (
     <Bar

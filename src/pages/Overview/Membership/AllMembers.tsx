@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import AddMemberBtn from "../../../components/Button/AddMemberBtn";
+import AddMemberBtn from "../../../ui/Button/AddMemberBtn";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";

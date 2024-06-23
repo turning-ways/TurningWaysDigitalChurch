@@ -2,16 +2,12 @@ import { IoIosArrowBack } from "react-icons/io";
 import Header from "../Header";
 import OverviewContainer from "../OverviewContainer";
 import { BiSend } from "react-icons/bi";
-import { DropDownInput } from "../../../components/DropDownMenu/DropDownInput";
+import { DropDownInput } from "../../../ui/DropDownMenu/DropDownInput";
 import { useEffect, useRef, useState } from "react";
 import Heading from "./Heading";
 import { IoIosAddCircle, IoIosClose } from "react-icons/io";
 import Information from "./Information";
 import { useNavigate } from "react-router-dom";
-import useGetContacts from "../../../hooks/Contacts/useGetContact";
-import useUpdateContactStatus from "../../../hooks/Contacts/useUpdateContactStatus";
-import useUpdateContact from "../../../hooks/Contacts/useUpdateContact";
-import useAddContactComment from "../../../hooks/Contacts/useAddContactComment";
 import { useUserAuth } from "../../../stores/user";
 import { formatTheDate } from "./formatDate";
 import {
@@ -20,18 +16,24 @@ import {
   getDarkerShade,
   labels,
 } from "../../../constants/constants";
-import Modal from "../../../components/Modal/Modal";
+import Modal from "../../../ui/Modal/Modal";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
-import useAssignMember from "../../../hooks/Contacts/useAssignMember";
-import useAddLabel from "../../../hooks/Contacts/useAddLabel";
-import useDeleteLabel from "../../../hooks/Contacts/useDeleteLabel";
-import useAddActionItem from "../../../hooks/Contacts/useAddActionItem";
+import {
+  useAddLabel,
+  useAssignMember,
+  useDeleteLabel,
+  useAddActionItem,
+  useDeleteContactComment,
+  useUpdateContactComment,
+  useUpdateActionItem,
+  useUpdateContactStatus,
+  useUpdateContact,
+  useAddContactComment,
+  useGetContacts,
+} from "../../../hooks/useContact";
 import { Puff, ThreeDots } from "react-loader-spinner";
 import { MdOutlineDelete } from "react-icons/md";
-import useDeleteContactComment from "../../../hooks/Contacts/useDeleteContactComment";
 import { FiEdit } from "react-icons/fi";
-import useUpdateContactComment from "../../../hooks/Contacts/useUpdateContactComment";
-import useUpdateActionItem from "../../../hooks/Contacts/useUpdateActionItem";
 // import { FaArrowUp } from "react-icons/fa6";
 
 const ContactDetails = () => {
@@ -194,6 +196,26 @@ const ContactDetails = () => {
             />
           </div>
         </div>
+        <div className=" space-y-1 mt-4 ">
+          <p className="text-[#727272]">DOB</p>
+          <div className="border border-[#D9D9D9] rounded-lg p-2 ">
+            <input
+              className="outline-none text-[#434343] text-lg w-full bg-transparent"
+              readOnly={true}
+              value={contact ? contact.dateOfBirth : ""}
+            />
+          </div>
+        </div>
+        <div className=" space-y-1 mt-4">
+          <p className="text-[#727272]">Gender</p>
+          <div className="border border-[#D9D9D9] rounded-lg p-2">
+            <input
+              className="outline-none text-[#434343] text-lg w-full bg-transparent"
+              readOnly={true}
+              value={contact ? contact.gender : ""}
+            />
+          </div>
+        </div>
         <div className=" space-y-1 col-span-2 my-4">
           <p className="text-[#727272]">Address</p>
           <div className="border border-[#D9D9D9] rounded-lg p-2">
@@ -214,7 +236,7 @@ const ContactDetails = () => {
         <div className="overflow-x-scroll flex space-x-3 scrollbar-hide">
           {contact &&
             contact.labels &&
-            contact.labels.map((item) => (
+            contact.labels.map((item: any) => (
               <div
                 style={{
                   backgroundColor: getDarkerShade(item.label_type, -0.7),
@@ -231,7 +253,7 @@ const ContactDetails = () => {
             ))}
         </div>
         {showLabels && (
-          <Modal>
+          <Modal onClose={() => setShowLabels(false)}>
             <div
               className={`w-[400px] bg-white px-6 py-6 border rounded-2xl flex flex-col space-y-4`}
             >
@@ -276,7 +298,7 @@ const ContactDetails = () => {
           contact.actions &&
           Array.isArray(contact.actions) &&
           contact.actions.length > 0 &&
-          contact.actions.map((item, index) => (
+          contact.actions.map((item: any, index: any) => (
             <li className="flex space-x-2">
               <input
                 type="checkbox"
@@ -294,7 +316,7 @@ const ContactDetails = () => {
         </button>
       </ul>
       {showActions && (
-        <Modal>
+        <Modal onClose={() => setShowActions(false)}>
           <div
             className={`w-[400px] bg-white px-6 py-6 border rounded-2xl flex flex-col space-y-4`}
           >
@@ -342,14 +364,14 @@ const ContactDetails = () => {
         {contact &&
           contact.assignedTo &&
           contact.assignedTo.length > 0 &&
-          contact.assignedTo.map((item) => (
+          contact.assignedTo.map((item: any) => (
             <div className="bg-[#7F7E7E] text-white rounded-full h-full w-12 flex items-center justify-center">
               {item.first_name.charAt(0).toUpperCase() +
                 item.last_name.charAt(0).toUpperCase()}
             </div>
           ))}
         {showMembers && (
-          <Modal>
+          <Modal onClose={() => setShowMembers(false)}>
             <div
               className={`w-[400px] bg-white px-6 py-6 border rounded-2xl flex flex-col space-y-4`}
             >
@@ -423,7 +445,9 @@ const ContactDetails = () => {
             <div className="w-full">
               <div className="text-[#7F7E7E] flex justify-between items-center">
                 <p className="text-sm sm:text-base">
-                  {contact.firstName + " " + contact.lastName}
+                  {item.recordedBy?.first_name +
+                    " " +
+                    item.recordedBy?.last_name}
                 </p>
                 <p className="text-xs sm:text-sm">{formatTheDate(item.date)}</p>
               </div>
@@ -482,7 +506,7 @@ const ContactDetails = () => {
         pendingContactUpdate ||
         pendingUpdate ||
         pendingDeletion) && (
-        <Modal>
+        <Modal onClose={() => console.log("restricted")}>
           <ThreeDots color="black" />
         </Modal>
       )}

@@ -1,16 +1,15 @@
-import AuthContainer from "../../components/Container/AuthContainer";
-import Header from "../../components/Heading/Header";
+import AuthContainer from "../../ui/Container/AuthContainer";
+import Header from "../../ui/Heading/Header";
 
 import React, { useEffect, useRef, useState } from "react";
 import { useUserDetailsStore } from "../../stores/user";
-import NextButton from "../../components/Button/NextButton";
-import useVerifyPhoneSignUpOtp from "../../hooks/Signup/useVerifyPhoneSignUpOtp";
-import useRegisterWithPhone from "../../hooks/Signup/useRegisterWithPhone";
+import NextButton from "../../ui/Button/NextButton";
+import { useVerifyPhoneSignUpOtp } from "../../hooks/useAuthData";
+import { useRegisterWithPhone } from "../../hooks/useAuthData";
 
 let currentOtpIndex: number = 0;
 
 const PhoneOtpVerification = () => {
-
   const [value, setValue] = useState<boolean>(false);
 
   //

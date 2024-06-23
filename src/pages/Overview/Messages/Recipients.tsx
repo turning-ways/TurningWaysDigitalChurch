@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FiPlusCircle } from "react-icons/fi";
 // import { HiQuestionMarkCircle } from "react-icons/hi2";
 import { RiDeleteBin4Line } from "react-icons/ri";
-import Modal from "../../../components/Modal/Modal";
+import Modal from "../../../ui/Modal/Modal";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 // import { FaLeftLong, FaRightLong } from "react-icons/fa6";
 import useSendSms from "../../../hooks/Member/useSendSms";
@@ -50,11 +50,11 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
   const { recepients, removeRecepientById, addRecepients } =
     useSmsRecepientStore();
   const capitalizeFirstLetter = (sentence: string): string => {
-      return sentence
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-    };
+    return sentence
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
   return (
     <>
       <Subject title="Sender's ID" placeholder="Winners Chapel Magodo" />
@@ -127,7 +127,7 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
         </button>
 
         {open && (
-          <Modal>
+          <Modal  onClose={() => setOpen(false)}>
             <div className="bg-white px-[26px] py-[37px] rounded-2xl text-lg flex flex-col gap-6">
               <ul className="text-[#7F7F7F] flex flex-col gap-6 w-[334px]">
                 <li className="flex space-x-3 items-center cursor-pointer text-[#555555]">

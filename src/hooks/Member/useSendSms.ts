@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { success } from "../useUpdatePassword";
-import { notify } from "../useLogin";
+import { success, notify } from "../useAuthData";
 import { useUserAuth } from "../../stores/user";
 
 interface Member {
@@ -25,7 +24,7 @@ const useSendSms = () => {
     onSuccess: () => {
       success("Sms has been been sent successfully");
 
-    //   navigate("/admin/dashboard");
+      //   navigate("/admin/dashboard");
     },
     onError: () => notify("Couldn't send sms at this time"),
   });

@@ -1,8 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { notify } from "../useLogin";
+import { notify, success } from "../useAuthData";
 import useGetNote from "./useGetNote";
-import { success } from "../useUpdatePassword";
 
 interface Note {
   memberId: string;
