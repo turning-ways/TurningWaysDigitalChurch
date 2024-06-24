@@ -42,6 +42,7 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
               maturity: maturity.toLowerCase(),
               createdBy: user?._id,
               email,
+              gender,
             });
         }}
       >
@@ -82,12 +83,10 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
             setEmail(e.target.value);
           }}
           value={email}
-          notCompulsory=" "
+          notCompulsory="*"
         />
         <div className=" space-y-1 mb-4">
-          <p className="text-[#727272]">
-            D.O.B <span className="text-[#61BD74]"> *</span>
-          </p>
+          <p className="text-[#727272]">D.O.B</p>
           <div className="border rounded-lg p-2">
             <input
               className="outline-none text-[#434343] text-lg w-full"

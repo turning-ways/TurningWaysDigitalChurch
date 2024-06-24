@@ -134,7 +134,7 @@ const UpdatePersonalInfo = () => {
           <input
             className="outline-none text-[#434343] text-lg w-full"
             type="date"
-            value={dateOfBirth.split("T")[0]}
+            value={dateOfBirth?.split("T")[0]}
             onChange={(e) => setDateOfBirth(e.target.value)}
           />
         </div>

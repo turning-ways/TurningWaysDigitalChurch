@@ -25,7 +25,7 @@ const SubHeader = () => {
 
       try {
         const response = await fetch(
-          `https://digital-church.onrender.com/api/v1/members/upload/${memberId}`,
+          `https://turningways.onrender.com/api/v1/members/upload/${memberId}`,
           {
             method: "POST",
             body: formData,

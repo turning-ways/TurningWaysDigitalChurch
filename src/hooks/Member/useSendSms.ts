@@ -14,7 +14,7 @@ const useSendSms = () => {
     mutationFn: (memberDetails: Member) =>
       axios
         .post<Member>(
-          `https://digital-church.onrender.com/api/v1/churches/${user?.churchId?._id}/send-sms?dateparam=now&timeparam=now`,
+          `https://turningways.onrender.com/api/v1/churches/${user?.churchId?._id}/send-sms?dateparam=now&timeparam=now`,
           memberDetails,
           {
             withCredentials: true,

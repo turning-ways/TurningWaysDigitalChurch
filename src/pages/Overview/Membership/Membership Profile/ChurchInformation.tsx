@@ -22,7 +22,7 @@ const ChurchInformation = () => {
     queryKey: ["church", churchId, "member", memberId],
     queryFn: () =>
       axios
-        .get(`https://digital-church.onrender.com/api/v1/members/${memberId}`, {
+        .get(`https://turningways.onrender.com/api/v1/members/${memberId}`, {
           withCredentials: true,
         })
         .then((res) => res.data),
@@ -32,9 +32,10 @@ const ChurchInformation = () => {
     {
       name: "Member Status",
       value:
-        data && data?.member?.memberStatus ? 
-        data?.member?.memberStatus?.slice(0, 1).toUpperCase() +
-          data?.member?.memberStatus?.slice(1) : "Undefined",
+        data && data?.member?.memberStatus
+          ? data?.member?.memberStatus?.slice(0, 1).toUpperCase() +
+            data?.member?.memberStatus?.slice(1)
+          : "Undefined",
     },
     {
       name: "Worker Type",
@@ -47,9 +48,10 @@ const ChurchInformation = () => {
     {
       name: "Service Unit/Group",
       value:
-        data && data?.member?.ServiceUnit ?
-        data?.member?.ServiceUnit?.slice(0, 1).toUpperCase() +
-          data?.member?.ServiceUnit?.slice(1) : "Undefined",
+        data && data?.member?.ServiceUnit
+          ? data?.member?.ServiceUnit?.slice(0, 1).toUpperCase() +
+            data?.member?.ServiceUnit?.slice(1)
+          : "Undefined",
     },
   ];
 

@@ -14,7 +14,7 @@ const useDeleteNote = (memberId: string) => {
     mutationFn: (note: Note) =>
       axios
         .delete<Note>(
-          `https://digital-church.onrender.com/api/v1/members/${note.memberId}/notes/${note.noteId}`,
+          `https://turningways.onrender.com/api/v1/members/${note.memberId}/notes/${note.noteId}`,
           {
             withCredentials: true,
           }

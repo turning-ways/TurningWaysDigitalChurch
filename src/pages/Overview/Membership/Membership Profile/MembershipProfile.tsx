@@ -1,6 +1,5 @@
 import Header from "../../Header";
 import SubHeader from "../../SubHeader";
-import { Outlet } from "react-router-dom";
 // import AddMember from "../../AddMemberBtn";
 import InformationHeader from "../InformationHeader";
 import OverviewContainer from "../../OverviewContainer";
@@ -8,6 +7,11 @@ import useGetMemberDetails from "../../../../hooks/Member/member-service/useGetM
 import { ThreeDots } from "react-loader-spinner";
 import { useEffect, useRef, useState } from "react";
 import Notes from "./Notes";
+import PersonalInformation from "./PersonalInformation";
+import ContactInformation from "./ContactInformation";
+import ChurchInformation from "./ChurchInformation";
+import MembershipHistory from "./MembershipHistory";
+import { useLocation } from "react-router-dom";
 
 const MembershipProfile = () => {
   const queryParams = new URLSearchParams(location.search);
@@ -52,6 +56,8 @@ const MembershipProfile = () => {
     };
   }, []); // Empty dependency array ensures this effect runs only once when the component mounts
 
+  const locationPath = useLocation();
+
   return (
     <OverviewContainer active="Directory">
       {!isPending ? (
@@ -59,8 +65,14 @@ const MembershipProfile = () => {
           <Header text="Profile" />
           <SubHeader onNoteClick={() => setOpenNote(true)} />
           <InformationHeader route={routes} />
-          <Outlet />
-
+          {/* <Outlet /> */}
+          {locationPath.pathname ===
+            "/admin/directory/member/personal-information" && (
+            <PersonalInformation />
+          )}
+          {locationPath.pathname === "/admin/directory/member/contact-information" && <ContactInformation />}
+          {locationPath.pathname === "/admin/directory/member/church-information" && <ChurchInformation />}
+          {locationPath.pathname === "/admin/directory/member/membership-history" && <MembershipHistory />}
           {/* <AddMember /> */}
           <div ref={notesRef}>
             <Notes openNote={openNote} onClose={() => setOpenNote(false)} />

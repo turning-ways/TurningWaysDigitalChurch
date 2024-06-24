@@ -19,7 +19,7 @@ const useUpdateNote = (noteQuery: Query) => {
     mutationFn: (note: Note) =>
       axios
         .patch<Note>(
-          `https://digital-church.onrender.com/api/v1/members/${note.memberId}/notes/${note.noteId}`,
+          `https://turningways.onrender.com/api/v1/members/${note.memberId}/notes/${note.noteId}`,
           { note: note.note },
           {
             withCredentials: true,

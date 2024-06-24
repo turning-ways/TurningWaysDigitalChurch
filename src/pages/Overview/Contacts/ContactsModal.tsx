@@ -34,7 +34,7 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
         <ul className="text-[#555555]  space-y-2">
           <li
             className="hover:text-[#A0D7AC] cursor-pointer"
-            onClick={() => navigate(`/admin/contacts/detail?id=${id}`)}
+            onClick={() => navigate(`/admin/contacts/${id}`)}
           >
             View More
           </li>

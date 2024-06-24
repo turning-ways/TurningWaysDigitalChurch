@@ -99,7 +99,7 @@ const Dashboard = () => {
           <div className="py-3 px-3 flex flex-col items-center justify-center flex-grow space-y-1">
             <p className="text-sm lg:text-base text-center">Total Members</p>
             <p className="text-2xl lg:text-3xl text-[#0F123F]">
-              {members && members.length}
+              {members ? members?.length : "0"}
             </p>
           </div>
         </div>

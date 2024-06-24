@@ -44,7 +44,7 @@ const useGetAllMembers = (query: MembersQuery) => {
     queryFn: () =>
       axios
         .get(
-          `https://digital-church.onrender.com/api/v1/churches/${user?.churchId?._id}/members`,
+          `https://turningways.onrender.com/api/v1/churches/${user?.churchId?._id}/members`,
           {
             withCredentials: true,
             params: {

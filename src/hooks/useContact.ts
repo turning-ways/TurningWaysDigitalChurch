@@ -13,6 +13,8 @@ interface Contact {
   maturity?: string;
   createdBy?: string;
   email?: string;
+  dateOfBirth?: string;
+  gender?: string;
 }
 
 interface Error {
@@ -125,7 +127,7 @@ export const useAddContact = ({ onClose }: ContactPros) => {
 
   return useMutation({
     mutationFn: (contact: Contact) =>
-      contactService(user?.churchId?._id).post(contact),
+      contactService(user?.churchId?._id, "", "").post(contact),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: () => {
       success("Contact has been created successfully");
@@ -339,7 +341,7 @@ export const useUpdateContactComment = () => {
 };
 
 export const useUpdateContactStatus = (props: {
-  id: string | null;
+  id: string | undefined;
   onClose: () => void;
 }) => {
   const { user } = useUserAuth();
@@ -384,7 +386,7 @@ export const useGetAllContacts = () => {
 export const useGetContacts = () => {
   const { user } = useUserAuth();
   return useQuery<any>({
-    queryKey: ["churches", user?.churchId?._id, "contacts"],
+    queryKey: ["churches", user?.churchId?._id, "contacts", contactId],
     queryFn: () =>
       axios
         .get(

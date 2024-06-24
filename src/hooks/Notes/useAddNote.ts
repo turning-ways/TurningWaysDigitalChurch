@@ -10,10 +10,10 @@ interface Note {
 const useAddNote = (memberId: string) => {
   const { refetch } = useGetNote(memberId);
   return useMutation({
-    mutationFn: (note: {note:string}) =>
+    mutationFn: (note: { note: string }) =>
       axios
         .post<Note>(
-          `https://digital-church.onrender.com/api/v1/members/${memberId}/notes`,
+          `https://turningways.onrender.com/api/v1/members/${memberId}/notes`,
           note,
           {
             withCredentials: true,

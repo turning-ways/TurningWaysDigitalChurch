@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
   const logoutUser = async () => {
     try {
       const response = await fetch(
-        "https://digital-church.onrender.com/api/v1/users/logout",
+        "https://turningways.onrender.com/api/v1/users/logout",
         {
           method: "GET",
           credentials: "include",

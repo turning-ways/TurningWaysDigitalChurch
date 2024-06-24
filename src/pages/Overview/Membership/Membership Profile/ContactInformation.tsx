@@ -50,7 +50,6 @@ const ContactInformation = () => {
                 )
               }
             >
-              {/* <RiAddCircleFill className="text-2xl" /> */}
               <p className="text-lg ">Next</p>
             </button>
           </div>

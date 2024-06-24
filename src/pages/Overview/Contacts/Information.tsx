@@ -47,7 +47,7 @@ const Information = () => {
 
   const contactId = queryParams.get("id");
 
-  const { mutate } = useUpdateContactStatus({id: contactId, onClose: () => console.log("status changed")});
+  const { mutate } = useUpdateContactStatus({id: contactId??"", onClose: () => console.log("status changed")});
 
   const { user } = useUserAuth();
 

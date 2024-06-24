@@ -1,10 +1,13 @@
-import { Outlet } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Header from "../../Header";
 import OverviewContainer from "../../OverviewContainer";
 import SubHeader from "./SubHeader";
 // import ProfileEditButton from "../../../../components/Button/ProfileEditButton";
 
 import AddUpdateInfoHeader from "../AddUpdateInfoHeader";
+import EditProfilePersonalInfo from "./EditProfilePersonalInfo";
+import EditProfileContactInfo from "./EditProfileContactInfo";
+import EditProfileChurchInfo from "./EditProfileChurchInformation";
 
 const ProfileEdit = () => {
   const routes = {
@@ -13,12 +16,19 @@ const ProfileEdit = () => {
     churchInfo: "/admin/directory/add-member/church-information",
   };
 
+  const location = useLocation();
+
   return (
     <OverviewContainer active="Directory">
       <Header text="New Member Profile" />
       <SubHeader />
       <AddUpdateInfoHeader route={routes} />
-      <Outlet />
+
+      {location.pathname === routes.personalInfo && <EditProfilePersonalInfo />}
+
+      {location.pathname === routes.contactInfo && <EditProfileContactInfo />}
+
+      {location.pathname === routes.churchInfo && <EditProfileChurchInfo />}
       {/* <ProfileEditButton text="Save" onPress={handleAddingMember} /> */}
     </OverviewContainer>
   );

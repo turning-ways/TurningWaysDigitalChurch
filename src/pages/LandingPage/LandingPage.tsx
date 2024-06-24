@@ -54,6 +54,7 @@ const LandingPage = () => {
           <form
             onSubmit={handleSubmit((data) => {
               const { inputKey, password } = data;
+              console.log(inputKey, password)
               loginQuery.mutate({ inputKey, password });
             })}
           >

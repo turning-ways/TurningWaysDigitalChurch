@@ -5,10 +5,11 @@ import ContactsModal from "./ContactsModal";
 import { SlArrowRight } from "react-icons/sl";
 import { useGetAllContacts } from "../../../hooks/useContact";
 import { useNavigate } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
 
 const AllContactsList = () => {
   const [show, setShow] = useState<string | null>(null);
-  const { data: contacts } = useGetAllContacts();
+  const { data: contacts, isPending } = useGetAllContacts();
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
 
@@ -38,6 +39,8 @@ const AllContactsList = () => {
     return `${day} ${month} ${year} ${formattedTime}`;
   };
 
+  
+
   const navigate = useNavigate();
   return (
     <>
@@ -53,7 +56,9 @@ const AllContactsList = () => {
 
         <div className="border-t xl:hidden border-[#BDBDBD]" />
 
-        {contacts && Array.isArray(contacts) ? (
+        {contacts &&
+          Array.isArray(contacts) &&
+          !isPending &&
           contacts.map((contact) => (
             <>
               <div className="xl:flex flex-col relative hidden">
@@ -117,11 +122,12 @@ const AllContactsList = () => {
                 </div>
               </div>
             </>
-          ))
-        ) : (
-          <p>No contacts have been added yet</p>
+          ))}
+        {contacts && contacts?.length === 0 && (
+          <p>No contacts have been added</p>
         )}
       </div>
+      {isPending && <ThreeDots color="black" width={24} height={24} />}
     </>
   );
 };
