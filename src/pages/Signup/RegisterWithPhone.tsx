@@ -15,8 +15,8 @@ import HeaderTwo from "../../ui/Heading/HeaderTwo";
 import { useEffect, useState } from "react";
 import { useRegisterWithPhone, notify } from "../../hooks/useAuthData";
 import { useUserDetailsStore } from "../../stores/user";
-import TermsAndPrivacyPolicy from "../../ui/Agreement/TermsAndPrivacyPolicy";
 import EmailButton from "../../ui/Button/EmailButton";
+import TermsOfServiceAndPrivacyPolicy from "../../components/Register/TermsOfServiceAndPrivacyPolicy";
 // import { success } from "../../hooks/useUpdatePassword";
 
 declare global {
@@ -167,7 +167,7 @@ const RegisterWithPhone = () => {
               checked={checked}
               onChange={(e) => setChecked(e.target.checked)}
             />
-            <TermsAndPrivacyPolicy />
+            <TermsOfServiceAndPrivacyPolicy />
           </div>
           <NextButton isPending={isPending} />
           <div className="flex items-center my-5 text-[#718096] w-full lg:max-w-[550px]">

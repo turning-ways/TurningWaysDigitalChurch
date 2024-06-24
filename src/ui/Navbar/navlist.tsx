@@ -33,7 +33,7 @@ export   const navList = [
   {
     source: "../../../public/assets/images/Navbar/SettingsIcon.svg",
     title: "Settings",
-    route: "/admin/settings",
+    route: "/admin/setting/account",
     icon: <IoSettingsOutline className="text-2xl" />,
   },
   {

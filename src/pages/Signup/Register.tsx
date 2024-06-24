@@ -12,8 +12,8 @@ import Input from "../../ui/Input/Input";
 import NextButton from "../../ui/Button/NextButton";
 import PhoneButton from "../../ui/Button/PhoneButton";
 import { useEffect, useState } from "react";
-import TermsAndPrivacyPolicy from "../../ui/Agreement/TermsAndPrivacyPolicy";
 import { notify } from "../../hooks/useAuthData";
+import TermsOfServiceAndPrivacyPolicy from "../../components/Register/TermsOfServiceAndPrivacyPolicy";
 const Register = () => {
   const schema = z.object({
     first_name: z
@@ -127,7 +127,7 @@ const Register = () => {
               checked={checked}
               onChange={(e) => setChecked(e.target.checked)}
             />
-            <TermsAndPrivacyPolicy />
+            <TermsOfServiceAndPrivacyPolicy />
           </div>
           <NextButton isPending={isPending} />
           <div className="flex items-center my-5 text-[#718096] w-full lg:max-w-[550px]">

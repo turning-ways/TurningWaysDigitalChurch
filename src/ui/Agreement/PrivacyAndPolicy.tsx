@@ -1,31 +1,25 @@
 import { useState } from "react";
 import Modal from "../Modal/Modal";
-import { Agreement, termList, OurServices, PropertyRights } from "./terms";
+import {
+  Agreement,
+  termList,
+  OurServices,
+  PropertyRights,
+  UserRepresentations,
+  ProhibitedActivites,
+  Disclaimer,
+} from "./terms";
 
-const TermsAndPrivacyPolicy = () => {
-  const [openTerms, setOpenTerms] = useState(false);
+const PrivacyAndPolicy = ({onClose}: {onClose: () => void}) => {
   const [active, setActive] = useState("AGREEMENT TO OUR LEGAL TERMS");
   return (
-    <div>
-      <p>
-        I agree to the{" "}
-        <span
-          className="text-secondary cursor-pointer"
-          onClick={() => setOpenTerms(!openTerms)}
-        >
-          Terms of Service
-        </span>{" "}
-        and the{" "}
-        <span className="text-secondary cursor-pointer">Privacy Policy</span>
-      </p>
-      {openTerms && (
-        <Modal onClose={() => setOpenTerms(false)}>
-          <main className="bg-white max-w-[1000px] w-full max-h-[750px] overflow-y-scroll">
+        <Modal onClose={onClose}>
+          <main className="bg-white max-w-[1000px] w-full max-h-[550px] lg:max-h-[750px] overflow-y-scroll">
             <header className="bg-[#17275B] text-white md:text-3xl px-10 py-3 text-center sticky top-0">
-              TERMS OF USE
+              PRIVACY POLICY
             </header>
             <section className="md:grid md:grid-cols-[350px,1fr] gap-x-4 text-[#1C1C1C] p-4">
-              <ul className="space-y-2 hidden md:block sticky top-16 h-fit">
+              <ul className="space-y-2 hidden md:block sticky top-20 h-fit">
                 {termList.map((item) => (
                   <li className={`${active === item.name && "font-azoBold"}`}>
                     <a
@@ -71,13 +65,34 @@ const TermsAndPrivacyPolicy = () => {
                   <p>{PropertyRights.p5}</p>
                   <p>{PropertyRights.p6}</p>
                 </li>
+                <li>
+                  <h1 className="font-azoBold underline">
+                    {UserRepresentations.title}
+                  </h1>
+                  <p>{UserRepresentations.p1}</p>
+                  <p>{UserRepresentations.p2}</p>
+                </li>
+                <li>
+                  <h1 className="font-azoBold underline">
+                    {ProhibitedActivites.title}
+                  </h1>
+                  <p>{ProhibitedActivites.p1}</p>
+                  <p>{ProhibitedActivites.p2}</p>
+                  <p>{ProhibitedActivites.p3}</p>
+                  <p>{ProhibitedActivites.p4}</p>
+                  <p>{ProhibitedActivites.p5}</p>
+                  <p>{ProhibitedActivites.p6}</p>
+                </li>
+                <li>
+                  <h1 className="font-azoBold underline">{Disclaimer.title}</h1>
+                  <p>{Disclaimer.p1}</p>
+                  <p>{Disclaimer.p2}</p>
+                </li>
               </ul>
             </section>
           </main>
         </Modal>
-      )}
-    </div>
   );
 };
 
-export default TermsAndPrivacyPolicy;
+export default PrivacyAndPolicy;
