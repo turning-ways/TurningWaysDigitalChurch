@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { notify } from "../../../hooks/useAuthData";
-import { set } from "zod";
 
 const PersonalInfo = () => {
   const [phone, setPhone] = useState("");
