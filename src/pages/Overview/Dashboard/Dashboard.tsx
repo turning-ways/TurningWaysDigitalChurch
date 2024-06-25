@@ -98,7 +98,6 @@ const Dashboard = () => {
           </li>
         ))}
       </ul>
-      {JSON.stringify(params)}
       {/* component 2 closed */}
       {/* component 3 */}
       <div
