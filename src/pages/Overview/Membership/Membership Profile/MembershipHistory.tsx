@@ -41,7 +41,7 @@ const MembershipHistory = () => {
               )
             }
           >
-            <p className="text-lg ">Previous</p>
+            <p className="text-lg">Previous</p>
           </button>
         </div>
       )}

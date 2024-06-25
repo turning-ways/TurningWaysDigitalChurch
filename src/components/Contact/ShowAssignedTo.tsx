@@ -2,13 +2,17 @@ import Modal from "../../ui/Modal/Modal";
 import useGetAllMembers from "../../hooks/Member/useGetAllMembers";
 import { useAssignMember } from "../../hooks/useContact";
 import { capitalizeFirstLetters } from "../../constants/constants";
+import { useParams } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
 
 const ShowAssignedTo = ({ onClose }: { onClose: () => void }) => {
   const allMembersQuery = useGetAllMembers({
     page: 1,
     pageSize: 100000,
   });
-  const assignMemberQuery = useAssignMember(onClose);
+  const {contact_id} = useParams();
+
+  const assignMemberQuery = useAssignMember(onClose, contact_id??"");
 
   return (
     <Modal onClose={onClose}>
@@ -33,10 +37,10 @@ const ShowAssignedTo = ({ onClose }: { onClose: () => void }) => {
           <p>There are no members present</p>
         )}
         <button
-          className="px-10 w-fit bg-[#F3F3F3] text-[#7A7A7A] self-center rounded-[14px] py-2"
+          className="px-10 w-fit bg-[#F3F3F3] text-[#7A7A7A] self-center rounded-[14px] py-2 flex justify-center"
           onClick={onClose}
         >
-          Cancel
+          {!assignMemberQuery.isPending ? <p>Cancel</p> : <ThreeDots width={24} height={24} color="black"/>}
         </button>
       </div>
     </Modal>

@@ -70,7 +70,7 @@ function App() {
 
           <Route element={<ProtectedRoutes />}>
             <Route path="admin">
-              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="dashboard/:date" element={<Dashboard />} />
               <Route path="directory" element={<Membership />} />
               <Route path="directory">
                 <Route path="member/:section" element={<MembershipProfile />}></Route>

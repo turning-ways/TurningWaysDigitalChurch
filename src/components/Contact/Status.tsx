@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DropDownInput } from "../../ui/DropDownMenu/DropDownInput";
 import { useUserAuth } from "../../stores/user";
 import {
@@ -7,6 +7,7 @@ import {
   useUpdateContactStatus,
 } from "../../hooks/useContact";
 import { useParams } from "react-router-dom";
+import { capitalizeFirstLetters } from "../../constants/constants";
 
 const Status = () => {
   const id = useUserAuth((auth) => auth.user?._id);
@@ -17,7 +18,10 @@ const Status = () => {
     id: contact_id,
     onClose: () => console.log("status updated"),
   });
-  const updateContactQuery = useUpdateContact({});
+  const updateContactQuery = useUpdateContact(
+    () => console.log("..."),
+    contact_id ?? ""
+  );
   const [membershipStatus, setMembershipStatus] = useState("");
   const handleMembershipStatus = (value: string) => {
     setMembershipStatus(value);
@@ -28,6 +32,15 @@ const Status = () => {
     setMaturity(value);
     updateContactQuery.mutate({ maturity: value });
   };
+
+  useEffect(() => {
+    if (contactDetailsQuery.data) {
+      setMembershipStatus(contactDetailsQuery.data.membershipStatus);
+      setMaturity(contactDetailsQuery.data.maturity)
+    }
+  }, [contactDetailsQuery.data]);
+
+
   return (
     <section className="md:grid md:grid-cols-2 gap-x-4 ">
       <DropDownInput
@@ -35,7 +48,7 @@ const Status = () => {
         items={["potential", "confirmed", "cancelled"]}
         placeholder="In Progress"
         onSelect={handleMembershipStatus}
-        value={membershipStatus}
+        value={capitalizeFirstLetters(membershipStatus)}
         onChange={(value) => setMembershipStatus(value)}
       />
       <DropDownInput
@@ -43,12 +56,17 @@ const Status = () => {
         items={["adult", "child", "teen"]}
         placeholder="Adult"
         onSelect={handleMaturity}
-        value={maturity}
+        value={capitalizeFirstLetters(maturity)}
         onChange={(value) => setMaturity(value)}
       />
 
       {fields.map((field, index) => (
-        <div className={`space-y-1 mb-4 md:mb-0 ${index === fields.length-1 && "col-span-2"}`} key={index}>
+        <div
+          className={`space-y-1 mb-4 ${
+            index === fields.length - 1 && "col-span-2"
+          }`}
+          key={index}
+        >
           <p className="text-[#727272]">{field.name}</p>
           <div className="border border-[#D9D9D9] rounded-lg p-2 ">
             <input

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
-import * as XLSX from "xlsx";
+// import * as XLSX from "xlsx";
 import MemberTable from "../../../ui/Table/DashboardTable";
 
 const MemberList = () => {
@@ -57,28 +57,28 @@ const MemberList = () => {
       isAnniversary(member.anniversary) === true
   );
 
-  const handleOnExport = () => {
-    const selectedMembers = members
-      ? members.map((member) => ({
-          ServiceUnit: member.ServiceUnit,
-          WorkerStatus: member.WorkerStatus,
-          accessPermission: member.accessPermission,
-          age: member.age,
-          anniversary: member.anniversary,
-          dateJoined: member.dateJoined,
-          dateOfBirth: member.dateOfBirth,
-          email: member.email,
-          first_name: member.first_name,
-          fullname: member.fullname,
-          gender: member.gender,
-        }))
-      : [{}];
+  // const handleOnExport = () => {
+  //   const selectedMembers = members
+  //     ? members.map((member) => ({
+  //         ServiceUnit: member.ServiceUnit,
+  //         WorkerStatus: member.WorkerStatus,
+  //         accessPermission: member.accessPermission,
+  //         age: member.age,
+  //         anniversary: member.anniversary,
+  //         dateJoined: member.dateJoined,
+  //         dateOfBirth: member.dateOfBirth,
+  //         email: member.email,
+  //         first_name: member.first_name,
+  //         fullname: member.fullname,
+  //         gender: member.gender,
+  //       }))
+  //     : [{}];
 
-    const wb = XLSX.utils.book_new(),
-      ws = XLSX.utils.json_to_sheet(selectedMembers);
-    XLSX.utils.book_append_sheet(wb, ws, "My Sheet !");
-    XLSX.writeFile(wb, "MyExcel.xlsx");
-  };
+  //   const wb = XLSX.utils.book_new(),
+  //     ws = XLSX.utils.json_to_sheet(selectedMembers);
+  //   XLSX.utils.book_append_sheet(wb, ws, "My Sheet !");
+  //   XLSX.writeFile(wb, "MyExcel.xlsx");
+  // };
 
   return (
     <>
@@ -104,12 +104,12 @@ const MemberList = () => {
             </li>
           ))}
         </ul>
-        <button
+        {/* <button
           className="bg-[#758CD7] text-white  px-4 py-2 rounded-md hidden md:block"
           onClick={handleOnExport}
         >
           Export Data
-        </button>
+        </button> */}
         {/* <CSVLink data={members ? members : []}>export data</CSVLink> */}
       </div>
       {/* component 5 closed */}

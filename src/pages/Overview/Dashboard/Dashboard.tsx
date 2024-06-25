@@ -3,7 +3,6 @@ import { MdCalendarToday } from "react-icons/md";
 import { MdOutlineNextWeek } from "react-icons/md";
 import { IoCalendarOutline } from "react-icons/io5";
 import { TbCloudSearch } from "react-icons/tb";
-import { LuCalendarDays } from "react-icons/lu";
 import Header from "../Header";
 import OverviewContainer from "../OverviewContainer";
 import MembershipDataBar from "./BarChart/MembershipDataBar";
@@ -11,8 +10,10 @@ import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
 import AgeDistrBar from "./BarChart/AgeDistrBar";
 import { PieChart } from "./PieChart/PieChart";
 import MemberList from "./MemberList";
-import { useState } from "react";
 import { useGetAllContacts } from "../../../hooks/useContact";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import useMemberStats from "../../../hooks/Member/useMemberStats";
+import { useEffect } from "react";
 // import useMemberStats from "../../../hooks/Member/useMemberStats";
 
 const Dashboard = () => {
@@ -34,7 +35,7 @@ const Dashboard = () => {
     {
       icon: <MdCalendarToday />,
       title: "Today",
-      id: "",
+      id: "today",
     },
     {
       icon: <MdOutlineNextWeek />,
@@ -51,16 +52,25 @@ const Dashboard = () => {
       title: "Last Quarter",
       id: "lastQuarter",
     },
-    {
-      icon: <LuCalendarDays />,
-      title: "YTD",
-      id: "ytd",
-    },
+    // {
+    //   icon: <LuCalendarDays />,
+    //   title: "YTD",
+    //   id: "ytd",
+    // },
   ];
 
-  const [active, setActive] = useState<string>("");
-
   const { data: contacts } = useGetAllContacts();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = useParams();
+  const { date } = params;
+  const memberStatsQuery = useMemberStats(date);
+
+  useEffect(() => {
+    // Call useMemberStats again with the updated date
+    memberStatsQuery.refetch();
+  }, [date]);
 
   // const { data: memberCount } = useMemberStats(active);
   return (
@@ -72,7 +82,7 @@ const Dashboard = () => {
         {getData.map((item, i) => (
           <li
             className={`md:px-4 w-full lg:w-fit border-b-4 text-sm md:text-md  ${
-              active === item.id
+              location.pathname === "/admin/dashboard/" + item.id
                 ? "border-b-[#446DE3] text-[#446DE3]"
                 : "border-b-[#B6B5B5] text-[#B6B5B5]"
             } items-center cursor-pointer ${
@@ -80,7 +90,7 @@ const Dashboard = () => {
             } ${item.id === "lastQuarter" ? "hidden sm:flex" : "flex "}`}
             key={i}
             onClick={() => {
-              setActive(item.id);
+              navigate("/admin/dashboard/" + item.id);
             }}
           >
             {item.icon}
@@ -88,6 +98,7 @@ const Dashboard = () => {
           </li>
         ))}
       </ul>
+      {JSON.stringify(params)}
       {/* component 2 closed */}
       {/* component 3 */}
       <div
@@ -129,7 +140,7 @@ const Dashboard = () => {
           <div className="py-3 px-3 flex flex-col justify-center items-center flex-grow space-y-1">
             <p className="text-sm lg:text-base text-center">Contacts</p>
             <p className="text-2xl lg:text-3xl text-[#0F123F]">
-              {contacts?.length}
+              {contacts ? contacts?.length : 0}
             </p>
           </div>
         </div>
@@ -144,40 +155,48 @@ const Dashboard = () => {
             <MembershipDataBar />
           </div>
         </div>
-        <div className="mt-10 border border-secondary w-full px-4 pt-6 rounded-[20px]">
-          <div className="h-44 mb-20">
-            <p className="text-xl text-[#2B3674] mb-10">Age Distribution</p>
-            <AgeDistrBar timeLine={active} />
-          </div>
-        </div>
-        <div className="mt-10 w-full px-4  pt-6 rounded-[20px] bg-[#F6F8FA]">
-          <div className=" flex flex-col">
-            <p className="text-xl text-[#2B3674] mb-3">Gender Distribution</p>
-            <div className="w-[200px] self-center">
-              <PieChart timeLine={active} />
-            </div>
-            <div className="flex bg-white justify-center gap-x-3 py-2 my-3 rounded-[15px]">
-              <div>
-                <div className="flex gap-x-2">
-                  <div className="w-2 h-2 bg-[#758CD7] rounded-full" />
-                  <p className="text-[#A3AED0]">Male</p>
-                </div>
-                <p className="text-right text-[#2B3674] text-[18px] font-azoBold">
-                  {getGenderPercentage("male") + "%"}
-                </p>
-              </div>
-              <div>
-                <div className="flex gap-x-2">
-                  <div className="w-2 h-2 bg-[#A0D7AB] rounded-full" />
-                  <p className="text-[#A3AED0]">Female</p>
-                </div>
-                <p className="text-right text-[#2B3674] text-[18px] font-azoBold">
-                  {getGenderPercentage("female") + "%"}
-                </p>
+        {members?.length !== 1 &&
+          memberStatsQuery.data?.["members-count"] !== 0 && (
+            <div className="mt-10 border border-secondary w-full px-4 pt-6 rounded-[20px]">
+              <div className="h-44 mb-20">
+                <p className="text-xl text-[#2B3674] mb-10">Age Distribution</p>
+                <AgeDistrBar timeLine={date ?? ""} />
               </div>
             </div>
-          </div>
-        </div>
+          )}
+        {members?.length !== 1 &&
+          memberStatsQuery.data?.["members-count"] !== 0 && (
+            <div className="mt-10 w-full px-4  pt-6 rounded-[20px] bg-[#F6F8FA]">
+              <div className=" flex flex-col">
+                <p className="text-xl text-[#2B3674] mb-3">
+                  Gender Distribution
+                </p>
+                <div className="w-[200px] self-center">
+                  <PieChart timeLine={date ?? ""} />
+                </div>
+                <div className="flex bg-white justify-center gap-x-3 py-2 my-3 rounded-[15px]">
+                  <div>
+                    <div className="flex gap-x-2">
+                      <div className="w-2 h-2 bg-[#758CD7] rounded-full" />
+                      <p className="text-[#A3AED0]">Male</p>
+                    </div>
+                    <p className="text-right text-[#2B3674] text-[18px] font-azoBold">
+                      {getGenderPercentage("male") + "%"}
+                    </p>
+                  </div>
+                  <div>
+                    <div className="flex gap-x-2">
+                      <div className="w-2 h-2 bg-[#A0D7AB] rounded-full" />
+                      <p className="text-[#A3AED0]">Female</p>
+                    </div>
+                    <p className="text-right text-[#2B3674] text-[18px] font-azoBold">
+                      {getGenderPercentage("female") + "%"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
       </div>
       {/* component 4 closed */}
       {/* component 5 */}

@@ -1,7 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import useGetNote from "./useGetNote";
 import { notify, success } from "../useAuthData";
+import memberService  from "../../services/member-service";
+import { useUserAuth } from "../../stores/user";
 
 interface Note {
   note: string;
@@ -9,17 +10,9 @@ interface Note {
 
 const useAddNote = (memberId: string) => {
   const { refetch } = useGetNote(memberId);
+  const churchId = useUserAuth((auth) => auth?.user?.churchId?._id);
   return useMutation({
-    mutationFn: (note: { note: string }) =>
-      axios
-        .post<Note>(
-          `https://turningways.onrender.com/api/v1/members/${memberId}/notes`,
-          note,
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => res.data),
+    mutationFn: (note: { note: string }) => memberService<Note>(memberId, churchId, "/notes").post(note),
     onSuccess: () => {
       success("Note has been added successfully");
       refetch();

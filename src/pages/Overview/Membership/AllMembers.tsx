@@ -4,7 +4,7 @@ import AddMemberBtn from "../../../ui/Button/AddMemberBtn";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import useGetAllMembers from "../../../hooks/Member/useGetAllMembers";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 // import { FaArrowLeft } from "react-icons/fa6";
 import { ThreeDots } from "react-loader-spinner";
 import { SlArrowRight } from "react-icons/sl";
@@ -21,47 +21,47 @@ const AllMembers = () => {
     refetch,
   } = useGetAllMembers({ page: 1, pageSize: 10000 });
 
-  const [memberCheckboxes, setMemberCheckboxes] = useState(
-    Array(members?.length).fill(false)
-  );
+  // const [memberCheckboxes, setMemberCheckboxes] = useState(
+  //   Array(members?.length).fill(false)
+  // );
 
-  const [selectAll, setSelectAll] = useState(false);
+  // const [selectAll, setSelectAll] = useState(false);
 
-  const [selectedMembers, setSelectedMembers] = useState<any[]>([]);
+  // const [selectedMembers, setSelectedMembers] = useState<any[]>([]);
 
-  const handleMemberCheckboxChange = (index: number) => {
-    const updatedCheckboxes = [...memberCheckboxes];
-    updatedCheckboxes[index] = !updatedCheckboxes[index];
-    setMemberCheckboxes(updatedCheckboxes);
-    setSelectAll(updatedCheckboxes.every((checkbox) => checkbox === true));
+  // const handleMemberCheckboxChange = (index: number) => {
+  //   const updatedCheckboxes = [...memberCheckboxes];
+  //   updatedCheckboxes[index] = !updatedCheckboxes[index];
+  //   setMemberCheckboxes(updatedCheckboxes);
+  //   setSelectAll(updatedCheckboxes.every((checkbox) => checkbox === true));
 
-    const selectedMember = members && members[index];
-    if (updatedCheckboxes[index]) {
-      setSelectedMembers((prevMembers) => [...prevMembers, selectedMember]);
-    } else if (updatedCheckboxes[index] === false) {
-      setSelectedMembers((prevState) =>
-        selectedMember
-          ? prevState.filter(
-              (member: { id: string }) => member.id !== selectedMember.id
-            )
-          : []
-      );
-    }
-  };
+  //   const selectedMember = members && members[index];
+  //   if (updatedCheckboxes[index]) {
+  //     setSelectedMembers((prevMembers) => [...prevMembers, selectedMember]);
+  //   } else if (updatedCheckboxes[index] === false) {
+  //     setSelectedMembers((prevState) =>
+  //       selectedMember
+  //         ? prevState.filter(
+  //             (member: { id: string }) => member.id !== selectedMember.id
+  //           )
+  //         : []
+  //     );
+  //   }
+  // };
 
-  const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const isChecked = event.target.checked;
-    setSelectAll(isChecked);
-    setMemberCheckboxes(memberCheckboxes.map(() => isChecked));
-    if (isChecked) {
-      // If select all is checked, add all members to selectedMembers
-      setSelectedMembers(members ? [...members] : []);
-    } else {
-      // If select all is unchecked, remove all members from selectedMembers
-      setSelectedMembers([]);
-      console.log(selectedMembers);
-    }
-  };
+  // const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const isChecked = event.target.checked;
+  //   setSelectAll(isChecked);
+  //   setMemberCheckboxes(memberCheckboxes.map(() => isChecked));
+  //   if (isChecked) {
+  //     // If select all is checked, add all members to selectedMembers
+  //     setSelectedMembers(members ? [...members] : []);
+  //   } else {
+  //     // If select all is unchecked, remove all members from selectedMembers
+  //     setSelectedMembers([]);
+  //     console.log(selectedMembers);
+  //   }
+  // };
 
   // const totalPages = members ? Math.ceil(members?.length / pageSize) : 0;
   // const renderPaginationNumbers = () => {
@@ -99,11 +99,11 @@ const AllMembers = () => {
         <div className="flex flex-col items-center">
           <div className="md:grid grid-cols-[70px,1fr,1fr,1fr,1fr,100px] gap-4 gap-x-6 border-b py-2  w-full hidden">
             <div className="flex space-x-3 items-center">
-              <input
+              {/* <input
                 type="checkbox"
                 checked={selectAll}
                 onChange={handleSelectAll}
-              />
+              /> */}
               <p>Profile</p>
             </div>
             <div className="">Name</div>
@@ -119,13 +119,13 @@ const AllMembers = () => {
             {members && members?.length !== 0 ? (
               members.map((item: any, index: number) => (
                 <>
-                  <div className="md:grid grid-cols-[70px,1fr,1fr,1fr,1fr,100px] border-b py-4  text-[#636363] gap-4 gap-x-6 w-full items-center hidden">
+                  <div className="md:grid grid-cols-[70px,1fr,1fr,1fr,1fr,100px] border-b py-4  text-[#636363] gap-4 gap-x-6 w-full items-center hidden" key={index}>
                     <div className="flex space-x-3 items-center">
-                      <input
+                      {/* <input
                         type="checkbox"
                         checked={memberCheckboxes[index]}
                         onChange={() => handleMemberCheckboxChange(index)}
-                      />
+                      /> */}
                       {item.photo ? (
                         <img
                           src={item.photo}

@@ -2,20 +2,20 @@ import { useState } from "react";
 import ShowActions from "./ShowActions";
 import Heading from "../../pages/Overview/Contacts/Heading";
 import { useGetContacts, useUpdateActionItem } from "../../hooks/useContact";
+import { useParams } from "react-router-dom";
 
 const ActionChecklist = () => {
   const [showActions, setShowActions] = useState<boolean>(false);
   const contactDetailsQuery = useGetContacts();
-  const [actions, setActions] = useState(contactDetailsQuery.data?.actions);
-  const newActions = actions ? actions : [];
-  const updateActionChecklistQuery = useUpdateActionItem();
-
-
-
+  const newActions = contactDetailsQuery.data?.actions ? contactDetailsQuery.data?.actions : [];
+  const {contact_id} = useParams();
+  const updateActionChecklistQuery = useUpdateActionItem(contact_id??"");
   const handleCheckboxChange = (index: number) => {
-    newActions[index].checked = !newActions[index].checked;
-    setActions(newActions);
-    updateActionChecklistQuery.mutate(newActions[index]);
+    if (newActions[index]) {
+      newActions[index].checked = !newActions[index].checked;
+      updateActionChecklistQuery.mutate(newActions[index]);
+      console.log("dire");
+    } else console.log(contactDetailsQuery.data?.actions);
   };
 
   return (
@@ -30,7 +30,7 @@ const ActionChecklist = () => {
             <li className="flex space-x-2">
               <input
                 type="checkbox"
-                checked={item.checked}
+                checked={item?.checked}
                 onChange={() => handleCheckboxChange(index)}
               />
               <p>{item.actionLabel}</p>

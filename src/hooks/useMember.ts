@@ -28,7 +28,7 @@ export const useGetMemberDetails = () => {
     return useQuery<Member>({
       queryKey: ["church", churchId, "member", memberId],
       queryFn: () => {
-        return memberService(memberId, churchId).get();
+        return memberService<Member>(memberId, churchId).get();
       },
     });
   };

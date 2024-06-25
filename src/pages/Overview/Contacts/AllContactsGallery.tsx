@@ -25,7 +25,7 @@ const AllContactsGallery = () => {
     const month = date.toLocaleString("default", { month: "long" });
     const year = date.getUTCFullYear();
 
-    let hours = date.getUTCHours();
+    let hours = date.getUTCHours() + 1;
     const minutes = date.getUTCMinutes().toString().padStart(2, "0");
     const ampm = hours >= 12 ? "PM" : "AM";
     hours = hours % 12;
@@ -86,9 +86,9 @@ const AllContactsGallery = () => {
             <div className="flex justify-between">
               <p>
                 <span className="font-azoSemiBold">Last Modified:</span>{" "}
-                {formatDate(contact.ModifiedDate)}
+                {formatDate(contact.modifiedDate)}
               </p>
-              <div className="w-5 h-5 bg-red-400 rounded-full" />
+              {/* <div className="w-5 h-5 bg-red-400 rounded-full" /> */}
             </div>
             <ContactsModal
               show={show}

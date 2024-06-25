@@ -30,8 +30,8 @@ export interface Member {
   };
 }
 
-const apiClient = (memberId: string | null, churchId: string | undefined) => {
-  return new ApiClient<Member>(`/api/v1/members/${churchId}/member/${memberId}`);
+const apiClient = <T>(memberId: string | null, churchId: string | undefined, endpoint?:string) => {
+  return new ApiClient<T>(`/api/v1/members/${churchId}/member/${memberId}` + `${endpoint ? endpoint : ""}`);
 };
 
 export default apiClient;

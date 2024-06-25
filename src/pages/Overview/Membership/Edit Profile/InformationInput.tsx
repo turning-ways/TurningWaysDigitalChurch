@@ -9,7 +9,7 @@ interface InformationInputProps {
 
 const InformationInput: React.FC<InformationInputProps> = ({ text, onChange, value, notCompulsory}) => {
   return (
-    <div className=" space-y-1 mb-4">
+    <div className=" space-y-1 mb-4 bg-white">
       <p className="text-[#727272]">
         {text} <span className="text-[#61BD74]">{notCompulsory ? notCompulsory : "*"}</span>
       </p>

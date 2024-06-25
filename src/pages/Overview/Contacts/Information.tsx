@@ -1,9 +1,13 @@
 import { BiSolidDownArrow } from "react-icons/bi";
 import Heading from "./Heading";
 import { useEffect, useState } from "react";
-import { useGetContacts, useUpdateContactStatus } from "../../../hooks/useContact";
+import {
+  useGetContacts,
+  useUpdateContactStatus,
+} from "../../../hooks/useContact";
 import UpdateContact from "./UpdateContact";
 import { useUserAuth } from "../../../stores/user";
+import { useParams } from "react-router-dom";
 
 const Information = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -43,15 +47,15 @@ const Information = () => {
     return `${day}${ordinalSuffix} ${month} ${year}`;
   };
 
-  const queryParams = new URLSearchParams(location.search);
+  const {contact_id} = useParams();
 
-  const contactId = queryParams.get("id");
-
-  const { mutate } = useUpdateContactStatus({id: contactId??"", onClose: () => console.log("status changed")});
+  const { mutate } = useUpdateContactStatus({
+    id: contact_id ?? "",
+    onClose: () => console.log("status changed"),
+  });
 
   const { user } = useUserAuth();
 
-  
   return (
     <div className="relative">
       <Heading text="Contact Information" />
@@ -64,10 +68,10 @@ const Information = () => {
       </h2>
       <div className="md:flex justify-between items-center space-y-2 md:space-y-0 mb-8 md:mb-0">
         <p className="text-sm text-[#A1A0A0] mb-4 md:mb-0">
-          {contact && contact.createdAt && contact.ModifiedDate ? (
+          {contact && contact.createdAt && contact.modifiedDate ? (
             `Created: ${formatDate(
               contact.createdAt
-            )} | Last Modified: ${formatDate(contact.ModifiedDate)}`
+            )} | Last Modified: ${formatDate(contact.modifiedDate)}`
           ) : (
             <span className="skeleton skeleton-text w-96"></span>
           )}

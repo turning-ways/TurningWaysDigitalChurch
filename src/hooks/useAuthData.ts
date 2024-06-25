@@ -171,16 +171,17 @@ export const useLogin = () => {
     mutationFn: (user: LoginDetails) => service("/login").post(user),
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
     onSuccess: (res: any) => {
-      const url = new URL(res.redirectUrl);
-      if (url.pathname === "/admin/dashboard") {
+      
+      if (res.redirectType === "adminDashboard") {
         setChurchId(res.churchId);
         success("Sign In was Successfull");
-        navigate(url.pathname);
-        console.log(res.churchId);
+        navigate('/admin/dashboard/today');
+        // console.log(res.churchId);
       }
-      if (url.pathname === "/register/personalinfo") {
+      if (res.redirectType === "churchSelection") {
+        setChurchId(res.churchId);
         success("Sign In was Successfull, Please create your church");
-        navigate(url.pathname);
+        navigate('/register/churchinfo');
       }
     },
     onError: (err: ErrorResponse) => {
@@ -217,7 +218,7 @@ export const useResetPassword = () => {
 export const useVerifyEmail = () => {
   return useMutation({
     mutationFn: (email: { email: string }) =>
-      service("/verify-email").patch(email),
+      service("/verify-email").post(email),
     onSuccess: () => {
       success("Otp has been sent to email");
     },
@@ -277,12 +278,12 @@ export const useAddChurch = () => {
   // };
   return useMutation({
     mutationFn: (churchDetails: Church) =>
-      apiClient<Church>().post(churchDetails),
+      apiClient<Church>("").post(churchDetails),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: (res: any) => {
       success("Church has been created successfully");
 
-      console.log(res.data.church.id);
+      // console.log(res.data.church.id);
 
       mutate({
         role,
@@ -299,7 +300,7 @@ export const useAddChurch = () => {
       // navigate("/admin/dashboard");
     },
     onError: (err) => {
-      notify("THE CHURCH YOU ENTERED HAS AN ADMIN ALREADY!");
+      notify("Fill in all required fields");
       console.log(err);
     },
   });

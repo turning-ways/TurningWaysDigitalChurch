@@ -8,10 +8,12 @@ import { formatTheDate } from "../../pages/Overview/Contacts/formatDate";
 import { useUserAuth } from "../../stores/user";
 import { FiEdit } from "react-icons/fi";
 import { MdOutlineDelete } from "react-icons/md";
+import { useParams } from "react-router-dom";
 
 const Comments = () => {
+  const {contact_id} = useParams();
   const contactDetailsQuery = useGetContacts();
-  const updateCommentQuery = useUpdateContactComment();
+  const updateCommentQuery = useUpdateContactComment(contact_id??"");
   const deleteCommentQuery = useDeleteContactComment();
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [updateComment, setUpdateComment] = useState<number | null>(null);
@@ -48,9 +50,9 @@ const Comments = () => {
 
   return (
     <section>
-      {Array.isArray(contactDetailsQuery.data?.Notes) &&
-      contactDetailsQuery.data.Notes.length > 0 ? (
-        [...contactDetailsQuery.data.Notes].reverse().map((item, index) => (
+      {Array.isArray(contactDetailsQuery.data?.notes) &&
+      contactDetailsQuery.data.notes.length > 0 ? (
+        [...contactDetailsQuery.data.notes].reverse().map((item, index) => (
           <div className="flex w-full space-x-4 mt-4" key={item._id}>
             <div className="bg-[#D9D9D9] text-[#707070] flex justify-center items-center p-3 rounded-full w-10 h-10">
               {contactDetailsQuery.data?.firstName.charAt(0).toUpperCase() +
@@ -59,9 +61,11 @@ const Comments = () => {
             <div className="w-full">
               <div className="text-[#7F7E7E] flex justify-between items-center">
                 <p className="text-sm sm:text-base">
-                  {item.recordedBy?.first_name +
+                {/* {item.recordedBy?.first_name +
                     " " +
-                    item.recordedBy?.last_name}
+                    item.recordedBy?.last_name} */}
+                {contactDetailsQuery.data?.firstName + " " +
+                contactDetailsQuery.data?.lastName}
                 </p>
                 <p className="text-xs sm:text-sm">{formatTheDate(item.date)}</p>
               </div>

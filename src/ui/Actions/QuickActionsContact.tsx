@@ -44,7 +44,7 @@ import { useGetAllContacts } from "../../hooks/useContact";
     return (
       <div className={`flex justify-between my-10 flex-col space-y-3 lg:flex-row lg:space-y-0 ${display}`}>
         <p className="lg:text-lg text-[#7F7E7E] text-base">
-          {contacts ? contacts.length : "..."} Persons
+          {contacts ? contacts.length : 0} Persons
         </p>
         <ul className="flex space-x-6 text-[18px] text-[#8A8989] overflow-x-scroll scrollbar-hide">
           {items.map((item) => (

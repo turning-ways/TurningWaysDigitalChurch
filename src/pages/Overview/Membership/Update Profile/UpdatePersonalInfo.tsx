@@ -97,7 +97,7 @@ const UpdatePersonalInfo = () => {
         text="Prefix"
         items={["Mr", "Mrs"]}
         placeholder="Mr/Mrs"
-        value={prefix ?? "undefined"}
+        value={prefix}
         onSelect={handleSelectValue}
       />
       {information.map((item, index) => (
@@ -107,11 +107,7 @@ const UpdatePersonalInfo = () => {
             onChange={(e) => {
               item.set(e.target.value);
             }}
-            value={
-              item.value
-                ? item?.value?.slice(0, 1).toUpperCase() + item?.value?.slice(1)
-                : "undefined"
-            }
+            value={item.value}
             notCompulsory={
               item.name === "Suffix" || item.name === "Middle Name" ? " " : "*"
             }

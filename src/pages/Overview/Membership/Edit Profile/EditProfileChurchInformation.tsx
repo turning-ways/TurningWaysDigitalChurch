@@ -61,6 +61,7 @@ const EditProfileChurchInfo = () => {
       first_name &&
       last_name &&
       contact_phone !== "" &&
+      contact_email !== "" &&
       dateOfBirth !== "" &&
       gender !== ""
     ) {
@@ -76,11 +77,14 @@ const EditProfileChurchInfo = () => {
         gender,
         dateOfBirth,
         anniversary,
-        memberStatus: member_status,
+        memberStatus: member_status === "" ? "inactive" : member_status,
         ServiceUnit: service_unit,
         workType: work_type,
       });
-    } else notify("Please fill in all required fields");
+    } else {
+      notify("Please fill in all required fields");
+      console.log(first_name, last_name, contact_phone, dateOfBirth, gender);
+    }
   };
 
   const navigate = useNavigate();

@@ -5,12 +5,12 @@ import { GoWorkflow } from "react-icons/go";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 
-export   const navList = [
+export const navList = [
   {
     source: "../../../public/assets/images/Navbar/MembershipIcon.svg",
     title: "Dashboard",
     icon: <RxDashboard className="text-2xl" />,
-    route: `/admin/dashboard`,
+    route: `/admin/dashboard/today`,
   },
   {
     source: "../../../public/assets/images/Navbar/MembershipIcon.svg",

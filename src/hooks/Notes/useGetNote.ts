@@ -16,7 +16,7 @@ const useGetNote = (memberId: string) => {
     queryFn: () =>
       axios
         .get(
-          `https://turningways.onrender.com/api/v1/members/${memberId}/notes`,
+          `https://turningways.onrender.com/api/v1/members/${user?.churchId?._id}/member/${memberId}/notes`,
           {
             withCredentials: true,
           }

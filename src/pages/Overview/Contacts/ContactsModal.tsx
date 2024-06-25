@@ -6,7 +6,7 @@ import {
   useDeleteContact,
 } from "../../../hooks/useContact";
 import { ThreeDots } from "react-loader-spinner";
-import UpdateContact from "./UpdateContact";
+// import UpdateContact from "./UpdateContact";
 
 interface ContactsModalProps {
   show: string | null;
@@ -18,18 +18,41 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
-  const [openUpdate, setOpenUpdate] = useState(false);
-  const { mutate: update, isPending } = useUpdateContactStatus({
+  // const [openUpdate, setOpenUpdate] = useState(false);
+  const { mutate: update } = useUpdateContactStatus({
     id,
     onClose: () => setOpenConfirm(!openConfirm),
   });
-  const { mutate: deleteContact } = useDeleteContact();
+  const { mutate: deleteContact, isPending: deleteC } = useDeleteContact(() => {
+    setOpen(false);
+    onClose();
+  });
+
+  // const modalRef = useRef<HTMLDivElement>(null);
+
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (
+  //       modalRef.current &&
+  //       !modalRef.current.contains(event.target as Node)
+  //     ) {
+  //       onClose();
+  //     }
+  //   };
+
+  //   document.addEventListener("mousedown", handleClickOutside);
+
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [onClose]);
   return (
     <>
       <div
         className={`modal bg-white rounded-2xl w-[280px] px-6 py-4 space-y-6 border self-end absolute top-12 z-50 ${
           show === id ? "block" : "hidden"
         }`}
+        // ref={modalRef}
       >
         <ul className="text-[#555555]  space-y-2">
           <li
@@ -38,12 +61,12 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
           >
             View More
           </li>
-          <li
+          {/* <li
             className="hover:text-[#A0D7AC] cursor-pointer"
             onClick={() => setOpenUpdate(!openUpdate)}
           >
             Update Contact
-          </li>
+          </li> */}
           <li
             className="hover:text-[#A0D7AC] cursor-pointer"
             onClick={() => setOpen(!open)}
@@ -82,10 +105,14 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
                 No
               </button>
               <button
-                className="bg-[#F4F4F4] text-[#7B7B7B] rounded-[14px] w-full py-2 px-4 hover:bg-[#17275B] hover:text-white"
+                className="bg-[#F4F4F4] text-[#7B7B7B] rounded-[14px] w-full py-2 px-4 hover:bg-[#17275B] hover:text-white flex justify-center"
                 onClick={() => deleteContact(id)}
               >
-                Yes
+                {!deleteC ? (
+                  <p>Yes</p>
+                ) : (
+                  <ThreeDots width={24} height={24} color="white" />
+                )}
               </button>
             </div>
           </div>
@@ -109,24 +136,20 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
                 No
               </button>
               <button
-                className="bg-[#F4F4F4] text-[#7B7B7B] rounded-[14px] w-full py-2 px-4 hover:bg-[#17275B] hover:text-white flex justify-center"
+                className="bg-[#F4F4F4] text-[#7B7B7B] rounded-[14px] w-full py-2 px-4 hover:bg-[#17275B] hover:text-white "
                 onClick={() => {
                   update({ membershipStatus: "confirmed" });
                 }}
               >
-                {!isPending ? (
-                  <p>Yes</p>
-                ) : (
-                  <ThreeDots height="25" width="50" color="#141414" />
-                )}
+                <p>Yes</p>
               </button>
             </div>
           </div>
         </Modal>
       )}
-      {openUpdate && (
-        <UpdateContact onClose={() => setOpenUpdate(!openUpdate)} />
-      )}
+      {/* {openUpdate && (
+        <UpdateContact onClose={() => setOpenUpdate(!openUpdate)} id={id} />
+      )} */}
     </>
   );
 };

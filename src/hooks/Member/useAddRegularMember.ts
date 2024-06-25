@@ -76,7 +76,7 @@ const useAddRegularMember = () => {
     mutationFn: (memberDetails: Member) => apiClient.post(memberDetails),
     onSuccess: () => {
       success("Member has been added successfully");
-      navigate("/admin/dashboard");
+      navigate("/admin/directory");
       resetForm();
     },
     onError: () => notify("Couldn't add member"),

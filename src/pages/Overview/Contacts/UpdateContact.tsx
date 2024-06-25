@@ -6,20 +6,24 @@ import PhoneNumber from "../../../ui/Input/PhoneNumber";
 import { IoIosClose } from "react-icons/io";
 import { ThreeDots } from "react-loader-spinner";
 import { DropDownInput } from "../../../ui/DropDownMenu/DropDownInput";
+import { useParams } from "react-router-dom";
 
 interface UpdateContactProps {
   onClose: () => void;
+  id?: string;
 }
 
-const UpdateContact: React.FC<UpdateContactProps> = ({ onClose }) => {
+const UpdateContact: React.FC<UpdateContactProps> = ({ onClose, id }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
   const [maturity, setMaturity] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const {contact_id} = useParams();
 
-  const { mutate: update, isPending } = useUpdateContact({ onClose: onClose });
+
+  const { mutate: update, isPending } = useUpdateContact(onClose, contact_id?contact_id : id );
 
   const { data: contact } = useGetContacts();
 
@@ -48,7 +52,7 @@ const UpdateContact: React.FC<UpdateContactProps> = ({ onClose }) => {
   return (
     <Modal onClose={() => console.log("close")}>
       <form
-        className="w-[450px] md:w-[605px] bg-white px-6 py-6 border rounded-2xl flex flex-col"
+        className="w-[450px] md:w-[605px] bg-white px-6 py-6 border rounded-2xl flex flex-col max-h-[600px] overflow-y-scroll"
         onSubmit={(e) => {
           e.preventDefault();
           handleEdit();
@@ -56,6 +60,7 @@ const UpdateContact: React.FC<UpdateContactProps> = ({ onClose }) => {
       >
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl">Edit Contact</h1>
+          {id}
           <IoIosClose className="text-5xl cursor-pointer" onClick={onClose} />
         </div>
         <InformationInput
@@ -102,7 +107,7 @@ const UpdateContact: React.FC<UpdateContactProps> = ({ onClose }) => {
           value={address}
           notCompulsory={" "}
         />
-        <button className="self-end border border-[#414141] px-20 py-2 rounded-lg text-[#141414]">
+        <button className="self-end border border-[#414141] px-20 py-2 rounded-lg text-[#141414] sticky bottom-0 bg-white">
           {!isPending ? (
             <p>Save</p>
           ) : (

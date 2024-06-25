@@ -58,7 +58,10 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
     }
   };
 
-  const { mutate: mutateNote, isPending: pendingUpdate } = useUpdateNote({
+  const {
+    mutate: mutateNote,
+    isPending: pendingUpdate,
+  } = useUpdateNote({
     memberId: memberId ?? "",
   });
 
@@ -166,13 +169,17 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
               value={value}
               className="flex-grow text-black p-2 outline-none shadow-md"
               placeholder="Type your comment here"
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => {
+                setValue(e.target.value);
+                setTimeout(() => setValue(""), 3000);
+              }}
               onKeyDown={handleKeyDown}
             />
             <button
               className=" bg-[#17275B] text-white px-3 flex items-center"
               onClick={() => {
                 mutate({ note: value });
+                setTimeout(() => setValue(""), 3000);
                 refetch();
               }}
               //   onClick={() => console.log(notes)}

@@ -4,12 +4,14 @@ import { useAddContactComment } from '../../hooks/useContact';
 import { BiSend } from 'react-icons/bi';
 import { Puff } from 'react-loader-spinner';
 import { useUserAuth } from '../../stores/user';
+import { useParams } from 'react-router-dom';
 
 const TypeYourComment = () => {
     const [comment, setComment] = useState("");
-    const userId = useUserAuth((auth) => auth.user?._id)
+    const userId = useUserAuth((auth) => auth.user?._id);
+    const {contact_id} = useParams()
     const addCommentQuery =
-    useAddContactComment(() => setComment(""));
+    useAddContactComment(() => setComment(""), contact_id??"");
   return (
     <section>
         <Heading text="Comments" />

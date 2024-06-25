@@ -4,6 +4,7 @@ import { notify } from "./useAuthData";
 import { useUserAuth } from "../stores/user";
 import contactService from "../services/contact-service";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 interface Contact {
   firstName?: string;
@@ -99,7 +100,7 @@ interface Contacts {
   maturity: string;
   createdBy: string;
   createdAt: string;
-  ModifiedDate: string;
+  modifiedDate: string;
   membershipStatus: string;
   status: string;
   _id: string;
@@ -116,10 +117,6 @@ interface Contacts {
   dateOfBirth: string;
   gender: string;
 }
-
-const queryParams = new URLSearchParams(location.search);
-
-const contactId = queryParams.get("id");
 
 export const useAddContact = ({ onClose }: ContactPros) => {
   const { user } = useUserAuth();
@@ -145,13 +142,13 @@ export const useAddContact = ({ onClose }: ContactPros) => {
   });
 };
 
-export const useAddActionItem = (onClose: () => void) => {
+export const useAddActionItem = (onClose: () => void, contact_id: string) => {
   const { user } = useUserAuth();
   const { refetch } = useGetContacts();
 
   return useMutation({
     mutationFn: (contact: Action) =>
-      contactService(user?.churchId?._id, contactId, "/action").post(contact),
+      contactService(user?.churchId?._id, contact_id, "/action").post(contact),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: () => {
       success("Action has been added successfully");
@@ -164,14 +161,17 @@ export const useAddActionItem = (onClose: () => void) => {
   });
 };
 
-export const useAddContactComment = (emptyComment: () => void) => {
+export const useAddContactComment = (
+  emptyComment: () => void,
+  contact_id: string
+) => {
   const { user } = useUserAuth();
 
   const { refetch } = useGetContacts();
 
   return useMutation({
     mutationFn: (comment: any) =>
-      contactService<Comment>(user?.churchId?._id, contactId, "/notes").patch(
+      contactService<Comment>(user?.churchId?._id, contact_id, "/notes").patch(
         comment
       ),
     onSuccess: () => {
@@ -183,14 +183,14 @@ export const useAddContactComment = (emptyComment: () => void) => {
   });
 };
 
-export const useAddLabel = (onClose: () => void) => {
+export const useAddLabel = (onClose: () => void, contact_id: string) => {
   const { user } = useUserAuth();
 
   const { refetch } = useGetContacts();
 
   return useMutation({
     mutationFn: (labels: Label) =>
-      contactService(user?.churchId?._id, contactId, "/label").patch(labels),
+      contactService(user?.churchId?._id, contact_id, "/label").patch(labels),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: () => {
       success("Label has been added successfully");
@@ -203,7 +203,7 @@ export const useAddLabel = (onClose: () => void) => {
   });
 };
 
-export const useAssignMember = (onClose: () => void) => {
+export const useAssignMember = (onClose: () => void, contact_id: string) => {
   const { user } = useUserAuth();
 
   const { refetch } = useGetContacts();
@@ -212,7 +212,7 @@ export const useAssignMember = (onClose: () => void) => {
     mutationFn: (memberId: string) =>
       contactService(
         user?.churchId?._id,
-        contactId,
+        contact_id,
         `/assign?aid=${memberId}`
       ).patch({}),
     onSuccess: () => {
@@ -220,22 +220,23 @@ export const useAssignMember = (onClose: () => void) => {
       refetch();
       onClose();
     },
-    onError: () => notify("Member couldn't be assigned at this moment"),
+    onError: () => notify("Member has been assigned already"),
   });
 };
 
-export const useDeleteContact = () => {
+export const useDeleteContact = (onClose: () => void) => {
   const { user } = useUserAuth();
 
-  const { refetch } = useGetContacts();
+  const { refetch } = useGetAllContacts();
 
   return useMutation({
-    mutationFn: (contactId: string) =>
-      contactService(user?.churchId?._id, contactId).delete(),
+    mutationFn: (contact_id: string) =>
+      contactService(user?.churchId?._id, contact_id,"").delete(),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: () => {
       success("Contact has been deleted successfully");
       refetch();
+      onClose();
     },
     onError: () => {
       notify("Couldn't delete contact at this moment");
@@ -260,7 +261,7 @@ export const useDeleteContactComment = () => {
   });
 };
 
-export const useDeleteLabel = () => {
+export const useDeleteLabel = (contact_id: string, reset: () => void) => {
   const { user } = useUserAuth();
 
   const { refetch } = useGetContacts();
@@ -269,12 +270,13 @@ export const useDeleteLabel = () => {
     mutationFn: (label_name: string) =>
       contactService(
         user?.churchId?._id,
-        contactId,
+        contact_id,
         `/label?label=${label_name}`
       ).delete(),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: () => {
       success("Label has been deleted successfully");
+      setTimeout(() => reset(), 1000);
       refetch();
     },
     onError: () => {
@@ -283,7 +285,7 @@ export const useDeleteLabel = () => {
   });
 };
 
-export const useUpdateActionItem = () => {
+export const useUpdateActionItem = (contact_id: string) => {
   const { user } = useUserAuth();
 
   const { refetch } = useGetContacts();
@@ -291,7 +293,7 @@ export const useUpdateActionItem = () => {
     mutationFn: (action: { checked: boolean; _id: string }) =>
       contactService(
         user?.churchId?._id,
-        contactId,
+        contact_id,
         `/action?action=${action._id}&checked=${action.checked}`
       ).patch({}),
     onSuccess: () => {
@@ -301,14 +303,14 @@ export const useUpdateActionItem = () => {
   });
 };
 
-export const useUpdateContact = ({ onClose }: { onClose?: () => void }) => {
+export const useUpdateContact = (onClose: () => void, contact_id: string | undefined) => {
   const { user } = useUserAuth();
 
   const { refetch } = useGetContacts();
 
   return useMutation({
     mutationFn: (contact: Contact) =>
-      contactService(user?.churchId?._id, contactId).patch(contact),
+      contactService(user?.churchId?._id, contact_id, "").patch(contact),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: () => {
       success("Contact has been updated successfully");
@@ -321,7 +323,7 @@ export const useUpdateContact = ({ onClose }: { onClose?: () => void }) => {
   });
 };
 
-export const useUpdateContactComment = () => {
+export const useUpdateContactComment = (contact_id: string) => {
   const { user } = useUserAuth();
 
   const { refetch } = useGetContacts();
@@ -329,7 +331,7 @@ export const useUpdateContactComment = () => {
     mutationFn: (note: Note) =>
       contactService<Note>(
         user?.churchId?._id,
-        contactId,
+        contact_id,
         `/notes/${note.noteId}`
       ).patch({ note: note.note, recordedBy: note.recordedBy }),
     onSuccess: () => {
@@ -371,7 +373,7 @@ export const useGetAllContacts = () => {
     queryFn: () =>
       axios
         .get(
-          `https://turningways.onrender.com/api/v1/churches/${user?.churchId._id}/contact/`,
+          `https://turningways.onrender.com/api/v1/churches/${user?.churchId._id}/contact`,
           {
             withCredentials: true,
           }
@@ -383,14 +385,15 @@ export const useGetAllContacts = () => {
   });
 };
 
-export const useGetContacts = () => {
+export const useGetContacts = (id?:string) => {
   const { user } = useUserAuth();
+  const { contact_id } = useParams();
   return useQuery<any>({
-    queryKey: ["churches", user?.churchId?._id, "contacts", contactId],
+    queryKey: ["churches", user?.churchId?._id, "contacts", contact_id],
     queryFn: () =>
       axios
         .get(
-          `https://turningways.onrender.com/api/v1/churches/${user?.churchId._id}/contact/${contactId}`,
+          `https://turningways.onrender.com/api/v1/churches/${user?.churchId._id}/contact/${contact_id ? contact_id : id}`,
           {
             withCredentials: true,
           }

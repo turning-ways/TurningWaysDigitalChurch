@@ -36,7 +36,7 @@ const useUpdateMember = (memberId: string) => {
   const churchId = useUserAuth((auth) => auth?.user?.churchId?._id);
   return useMutation({
     mutationFn: (memberDetails: Member) =>
-      memberService(memberId, churchId).post(memberDetails),
+      memberService(memberId, churchId).patch(memberDetails),
     onSuccess: () => {
       success("Member has been updated successfully");
       // navigate("/admin/dashboard");

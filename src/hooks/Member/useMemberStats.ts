@@ -22,7 +22,7 @@ interface DataType {
   };
 }
 
-const useMemberStats = (timeLine: string) => {
+const useMemberStats = (timeLine: string | undefined) => {
   const { user } = useUserAuth();
   return useQuery({
     queryKey: ["data", user?.churchId?._id],

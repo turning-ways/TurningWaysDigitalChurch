@@ -80,15 +80,16 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
             <p>Membership</p>
           </div>
           <ul className="gap-y-4 flex flex-col">
-            {navList.map((item) => (
+            {navList.map((item, index) => (
               <Link
                 to={item.route}
                 className={` hover:bg-DarkBlueHover hover:text-white py-2 pl-5 pr-6 rounded-[10px] cursor-pointer ${
                   // location.pathname === item.route && "bg-DarkBlueHover text-white"
                   active === item.title && "bg-DarkBlueHover text-white"
                 }`}
+                key={index}
               >
-                <li className="flex gap-x-4">
+                <li className="flex gap-x-4" key={index}>
                   {item.icon}
                   <div className="w-20 xl:w-28">{item.title}</div>
                 </li>
