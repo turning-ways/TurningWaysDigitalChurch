@@ -59,7 +59,7 @@ const LoginWithEmail = () => {
             </p>
           </div>
           <Input
-            heading="Email or Password"
+            heading="Email"
             name="email"
             placeholder=""
             register={register}
