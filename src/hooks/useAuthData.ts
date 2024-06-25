@@ -171,17 +171,16 @@ export const useLogin = () => {
     mutationFn: (user: LoginDetails) => service("/login").post(user),
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
     onSuccess: (res: any) => {
-      
       if (res.redirectType === "adminDashboard") {
         setChurchId(res.churchId);
         success("Sign In was Successfull");
-        navigate('/admin/dashboard/today');
+        navigate("/admin/dashboard/today");
         // console.log(res.churchId);
       }
       if (res.redirectType === "churchSelection") {
         setChurchId(res.churchId);
         success("Sign In was Successfull, Please create your church");
-        navigate('/register/churchinfo');
+        navigate("/register/personalinfo");
       }
     },
     onError: (err: ErrorResponse) => {
@@ -286,12 +285,12 @@ export const useAddChurch = () => {
       // console.log(res.data.church.id);
 
       mutate({
-        role,
-        howDidYouHear,
+        role: role.toLowerCase(),
+        howDidYouHear: howDidYouHear.toLowerCase(),
         phone: phoneNumber,
         churchId: res.data.church.id,
         email,
-        gender,
+        gender: gender.toLowerCase(),
         dateOfBirth,
       });
 

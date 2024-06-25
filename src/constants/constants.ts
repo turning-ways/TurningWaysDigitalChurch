@@ -1,8 +1,8 @@
 import Color from "color";
 
-export const roles = ["admin"];
+export const roles = ["Admin"];
 
-export const hearAboutUs = ["facebook", "instagram", "linkedin"];
+export const hearAboutUs = ["Facebook", "Instagram", "Linkedin"];
 
 export const action = [
   "Undefined",

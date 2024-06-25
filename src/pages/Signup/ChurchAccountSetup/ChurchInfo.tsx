@@ -4,7 +4,7 @@ import HeaderTwo from "../../../ui/Heading/HeaderTwo";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { useMemberStore } from "../../../stores/member";
 import { useAddChurch } from "../../../hooks/useAuthData";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DropDownMenu from "../../../ui/DropDownMenu/DropDownMenu";
 import NextButton from "../../../ui/Button/NextButton";
 
@@ -72,9 +72,29 @@ const ChurchInfo = () => {
   useEffect(() => {
     fetchCountries();
   }, []);
+
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Function to handle clicks outside the dropdown
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setShowCountry(false);
+    }
+  };
+
+  // Effect to set up event listener when component mounts
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Clean up event listener when component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   return (
     <>
-      <AuthContainer center="pt-16 pb-10">
+      <AuthContainer center="pt-16 md:pt-0">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -159,7 +179,7 @@ const ChurchInfo = () => {
             )}
             <div className="mb-2">
               <HeaderTwo>
-                Your Church Website <span className="text-secondary">*</span>
+                Your Church Website
               </HeaderTwo>
               <input
                 type="text"
@@ -182,34 +202,40 @@ const ChurchInfo = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <PhoneInput
-              defaultCountry="ng"
-              value={phone}
-              onChange={(phone) => setPhone(phone)}
-              inputStyle={{
-                width: "100%",
-                paddingLeft: "10px",
-                paddingTop: "24px",
-                paddingRight: "10px",
-                paddingBottom: "24px",
-                backgroundColor: "#F7FAFC",
-                borderColor: "#EBEFF9",
-                borderStartEndRadius: "12px",
-                borderEndEndRadius: "12px",
-                fontSize: "18px",
-              }}
-              countrySelectorStyleProps={{
-                buttonStyle: {
-                  height: "100%",
+            <div className="mb-2">
+              <HeaderTwo>
+                Phone Number <span className="text-secondary">*</span>
+              </HeaderTwo>
+
+              <PhoneInput
+                defaultCountry="ng"
+                value={phone}
+                onChange={(phone) => setPhone(phone)}
+                inputStyle={{
+                  width: "100%",
                   paddingLeft: "10px",
+                  paddingTop: "24px",
                   paddingRight: "10px",
+                  paddingBottom: "24px",
                   backgroundColor: "#F7FAFC",
                   borderColor: "#EBEFF9",
-                  borderEndStartRadius: "12px",
-                  borderStartStartRadius: "12px",
-                },
-              }}
-            />
+                  borderStartEndRadius: "12px",
+                  borderEndEndRadius: "12px",
+                  fontSize: "18px",
+                }}
+                countrySelectorStyleProps={{
+                  buttonStyle: {
+                    height: "100%",
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                    backgroundColor: "#F7FAFC",
+                    borderColor: "#EBEFF9",
+                    borderEndStartRadius: "12px",
+                    borderStartStartRadius: "12px",
+                  },
+                }}
+              />
+            </div>
             <div className="mb-2">
               <HeaderTwo>
                 Enter your church's street address{" "}
@@ -273,6 +299,7 @@ const ChurchInfo = () => {
                 onClick={() => {
                   setShowCountry(!showCountry);
                 }}
+                ref={dropdownRef}
               >
                 <input
                   className="outline-none w-full h-auto bg-inherit"

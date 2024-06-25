@@ -4,7 +4,7 @@ import Header from "../../../ui/Heading/Header";
 import HeaderTwo from "../../../ui/Heading/HeaderTwo";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { useMemberStore } from "../../../stores/member";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DropDownMenu from "../../../ui/DropDownMenu/DropDownMenu";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +14,8 @@ const OrganizationInfo = () => {
   const [churchValue, setChurchValue] = useState("");
   const [isParentChurchValue, setIsParentChurchValue] = useState("");
 
-  const { setChurchName, setIsParentChurch } = useMemberStore();
+  const { setChurchName, setIsParentChurch, churchName, isParentChurch } =
+    useMemberStore();
 
   const handleSelectedItem = (selectedItem: string) => {
     setIsParentChurchValue(selectedItem);
@@ -23,9 +24,33 @@ const OrganizationInfo = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setChurchValue(churchName);
+    setIsParentChurchValue(isParentChurch);
+  }, []);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Function to handle clicks outside the dropdown
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setShow(false);
+    }
+  };
+
+  // Effect to set up event listener when component mounts
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Clean up event listener when component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
-      <AuthContainer center="sm:items-center h-screen pt-16 md:pt-0">
+      <AuthContainer center="pt-16 md:pt-0">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -44,7 +69,10 @@ const OrganizationInfo = () => {
           </div>
           <div className="mb-6">
             <div className="mb-6 w-full">
-              <HeaderTwo>Your church organization or name</HeaderTwo>
+              <HeaderTwo>
+                Your church organization or name{" "}
+                <span className="text-secondary">*</span>
+              </HeaderTwo>
               <input
                 type="text"
                 className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full p-3 outline-none  "
@@ -54,10 +82,14 @@ const OrganizationInfo = () => {
               />
             </div>
             <div className="relative">
-              <HeaderTwo>Is this a parent church?</HeaderTwo>
+              <HeaderTwo>
+                Is this a parent church?{" "}
+                <span className="text-secondary">*</span>
+              </HeaderTwo>
               <div
                 className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center"
                 onClick={() => setShow(!show)}
+                ref={dropdownRef}
               >
                 <input
                   className="outline-none w-full h-auto bg-inherit"

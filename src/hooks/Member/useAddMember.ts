@@ -36,7 +36,7 @@ const useAddMember = () => {
       success("Member has been added successfully");
       handleRefresh();
 
-      navigate("/admin/dashboard");
+      navigate("/admin/dashboard/today");
     },
     onError: () => notify("Couldn't add member"),
   });

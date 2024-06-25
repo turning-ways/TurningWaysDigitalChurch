@@ -3,7 +3,7 @@ import Header from "../../../ui/Heading/Header";
 import HeaderTwo from "../../../ui/Heading/HeaderTwo";
 import { TiArrowSortedDown } from "react-icons/ti";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import NextButton from "../../../ui/Button/NextButton";
 import DropDownMenu from "../../../ui/DropDownMenu/DropDownMenu";
 import { roles, hearAboutUs } from "../../../constants/constants";
@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { notify } from "../../../hooks/useAuthData";
+import { set } from "zod";
 
 const PersonalInfo = () => {
   const [phone, setPhone] = useState("");
@@ -52,7 +53,22 @@ const PersonalInfo = () => {
     setGender,
     setEmail,
     setDateOfBirth,
+    role,
+    howDidYouHear,
+    gender,
+    phoneNumber,
+    dateOfBirth,
+    email,
   } = useMemberStore();
+
+  useEffect(() => {
+    setRoleValue(role);
+    setPhone(phoneNumber.MainPhone);
+    setGenderValue(gender);
+    setDateOfBirthValue(dateOfBirth);
+    setHear(howDidYouHear);
+    setEmailValue(email);
+  }, []);
 
   //navigation
   const navigate = useNavigate();
@@ -60,6 +76,27 @@ const PersonalInfo = () => {
   // const isNumeric = (value: string) => {
   //   return /^0\d{10}$/.test(value);
   // };
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Function to handle clicks outside the dropdown
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setShowGender(false);
+      setShowHearAbout(false);
+      setShowRoles(false);
+    }
+  };
+
+  // Effect to set up event listener when component mounts
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Clean up event listener when component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -77,11 +114,11 @@ const PersonalInfo = () => {
 
             if (
               phone !== "" &&
-              hear !== "" &&
-              roleValue !== "" &&
-              emailValue !== "" &&
-              genderValue !== "" &&
-              dateOfBirthValue !== ""
+              // hear !== "" &&
+              // roleValue !== "" &&
+              // emailValue !== "" &&
+              genderValue !== ""
+              // dateOfBirthValue !== ""
             ) {
               // if (isNumeric(phone)) {
               navigate("/register/organizationinfo");
@@ -105,7 +142,9 @@ const PersonalInfo = () => {
           </div>
           <div className="space-y-8 mb-10">
             <div className="mb-2">
-              <HeaderTwo>Phone Number</HeaderTwo>
+              <HeaderTwo>
+                Phone Number <span className="text-secondary">*</span>
+              </HeaderTwo>
 
               <PhoneInput
                 defaultCountry="ng"
@@ -138,10 +177,13 @@ const PersonalInfo = () => {
             </div>
 
             <div className="relative">
-              <HeaderTwo>Gender</HeaderTwo>
+              <HeaderTwo>
+                Gender <span className="text-secondary">*</span>
+              </HeaderTwo>
               <div
                 className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center"
                 onClick={() => setShowGender(!showGender)}
+                ref={dropdownRef}
               >
                 <input
                   className="outline-none w-full h-auto bg-inherit"
@@ -159,14 +201,12 @@ const PersonalInfo = () => {
               {showGender && (
                 <DropDownMenu
                   onSelect={handleSelectGender}
-                  dropdownItems={["male", "female"]}
+                  dropdownItems={["Male", "Female"]}
                 />
               )}
             </div>
             <div className="mb-2">
-              <HeaderTwo>
-                Email Address <span className="text-secondary">*</span>
-              </HeaderTwo>
+              <HeaderTwo>Email Address</HeaderTwo>
               <input
                 type="text"
                 className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
@@ -176,12 +216,10 @@ const PersonalInfo = () => {
               />
             </div>
             <div className=" space-y-1 mb-4">
-              <p className="text-[#727272]">
-                D.O.B <span className="text-[#61BD74]"> *</span>
-              </p>
+              <p className="text-[#727272]">D.O.B</p>
               <div className="mb-2">
                 <input
-                  className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
+                  className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none text-gray-500"
                   type="date"
                   value={dateOfBirthValue}
                   onChange={(e) => setDateOfBirthValue(e.target.value)}
@@ -193,6 +231,7 @@ const PersonalInfo = () => {
               <div
                 className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center"
                 onClick={() => setShowRoles(!showRoles)}
+                ref={dropdownRef}
               >
                 <input
                   className="outline-none w-full h-auto bg-inherit"
@@ -219,6 +258,7 @@ const PersonalInfo = () => {
               <div
                 className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center"
                 onClick={() => setShowHearAbout(!showHearAbout)}
+                ref={dropdownRef}
               >
                 <input
                   className="outline-none w-full h-auto bg-inherit"
