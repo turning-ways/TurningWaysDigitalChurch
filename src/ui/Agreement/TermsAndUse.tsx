@@ -10,13 +10,11 @@ import {
   Disclaimer,
 } from "./terms";
 
-
-
-const TermsAndUse= ({onClose} : {onClose: () => void}) => {
+const TermsAndUse = ({ onClose }: { onClose: () => void }) => {
   const [active, setActive] = useState("AGREEMENT TO OUR LEGAL TERMS");
   return (
     <Modal onClose={onClose}>
-      <main className="bg-white max-w-[1000px] w-full max-h-[550px] lg:max-h-[750px] overflow-y-scroll">
+      <main className="bg-white max-w-[1000px] w-full h-[550px] overflow-y-scroll">
         <header className="bg-[#17275B] text-white md:text-3xl px-10 py-3 text-center sticky top-0">
           TERMS OF USE
         </header>
