@@ -298,8 +298,8 @@ export const useAddChurch = () => {
 
       // navigate("/admin/dashboard");
     },
-    onError: (err) => {
-      notify("Fill in all required fields");
+    onError: (err: ErrorResponse) => {
+      notify(err.response.data.message);
       console.log(err);
     },
   });
