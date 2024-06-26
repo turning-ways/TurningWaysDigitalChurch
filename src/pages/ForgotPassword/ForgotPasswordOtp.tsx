@@ -96,7 +96,7 @@ const ForgotPasswordOtp = () => {
                 <React.Fragment key={index}>
                   <input
                     ref={index === activeOTPIndex ? inputRef : null}
-                    type="text"
+                    type="number"
                     className="w-full h-12 border-b-2  bg-transparent outline-none text-center font-semibold border-b-[#CCE9D1]  focus:border-b-[#61BD74] focus:text-[#5E9942] text-[#CCE9D1] transition spin-button-none placeholder-[#CCE9D1]"
                     onChange={handleChange}
                     value={otp[index]}
