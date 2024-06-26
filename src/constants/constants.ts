@@ -2,7 +2,7 @@ import Color from "color";
 
 export const roles = ["Admin", "Worker", "Member"];
 
-export const hearAboutUs = ["Facebook", "Instagram", "Linkedin"];
+export const hearAboutUs = ["Facebook", "Instagram", "Linkedin", "Others"];
 
 export const action = [
   "Undefined",
