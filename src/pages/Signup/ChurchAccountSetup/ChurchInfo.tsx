@@ -3,7 +3,7 @@ import Header from "../../../ui/Heading/Header";
 import HeaderTwo from "../../../ui/Heading/HeaderTwo";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { useMemberStore } from "../../../stores/member";
-import { useAddChurch } from "../../../hooks/useAuthData";
+import { notify, useAddChurch } from "../../../hooks/useAuthData";
 import { useEffect, useState } from "react";
 import DropDownMenu from "../../../ui/DropDownMenu/DropDownMenu";
 import NextButton from "../../../ui/Button/NextButton";
@@ -27,7 +27,7 @@ const ChurchInfo = () => {
 
   const [showCountry, setShowCountry] = useState<boolean>(false);
 
-  const { churchName, isParentChurch } = useMemberStore();
+  const { churchName, isParentChurch, gender, phoneNumber } = useMemberStore();
 
   const { mutate, isPending } = useAddChurch();
 
@@ -72,25 +72,31 @@ const ChurchInfo = () => {
   useEffect(() => {
     fetchCountries();
   }, []);
-
   return (
     <>
       <AuthContainer center="pt-16 md:pt-0">
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            mutate({
-              phone,
-              name: churchName,
-              country,
-              state,
-              address,
-              postalCode,
-              city,
-              website,
-              email,
-            });
-            console.log(churchName);
+            if (
+              gender !== "" &&
+              phoneNumber.MainPhone !== "" &&
+              churchName !== "" && isParentChurch !== ""
+            ) {
+              mutate({
+                phone,
+                name: churchName,
+                country,
+                state,
+                address,
+                postalCode,
+                city,
+                website,
+                email,
+              });
+            } else {
+              notify("Fill in all the required fields")
+            }
           }}
         >
           <div className="mb-5 max-w-[550px] mx-auto">
