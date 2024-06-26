@@ -36,8 +36,8 @@ const LandingPage = () => {
             alt=""
             className="w-36"
           />
-          <ul className="flex text-[#6181E7] space-x-5 sm:space-x-10 items-center font-azo text-base sm:text-lg">
-            <li className="">
+          <ul className="flex text-[#6181E7] sm:space-x-10 items-center font-azo text-base sm:text-lg">
+            <li className="self-end">
               <button onClick={() => navigate("/register")}>Sign up</button>
             </li>
             <li>
@@ -54,7 +54,7 @@ const LandingPage = () => {
           <form
             onSubmit={handleSubmit((data) => {
               const { inputKey, password } = data;
-              console.log(inputKey, password)
+              console.log(inputKey, password);
               loginQuery.mutate({ inputKey, password });
             })}
           >
