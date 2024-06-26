@@ -32,7 +32,7 @@ const ResetPassword = () => {
 
   return (
     <>
-      <AuthContainer center="sm:items-center h-screen pt-16 md:pt-0">
+      <AuthContainer center="sm:items-center h-screen pt-10 md:pt-0">
         <form
           onSubmit={handleSubmit((data) => {
             const { password, passwordConfirm } = data;

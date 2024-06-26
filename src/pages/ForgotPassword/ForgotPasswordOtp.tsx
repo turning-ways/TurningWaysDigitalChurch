@@ -73,7 +73,7 @@ const ForgotPasswordOtp = () => {
   const { mutate: sendOtp } = useForgotPassword();
   return (
     <>
-      <AuthContainer center="sm:items-center h-screen pt-16 md:pt-0">
+      <AuthContainer center="sm:items-center h-screen pt-10 md:pt-0">
         <form
           onSubmit={(e) => {
             e.preventDefault();
