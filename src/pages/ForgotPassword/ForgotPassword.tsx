@@ -54,7 +54,7 @@ const ForgotPassword = () => {
             <input
               {...register("inputKey")}
               type="text"
-              className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full p-3 outline-none placeholder-[#4A5568]"
+              className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full p-3 outline-none placeholder-[#BBB9B9]"
               placeholder="example@gmail.com or 2340000000000"
             />
           </div>

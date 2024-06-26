@@ -94,7 +94,7 @@ const LandingPage = () => {
               placeholder="********"
               formError={errors.password?.message}
             />
-            <div className="flex justify-between items-center my-10 text-sm lg:text-base">
+            <div className="flex justify-between items-center my-6 text-sm lg:text-base">
               <div className="text-[#718096] flex items-center space-x-2">
                 <input type="checkbox" />
                 <p>remember me</p>
