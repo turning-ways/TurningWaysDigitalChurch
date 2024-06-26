@@ -38,7 +38,7 @@ const LoginWithEmail = () => {
 
   return (
     <>
-      <AuthContainer center="sm:items-center pt-16 md:pt-0">
+      <AuthContainer center="sm:items-center pt-10 md:pt-0">
         <form
           onSubmit={handleSubmit((data) => {
             const { email, password } = data;

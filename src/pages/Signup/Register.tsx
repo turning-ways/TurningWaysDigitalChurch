@@ -53,7 +53,7 @@ const Register = () => {
   const [checked, setChecked] = useState(false);
   return (
     <>
-      <AuthContainer center="sm:items-center pt-16 md:pt-0">
+      <AuthContainer center="sm:items-center md:pt-0">
         <form
           onSubmit={handleSubmit((data) => {
             const { first_name, last_name, email, password, passwordConfirm } =
@@ -71,7 +71,7 @@ const Register = () => {
               notify("Please agree to our terms of service and privacy policy");
             }
           })}
-          className="bg-white py-10 px-6"
+          className="bg-white py-10"
         >
           <div className=" mb-10">
             <Header>Sign Up</Header>
