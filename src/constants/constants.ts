@@ -1,6 +1,6 @@
 import Color from "color";
 
-export const roles = ["Admin"];
+export const roles = ["Admin", "Worker", "Member"];
 
 export const hearAboutUs = ["Facebook", "Instagram", "Linkedin"];
 

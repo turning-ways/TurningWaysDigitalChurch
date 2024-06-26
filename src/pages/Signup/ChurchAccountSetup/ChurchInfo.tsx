@@ -4,7 +4,7 @@ import HeaderTwo from "../../../ui/Heading/HeaderTwo";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { useMemberStore } from "../../../stores/member";
 import { useAddChurch } from "../../../hooks/useAuthData";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import DropDownMenu from "../../../ui/DropDownMenu/DropDownMenu";
 import NextButton from "../../../ui/Button/NextButton";
 
@@ -73,25 +73,6 @@ const ChurchInfo = () => {
     fetchCountries();
   }, []);
 
-
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Function to handle clicks outside the dropdown
-  const handleClickOutside = (event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-      setShowCountry(false);
-    }
-  };
-
-  // Effect to set up event listener when component mounts
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-
-    // Clean up event listener when component unmounts
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
   return (
     <>
       <AuthContainer center="pt-16 md:pt-0">
@@ -178,9 +159,7 @@ const ChurchInfo = () => {
               </div>
             )}
             <div className="mb-2">
-              <HeaderTwo>
-                Your Church Website
-              </HeaderTwo>
+              <HeaderTwo>Your Church Website</HeaderTwo>
               <input
                 type="text"
                 className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-xl w-full p-3 outline-none "
@@ -299,7 +278,6 @@ const ChurchInfo = () => {
                 onClick={() => {
                   setShowCountry(!showCountry);
                 }}
-                ref={dropdownRef}
               >
                 <input
                   className="outline-none w-full h-auto bg-inherit"
@@ -320,6 +298,9 @@ const ChurchInfo = () => {
                         country.name.common
                     )
                     .sort((a, b) => a.localeCompare(b))}
+                  onClose={() => {
+                    setShowCountry(false);
+                  }}
                 />
               )}
             </div>

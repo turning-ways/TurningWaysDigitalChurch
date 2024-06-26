@@ -84,8 +84,6 @@ function App() {
               <Route path="setting/:setting_header" element={<Settings />} />
               <Route path="help" element={<NotBuilt active="Help" />} />
               <Route path="logout" element={<NotBuilt active="Logout" />} />
-
-
             </Route>
           </Route>
 
