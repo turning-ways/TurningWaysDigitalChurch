@@ -114,7 +114,7 @@ const LandingPage = () => {
             </div>
             <GoogleButton />
             <div
-              className="border border-[#CBD5E0] py-3 rounded-[20px] lg:space-x-1 flex  px-6 justify-center lg:justify-normal space-x-3 items-center w-full cursor-pointer mt-5"
+              className="border border-[#CBD5E0] py-3 rounded-[8px] lg:space-x-1 flex  px-6 justify-center lg:justify-normal space-x-3 items-center w-full cursor-pointer mt-5"
               onClick={() => navigate("/register")}
             >
               <img
