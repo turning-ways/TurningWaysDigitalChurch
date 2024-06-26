@@ -115,7 +115,7 @@ const OtpVerification = () => {
             className={`text-[#CCE9D1]  ${
               timerActive
                 ? "cursor-not-allowed"
-                : "cursor-pointer hover:text-[#61BD74]"
+                : "cursor-pointer text-[#458552]"
             }`}
             disabled={timerActive}
             onClick={() => {
