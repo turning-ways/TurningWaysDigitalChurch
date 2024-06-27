@@ -168,9 +168,7 @@ const MemberList = () => {
         {active === "First Timers" &&
           firstTimers &&
           firstTimers.length === 0 && (
-            <p className="text-[#CACACA]">
-              No first timer's at the moment
-            </p>
+            <p className="text-[#CACACA] mt-2">No first timer's at the moment</p>
           )}
         {active === "Upcoming Birthday" &&
           birthdayCelebrants &&
@@ -189,7 +187,7 @@ const MemberList = () => {
         {active === "Upcoming Birthday" &&
           birthdayCelebrants &&
           birthdayCelebrants.length === 0 && (
-            <p className="text-[#CACACA]">
+            <p className="text-[#CACACA] mt-2">
               No upcoming birthday's at the moment
             </p>
           )}
@@ -210,7 +208,7 @@ const MemberList = () => {
         {active === "Upcoming Anniversary" &&
           upcomingAnniversary &&
           upcomingAnniversary.length === 0 && (
-            <p className="text-[#CACACA]">
+            <p className="text-[#CACACA] mt-2">
               No upcoming anniversary at the moment
             </p>
           )}
