@@ -169,7 +169,7 @@ const MemberList = () => {
           firstTimers &&
           firstTimers.length === 0 && (
             <p className="text-[#CACACA]">
-              No upcoming birthday's at the moment
+              No first timer's at the moment
             </p>
           )}
         {active === "Upcoming Birthday" &&
