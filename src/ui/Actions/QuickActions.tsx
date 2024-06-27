@@ -52,7 +52,7 @@ const QuickActions: React.FC<QuickActionsProps> = ({ display }) => {
   return (
     <>
       <div
-        className={`flex justify-between my-6 lg:my-10 flex-col space-y-1 lg:flex-row lg:space-y-0 ${display}`}
+        className={`flex justify-between mt-6 mb-4 lg:my-10 flex-col space-y-1 lg:flex-row lg:space-y-0 ${display}`}
       >
         <p className="lg:text-lg text-[#7F7E7E] text-base">
           {members ? members.length : "0"} Persons
