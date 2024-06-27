@@ -74,7 +74,7 @@ const EditProfileChurchInfo = () => {
         address: { HomeAddress: contact_address },
         phone: { MainPhone: contact_phone },
         churchId: user ? user?.churchId?._id : "",
-        gender,
+        gender: gender.toLowerCase(),
         dateOfBirth,
         anniversary,
         memberStatus: member_status === "" ? "inactive" : member_status,

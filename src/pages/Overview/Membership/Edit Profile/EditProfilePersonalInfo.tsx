@@ -93,7 +93,7 @@ const EditProfilePersonalInfo = () => {
       ))}
       <DropDownInput
         text="Gender"
-        items={["male", "female"]}
+        items={["Male", "Female"]}
         placeholder="Male"
         compulsory="*"
         onSelect={handleGender}
