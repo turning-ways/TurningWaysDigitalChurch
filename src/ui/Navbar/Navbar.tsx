@@ -47,19 +47,19 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
         transition={{ ease: "easeInOut", duration: 0.3 }}
       >
         <m.div
-          className="h-[2.5px] w-5 bg-black mb-1"
+          className="h-[2.5px] w-5 bg-white mb-1"
           initial={{ y: 0, rotate: 0 }}
           animate={isOpen ? { y: 6.5, rotate: 45 } : { y: 0, rotate: 0 }}
           transition={{ ease: "easeInOut", duration: 0.3 }}
         />
         <m.div
-          className={`h-[2.5px] bg-black mb-1 ${isOpen ? "w-5" : "w-3"}`}
+          className={`h-[2.5px] bg-white mb-1 ${isOpen ? "w-5" : "w-3"}`}
           initial={{ opacity: 1 }}
           animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
           transition={{ ease: "easeInOut", duration: 0.3 }}
         />
         <m.div
-          className="h-[2.5px] w-5 bg-black"
+          className="h-[2.5px] w-5 bg-white"
           initial={{ y: 0, rotate: 0 }}
           animate={isOpen ? { y: -7, rotate: -45 } : { y: 0, rotate: 0 }}
           transition={{ ease: "easeInOut", duration: 0.3 }}
