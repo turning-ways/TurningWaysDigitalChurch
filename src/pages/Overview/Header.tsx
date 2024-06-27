@@ -58,7 +58,7 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
       </div>
       <div className="flex justify-between items-center">
         <h2 className="font-azoBold text-[#0F1D48] text-3xl">{text}</h2>
-        <div className="flex space-x-5 items-center">
+        <div className="flex space-x-4 items-center">
           <Search size="hidden md:flex" />
           <IoIosAddCircleOutline
             className="text-[45px] cursor-pointer hidden sm:block"
@@ -66,14 +66,17 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
               navigate("/admin/directory/add-member/personal-information")
             }
           />
-          <IoMdNotificationsOutline style={{ fontSize: "45px" }} />
+          <IoMdNotificationsOutline style={{ fontSize: "28px" }} />
           <div className="flex space-x-2 items-center">
             <div
-              className="flex space-x-2 items-center w-10 "
+              className="flex space-x-2 items-center w-[28px] "
               onClick={() => setShowProfile(!showProfile)}
             >
               {user?.photo ? (
-                <img src={user.photo} className="w-full h-10 rounded-full" />
+                <img
+                  src={user.photo}
+                  className="w-full h-[28px] rounded-full"
+                />
               ) : (
                 <div className="border-black border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer z-50">
                   {first_name && first_name?.charAt(0) + last_name?.charAt(0)}
