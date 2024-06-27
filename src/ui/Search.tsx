@@ -23,7 +23,7 @@ const Search: React.FC<SearchProps> = ({ size }) => {
   );
   return (
     <div
-      className={`rounded-2xl bg-[#F2F0F0] py-2 px-3 gap-x-3 items-center h-fit w-full lg:w-[300px] relative ${size}`}
+      className={`rounded-lg bg-[#F2F0F0] py-2 px-3 gap-x-3 items-center h-fit w-full lg:w-[300px] relative ${size}`}
     >
       <CiSearch style={{ fontSize: "29px", color: "#6D6C6C" }} />
       <input

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   IoIosAddCircleOutline,
   IoMdNotificationsOutline,
@@ -46,6 +46,27 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
     }
   };
 
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Function to handle clicks outside the dropdown
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setShowProfile(false)
+    }
+  };
+
+  // Effect to set up event listener when component mounts
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Clean up event listener when component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+
   return (
     <div className="space-y-5 font-azo flex flex-col relative">
       <div className="flex items-center gap-x-2">
@@ -71,6 +92,7 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
             <div
               className="flex space-x-2 items-center w-[28px] "
               onClick={() => setShowProfile(!showProfile)}
+              ref={dropdownRef}
             >
               {user?.photo ? (
                 <img
