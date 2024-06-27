@@ -49,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
   return (
     <div className="space-y-5 font-azo flex flex-col relative">
       <div className="flex items-center gap-x-2">
-        <div className="bg-yellow-400 px-3 py-1 rounded-full">
+        <div className="bg-yellow-400 h-10 w-10 justify-center flex items-center rounded-full">
           {user?.churchId?.name?.charAt(0)?.toUpperCase()}
         </div>
         <h1 className="tracking-widest">
