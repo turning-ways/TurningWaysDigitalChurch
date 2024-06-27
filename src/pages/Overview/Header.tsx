@@ -58,7 +58,7 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
       </div>
       <div className="flex justify-between items-center">
         <h2 className="font-azoBold text-[#0F1D48] text-3xl">{text}</h2>
-        <div className="flex space-x-4 items-center">
+        <div className="flex space-x-3 items-center">
           <Search size="hidden md:flex" />
           <IoIosAddCircleOutline
             className="text-[45px] cursor-pointer hidden sm:block"
