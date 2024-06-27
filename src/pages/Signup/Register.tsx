@@ -70,7 +70,7 @@ const Register = () => {
                 );
               }
             } else {
-              notify("Passwords don't match")
+              notify("Passwords doesn't match")
             }
           })}
           className="bg-white py-10"

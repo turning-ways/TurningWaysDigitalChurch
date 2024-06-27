@@ -87,7 +87,7 @@ const RegisterWithPhone = () => {
                 console.log(phoneNumber.length);
               }
             } else {
-              notify("Passwords don't match")
+              notify("Passwords doesn't match")
             }
             setPhone(phoneNumber);
           })}
