@@ -47,7 +47,7 @@ const PersonalInformation = () => {
               {data?.member?.middle_name
                 ? data?.member?.middle_name?.slice(0, 1).toUpperCase() +
                   data?.member?.middle_name?.slice(1)
-                : ""}
+                : "None"}
             </p>
           </div>
           <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
@@ -56,7 +56,7 @@ const PersonalInformation = () => {
               {data.member.prefix
                 ? data?.member?.prefix?.slice(0, 1).toUpperCase() +
                   data.member?.prefix?.slice(1)
-                : ""}
+                : "None"}
             </p>
           </div>
           <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
@@ -65,7 +65,7 @@ const PersonalInformation = () => {
               {data.member.suffix
                 ? data?.member?.suffix?.slice(0, 1).toUpperCase() +
                   data?.member?.suffix?.slice(1)
-                : ""}
+                : "None"}
             </p>
           </div>
           <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
