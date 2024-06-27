@@ -165,6 +165,13 @@ const MemberList = () => {
               id={item._id}
             />
           ))}
+        {active === "First Timers" &&
+          firstTimers &&
+          firstTimers.length === 0 && (
+            <p className="text-[#CACACA]">
+              No upcoming birthday's at the moment
+            </p>
+          )}
         {active === "Upcoming Birthday" &&
           birthdayCelebrants &&
           birthdayCelebrants?.map((item: any, index: number) => (
@@ -179,6 +186,13 @@ const MemberList = () => {
               id={item._id}
             />
           ))}
+        {active === "Upcoming Birthday" &&
+          birthdayCelebrants &&
+          birthdayCelebrants.length === 0 && (
+            <p className="text-[#CACACA]">
+              No upcoming birthday's at the moment
+            </p>
+          )}
         {active === "Upcoming Anniversary" &&
           upcomingAnniversary &&
           upcomingAnniversary?.map((item: any, index: number) => (
@@ -193,6 +207,13 @@ const MemberList = () => {
               id={item._id}
             />
           ))}
+        {active === "Upcoming Anniversary" &&
+          upcomingAnniversary &&
+          upcomingAnniversary.length === 0 && (
+            <p className="text-[#CACACA]">
+              No upcoming anniversary at the moment
+            </p>
+          )}
       </div>
     </>
   );
