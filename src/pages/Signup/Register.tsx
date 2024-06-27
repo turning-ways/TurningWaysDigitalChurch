@@ -16,12 +16,8 @@ import { notify } from "../../hooks/useAuthData";
 import TermsOfServiceAndPrivacyPolicy from "../../components/Register/TermsOfServiceAndPrivacyPolicy";
 const Register = () => {
   const schema = z.object({
-    first_name: z
-      .string()
-      .min(4, { message: "Name should be atleast 4 characters long" }),
-    last_name: z
-      .string()
-      .min(4, { message: "Name should be atleast 4 characters long" }),
+    first_name: z.string().min(1, { message: "Please fill this field" }),
+    last_name: z.string().min(1, { message: "Please fill this field" }),
     email: z.string().email({ message: "Please enter a valid email" }),
     password: z
       .string()
