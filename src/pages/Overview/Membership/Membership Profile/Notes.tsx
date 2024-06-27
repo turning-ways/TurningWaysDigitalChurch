@@ -90,7 +90,7 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
           openNote ? "flex" : "hidden"
         }`}
       >
-        <div className="absolute bottom-0 top-40 right-10 mb-10 flex justify-between   text-white W-96 flex-col border bg-white px-2">
+        <div className="absolute bottom-0 top-40 right-10 mb-10 flex justify-between   text-white flex-col border bg-white px-2">
           <div className="bg-white p-4 w-[600px]">
             <div className="flex justify-between">
               <p className="text-[#141414] font-azoBold text-2xl self-start ">
