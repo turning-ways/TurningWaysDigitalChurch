@@ -61,7 +61,6 @@ const EditProfileChurchInfo = () => {
       first_name &&
       last_name &&
       contact_phone !== "" &&
-      contact_email !== "" &&
       dateOfBirth !== "" &&
       gender !== ""
     ) {
