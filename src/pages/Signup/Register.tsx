@@ -55,16 +55,22 @@ const Register = () => {
             const { first_name, last_name, email, password, passwordConfirm } =
               data;
             setEmail(email);
-            if (checked) {
-              mutate({
-                first_name,
-                last_name,
-                email,
-                password,
-                passwordConfirm,
-              });
+            if (password === passwordConfirm) {
+              if (checked) {
+                mutate({
+                  first_name,
+                  last_name,
+                  email,
+                  password,
+                  passwordConfirm,
+                });
+              } else {
+                notify(
+                  "Please agree to our terms of service and privacy policy"
+                );
+              }
             } else {
-              notify("Please agree to our terms of service and privacy policy");
+              notify("Passwords don't match")
             }
           })}
           className="bg-white py-10"

@@ -72,17 +72,22 @@ const RegisterWithPhone = () => {
           onSubmit={handleSubmit((data) => {
             const { first_name, last_name, password, passwordConfirm } = data;
             // setEmail(email);
-            if (checked) {
-              mutate({
-                first_name,
-                last_name,
-                password,
-                passwordConfirm,
-                phoneNumber,
-              });
+            if (password === passwordConfirm) {
+
+              if (checked) {
+                mutate({
+                  first_name,
+                  last_name,
+                  password,
+                  passwordConfirm,
+                  phoneNumber,
+                });
+              } else {
+                notify("Please agree to our terms of service and privacy policy");
+                console.log(phoneNumber.length);
+              }
             } else {
-              notify("Please agree to our terms of service and privacy policy");
-              console.log(phoneNumber.length);
+              notify("Passwords don't match")
             }
             setPhone(phoneNumber);
           })}
