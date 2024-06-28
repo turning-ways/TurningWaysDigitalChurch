@@ -9,7 +9,7 @@ import { useVerifySignUpOtp, useVerifyEmail } from "../../hooks/useAuthData";
 let currentOtpIndex: number = 0;
 
 const OtpVerification = () => {
-  const [value, setValue] = useState<boolean>(false);
+  // const [value, setValue] = useState<boolean>(false);
 
   //
   const [otp, setOtp] = useState<string[]>(new Array(4).fill(""));
@@ -24,11 +24,11 @@ const OtpVerification = () => {
     setOtp(newOTP);
     if (!inputValue) setActiveOTPIndex(currentOtpIndex - 1);
     else setActiveOTPIndex(currentOtpIndex + 1);
-    if (inputValue !== "") {
-      setValue(true);
-    } else {
-      setValue(false);
-    }
+    // if (inputValue !== "") {
+    //   setValue(true);
+    // } else {
+    //   setValue(false);
+    // }
   };
 
   // console.log(value);
