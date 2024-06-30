@@ -89,7 +89,7 @@ interface AssignedTo {
 
 interface LabelT {
   label: string;
-  label_type: string;
+  labelType: string;
 }
 
 interface Contacts {
@@ -133,7 +133,7 @@ export const useAddContact = ({ onClose }: ContactPros) => {
     },
     onError: (err: Error) => {
       if (err.response.data.stack.includes("duplicate")) {
-        notify("Contact already exists");
+        notify("Phone number already exists");
       } else {
         notify("Fill in all compulsory fields");
         console.log(err);
@@ -231,7 +231,7 @@ export const useDeleteContact = (onClose: () => void) => {
 
   return useMutation({
     mutationFn: (contact_id: string) =>
-      contactService(user?.churchId?._id, contact_id,"").delete(),
+      contactService(user?.churchId?._id, contact_id, "").delete(),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: () => {
       success("Contact has been deleted successfully");
@@ -303,7 +303,10 @@ export const useUpdateActionItem = (contact_id: string) => {
   });
 };
 
-export const useUpdateContact = (onClose: () => void, contact_id: string | undefined) => {
+export const useUpdateContact = (
+  onClose: () => void,
+  contact_id: string | undefined
+) => {
   const { user } = useUserAuth();
 
   const { refetch } = useGetContacts();
@@ -385,7 +388,7 @@ export const useGetAllContacts = () => {
   });
 };
 
-export const useGetContacts = (id?:string) => {
+export const useGetContacts = (id?: string) => {
   const { user } = useUserAuth();
   const { contact_id } = useParams();
   return useQuery<any>({
@@ -393,7 +396,9 @@ export const useGetContacts = (id?:string) => {
     queryFn: () =>
       axios
         .get(
-          `https://turningways.onrender.com/api/v1/churches/${user?.churchId._id}/contact/${contact_id ? contact_id : id}`,
+          `https://turningways.onrender.com/api/v1/churches/${
+            user?.churchId._id
+          }/contact/${contact_id ? contact_id : id}`,
           {
             withCredentials: true,
           }

@@ -10,6 +10,9 @@ interface PersonalInfo {
   gender: string;
   dateOfBirth: string;
   anniversary: string;
+  educational_level: string;
+  employment_status: string;
+  health_status: string;
   setPrefix: (prefix: string) => void;
   setFirstName: (first_name: string) => void;
   setMiddleName: (middle_name: string) => void;
@@ -18,6 +21,9 @@ interface PersonalInfo {
   setGender: (gender: string) => void;
   setDateOfBirth: (dob: string) => void;
   setAnniversary: (anniversary: string) => void;
+  setEducationalLevel: (s: string) => void;
+  setEmploymentStatus: (s: string) => void;
+  setHealthStatus: (s: string) => void;
 }
 
 //prefix
@@ -44,6 +50,15 @@ const dateOfBirth = savedDateOfBirth ? JSON.parse(savedDateOfBirth) : "";
 //anniversary
 const savedAnniversary = localStorage.getItem("anniversary");
 const anniversary = savedAnniversary ? JSON.parse(savedAnniversary) : "";
+//educational level
+const savedEducationalLevel = localStorage.getItem("educational-level");
+const educational_level = savedEducationalLevel ? JSON.parse(savedEducationalLevel) : "";
+//employment status
+const savedEmploymentStatus = localStorage.getItem("employment-status");
+const employment_status = savedEmploymentStatus ? JSON.parse(savedEmploymentStatus) : "";
+//health status
+const savedHealthStatus = localStorage.getItem("health-status");
+const health_status = savedHealthStatus ? JSON.parse(savedHealthStatus) : "";
 
 export const usePersonalInformationStore = create<PersonalInfo>()(
   (set, get) => ({
@@ -55,6 +70,9 @@ export const usePersonalInformationStore = create<PersonalInfo>()(
     gender,
     dateOfBirth,
     anniversary,
+    educational_level,
+    employment_status,
+    health_status,
     setPrefix: (prefix) => {
       {
         set(() => {
@@ -104,16 +122,44 @@ export const usePersonalInformationStore = create<PersonalInfo>()(
       localStorage.setItem("gender", JSON.stringify(get().gender));
     },
     setDateOfBirth: (dob) => {
-     { set(() => {
-        return {dateOfBirth: dob}
-      })}
+      {
+        set(() => {
+          return { dateOfBirth: dob };
+        });
+      }
       localStorage.setItem("dateOfBirth", JSON.stringify(get().dateOfBirth));
     },
     setAnniversary: (anniversary) => {
-     { set(() => {
-        return {anniversary}
-      })}
+      {
+        set(() => {
+          return { anniversary };
+        });
+      }
       localStorage.setItem("anniversary", JSON.stringify(get().anniversary));
-    }
+    },
+    setEducationalLevel: (educational_level) => {
+      {
+        set(() => {
+          return { educational_level };
+        });
+      }
+      localStorage.setItem("educational-level", JSON.stringify(get().educational_level));
+    },
+    setEmploymentStatus: (employment_status) => {
+      {
+        set(() => {
+          return { employment_status };
+        });
+      }
+      localStorage.setItem("employment-status", JSON.stringify(get().employment_status));
+    },
+    setHealthStatus: (health_status) => {
+      {
+        set(() => {
+          return { health_status };
+        });
+      }
+      localStorage.setItem("health-status", JSON.stringify(get().health_status));
+    },
   })
 );

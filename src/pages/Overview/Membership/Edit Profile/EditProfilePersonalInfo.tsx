@@ -13,6 +13,9 @@ const EditProfilePersonalInfo = () => {
     setGender,
     setDateOfBirth,
     setAnniversary,
+    setEducationalLevel,
+    setEmploymentStatus,
+    setHealthStatus,
     first_name,
     middle_name,
     last_name,
@@ -21,6 +24,9 @@ const EditProfilePersonalInfo = () => {
     anniversary,
     prefix,
     gender,
+    educational_level,
+    employment_status,
+    health_status,
   } = usePersonalInformationStore();
 
   const navigate = useNavigate();
@@ -54,6 +60,18 @@ const EditProfilePersonalInfo = () => {
 
   const handleGender = (value: string) => {
     setGender(value);
+  };
+
+  const handleEducationalLevel = (value: string) => {
+    setEducationalLevel(value.toLowerCase());
+  };
+
+  const handleEmploymentStatus = (value: string) => {
+    setEmploymentStatus(value.toLowerCase());
+  };
+
+  const handleHealthStatus = (value: string) => {
+    setHealthStatus(value.toLowerCase());
   };
 
   return (
@@ -124,6 +142,40 @@ const EditProfilePersonalInfo = () => {
           />
         </div>
       </div>
+      <DropDownInput
+        text="Educational Level"
+        items={[
+          "Undefined",
+          "Primary",
+          "Secondary",
+          "Graduate",
+          "Post Graduate",
+          "Others",
+        ]}
+        placeholder="undefined"
+        compulsory=" "
+        onSelect={handleEducationalLevel}
+        value={educational_level}
+        onChange={(educational_level) => setEducationalLevel(educational_level)}
+      />
+      <DropDownInput
+        text="Employment Status"
+        items={["Undefined", "Self Employed", "Employed", "Unemployed"]}
+        placeholder="undefined"
+        compulsory=" "
+        onSelect={handleEmploymentStatus}
+        value={employment_status}
+        onChange={(employment_status) => setEducationalLevel(employment_status)}
+      />
+      <DropDownInput
+        text="Health Status"
+        items={["Undefined", "Healthy", "Allergic", "Special Condition"]}
+        placeholder="undefined"
+        compulsory=" "
+        onSelect={handleHealthStatus}
+        value={health_status}
+        onChange={(health_status) => setEducationalLevel(health_status)}
+      />
       <button
         className=" self-end mt-4 bg-[#17275B] text-white px-4
         

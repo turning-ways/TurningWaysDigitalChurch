@@ -12,6 +12,30 @@ export const formatDate = (dateString: string) => {
   const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(date);
   return formattedDate;
 };
+export const formatDateTime = (dateTimeString: string) => {
+  const dateTime = new Date(dateTimeString);
+
+  // Format options for date
+  const dateFormatOptions: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+  const formattedDate = new Intl.DateTimeFormat("en-GB", dateFormatOptions).format(dateTime);
+
+  // Format options for time
+  const timeFormatOptions: Intl.DateTimeFormatOptions = {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true, // Use 12-hour format (e.g., 9:40pm)
+  };
+  const formattedTime = new Intl.DateTimeFormat("en-US", timeFormatOptions).format(dateTime);
+
+  // Combine date and time into desired format
+  const formattedDateTime = `${formattedDate} ${formattedTime}`;
+
+  return formattedDateTime;
+};
 const PersonalInformation = () => {
   const { data } = useGetMemberDetails();
   const queryParams = new URLSearchParams(location.search);
