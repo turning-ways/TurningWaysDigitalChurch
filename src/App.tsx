@@ -32,6 +32,7 @@ import LoginWithNumber from "./pages/Signin/WithPhoneNumber/LoginWithNumber";
 import Contacts from "./pages/Overview/Contacts/Contacts";
 import ContactDetails from "./pages/Overview/Contacts/ContactDetails";
 import Settings from "./pages/Overview/Settings/Settings";
+import MemberSignup from "./pages/Signup/MemberSignup";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
 
           {/* Register a New User  */}
           <Route path="/register" element={<Register />} />
+          <Route path="/register/member" element={<MemberSignup />} />
           <Route path="/register/phone" element={<RegisterWithPhone />} />
           <Route path="register">
             <Route path="otp-verification" element={<OtpVerification />} />
