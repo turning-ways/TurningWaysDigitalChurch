@@ -105,6 +105,33 @@ const PersonalInformation = () => {
               {formatDate(data?.member?.dateOfBirth)}
             </p>
           </div>
+          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+            <p className="text-[#727272]">Educational Level</p>
+            <p className="outline-none text-[#434343] text-lg w-full">
+              {data.member.educationalLevel
+                ? data?.member?.educationalLevel?.slice(0, 1).toUpperCase() +
+                  data?.member?.educationalLevel?.slice(1)
+                : "Undefined"}
+            </p>
+          </div>
+          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+            <p className="text-[#727272]">Employment Status</p>
+            <p className="outline-none text-[#434343] text-lg w-full">
+              {data.member.employmentStatus
+                ? data?.member?.employmentStatus?.slice(0, 1).toUpperCase() +
+                  data?.member?.employmentStatus?.slice(1)
+                : "Undefined"}
+            </p>
+          </div>
+          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+            <p className="text-[#727272]">Health Status</p>
+            <p className="outline-none text-[#434343] text-lg w-full">
+              {data.member.healthStatus
+                ? data?.member?.healthStatus?.slice(0, 1).toUpperCase() +
+                  data?.member?.healthStatus?.slice(1)
+                : "Undefined"}
+            </p>
+          </div>
           <button
             className=" self-end mt-4 bg-[#17275B] text-white px-4
         

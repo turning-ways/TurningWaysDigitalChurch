@@ -32,7 +32,7 @@ const UpdateContactInfo = () => {
   const memberId = queryParams.get("id");
 
   const { mutate, isPending } = useUpdateMember(memberId ? memberId : "");
-  const { first_name, last_name, middle_name, suffix, gender } =
+  const { first_name, last_name, middle_name, suffix, gender, employment_status, educational_level, health_status } =
     useEditPersonalInformationStore();
   const { member_status, work_type, service_unit } =
     useEditChurchInformationStore();
@@ -53,6 +53,9 @@ const UpdateContactInfo = () => {
       memberStatus: member_status,
       workerType: work_type,
       ServiceUnit: service_unit,
+      educationalLevel: educational_level.toLowerCase(),
+      employmentStatus: employment_status.toLowerCase(),
+      healthStatus: health_status.toLowerCase(),
     });
     // console.log(member_status, work_type, service_unit);
   };

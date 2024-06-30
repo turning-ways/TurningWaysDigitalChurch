@@ -165,7 +165,7 @@ const EditProfilePersonalInfo = () => {
         compulsory=" "
         onSelect={handleEmploymentStatus}
         value={employment_status}
-        onChange={(employment_status) => setEducationalLevel(employment_status)}
+        onChange={(employment_status) => setEmploymentStatus(employment_status)}
       />
       <DropDownInput
         text="Health Status"
@@ -174,7 +174,7 @@ const EditProfilePersonalInfo = () => {
         compulsory=" "
         onSelect={handleHealthStatus}
         value={health_status}
-        onChange={(health_status) => setEducationalLevel(health_status)}
+        onChange={(health_status) => setHealthStatus(health_status)}
       />
       <button
         className=" self-end mt-4 bg-[#17275B] text-white px-4

@@ -27,6 +27,9 @@ export interface Member {
     photo: string;
     role: string;
     workerType: string;
+    employmentStatus: string;
+    educationalLevel: string;
+    healthStatus: string;
   };
 }
 

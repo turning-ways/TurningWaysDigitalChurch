@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useGetMemberDetails from "../../../../hooks/Member/member-service/useGetMemberDetails";
-import { formatDate, formatDateTime } from "./PersonalInformation";
+import { formatDateTime } from "./PersonalInformation";
 
 const MembershipHistory = () => {
   // dateJoined, createdBy and updated at

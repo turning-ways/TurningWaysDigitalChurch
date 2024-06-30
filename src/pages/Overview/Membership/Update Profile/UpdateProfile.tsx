@@ -38,6 +38,9 @@ const UpdateProfile = () => {
     setSuffix,
     setGender,
     setDateOfBirth,
+    setEducationalLevel,
+    setEmploymentStatus,
+    setHealthStatus,
   } = useEditPersonalInformationStore();
   const { setContactEmail, setContactAddress, setContactPhone } =
     useEditContactInformationStore();
@@ -57,6 +60,9 @@ const UpdateProfile = () => {
     setMemberStatus(data ? data.member.memberStatus : "");
     setWorkType(data ? data.member.workerType : "");
     setServiceUnit(data ? data.member.ServiceUnit : "");
+    setEducationalLevel(data ? data.member.educationalLevel : "");
+    setEmploymentStatus(data ? data.member.employmentStatus : "");
+    setHealthStatus(data ? data.member.healthStatus : "");
   }, []);
 
   return (

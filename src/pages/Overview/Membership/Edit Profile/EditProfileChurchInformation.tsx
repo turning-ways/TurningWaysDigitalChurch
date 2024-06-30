@@ -51,6 +51,9 @@ const EditProfileChurchInfo = () => {
     gender,
     dateOfBirth,
     anniversary,
+    educational_level,
+    employment_status,
+    health_status,
   } = usePersonalInformationStore();
   const { contact_email } = useContactInformationStore();
   const { contact_address, contact_phone } = useContactInformationStore();
@@ -79,6 +82,9 @@ const EditProfileChurchInfo = () => {
         memberStatus: member_status === "" ? "inactive" : member_status,
         ServiceUnit: service_unit,
         workType: work_type,
+        educationalLevel: educational_level.toLowerCase(),
+        employmentStatus: employment_status.toLowerCase(),
+        healthStatus: health_status.toLowerCase(),
       });
     } else {
       notify("Please fill in all required fields");

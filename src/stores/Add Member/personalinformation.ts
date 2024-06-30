@@ -49,16 +49,16 @@ const savedDateOfBirth = localStorage.getItem("dateOfBirth");
 const dateOfBirth = savedDateOfBirth ? JSON.parse(savedDateOfBirth) : "";
 //anniversary
 const savedAnniversary = localStorage.getItem("anniversary");
-const anniversary = savedAnniversary ? JSON.parse(savedAnniversary) : "";
+const anniversary = savedAnniversary && savedAnniversary !== "undefined" ? JSON.parse(savedAnniversary) : "";
 //educational level
 const savedEducationalLevel = localStorage.getItem("educational-level");
-const educational_level = savedEducationalLevel ? JSON.parse(savedEducationalLevel) : "";
+const educational_level = savedEducationalLevel && savedEducationalLevel !== "undefined" ? JSON.parse(savedEducationalLevel) : "undefined";
 //employment status
 const savedEmploymentStatus = localStorage.getItem("employment-status");
-const employment_status = savedEmploymentStatus ? JSON.parse(savedEmploymentStatus) : "";
+const employment_status = savedEmploymentStatus && savedEmploymentStatus !== "undefined" ? JSON.parse(savedEmploymentStatus) : "undefined";
 //health status
 const savedHealthStatus = localStorage.getItem("health-status");
-const health_status = savedHealthStatus ? JSON.parse(savedHealthStatus) : "";
+const health_status = savedHealthStatus && savedHealthStatus !== "undefined" ? JSON.parse(savedHealthStatus) : "undefined";
 
 export const usePersonalInformationStore = create<PersonalInfo>()(
   (set, get) => ({

@@ -23,7 +23,13 @@ const UpdatePersonalInfo = () => {
     gender,
     prefix,
     dateOfBirth,
+    educational_level,
+    employment_status,
+    health_status,
     setDateOfBirth,
+    setEducationalLevel,
+    setEmploymentStatus,
+    setHealthStatus,
   } = useEditPersonalInformationStore();
 
   const navigate = useNavigate();
@@ -87,8 +93,23 @@ const UpdatePersonalInfo = () => {
       memberStatus: member_status,
       workerType: work_type,
       ServiceUnit: service_unit,
+      employmentStatus: employment_status.toLowerCase(),
+      educationalLevel: educational_level.toLowerCase(),
+      healthStatus: health_status.toLowerCase(),
     });
     // console.log(member_status, work_type, service_unit);
+  };
+
+  const handleEducationalLevel = (value: string) => {
+    setEducationalLevel(value.toLowerCase());
+  };
+
+  const handleEmploymentStatus = (value: string) => {
+    setEmploymentStatus(value.toLowerCase());
+  };
+
+  const handleHealthStatus = (value: string) => {
+    setHealthStatus(value.toLowerCase());
   };
 
   return (
@@ -135,6 +156,40 @@ const UpdatePersonalInfo = () => {
           />
         </div>
       </div>
+      <DropDownInput
+        text="Educational Level"
+        items={[
+          "Undefined",
+          "Primary",
+          "Secondary",
+          "Graduate",
+          "Post Graduate",
+          "Others",
+        ]}
+        placeholder="undefined"
+        compulsory=" "
+        onSelect={handleEducationalLevel}
+        value={educational_level}
+        onChange={(educational_level) => setEducationalLevel(educational_level)}
+      />
+      <DropDownInput
+        text="Employment Status"
+        items={["Undefined", "Self Employed", "Employed", "Unemployed"]}
+        placeholder="undefined"
+        compulsory=" "
+        onSelect={handleEmploymentStatus}
+        value={employment_status}
+        onChange={(employment_status) => setEmploymentStatus(employment_status)}
+      />
+      <DropDownInput
+        text="Health Status"
+        items={["Undefined", "Healthy", "Allergic", "Special Condition"]}
+        placeholder="undefined"
+        compulsory=" "
+        onSelect={handleHealthStatus}
+        value={health_status}
+        onChange={(health_status) => setHealthStatus(health_status)}
+      />
       <div className="flex justify-between">
         <button
           className=" self-end mt-4 bg-[#17275B] text-white px-4
