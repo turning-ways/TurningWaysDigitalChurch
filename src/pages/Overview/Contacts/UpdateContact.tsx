@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import Modal from "../../../ui/Modal/Modal";
-import { useUpdateContact, useGetContacts } from "../../../hooks/useContact";
+import {
+  useUpdateContact,
+  useGetContacts,
+  useUpdateContactStatus,
+} from "../../../hooks/useContact";
 import InformationInput from "../Membership/Edit Profile/InformationInput";
 import PhoneNumber from "../../../ui/Input/PhoneNumber";
 import { IoIosClose } from "react-icons/io";
 import { ThreeDots } from "react-loader-spinner";
 import { DropDownInput } from "../../../ui/DropDownMenu/DropDownInput";
 import { useParams } from "react-router-dom";
+import { useUserAuth } from "../../../stores/user";
 
 interface UpdateContactProps {
   onClose: () => void;
@@ -19,13 +24,25 @@ const UpdateContact: React.FC<UpdateContactProps> = ({ onClose, id }) => {
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
   const [maturity, setMaturity] = useState("");
+  const [membership, setMembership] = useState("");
+  // const [dateOfBirth, setDateOfBirth] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const {contact_id} = useParams();
 
+  const { contact_id } = useParams();
 
-  const { mutate: update, isPending } = useUpdateContact(onClose, contact_id?contact_id : id );
+  const { mutate: update, isPending } = useUpdateContact(
+    onClose,
+    contact_id ? contact_id : id
+  );
 
   const { data: contact } = useGetContacts();
+
+  const contactStatusQuery = useUpdateContactStatus({
+    id: contact_id,
+    onClose: () => console.log("status updated"),
+  });
+
+  const modifiedBy = useUserAuth((auth) => auth.user?._id);
 
   const handleEdit = () => {
     update({
@@ -36,6 +53,7 @@ const UpdateContact: React.FC<UpdateContactProps> = ({ onClose, id }) => {
       phoneNumber,
       email,
     });
+    contactStatusQuery.mutate({ membershipStatus: membership, modifiedBy });
   };
 
   useEffect(() => {
@@ -46,13 +64,14 @@ const UpdateContact: React.FC<UpdateContactProps> = ({ onClose, id }) => {
       setMaturity(contact.maturity);
       setPhoneNumber(contact.phoneNumber);
       setEmail(contact.email);
+      setMembership(contact.membershipStatus);
     }
   }, [contact]);
 
   return (
-    <Modal onClose={() => console.log("close")}>
+    <Modal onClose={onClose}>
       <form
-        className="w-[450px] md:w-[605px] bg-white px-6 py-6 border rounded-2xl flex flex-col max-h-[600px] overflow-y-scroll"
+        className="w-[450px] z-[999] md:w-[605px] bg-white px-6 py-6 border rounded-2xl flex flex-col max-h-[600px] overflow-y-scroll"
         onSubmit={(e) => {
           e.preventDefault();
           handleEdit();
@@ -86,10 +105,18 @@ const UpdateContact: React.FC<UpdateContactProps> = ({ onClose, id }) => {
           text="Maturity"
           items={["Child", "Adult", "Teen"]}
           placeholder="Child, Adult or Teen"
-          compulsory="*"
+          compulsory=" "
           onSelect={(value) => setMaturity(value)}
           value={maturity}
           onChange={(maturity) => setMaturity(maturity)}
+        />
+        <DropDownInput
+          text="Membership:"
+          items={["potential", "confirmed", "cancelled"]}
+          placeholder="potential, confirmed, cancelled"
+          onSelect={(value) => setMembership(value)}
+          value={membership}
+          onChange={(value) => setMembership(value)}
         />
         <InformationInput
           text={"Email"}
@@ -107,6 +134,19 @@ const UpdateContact: React.FC<UpdateContactProps> = ({ onClose, id }) => {
           value={address}
           notCompulsory={" "}
         />
+        {/* <div className=" space-y-1 mb-4">
+        <p className="text-[#727272]">
+          D.O.B <span className="text-[#61BD74]"> *</span>
+        </p>
+        <div className="border rounded-lg p-2">
+          <input
+            className="outline-none text-[#434343] text-lg w-full"
+            type="date"
+            value={dateOfBirth}
+            onChange={(e) => setDateOfBirth(e.target.value)}
+          />
+        </div>
+      </div> */}
         <button className="self-end border border-[#414141] px-20 py-2 rounded-lg text-[#141414] sticky bottom-0 bg-white">
           {!isPending ? (
             <p>Save</p>

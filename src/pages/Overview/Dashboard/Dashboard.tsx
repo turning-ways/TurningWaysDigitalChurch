@@ -14,27 +14,17 @@ import { useGetAllContacts } from "../../../hooks/useContact";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useMemberStats from "../../../hooks/Member/useMemberStats";
 import { useEffect } from "react";
+import Modal from "../../../ui/Modal/Modal";
+import { ThreeDots } from "react-loader-spinner";
 // import useMemberStats from "../../../hooks/Member/useMemberStats";
 
 const Dashboard = () => {
   const { data: members } = useGetAllMembers({ page: 1, pageSize: 100000 });
-  const noOfMembers = members?.length;
-  const getGenderPercentage = (gender: string) => {
-    const selectedGender = members?.filter(
-      (member: { gender: string }) => member.gender === gender
-    );
-    const noOfSelectedGender = selectedGender?.length;
-    const selectedGenderPercentage =
-      noOfSelectedGender &&
-      noOfMembers &&
-      (noOfSelectedGender / noOfMembers) * 100;
-    return selectedGenderPercentage?.toPrecision(3);
-  };
 
   const getData = [
     {
       icon: <MdCalendarToday />,
-      title: "Today",
+      title: "Till Date",
       id: "today",
     },
     {
@@ -150,56 +140,65 @@ const Dashboard = () => {
         <div className="mt-10 border border-secondary w-full px-4 pt-6 rounded-[20px]">
           <div className="h-44 mb-20">
             <p className="text-xl text-[#2B3674]">Membership data</p>
-            <p className="text-[#BABEC6] mb-4">New members added</p>
+            <p className="text-[#BABEC6] mb-4">Monthly trend</p>
             <MembershipDataBar />
           </div>
         </div>
-        {members?.length !== 1 &&
-          memberStatsQuery.data?.["members-count"] !== 0 && (
-            <div className="mt-10 border border-secondary w-full px-4 pt-6 rounded-[20px]">
-              <div className="h-44 mb-20">
-                <p className="text-xl text-[#2B3674] mb-10">Age Distribution</p>
-                <AgeDistrBar timeLine={date ?? ""} />
-              </div>
+        {/* {members?.length !== 1 &&
+          memberStatsQuery.data?.["members-count"] !== 0 && ( */}
+        <div className="mt-10 border border-secondary w-full px-4 pt-6 rounded-[20px]">
+          <div className="h-44 mb-20">
+            <p className="text-xl text-[#2B3674] mb-10">Age Distribution</p>
+            <AgeDistrBar timeLine={date ?? ""} />
+          </div>
+        </div>
+        {/* )} */}
+        {/* {members?.length !== 1 &&
+          memberStatsQuery.data?.["members-count"] !== 0 && ( */}
+        <div className="mt-10 w-full px-4  pt-6 rounded-[20px] bg-[#F6F8FA]">
+          <div className=" flex flex-col">
+            <p className="text-xl text-[#2B3674] mb-3">Gender Distribution</p>
+            <div className="w-[200px] self-center">
+              <PieChart timeLine={date ?? ""} />
             </div>
-          )}
-        {members?.length !== 1 &&
-          memberStatsQuery.data?.["members-count"] !== 0 && (
-            <div className="mt-10 w-full px-4  pt-6 rounded-[20px] bg-[#F6F8FA]">
-              <div className=" flex flex-col">
-                <p className="text-xl text-[#2B3674] mb-3">
-                  Gender Distribution
+            <div className="flex bg-white justify-center gap-x-3 py-2 my-3 rounded-[15px]">
+              <div>
+                <div className="flex gap-x-2">
+                  <div className="w-2 h-2 bg-[#758CD7] rounded-full" />
+                  <p className="text-[#A3AED0]">Male</p>
+                </div>
+                <p className="text-right text-[#2B3674] text-[18px] font-azoBold">
+                  {(memberStatsQuery?.data?.["male-members-count"] &&
+                    (memberStatsQuery?.data?.["male-members-count"] /
+                      memberStatsQuery?.data?.["members-count"]) *
+                      100) + "%"}
                 </p>
-                <div className="w-[200px] self-center">
-                  <PieChart timeLine={date ?? ""} />
+              </div>
+              <div>
+                <div className="flex gap-x-2">
+                  <div className="w-2 h-2 bg-[#A0D7AB] rounded-full" />
+                  <p className="text-[#A3AED0]">Female</p>
                 </div>
-                <div className="flex bg-white justify-center gap-x-3 py-2 my-3 rounded-[15px]">
-                  <div>
-                    <div className="flex gap-x-2">
-                      <div className="w-2 h-2 bg-[#758CD7] rounded-full" />
-                      <p className="text-[#A3AED0]">Male</p>
-                    </div>
-                    <p className="text-right text-[#2B3674] text-[18px] font-azoBold">
-                      {getGenderPercentage("male") + "%"}
-                    </p>
-                  </div>
-                  <div>
-                    <div className="flex gap-x-2">
-                      <div className="w-2 h-2 bg-[#A0D7AB] rounded-full" />
-                      <p className="text-[#A3AED0]">Female</p>
-                    </div>
-                    <p className="text-right text-[#2B3674] text-[18px] font-azoBold">
-                      {getGenderPercentage("female") + "%"}
-                    </p>
-                  </div>
-                </div>
+                <p className="text-right text-[#2B3674] text-[18px] font-azoBold">
+                  {(memberStatsQuery?.data?.["female-members-count"] &&
+                    (memberStatsQuery?.data?.["female-members-count"] /
+                      memberStatsQuery?.data?.["female-members-count"]) *
+                      100) + "%"}
+                </p>
               </div>
             </div>
-          )}
+          </div>
+        </div>
+        {/* )} */}
       </div>
       {/* component 4 closed */}
       {/* component 5 */}
       <MemberList />
+      {memberStatsQuery.isLoading && (
+        <Modal onClose={() => console.log("restricted")}>
+          <ThreeDots color="black" />
+        </Modal>
+      )}
     </OverviewContainer>
   );
 };

@@ -1,65 +1,13 @@
-import { useEffect, useState } from "react";
-import { DropDownInput } from "../../ui/DropDownMenu/DropDownInput";
-import { useUserAuth } from "../../stores/user";
+import { capitalizeFirstLetters } from "../../constants/constants";
 import {
   useGetContacts,
-  useUpdateContact,
-  useUpdateContactStatus,
 } from "../../hooks/useContact";
-import { useParams } from "react-router-dom";
-import { capitalizeFirstLetters } from "../../constants/constants";
 
 const Status = () => {
-  const id = useUserAuth((auth) => auth.user?._id);
-  const { contact_id } = useParams();
   const contactDetailsQuery = useGetContacts();
-
-  const contactStatusQuery = useUpdateContactStatus({
-    id: contact_id,
-    onClose: () => console.log("status updated"),
-  });
-  const updateContactQuery = useUpdateContact(
-    () => console.log("..."),
-    contact_id ?? ""
-  );
-  const [membershipStatus, setMembershipStatus] = useState("");
-  const handleMembershipStatus = (value: string) => {
-    setMembershipStatus(value);
-    contactStatusQuery.mutate({ membershipStatus: value, modifiedBy: id });
-  };
-  const [maturity, setMaturity] = useState("");
-  const handleMaturity = (value: string) => {
-    setMaturity(value);
-    updateContactQuery.mutate({ maturity: value });
-  };
-
-  useEffect(() => {
-    if (contactDetailsQuery.data) {
-      setMembershipStatus(contactDetailsQuery.data.membershipStatus);
-      setMaturity(contactDetailsQuery.data.maturity)
-    }
-  }, [contactDetailsQuery.data]);
-
 
   return (
     <section className="md:grid md:grid-cols-2 gap-x-4 ">
-      <DropDownInput
-        text="Membership:"
-        items={["potential", "confirmed", "cancelled"]}
-        placeholder="In Progress"
-        onSelect={handleMembershipStatus}
-        value={capitalizeFirstLetters(membershipStatus)}
-        onChange={(value) => setMembershipStatus(value)}
-      />
-      <DropDownInput
-        text="Maturity:"
-        items={["adult", "child", "teen"]}
-        placeholder="Adult"
-        onSelect={handleMaturity}
-        value={capitalizeFirstLetters(maturity)}
-        onChange={(value) => setMaturity(value)}
-      />
-
       {fields.map((field, index) => (
         <div
           className={`space-y-1 mb-4 ${
@@ -74,7 +22,7 @@ const Status = () => {
               readOnly={true}
               value={
                 contactDetailsQuery.data
-                  ? contactDetailsQuery.data[field.id]
+                  ? (field.id !== "phoneNumber" && field.id !== "email" ? capitalizeFirstLetters(contactDetailsQuery.data[field.id]) : contactDetailsQuery.data[field.id])
                   : ""
               }
             />
@@ -88,9 +36,12 @@ const Status = () => {
 export default Status;
 
 const fields = [
+  { id: "membershipStatus", name: "Membership Status" },
+  { id: "maturity", name: "Maturity" },
   { id: "phoneNumber", name: "Phone Number" },
   { id: "email", name: "Email" },
   { id: "dateOfBirth", name: "DOB" },
   { id: "gender", name: "Gender" },
   { id: "address", name: "Address" },
+
 ];

@@ -142,7 +142,7 @@ const MemberList = () => {
               <MemberTable
                 length={members.length}
                 index={index}
-                first_name={item.first_name}
+                first_name={item.fullname}
                 dateOfBirth={item.dateOfBirth?.slice(0, 10)}
                 gender={item.gender}
                 email={item.email}
@@ -157,7 +157,7 @@ const MemberList = () => {
             <MemberTable
               length={firstTimers.length}
               index={index}
-              first_name={item.first_name}
+              first_name={item.fullname}
               dateOfBirth={item.dateOfBirth?.slice(0, 10)}
               gender={item.gender}
               email={item.email}
@@ -168,7 +168,9 @@ const MemberList = () => {
         {active === "First Timers" &&
           firstTimers &&
           firstTimers.length === 0 && (
-            <p className="text-[#CACACA] mt-2">No first timer's at the moment</p>
+            <p className="text-[#CACACA] mt-2">
+              No first timer's at the moment
+            </p>
           )}
         {active === "Upcoming Birthday" &&
           birthdayCelebrants &&
@@ -176,7 +178,7 @@ const MemberList = () => {
             <MemberTable
               length={birthdayCelebrants.length}
               index={index}
-              first_name={item.first_name}
+              first_name={item.fullname}
               dateOfBirth={item.dateOfBirth?.slice(0, 10)}
               gender={item.gender}
               email={item.email}
@@ -197,7 +199,7 @@ const MemberList = () => {
             <MemberTable
               length={upcomingAnniversary.length}
               index={index}
-              first_name={item.first_name}
+              first_name={item.fullname}
               dateOfBirth={item.dateOfBirth?.slice(0, 10)}
               gender={item.gender}
               email={item.email}
