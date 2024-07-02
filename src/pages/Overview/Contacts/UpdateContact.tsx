@@ -120,6 +120,7 @@ const UpdateContact: React.FC<UpdateContactProps> = ({ onClose, id }) => {
         />
         <InformationInput
           text={"Email"}
+          type="email"
           onChange={(e) => {
             setEmail(e.target.value);
           }}
