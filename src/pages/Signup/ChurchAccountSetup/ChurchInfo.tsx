@@ -264,7 +264,7 @@ const ChurchInfo = () => {
 
             <div className="mb-2">
               <HeaderTwo>
-                Postal/Zip Code <span className="text-secondary">*</span>
+                Postal/Zip Code
               </HeaderTwo>
               <input
                 type="text"

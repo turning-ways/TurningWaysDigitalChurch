@@ -21,7 +21,7 @@ const Register = () => {
     email: z.string().email({ message: "Please enter a valid email" }),
     password: z
       .string()
-      .min(5, { message: "Password should be atleast 8 characters long" }),
+      .min(8, { message: "Password should be atleast 8 characters long" }),
     passwordConfirm: z
       .string()
       .min(8, { message: "Password should be atleast 8 characters long" }),

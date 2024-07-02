@@ -46,29 +46,33 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
     }
   };
 
-
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Function to handle clicks outside the dropdown
   const handleClickOutside = (event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-      setShowProfile(false)
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setShowProfile(false);
     }
   };
 
   // Effect to set up event listener when component mounts
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     // Clean up event listener when component unmounts
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
-
   return (
-    <div className="space-y-5 font-azo flex flex-col relative">
+    <div
+      className="space-y-5 font-azo flex flex-col relative"
+      ref={dropdownRef}
+    >
       <div className="flex items-center gap-x-2">
         <div className="bg-yellow-400 h-10 w-10 justify-center flex items-center rounded-full">
           {user?.churchId?.name?.charAt(0)?.toUpperCase()}
@@ -80,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
       <div className="flex justify-between items-center">
         <h2 className="font-azoBold text-[#0F1D48] text-3xl">{text}</h2>
         <div className="flex space-x-3 items-center">
-          <Search size="hidden md:flex" />
+          <Search size="hidden md:flex"/>
           <IoIosAddCircleOutline
             className="text-[45px] cursor-pointer hidden sm:block"
             onClick={() =>
@@ -92,7 +96,6 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
             <div
               className="flex space-x-2 items-center w-[28px] "
               onClick={() => setShowProfile(!showProfile)}
-              ref={dropdownRef}
             >
               {user?.photo ? (
                 <img

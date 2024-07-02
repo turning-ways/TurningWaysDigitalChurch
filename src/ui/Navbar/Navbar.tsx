@@ -5,6 +5,7 @@ import { success } from "../../hooks/useAuthData";
 import { navList } from "./navlist";
 import { useEffect, useRef, useState } from "react";
 import { motion as m } from "framer-motion";
+import Modal from "../Modal/Modal";
 
 interface NavBarProps {
   active?: string;
@@ -12,6 +13,7 @@ interface NavBarProps {
 
 const Navbar: React.FC<NavBarProps> = ({ active }) => {
   const { setUser } = useUserAuth();
+  const [open, setOpen] = useState(false);
 
   const logoutUser = async () => {
     try {
@@ -126,7 +128,7 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
             active === "Logout" && "bg-DarkBlueHover text-white"
           }`}
           onClick={() => {
-            logoutUser();
+            setOpen(true)
           }}
         >
           <li className="flex gap-x-4">
@@ -135,6 +137,28 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
           </li>
         </div>
       </nav>
+      {open && (
+        <Modal onClose={() => setOpen(false)}>
+          <div className="bg-white px-[26px] py-[37px] rounded-2xl text-lg flex flex-col gap-6">
+            <p>Are you sure you want to log out</p>
+
+            <div className="flex self-center space-x-4">
+              <button
+                className=" text-[#ffffff] bg-[#e74a4a]  py-2 px-4 rounded-[14px] self-center"
+                onClick={() => logoutUser()}
+              >
+                Logout
+              </button>
+              <button
+                className=" text-[#7B7B7B] bg-[#F4F4F4] py-2 px-4 rounded-[14px] self-center"
+                onClick={() => setOpen(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };

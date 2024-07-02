@@ -182,7 +182,7 @@ const Dashboard = () => {
                 <p className="text-right text-[#2B3674] text-[18px] font-azoBold">
                   {(memberStatsQuery?.data?.["female-members-count"] &&
                     (memberStatsQuery?.data?.["female-members-count"] /
-                      memberStatsQuery?.data?.["female-members-count"]) *
+                      memberStatsQuery?.data?.["members-count"]) *
                       100) + "%"}
                 </p>
               </div>
