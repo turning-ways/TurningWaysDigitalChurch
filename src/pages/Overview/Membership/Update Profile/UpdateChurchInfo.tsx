@@ -45,7 +45,7 @@ const UpdateChurchInfo = () => {
   const memberId = queryParams.get("id");
 
   const { mutate, isPending } = useUpdateMember(memberId ? memberId : "");
-  const { first_name, last_name, middle_name, suffix, gender } =
+  const { first_name, last_name, middle_name, suffix, gender, educational_level, employment_status, health_status } =
     useEditPersonalInformationStore();
   const { contact_address, contact_phone, contact_email } =
     useEditContactInformationStore();
@@ -67,6 +67,9 @@ const UpdateChurchInfo = () => {
       memberStatus: member_status,
       workerType: work_type,
       ServiceUnit: service_unit,
+      employmentStatus: employment_status,
+      educationalLevel: educational_level,
+      healthStatus: health_status,
     });
     // console.log(member_status, work_type, service_unit);
   };

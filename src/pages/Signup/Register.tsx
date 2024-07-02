@@ -16,12 +16,8 @@ import { notify } from "../../hooks/useAuthData";
 import TermsOfServiceAndPrivacyPolicy from "../../components/Register/TermsOfServiceAndPrivacyPolicy";
 const Register = () => {
   const schema = z.object({
-    first_name: z
-      .string()
-      .min(4, { message: "Name should be atleast 4 characters long" }),
-    last_name: z
-      .string()
-      .min(4, { message: "Name should be atleast 4 characters long" }),
+    first_name: z.string().min(1, { message: "Please fill this field" }),
+    last_name: z.string().min(1, { message: "Please fill this field" }),
     email: z.string().email({ message: "Please enter a valid email" }),
     password: z
       .string()
@@ -53,25 +49,31 @@ const Register = () => {
   const [checked, setChecked] = useState(false);
   return (
     <>
-      <AuthContainer center="sm:items-center pt-16 md:pt-0">
+      <AuthContainer center="sm:items-center md:pt-0">
         <form
           onSubmit={handleSubmit((data) => {
             const { first_name, last_name, email, password, passwordConfirm } =
               data;
             setEmail(email);
-            if (checked) {
-              mutate({
-                first_name,
-                last_name,
-                email,
-                password,
-                passwordConfirm,
-              });
+            if (password === passwordConfirm) {
+              if (checked) {
+                mutate({
+                  first_name,
+                  last_name,
+                  email,
+                  password,
+                  passwordConfirm,
+                });
+              } else {
+                notify(
+                  "Please agree to our terms of service and privacy policy"
+                );
+              }
             } else {
-              notify("Please agree to our terms of service and privacy policy");
+              notify("Passwords doesn't match")
             }
           })}
-          className="bg-white py-10 px-6"
+          className="bg-white py-10"
         >
           <div className=" mb-10">
             <Header>Sign Up</Header>

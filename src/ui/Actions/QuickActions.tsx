@@ -52,19 +52,22 @@ const QuickActions: React.FC<QuickActionsProps> = ({ display }) => {
   return (
     <>
       <div
-        className={`flex justify-between my-10 flex-col space-y-3 lg:flex-row lg:space-y-0 ${display}`}
+        className={`flex justify-between mt-6 mb-4 lg:my-10 flex-col space-y-1 lg:flex-row lg:space-y-0 ${display}`}
       >
         <p className="lg:text-lg text-[#7F7E7E] text-base">
           {members ? members.length : "0"} Persons
         </p>
-        <ul className="flex space-x-6 text-[18px] text-[#8A8989] overflow-x-scroll scrollbar-hide">
-          {items.map((item) => (
+        <ul className="flex md:space-x-6 text-[18px] text-[#8A8989] overflow-x-scroll scrollbar-hide">
+          {items.map((item, index) => (
             <li
-              className="flex items-center space-x-1 p-2 cursor-pointer hover:text-[#555555] whitespace-nowrap "
+              className={`flex items-center space-x-1 ${
+                index === 0 ? "py-2 pr-2 " : "p-2"
+              } text-sm md:text-base cursor-pointer hover:text-[#555555] whitespace-nowrap `}
               onClick={() => {
                 if (item.name === "Send Bulk Message") setOpen(!open);
                 if (item.name === "Export Data") handleOnExport();
               }}
+              key={index}
             >
               <div>{item.icon}</div>
               <p className="leading-3">{item.name}</p>

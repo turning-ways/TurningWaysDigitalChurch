@@ -357,40 +357,42 @@ export const useVerifySignUpOtp = () => {
 };
 
 export const useAddChurch = () => {
-	const { mutate } = useAddMember();
-	const { role, howDidYouHear, phoneNumber, email, gender, dateOfBirth } = useMemberStore();
-	// const navigate = useNavigate();
-	// const { setUser } = useUserAuth();
-	// const { data: admin } = useAuth();
-	// const queryClient = useQueryClient();
-	// const handleRefresh = () => {
-	//   refetchAuth(queryClient);
-	// };
-	return useMutation({
-		mutationFn: (churchDetails: Church) => apiClient<Church>("").post(churchDetails),
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		onSuccess: (res: any) => {
-			success("Church has been created successfully");
+  const { mutate } = useAddMember();
+  const { role, howDidYouHear, phoneNumber, email, gender, dateOfBirth } =
+    useMemberStore();
+  // const navigate = useNavigate();
+  // const { setUser } = useUserAuth();
+  // const { data: admin } = useAuth();
+  // const queryClient = useQueryClient();
+  // const handleRefresh = () => {
+  //   refetchAuth(queryClient);
+  // };
+  return useMutation({
+    mutationFn: (churchDetails: Church) =>
+      apiClient<Church>("").post(churchDetails),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onSuccess: (res: any) => {
+      success("Church has been created successfully");
 
-			// console.log(res.data.church.id);
+      // console.log(res.data.church.id);
 
-			mutate({
-				role: role.toLowerCase(),
-				howDidYouHear: howDidYouHear.toLowerCase(),
-				phone: phoneNumber,
-				churchId: res.data.church.id,
-				email,
-				gender: gender.toLowerCase(),
-				dateOfBirth,
-			});
+      mutate({
+        role: role.toLowerCase(),
+        howDidYouHear: howDidYouHear.toLowerCase(),
+        phone: phoneNumber,
+        churchId: res.data.church.id,
+        email,
+        gender: gender.toLowerCase(),
+        dateOfBirth,
+      });
 
-			// handleRefresh();
+      // handleRefresh();
 
-			// navigate("/admin/dashboard");
-		},
-		onError: (err) => {
-			notify("Fill in all required fields");
-			console.log(err);
-		},
-	});
+      // navigate("/admin/dashboard");
+    },
+    onError: (err: ErrorResponse) => {
+      notify(err.response.data.message);
+      console.log(err);
+    },
+  });
 };

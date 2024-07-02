@@ -4,15 +4,15 @@ interface EmailButtonProps {
   onClick: () => void;
 }
 
-const EmailButton: React.FC<EmailButtonProps> = ({onClick}) => {
+const EmailButton: React.FC<EmailButtonProps> = ({ onClick }) => {
   return (
     <div
-      className="border border-[#CBD5E0] rounded-[20px] py-3 px-6 flex space-x-3 items-center w-full lg:max-w-[550px] cursor-pointer mt-5"
+    className="border border-[#CBD5E0] rounded-lg py-3 px-6 flex justify-center lg:justify-normal space-x-2 lg:space-x-3 items-center w-full  cursor-pointer mt-5"
       onClick={onClick}
     >
-      <FaRegEnvelope style={{ fontSize: "28px" }} />
-      <p className="text-center w-full text-[#67728A] text-lg font-medium">
-        Continue with email
+      <FaRegEnvelope className="text-xl lg:text-[28px]" />
+      <p className=" lg:text-center lg:w-full text-[#67728A] text-sm lg:text-base font-medium">
+        Continue with phone
       </p>
     </div>
   );

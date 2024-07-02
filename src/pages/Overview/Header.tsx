@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   IoIosAddCircleOutline,
   IoMdNotificationsOutline,
@@ -46,10 +46,31 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
     }
   };
 
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Function to handle clicks outside the dropdown
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setShowProfile(false)
+    }
+  };
+
+  // Effect to set up event listener when component mounts
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Clean up event listener when component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+
   return (
     <div className="space-y-5 font-azo flex flex-col relative">
       <div className="flex items-center gap-x-2">
-        <div className="bg-yellow-400 px-3 py-1 rounded-full">
+        <div className="bg-yellow-400 h-10 w-10 justify-center flex items-center rounded-full">
           {user?.churchId?.name?.charAt(0)?.toUpperCase()}
         </div>
         <h1 className="tracking-widest">
@@ -58,7 +79,7 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
       </div>
       <div className="flex justify-between items-center">
         <h2 className="font-azoBold text-[#0F1D48] text-3xl">{text}</h2>
-        <div className="flex space-x-5 items-center">
+        <div className="flex space-x-3 items-center">
           <Search size="hidden md:flex" />
           <IoIosAddCircleOutline
             className="text-[45px] cursor-pointer hidden sm:block"
@@ -66,14 +87,18 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
               navigate("/admin/directory/add-member/personal-information")
             }
           />
-          <IoMdNotificationsOutline style={{ fontSize: "45px" }} />
+          <IoMdNotificationsOutline style={{ fontSize: "28px" }} />
           <div className="flex space-x-2 items-center">
             <div
-              className="flex space-x-2 items-center w-10 "
+              className="flex space-x-2 items-center w-[28px] "
               onClick={() => setShowProfile(!showProfile)}
+              ref={dropdownRef}
             >
               {user?.photo ? (
-                <img src={user.photo} className="w-full h-10 rounded-full" />
+                <img
+                  src={user.photo}
+                  className="w-full h-[28px] rounded-full"
+                />
               ) : (
                 <div className="border-black border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer z-50">
                   {first_name && first_name?.charAt(0) + last_name?.charAt(0)}

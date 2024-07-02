@@ -9,7 +9,7 @@ import { useVerifySignUpOtp, useVerifyEmail } from "../../hooks/useAuthData";
 let currentOtpIndex: number = 0;
 
 const OtpVerification = () => {
-  const [value, setValue] = useState<boolean>(false);
+  // const [value, setValue] = useState<boolean>(false);
 
   //
   const [otp, setOtp] = useState<string[]>(new Array(4).fill(""));
@@ -24,15 +24,15 @@ const OtpVerification = () => {
     setOtp(newOTP);
     if (!inputValue) setActiveOTPIndex(currentOtpIndex - 1);
     else setActiveOTPIndex(currentOtpIndex + 1);
-    if (inputValue !== "") {
-      setValue(true);
-    } else {
-      setValue(false);
-    }
+    // if (inputValue !== "") {
+    //   setValue(true);
+    // } else {
+    //   setValue(false);
+    // }
   };
 
-  console.log(value);
-  console.log(otp);
+  // console.log(value);
+  // console.log(otp);
 
   const handleOnKeyDown = (
     { key }: React.KeyboardEvent<HTMLInputElement>,
@@ -95,7 +95,7 @@ const OtpVerification = () => {
                 <React.Fragment key={index}>
                   <input
                     ref={index === activeOTPIndex ? inputRef : null}
-                    type="text"
+                    // type="number"
                     className="w-full h-12 border-b-2  bg-transparent outline-none text-center font-semibold border-b-[#CCE9D1]  focus:border-b-[#61BD74] focus:text-[#5E9942] text-[#CCE9D1] transition spin-button-none placeholder-[#CCE9D1]"
                     onChange={handleChange}
                     value={otp[index]}
@@ -115,7 +115,7 @@ const OtpVerification = () => {
             className={`text-[#CCE9D1]  ${
               timerActive
                 ? "cursor-not-allowed"
-                : "cursor-pointer hover:text-[#61BD74]"
+                : "cursor-pointer text-[#458552]"
             }`}
             disabled={timerActive}
             onClick={() => {

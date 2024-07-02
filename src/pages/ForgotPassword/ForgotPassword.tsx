@@ -30,7 +30,7 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <AuthContainer center="sm:items-center h-screen pt-16 md:pt-0">
+      <AuthContainer center="sm:items-center h-screen pt-10 md:pt-0">
         <form
           onSubmit={handleSubmit((data) => {
             const { inputKey } = data;
@@ -54,7 +54,7 @@ const ForgotPassword = () => {
             <input
               {...register("inputKey")}
               type="text"
-              className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full p-3 outline-none placeholder-[#4A5568]"
+              className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full p-3 outline-none placeholder-[#BBB9B9]"
               placeholder="example@gmail.com or 2340000000000"
             />
           </div>

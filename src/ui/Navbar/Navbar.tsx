@@ -3,7 +3,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { useUserAuth } from "../../stores/user";
 import { success } from "../../hooks/useAuthData";
 import { navList } from "./navlist";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion as m } from "framer-motion";
 
 interface NavBarProps {
@@ -36,8 +36,30 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Function to handle clicks outside the dropdown
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setIsOpen(false);
+    }
+  };
+
+  // Effect to set up event listener when component mounts
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Clean up event listener when component unmounts
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <>
+    <div ref={dropdownRef}>
       <m.div
         className={`cursor-pointer  flex flex-col lg:hidden px-5 sm:px-10 py-5 fixed z-50 w-full ${
           isOpen ? "bg-inherit" : "bg-white"
@@ -47,19 +69,21 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
         transition={{ ease: "easeInOut", duration: 0.3 }}
       >
         <m.div
-          className="h-[2.5px] w-5 bg-black mb-1"
+          className={`h-[2.5px] w-5 ${isOpen ? "bg-white" : "bg-black"} mb-1`}
           initial={{ y: 0, rotate: 0 }}
           animate={isOpen ? { y: 6.5, rotate: 45 } : { y: 0, rotate: 0 }}
           transition={{ ease: "easeInOut", duration: 0.3 }}
         />
         <m.div
-          className={`h-[2.5px] bg-black mb-1 ${isOpen ? "w-5" : "w-3"}`}
+          className={`h-[2.5px] mb-1 ${
+            isOpen ? "w-5 bg-white" : "w-3 bg-black"
+          }`}
           initial={{ opacity: 1 }}
           animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
           transition={{ ease: "easeInOut", duration: 0.3 }}
         />
         <m.div
-          className="h-[2.5px] w-5 bg-black"
+          className={`h-[2.5px] w-5 ${isOpen ? "bg-white" : "bg-black"}`}
           initial={{ y: 0, rotate: 0 }}
           animate={isOpen ? { y: -7, rotate: -45 } : { y: 0, rotate: 0 }}
           transition={{ ease: "easeInOut", duration: 0.3 }}
@@ -111,7 +135,7 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
           </li>
         </div>
       </nav>
-    </>
+    </div>
   );
 };
 

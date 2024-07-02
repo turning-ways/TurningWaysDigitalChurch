@@ -3,7 +3,7 @@ import Header from "../../../ui/Heading/Header";
 import HeaderTwo from "../../../ui/Heading/HeaderTwo";
 import { TiArrowSortedDown } from "react-icons/ti";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import NextButton from "../../../ui/Button/NextButton";
 import DropDownMenu from "../../../ui/DropDownMenu/DropDownMenu";
 import { roles, hearAboutUs } from "../../../constants/constants";
@@ -75,27 +75,6 @@ const PersonalInfo = () => {
   // const isNumeric = (value: string) => {
   //   return /^0\d{10}$/.test(value);
   // };
-
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Function to handle clicks outside the dropdown
-  const handleClickOutside = (event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-      setShowGender(false);
-      setShowHearAbout(false);
-      setShowRoles(false);
-    }
-  };
-
-  // Effect to set up event listener when component mounts
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-
-    // Clean up event listener when component unmounts
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   return (
     <>
@@ -182,7 +161,7 @@ const PersonalInfo = () => {
               <div
                 className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center"
                 onClick={() => setShowGender(!showGender)}
-                ref={dropdownRef}
+                // ref={dropdownRef}
               >
                 <input
                   className="outline-none w-full h-auto bg-inherit"
@@ -201,6 +180,11 @@ const PersonalInfo = () => {
                 <DropDownMenu
                   onSelect={handleSelectGender}
                   dropdownItems={["Male", "Female"]}
+                  onClose={() => {
+                    setShowGender(false);
+                    setShowHearAbout(false);
+                    setShowRoles(false);
+                  }}
                 />
               )}
             </div>
@@ -230,7 +214,6 @@ const PersonalInfo = () => {
               <div
                 className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center"
                 onClick={() => setShowRoles(!showRoles)}
-                ref={dropdownRef}
               >
                 <input
                   className="outline-none w-full h-auto bg-inherit"
@@ -249,6 +232,11 @@ const PersonalInfo = () => {
                 <DropDownMenu
                   onSelect={handleSelectRoles}
                   dropdownItems={roles}
+                  onClose={() => {
+                    setShowGender(false);
+                    setShowHearAbout(false);
+                    setShowRoles(false);
+                  }}
                 />
               )}
             </div>
@@ -257,7 +245,6 @@ const PersonalInfo = () => {
               <div
                 className="border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center"
                 onClick={() => setShowHearAbout(!showHearAbout)}
-                ref={dropdownRef}
               >
                 <input
                   className="outline-none w-full h-auto bg-inherit"
@@ -276,6 +263,11 @@ const PersonalInfo = () => {
                 <DropDownMenu
                   onSelect={handleSelectHearAbout}
                   dropdownItems={hearAboutUs}
+                  onClose={() => {
+                    setShowGender(false);
+                    setShowHearAbout(false);
+                    setShowRoles(false);
+                  }}
                 />
               )}
             </div>

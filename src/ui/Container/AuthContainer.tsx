@@ -7,8 +7,8 @@ interface AuthContainerProps {
 
 const AuthContainer: React.FC<AuthContainerProps> = ({ children, center }) => {
   return (
-    <div className="relative bg-[#FFFDFD]">
-      <div className="bg-white w-full p-6 fixed md:w-fit md:bg-transparent z-50">
+    <div className="relative bg-[#FFFDFD] flex flex-col space-y-4">
+      <div className="bg-white w-full px-6 pt-6 pb-2  fixed md:w-fit md:bg-transparent z-50">
         <div
           className="bg-[#F5F7FD] w-fit  p-2 cursor-pointer rounded-full top-0"
           onClick={() => window.history.back()}

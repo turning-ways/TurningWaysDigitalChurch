@@ -73,7 +73,7 @@ const ForgotPasswordOtp = () => {
   const { mutate: sendOtp } = useForgotPassword();
   return (
     <>
-      <AuthContainer center="sm:items-center h-screen pt-16 md:pt-0">
+      <AuthContainer center="sm:items-center h-screen pt-10 md:pt-0">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -96,7 +96,7 @@ const ForgotPasswordOtp = () => {
                 <React.Fragment key={index}>
                   <input
                     ref={index === activeOTPIndex ? inputRef : null}
-                    type="text"
+                    // type="number"
                     className="w-full h-12 border-b-2  bg-transparent outline-none text-center font-semibold border-b-[#CCE9D1]  focus:border-b-[#61BD74] focus:text-[#5E9942] text-[#CCE9D1] transition spin-button-none placeholder-[#CCE9D1]"
                     onChange={handleChange}
                     value={otp[index]}
@@ -116,7 +116,7 @@ const ForgotPasswordOtp = () => {
             className={`text-[#CCE9D1]  ${
               timerActive
                 ? "cursor-not-allowed"
-                : "cursor-pointer hover:text-[#61BD74]"
+                : "cursor-pointer text-[#458552]"
             }`}
             disabled={timerActive}
             onClick={() => {

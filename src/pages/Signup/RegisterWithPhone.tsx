@@ -66,6 +66,7 @@ const RegisterWithPhone = () => {
 		window.scrollTo(0, 0);
 	}, []);
 
+
 	const [checked, setChecked] = useState(false);
 	return (
 		<>

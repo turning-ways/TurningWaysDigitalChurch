@@ -12,6 +12,30 @@ export const formatDate = (dateString: string) => {
   const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(date);
   return formattedDate;
 };
+export const formatDateTime = (dateTimeString: string) => {
+  const dateTime = new Date(dateTimeString);
+
+  // Format options for date
+  const dateFormatOptions: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+  const formattedDate = new Intl.DateTimeFormat("en-GB", dateFormatOptions).format(dateTime);
+
+  // Format options for time
+  const timeFormatOptions: Intl.DateTimeFormatOptions = {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true, // Use 12-hour format (e.g., 9:40pm)
+  };
+  const formattedTime = new Intl.DateTimeFormat("en-US", timeFormatOptions).format(dateTime);
+
+  // Combine date and time into desired format
+  const formattedDateTime = `${formattedDate} ${formattedTime}`;
+
+  return formattedDateTime;
+};
 const PersonalInformation = () => {
   const { data } = useGetMemberDetails();
   const queryParams = new URLSearchParams(location.search);
@@ -47,7 +71,7 @@ const PersonalInformation = () => {
               {data?.member?.middle_name
                 ? data?.member?.middle_name?.slice(0, 1).toUpperCase() +
                   data?.member?.middle_name?.slice(1)
-                : ""}
+                : "None"}
             </p>
           </div>
           <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
@@ -56,7 +80,7 @@ const PersonalInformation = () => {
               {data.member.prefix
                 ? data?.member?.prefix?.slice(0, 1).toUpperCase() +
                   data.member?.prefix?.slice(1)
-                : ""}
+                : "None"}
             </p>
           </div>
           <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
@@ -65,7 +89,7 @@ const PersonalInformation = () => {
               {data.member.suffix
                 ? data?.member?.suffix?.slice(0, 1).toUpperCase() +
                   data?.member?.suffix?.slice(1)
-                : ""}
+                : "None"}
             </p>
           </div>
           <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
@@ -79,6 +103,33 @@ const PersonalInformation = () => {
             <p className="text-[#727272]">Date of Birth</p>
             <p className="outline-none text-[#434343] text-lg w-full">
               {formatDate(data?.member?.dateOfBirth)}
+            </p>
+          </div>
+          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+            <p className="text-[#727272]">Educational Level</p>
+            <p className="outline-none text-[#434343] text-lg w-full">
+              {data.member.educationalLevel
+                ? data?.member?.educationalLevel?.slice(0, 1).toUpperCase() +
+                  data?.member?.educationalLevel?.slice(1)
+                : "Undefined"}
+            </p>
+          </div>
+          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+            <p className="text-[#727272]">Employment Status</p>
+            <p className="outline-none text-[#434343] text-lg w-full">
+              {data.member.employmentStatus
+                ? data?.member?.employmentStatus?.slice(0, 1).toUpperCase() +
+                  data?.member?.employmentStatus?.slice(1)
+                : "Undefined"}
+            </p>
+          </div>
+          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+            <p className="text-[#727272]">Health Status</p>
+            <p className="outline-none text-[#434343] text-lg w-full">
+              {data.member.healthStatus
+                ? data?.member?.healthStatus?.slice(0, 1).toUpperCase() +
+                  data?.member?.healthStatus?.slice(1)
+                : "Undefined"}
             </p>
           </div>
           <button

@@ -27,6 +27,9 @@ interface Member {
   workerType: string;
   ServiceUnit: string;
   memberStatus: string;
+  educationalLevel?:string;
+  employmentStatus?:string;
+  healthStatus?:string;
 
   MarriageStatus?: string;
 }

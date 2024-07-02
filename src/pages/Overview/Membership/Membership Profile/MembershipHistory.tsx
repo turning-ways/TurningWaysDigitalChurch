@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useGetMemberDetails from "../../../../hooks/Member/member-service/useGetMemberDetails";
-import { formatDate } from "./PersonalInformation";
+import { formatDateTime } from "./PersonalInformation";
 
 const MembershipHistory = () => {
   // dateJoined, createdBy and updated at
@@ -18,19 +18,19 @@ const MembershipHistory = () => {
           <div className="px-5 pt-6 pb-2 border-b space-y-2">
             <p className="text-[#727272]">Date Joined</p>
             <p className="outline-none text-[#434343] text-lg w-full">
-              {formatDate(data?.member?.dateJoined)}
+              {formatDateTime(data?.member?.dateJoined)}
             </p>
           </div>
           <div className="px-5 pt-6 pb-2 border-b space-y-2">
             <p className="text-[#727272]">Created By</p>
-            <p className="outline-none text-[#434343] text-lg w-full">
+            {/* <p className="outline-none text-[#434343] text-lg w-full">
               {data?.member?.createdBy}
-            </p>
+            </p> */}
           </div>
           <div className="px-5 pt-6 pb-2 border-b space-y-2">
             <p className="text-[#727272]">Updated At</p>
             <p className="outline-none text-[#434343] text-lg w-full">
-              {formatDate(data?.member?.updatedAt)}
+              {formatDateTime(data?.member?.updatedAt)}
             </p>
           </div>
           <button

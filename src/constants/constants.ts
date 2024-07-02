@@ -1,8 +1,8 @@
 import Color from "color";
 
-export const roles = ["Admin"];
+export const roles = ["Admin", "Worker", "Member"];
 
-export const hearAboutUs = ["Facebook", "Instagram", "Linkedin"];
+export const hearAboutUs = ["Facebook", "Instagram", "Linkedin", "Others"];
 
 export const action = [
   "Undefined",
@@ -10,16 +10,15 @@ export const action = [
   "Invite to Membership class",
   "Invite to Bible school",
   "Recommend for prayers",
-  "Other actions required"
+  "Other actions required",
 ];
-
 
 export const labels = [
   "Undefined",
   "Will attend service",
   "Unreachable",
   "Wrong number",
-  "Visiting"
+  "Visiting",
 ];
 
 export const getDarkerShade = (color: string, amount: number = 0.2): string => {
@@ -28,7 +27,9 @@ export const getDarkerShade = (color: string, amount: number = 0.2): string => {
 
 export const capitalizeFirstLetters = (str: string): string => {
   return str
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
+    ?.split(" ")
+    ?.map(
+      (word) => word.charAt(0)?.toUpperCase() + word.slice(1)?.toLowerCase()
+    )
+    ?.join(" ");
 };

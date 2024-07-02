@@ -11,9 +11,9 @@ import { MdOutlineDelete } from "react-icons/md";
 import { useParams } from "react-router-dom";
 
 const Comments = () => {
-  const {contact_id} = useParams();
+  const { contact_id } = useParams();
   const contactDetailsQuery = useGetContacts();
-  const updateCommentQuery = useUpdateContactComment(contact_id??"");
+  const updateCommentQuery = useUpdateContactComment(contact_id ?? "");
   const deleteCommentQuery = useDeleteContactComment();
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [updateComment, setUpdateComment] = useState<number | null>(null);
@@ -61,21 +61,22 @@ const Comments = () => {
             <div className="w-full">
               <div className="text-[#7F7E7E] flex justify-between items-center">
                 <p className="text-sm sm:text-base">
-                {/* {item.recordedBy?.first_name +
+                  {/* {item.recordedBy?.first_name +
                     " " +
                     item.recordedBy?.last_name} */}
-                {contactDetailsQuery.data?.firstName + " " +
-                contactDetailsQuery.data?.lastName}
+                  {contactDetailsQuery.data?.firstName +
+                    " " +
+                    contactDetailsQuery.data?.lastName}
                 </p>
                 <p className="text-xs sm:text-sm">{formatTheDate(item.date)}</p>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center space-x-5">
                 <input
                   ref={(el) => (inputRefs.current[index] = el)}
                   type="text"
                   readOnly={index !== updateComment}
                   // value={note.comment}
-                  className={`text-[#434343] w-[500px] ${
+                  className={`text-[#434343] w-[500px] lg:w-full ${
                     index === updateComment &&
                     "border border-slate-400 rounded-md px-3"
                   } outline-none  py-2`}

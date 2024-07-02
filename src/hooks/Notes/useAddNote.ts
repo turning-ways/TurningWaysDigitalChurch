@@ -8,7 +8,7 @@ interface Note {
   note: string;
 }
 
-const useAddNote = (memberId: string) => {
+const useAddNote = (memberId: string, reset: () => void) => {
   const { refetch } = useGetNote(memberId);
   const churchId = useUserAuth((auth) => auth?.user?.churchId?._id);
   return useMutation({
@@ -16,6 +16,7 @@ const useAddNote = (memberId: string) => {
     onSuccess: () => {
       success("Note has been added successfully");
       refetch();
+      reset();
     },
     onError: () => notify("Couldn't add note at this time"),
   });

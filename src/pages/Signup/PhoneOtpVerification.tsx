@@ -50,7 +50,7 @@ const PhoneOtpVerification = () => {
 	const [timerActive, setTimerActive] = useState(true);
 
 	const { phone } = useUserDetailsStore();
-
+  
 	useEffect(() => {
 		let interval: NodeJS.Timeout;
 		if (timerActive) {

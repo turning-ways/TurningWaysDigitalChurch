@@ -66,11 +66,11 @@ const AllContactsGallery = () => {
               Array.isArray(contact.labels) &&
               contact.labels.length > 0 ? (
                 contact.labels.map(
-                  (item: { label: string; label_type: string }) => (
+                  (item: { label: string; labelType: string }) => (
                     <div
                       style={{
-                        backgroundColor: getDarkerShade(item.label_type, -0.7),
-                        borderColor: getDarkerShade(item.label_type, 0.3),
+                        backgroundColor: getDarkerShade(item.labelType, -0.7),
+                        borderColor: getDarkerShade(item.labelType, 0.3),
                       }}
                       className="rounded-lg px-[10px] py-3 text-sm border"
                     >

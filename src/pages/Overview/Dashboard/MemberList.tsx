@@ -142,7 +142,7 @@ const MemberList = () => {
               <MemberTable
                 length={members.length}
                 index={index}
-                first_name={item.first_name}
+                first_name={item.fullname}
                 dateOfBirth={item.dateOfBirth?.slice(0, 10)}
                 gender={item.gender}
                 email={item.email}
@@ -157,7 +157,28 @@ const MemberList = () => {
             <MemberTable
               length={firstTimers.length}
               index={index}
-              first_name={item.first_name}
+              first_name={item.fullname}
+              dateOfBirth={item.dateOfBirth?.slice(0, 10)}
+              gender={item.gender}
+              email={item.email}
+              phone={item.phone.MainPhone}
+              id={item._id}
+            />
+          ))}
+        {active === "First Timers" &&
+          firstTimers &&
+          firstTimers.length === 0 && (
+            <p className="text-[#CACACA] mt-2">
+              No first timer's at the moment
+            </p>
+          )}
+        {active === "Upcoming Birthday" &&
+          birthdayCelebrants &&
+          birthdayCelebrants?.map((item: any, index: number) => (
+            <MemberTable
+              length={birthdayCelebrants.length}
+              index={index}
+              first_name={item.fullname}
               dateOfBirth={item.dateOfBirth?.slice(0, 10)}
               gender={item.gender}
               email={item.email}
@@ -167,11 +188,18 @@ const MemberList = () => {
           ))}
         {active === "Upcoming Birthday" &&
           birthdayCelebrants &&
-          birthdayCelebrants?.map((item: any, index: number) => (
+          birthdayCelebrants.length === 0 && (
+            <p className="text-[#CACACA] mt-2">
+              No upcoming birthday's at the moment
+            </p>
+          )}
+        {active === "Upcoming Anniversary" &&
+          upcomingAnniversary &&
+          upcomingAnniversary?.map((item: any, index: number) => (
             <MemberTable
-              length={birthdayCelebrants.length}
+              length={upcomingAnniversary.length}
               index={index}
-              first_name={item.first_name}
+              first_name={item.fullname}
               dateOfBirth={item.dateOfBirth?.slice(0, 10)}
               gender={item.gender}
               email={item.email}
@@ -181,18 +209,11 @@ const MemberList = () => {
           ))}
         {active === "Upcoming Anniversary" &&
           upcomingAnniversary &&
-          upcomingAnniversary?.map((item: any, index: number) => (
-            <MemberTable
-              length={upcomingAnniversary.length}
-              index={index}
-              first_name={item.first_name}
-              dateOfBirth={item.dateOfBirth?.slice(0, 10)}
-              gender={item.gender}
-              email={item.email}
-              phone={item.phone.MainPhone}
-              id={item._id}
-            />
-          ))}
+          upcomingAnniversary.length === 0 && (
+            <p className="text-[#CACACA] mt-2">
+              No upcoming anniversary at the moment
+            </p>
+          )}
       </div>
     </>
   );

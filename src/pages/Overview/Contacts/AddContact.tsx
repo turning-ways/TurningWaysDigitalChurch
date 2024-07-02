@@ -63,6 +63,7 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
             setLastName(e.target.value);
           }}
           value={lastName}
+          notCompulsory=" "
         />
         <PhoneNumber
           value={phoneNumber}
@@ -72,7 +73,7 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
           text="Maturity"
           items={["Child", "Adult", "Teen"]}
           placeholder="Child, Adult or Teen"
-          compulsory="*"
+          compulsory=" "
           onSelect={(value) => setMaturity(value)}
           value={maturity}
           onChange={(maturity) => setMaturity(maturity)}
@@ -83,7 +84,7 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
             setEmail(e.target.value);
           }}
           value={email}
-          notCompulsory="*"
+          notCompulsory=" "
         />
         <div className=" space-y-1 mb-4">
           <p className="text-[#727272]">D.O.B</p>
@@ -100,7 +101,7 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
           text="Gender"
           items={["male", "female"]}
           placeholder="Male"
-          compulsory="*"
+          compulsory=" "
           onSelect={handleGender}
           value={gender}
           onChange={(gender) => setGender(gender)}

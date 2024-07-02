@@ -31,7 +31,7 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
   const queryParams = new URLSearchParams(location.search);
   const memberId = queryParams.get("id");
   const [value, setValue] = useState<string>("");
-  const { mutate, isPending } = useAddNote(memberId ?? "");
+  const { mutate, isPending } = useAddNote(memberId ?? "", () => setValue(""));
   const { data } = useGetMemberDetails();
   const { data: notes, refetch } = useGetNote(memberId ?? "");
   const { mutate: del, isPending: pendingDelete } = useDeleteNote(
@@ -58,10 +58,7 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
     }
   };
 
-  const {
-    mutate: mutateNote,
-    isPending: pendingUpdate,
-  } = useUpdateNote({
+  const { mutate: mutateNote, isPending: pendingUpdate } = useUpdateNote({
     memberId: memberId ?? "",
   });
 
@@ -90,7 +87,7 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
           openNote ? "flex" : "hidden"
         }`}
       >
-        <div className="absolute bottom-0 top-40 right-10 mb-10 flex justify-between   text-white W-96 flex-col border bg-white px-2">
+        <div className="absolute bottom-0 right-10 mb-2 flex justify-between  h-[500px] overflow-y-scroll text-white flex-col border bg-white px-2">
           <div className="bg-white p-4 w-[600px]">
             <div className="flex justify-between">
               <p className="text-[#141414] font-azoBold text-2xl self-start ">
@@ -163,7 +160,7 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
                 )
               )}
           </div>
-          <div className="bg-white w-full flex mb-2 items-stretch">
+          <div className="bg-white w-full border flex mb-2 items-stretch sticky bottom-0">
             <input
               type="text"
               value={value}
@@ -171,7 +168,7 @@ const Notes: React.FC<NotesProps> = ({ openNote, onClose }) => {
               placeholder="Type your comment here"
               onChange={(e) => {
                 setValue(e.target.value);
-                setTimeout(() => setValue(""), 3000);
+                // setTimeout(() => setValue(""), 3000);
               }}
               onKeyDown={handleKeyDown}
             />

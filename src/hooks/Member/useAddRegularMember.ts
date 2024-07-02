@@ -32,6 +32,9 @@ interface Member {
   workType: string;
   ServiceUnit: string;
   prefix?: string;
+  educationalLevel?: string;
+  employmentStatus?: string;
+  healthStatus?: string;
 }
 
 const useAddRegularMember = () => {
@@ -44,6 +47,9 @@ const useAddRegularMember = () => {
     setPrefix,
     setDateOfBirth,
     setAnniversary,
+    setEducationalLevel,
+    setEmploymentStatus,
+    setHealthStatus,
   } = usePersonalInformationStore();
   const { setContactEmail } = useContactInformationStore();
   const { setContactAddress, setContactPhone } = useContactInformationStore();
@@ -66,6 +72,9 @@ const useAddRegularMember = () => {
     setMemberStatus("");
     setServiceUnit("");
     setWorkType("");
+    setEmploymentStatus("");
+    setHealthStatus("");
+    setEducationalLevel("");
   };
 
   const churchId = useUserAuth((auth) => auth?.user?.churchId?._id);

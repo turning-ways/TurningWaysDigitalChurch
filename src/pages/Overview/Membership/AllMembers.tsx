@@ -174,7 +174,7 @@ const AllMembers = () => {
                 </>
               ))
             ) : (
-              <div>There's no member</div>
+              <div className="mt-4 text-center">There's no member</div>
             )}
           </div>
           {/* <div className="flex justify-center items-center space-x-10 fixed bottom-14 text-sm md:text-base lg:bottom-2">
