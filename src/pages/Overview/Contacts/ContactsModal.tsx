@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../../ui/Modal/Modal";
 import {
@@ -19,7 +19,7 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
   const [open, setOpen] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
   // const [openUpdate, setOpenUpdate] = useState(false);
-  const { mutate: update } = useUpdateContactStatus({
+  const { mutate: update, isPending } = useUpdateContactStatus({
     id,
     onClose: () => setOpenConfirm(!openConfirm),
   });
@@ -28,28 +28,31 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
     onClose();
   });
 
-  // const modalRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     if (
-  //       modalRef.current &&
-  //       !modalRef.current.contains(event.target as Node)
-  //     ) {
-  //       onClose();
-  //     }
-  //   };
+  // Function to handle clicks outside the dropdown
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      onClose();
+    }
+  };
 
-  //   document.addEventListener("mousedown", handleClickOutside);
+  // Effect to set up event listener when component mounts
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
 
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [onClose]);
+    // Clean up event listener when component unmounts
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
-    <>
+    <div ref={dropdownRef} className="self-end absolute top-12">
       <div
-        className={`modal bg-white rounded-2xl w-[280px] px-6 py-4 space-y-6 border self-end absolute top-12 z-50 ${
+        className={`modal bg-white rounded-2xl w-[280px] px-6 py-4 space-y-6 border  z-50 ${
           show === id ? "block" : "hidden"
         }`}
         // ref={modalRef}
@@ -111,7 +114,7 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
                 {!deleteC ? (
                   <p>Yes</p>
                 ) : (
-                  <ThreeDots width={24} height={24} color="white" />
+                  <ThreeDots width={34} height={24} color="white" />
                 )}
               </button>
             </div>
@@ -136,12 +139,16 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
                 No
               </button>
               <button
-                className="bg-[#F4F4F4] text-[#7B7B7B] rounded-[14px] w-full py-2 px-4 hover:bg-[#17275B] hover:text-white "
+                className="bg-[#F4F4F4] flex justify-center text-[#7B7B7B] rounded-[14px] w-full py-2 px-4 hover:bg-[#17275B] hover:text-white "
                 onClick={() => {
                   update({ membershipStatus: "confirmed" });
                 }}
               >
-                <p>Yes</p>
+                {!isPending ? (
+                  <p>Yes</p>
+                ) : (
+                  <ThreeDots width={34} height={24} color="white" />
+                )}
               </button>
             </div>
           </div>
@@ -150,7 +157,7 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
       {/* {openUpdate && (
         <UpdateContact onClose={() => setOpenUpdate(!openUpdate)} id={id} />
       )} */}
-    </>
+    </div>
   );
 };
 
