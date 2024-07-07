@@ -24,15 +24,16 @@ import ResetPassword from "./pages/ForgotPassword/ResetPassword";
 import "./App.css";
 import ProtectedRoutes from "./ProtectedRoutes";
 import NotBuilt from "./pages/NotBuilt";
-import RegisterWithPhone from "./pages/Signup/RegisterWithPhone";
-import PhoneOtpVerification from "./pages/Signup/PhoneOtpVerification";
+// import RegisterWithPhone from "./pages/Signup/RegisterWithPhone";
+// import PhoneOtpVerification from "./pages/Signup/PhoneOtpVerification";
 import Members from "./pages/Members";
 import LoginWithEmail from "./pages/Signin/WithEmail/LoginWithEmail";
 import LoginWithNumber from "./pages/Signin/WithPhoneNumber/LoginWithNumber";
 import Contacts from "./pages/Overview/Contacts/Contacts";
 import ContactDetails from "./pages/Overview/Contacts/ContactDetails";
 import Settings from "./pages/Overview/Settings/Settings";
-import MemberSignup from "./pages/Signup/MemberSignup";
+import Invite from "./pages/Signup/MemberSignup";
+
 
 function App() {
   return (
@@ -50,14 +51,14 @@ function App() {
 
           {/* Register a New User  */}
           <Route path="/register" element={<Register />} />
-          <Route path="/register/member" element={<MemberSignup />} />
-          <Route path="/register/phone" element={<RegisterWithPhone />} />
+          <Route path="/invite" element={<Invite />} />
+          {/* <Route path="/register/phone" element={<RegisterWithPhone />} /> */}
           <Route path="register">
             <Route path="otp-verification" element={<OtpVerification />} />
-            <Route
+            {/* <Route
               path="phone-otp-verification"
               element={<PhoneOtpVerification />}
-            />
+            /> */}
             <Route path="personalinfo" element={<PersonalInfo />} />
             <Route path="organizationinfo" element={<OrganizationInfo />} />
             <Route path="churchinfo" element={<ChurchInfo />} />

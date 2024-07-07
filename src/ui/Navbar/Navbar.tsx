@@ -6,6 +6,7 @@ import { navList } from "./navlist";
 import { useEffect, useRef, useState } from "react";
 import { motion as m } from "framer-motion";
 import Modal from "../Modal/Modal";
+import { ThreeDots } from "react-loader-spinner";
 
 interface NavBarProps {
   active?: string;
@@ -14,8 +15,11 @@ interface NavBarProps {
 const Navbar: React.FC<NavBarProps> = ({ active }) => {
   const { setUser } = useUserAuth();
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const logoutUser = async () => {
+    setIsLoading(true);
+
     try {
       const response = await fetch(
         "https://turningways.onrender.com/api/v1/users/logout",
@@ -28,8 +32,10 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
       if (response.ok) {
         setUser(null);
         success("Logged Out");
+        setIsLoading(false);
       } else {
         console.error("Error logging out user:", response.statusText);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error("Error logging out user:", error);
@@ -128,7 +134,7 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
             active === "Logout" && "bg-DarkBlueHover text-white"
           }`}
           onClick={() => {
-            setOpen(true)
+            setOpen(true);
           }}
         >
           <li className="flex gap-x-4">
@@ -144,10 +150,14 @@ const Navbar: React.FC<NavBarProps> = ({ active }) => {
 
             <div className="flex self-center space-x-4">
               <button
-                className=" text-[#ffffff] bg-[#e74a4a]  py-2 px-4 rounded-[14px] self-center"
+                className=" text-[#ffffff] bg-[#e74a4a]  py-2 w-[100px] flex justify-center rounded-[14px] self-center"
                 onClick={() => logoutUser()}
               >
-                Logout
+                {!isLoading ? (
+                  <p>Logout</p>
+                ) : (
+                  <ThreeDots width={34} height={24} color="white" />
+                )}
               </button>
               <button
                 className=" text-[#7B7B7B] bg-[#F4F4F4] py-2 px-4 rounded-[14px] self-center"

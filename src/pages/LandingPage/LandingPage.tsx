@@ -37,7 +37,7 @@ const LandingPage = () => {
             className="w-36"
           />
           <ul className="flex text-[#6181E7] sm:space-x-10 items-center font-azo text-base sm:text-lg">
-            <li className="self-end">
+            <li className="self-end sm:self-center">
               <button onClick={() => navigate("/register")}>Sign up</button>
             </li>
             <li>
