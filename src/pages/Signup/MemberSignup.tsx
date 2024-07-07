@@ -13,7 +13,7 @@ import NextButton from "../../ui/Button/NextButton";
 import { useEffect, useState } from "react";
 // import { notify } from "../../hooks/useAuthData";
 import TermsOfServiceAndPrivacyPolicy from "../../components/Register/TermsOfServiceAndPrivacyPolicy";
-const MemberSignup = () => {
+const Invite = () => {
   const schema = z.object({
     email: z.string().email({ message: "Please enter a valid email" }),
     password: z
@@ -111,4 +111,4 @@ const MemberSignup = () => {
   );
 };
 
-export default MemberSignup;
+export default Invite;
