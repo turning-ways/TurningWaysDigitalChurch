@@ -32,7 +32,7 @@ import LoginWithNumber from "./pages/Signin/WithPhoneNumber/LoginWithNumber";
 import Contacts from "./pages/Overview/Contacts/Contacts";
 import ContactDetails from "./pages/Overview/Contacts/ContactDetails";
 import Settings from "./pages/Overview/Settings/Settings";
-import Invite from "./pages/Signup/MemberSignup";
+import Invite from "./pages/Signup/Invitation";
 
 
 function App() {
