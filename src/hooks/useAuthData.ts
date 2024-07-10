@@ -144,6 +144,31 @@ export const useRegister = () => {
 	});
 };
 
+export const useInviteMember = (id: string) => {
+	const { email } = useUserDetailsStore();
+	const { mutate } = useVerifyEmail();
+	const navigate = useNavigate();
+
+	return useMutation({
+		mutationFn: (user: User) => service(`/invite?id=${id}`).post(user),
+		onSuccess: () => {
+			mutate({ email });
+			navigate("/login/email");
+			success("Please Login to continue");
+		},
+		onError: (err: { response: { data: { message: string } } }) => {
+			const message = err.response.data.message;
+			if (message === "User validation failed: passwordConfirm: The passwords do not match!!") {
+				notify(`Passwords don't match`);
+			} else if (message === "User already exists") {
+				notify("An account with this email already exists");
+			} else {
+				notify("An error Occurred");
+			}
+		},
+	});
+};
+
 export const useRegisterWithPhone = (recaptchaContainerRef: React.RefObject<HTMLDivElement>) => {
 	const navigate = useNavigate();
 
@@ -357,42 +382,40 @@ export const useVerifySignUpOtp = () => {
 };
 
 export const useAddChurch = () => {
-  const { mutate } = useAddMember();
-  const { role, howDidYouHear, phoneNumber, email, gender, dateOfBirth } =
-    useMemberStore();
-  // const navigate = useNavigate();
-  // const { setUser } = useUserAuth();
-  // const { data: admin } = useAuth();
-  // const queryClient = useQueryClient();
-  // const handleRefresh = () => {
-  //   refetchAuth(queryClient);
-  // };
-  return useMutation({
-    mutationFn: (churchDetails: Church) =>
-      apiClient<Church>("").post(churchDetails),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onSuccess: (res: any) => {
-      success("Church has been created successfully");
+	const { mutate } = useAddMember();
+	const { role, howDidYouHear, phoneNumber, email, gender, dateOfBirth } = useMemberStore();
+	// const navigate = useNavigate();
+	// const { setUser } = useUserAuth();
+	// const { data: admin } = useAuth();
+	// const queryClient = useQueryClient();
+	// const handleRefresh = () => {
+	//   refetchAuth(queryClient);
+	// };
+	return useMutation({
+		mutationFn: (churchDetails: Church) => apiClient<Church>("").post(churchDetails),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		onSuccess: (res: any) => {
+			success("Church has been created successfully");
 
-      // console.log(res.data.church.id);
+			// console.log(res.data.church.id);
 
-      mutate({
-        role: role.toLowerCase(),
-        howDidYouHear: howDidYouHear.toLowerCase(),
-        phone: phoneNumber,
-        churchId: res.data.church.id,
-        email,
-        gender: gender.toLowerCase(),
-        dateOfBirth,
-      });
+			mutate({
+				role: role.toLowerCase(),
+				howDidYouHear: howDidYouHear.toLowerCase(),
+				phone: phoneNumber,
+				churchId: res.data.church.id,
+				email,
+				gender: gender.toLowerCase(),
+				dateOfBirth,
+			});
 
-      // handleRefresh();
+			// handleRefresh();
 
-      // navigate("/admin/dashboard");
-    },
-    onError: (err: ErrorResponse) => {
-      notify(err.response.data.message);
-      console.log(err);
-    },
-  });
+			// navigate("/admin/dashboard");
+		},
+		onError: (err: ErrorResponse) => {
+			notify(err.response.data.message);
+			console.log(err);
+		},
+	});
 };
