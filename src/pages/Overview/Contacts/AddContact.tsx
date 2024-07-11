@@ -83,6 +83,7 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
           onChange={(e) => {
             setEmail(e.target.value);
           }}
+          type="email"
           value={email}
           notCompulsory=" "
         />

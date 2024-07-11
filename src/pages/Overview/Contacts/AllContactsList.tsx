@@ -66,7 +66,7 @@ const AllContactsList = () => {
                   <div className="flex space-x-2 items-center truncate">
                     {/* <input type="checkbox" /> */}
                     <p className="truncate max-w-full">
-                      {contact.firstName + " " + contact.lastName}
+                      {contact.firstName}
                     </p>
                   </div>
                   <div className="">{contact.phoneNumber}</div>
@@ -110,9 +110,7 @@ const AllContactsList = () => {
               <div className="xl:hidden">
                 <div
                   className="border-b border-[#BDBDBD]  flex py-2 text-[#555454] px-3 justify-between items-center cursor-pointer"
-                  onClick={() =>
-                    navigate(`/admin/contacts/${contact._id}`)
-                  }
+                  onClick={() => navigate(`/admin/contacts/${contact._id}`)}
                 >
                   <div>
                     <p>{contact.firstName + " " + contact.lastName}</p>
