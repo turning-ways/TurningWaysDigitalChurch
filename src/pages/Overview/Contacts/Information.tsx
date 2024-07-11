@@ -47,7 +47,7 @@ const Information = () => {
     return `${day}${ordinalSuffix} ${month} ${year}`;
   };
 
-  const {contact_id} = useParams();
+  const { contact_id } = useParams();
 
   const { mutate } = useUpdateContactStatus({
     id: contact_id ?? "",
@@ -60,8 +60,8 @@ const Information = () => {
     <div className="relative">
       <Heading text="Contact Information" />
       <h2 className="md:mt-4">
-        {contact && contact.firstName && contact.lastName ? (
-          contact.firstName + " " + contact.lastName
+        {contact && contact.firstName ? (
+          contact.firstName + " " + (contact?.lastName === undefined ? "" : contact?.lastName)
         ) : (
           <span className="skeleton skeleton-text w-60"></span>
         )}

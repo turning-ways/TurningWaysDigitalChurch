@@ -50,7 +50,7 @@ const ContactsModal: React.FC<ContactsModalProps> = ({ show, id, onClose }) => {
     };
   }, []);
   return (
-    <div ref={dropdownRef} className="self-end absolute top-12">
+    <div className="self-end absolute z-50 top-12">
       <div
         className={`modal bg-white rounded-2xl w-[280px] px-6 py-4 space-y-6 border  z-50 ${
           show === id ? "block" : "hidden"
