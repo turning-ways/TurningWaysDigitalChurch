@@ -7,12 +7,30 @@ import { useAddContact } from "../../../hooks/useContact";
 import { useUserAuth } from "../../../stores/user";
 import { ThreeDots } from "react-loader-spinner";
 import { DropDownInput } from "../../../ui/DropDownMenu/DropDownInput";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Input from "../../../ui/Input/Input";
 
 interface AddContactProps {
   onClose: () => void;
 }
 
 const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
+  const schema = z.object({
+    email: z.string().email({ message: "Please enter a valid email" }),
+  });
+
+  type FormData = z.infer<typeof schema>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
+
   const { user } = useUserAuth();
   const { mutate, isPending } = useAddContact({ onClose: onClose });
   const [firstName, setFirstName] = useState("");
@@ -30,9 +48,8 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
   return (
     <Modal onClose={onClose}>
       <form
-        className={`w-[450px] md:w-[605px] bg-white px-6 py-6 border rounded-2xl flex flex-col max-h-[700px] overflow-y-scroll`}
-        onSubmit={(e) => {
-          e.preventDefault();
+        className={`w-full md:w-[605px] bg-white px-6 py-6 border rounded-2xl flex flex-col max-h-[700px] overflow-y-scroll`}
+        onSubmit={handleSubmit(() => {
           user?._id &&
             mutate({
               firstName,
@@ -44,7 +61,7 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
               email,
               gender,
             });
-        }}
+        })}
       >
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl">Add Contact</h1>
@@ -78,15 +95,15 @@ const AddContact: React.FC<AddContactProps> = ({ onClose }) => {
           value={maturity}
           onChange={(maturity) => setMaturity(maturity)}
         />
-        <InformationInput
-          text={"Email"}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-          type="email"
-          value={email}
-          notCompulsory=" "
+        <Input
+          heading={"Email"}
+          name={"email"}
+          register={register}
+          placeholder={"temidireowoeye@gmail.com"}
+          formError={errors.email?.message}
+          classname="bg-white"
         />
+
         <div className=" space-y-1 mb-4">
           <p className="text-[#727272]">D.O.B</p>
           <div className="border rounded-lg p-2">

@@ -10,6 +10,7 @@ export interface InputProps {
   placeholder: string;
   formError: string | undefined;
   mutateError?: string | undefined;
+  classname?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -19,12 +20,13 @@ const Input: React.FC<InputProps> = ({
   placeholder,
   formError,
   mutateError,
+  classname
 }) => {
   return (
     <div className="mb-6">
       <HeaderTwo>{heading}</HeaderTwo>
       <div
-        className={`border border-[#EBEFF9] bg-[#F7FAFC] rounded-lg w-full px-3 py-1 flex items-center ${
+        className={`border border-[#EBEFF9] bg-[#F7FAFC] ${classname} rounded-lg w-full px-3 py-1 flex items-center ${
           formError ? "border-[#FF0000] border-2" : "border-[#EBEFF9] border"
         }`}
       >

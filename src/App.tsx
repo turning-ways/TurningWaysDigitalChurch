@@ -73,7 +73,9 @@ function App() {
 
           <Route element={<ProtectedRoutes />}>
             <Route path="admin">
+              {/* Dashboard */}
               <Route path="dashboard/:date" element={<Dashboard />} />
+              {/* Directory */}
               <Route path="directory" element={<Membership />} />
               <Route path="directory">
                 <Route path="member/:section" element={<MembershipProfile />}></Route>
@@ -81,11 +83,16 @@ function App() {
                 <Route path="update-member/:section" element={<UpdateProfile />}></Route>
                 <Route path="sms" element={<SmsMessage />} />
               </Route>
+              {/* Forms */}
               <Route path="forms" element={<NotBuilt active="Forms" />} />
+              {/* Contacts */}
               <Route path="contacts" element={<Contacts />} />
               <Route path="contacts/:contact_id" element={<ContactDetails />}></Route>
+              {/* Settings */}
               <Route path="setting/:setting_header" element={<Settings />} />
+              {/* Help */}
               <Route path="help" element={<NotBuilt active="Help" />} />
+              {/* Logout */}
               <Route path="logout" element={<NotBuilt active="Logout" />} />
             </Route>
           </Route>

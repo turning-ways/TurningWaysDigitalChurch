@@ -9,7 +9,7 @@ interface PieProps {
 }
 
 export const PieChart: React.FC<PieProps> = ({timeLine}) => {
-  const{data} = useMemberStats(timeLine);
+  const { data } = useMemberStats(timeLine);
   const noOfFemale = data?.["female-members-count"];
   const noOfMale = data?.["male-members-count"];
   const totalMembers = data?.["members-count"];

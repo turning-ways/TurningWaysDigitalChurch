@@ -36,6 +36,7 @@ const Register = () => {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
+  
   const navigate = useNavigate();
 
   const { mutate, isPending } = useRegister();
