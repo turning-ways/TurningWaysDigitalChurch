@@ -8,7 +8,7 @@ import NextButton from "../../../ui/Button/NextButton";
 import DropDownMenu from "../../../ui/DropDownMenu/DropDownMenu";
 import { roles, hearAboutUs } from "../../../constants/constants";
 import { useMemberStore } from "../../../stores/member";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // import useAddMember from "../../../hooks/AddMember/useAddMember";
 
@@ -44,12 +44,13 @@ const PersonalInfo = () => {
 		setGenderValue(selectedItem);
 		setShowGender(false);
 	};
+	const location = useLocation();
 
 	useEffect(() => {
 		const refreshAuthToken = async () => {
 			try {
 				// getting the token from the url with name t
-				const urlParams = new URLSearchParams();
+				const urlParams = new URLSearchParams(location.search);
 				const token = urlParams.get("t");
 
 				localStorage.clear();
