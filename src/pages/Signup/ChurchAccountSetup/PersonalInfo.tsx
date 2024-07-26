@@ -48,6 +48,7 @@ const PersonalInfo = () => {
 	useEffect(() => {
 		const refreshAuthToken = async () => {
 			try {
+				localStorage.clear();
 				const response = await axios.post(
 					"/api/v1/auth/refresh",
 					{},
