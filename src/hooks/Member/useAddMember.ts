@@ -6,40 +6,38 @@ import { useNavigate } from "react-router-dom";
 import ApiClient from "../../services/api-client";
 
 interface Member {
-  role: string;
-  howDidYouHear: string;
-  phone: {
-    MainPhone: string;
-  };
-  gender?: string;
-  churchId: string;
-  prefix?: string;
-  suffix?: string;
-  first_name?: string;
-  middle_name?: string;
-  last_name?: string;
-  email?: string;
-  address?: { HomeAddress: string };
-  dateOfBirth?: string;
+	role: string;
+	howDidYouHear: string;
+	phone: string;
+	gender?: string;
+	churchId: string;
+	prefix?: string;
+	suffix?: string;
+	first_name?: string;
+	middle_name?: string;
+	last_name?: string;
+	email?: string;
+	address?: { HomeAddress: string };
+	dateOfBirth?: string;
 }
 
 const useAddMember = () => {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const handleRefresh = () => {
-    queryClient.invalidateQueries({ queryKey: ["auth"] });
-  };
-  const apiClient = new ApiClient("/api/v1/members");
-  return useMutation({
-    mutationFn: (memberDetails: Member) => apiClient.post(memberDetails),
-    onSuccess: () => {
-      success("Member has been added successfully");
-      handleRefresh();
+	const navigate = useNavigate();
+	const queryClient = useQueryClient();
+	const handleRefresh = () => {
+		queryClient.invalidateQueries({ queryKey: ["auth"] });
+	};
+	const apiClient = new ApiClient("/api/v1/members/create-member-onboarding");
+	return useMutation({
+		mutationFn: (memberDetails: Member) => apiClient.post(memberDetails),
+		onSuccess: () => {
+			success("Member has been added successfully");
+			handleRefresh();
 
-      navigate("/admin/dashboard/today");
-    },
-    onError: () => notify("Couldn't add member"),
-  });
+			navigate("/admin/dashboard/today");
+		},
+		onError: () => notify("Couldn't add member"),
+	});
 };
 
 export default useAddMember;

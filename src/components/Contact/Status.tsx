@@ -1,47 +1,58 @@
+import { useSelector } from "react-redux";
 import { capitalizeFirstLetters } from "../../constants/constants";
-import {
-  useGetContacts,
-} from "../../hooks/useContact";
+import { selectContactsLoading, selectSelectedContact } from "../../slices/contactSlice";
 
 const Status = () => {
-  const contactDetailsQuery = useGetContacts();
-
-  return (
-    <section className="md:grid md:grid-cols-2 gap-x-4 ">
-      {fields.map((field, index) => (
-        <div
-          className={`space-y-1 mb-4 ${
-            index === fields.length - 1 && "col-span-2"
-          }`}
-          key={index}
-        >
-          <p className="text-[#727272]">{field.name}</p>
-          <div className="border border-[#D9D9D9] rounded-lg p-2 ">
-            <input
-              className={`outline-none text-[#434343] text-lg w-full bg-transparent `}
-              readOnly={true}
-              value={
-                contactDetailsQuery.data
-                  ? (field.id !== "phoneNumber" && field.id !== "email" ? capitalizeFirstLetters(contactDetailsQuery.data[field.id]) : contactDetailsQuery.data[field.id])
-                  : ""
-              }
-            />
-          </div>
-        </div>
-      ))}
-    </section>
-  );
+	const contact = useSelector(selectSelectedContact) as any;
+	const isPending = useSelector(selectContactsLoading);
+	return (
+		<section className="md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 ">
+			{fields.map((field, index) => (
+				<div
+					className={`space-y-1 mb-4 ${index === fields.length - 1 && "col-span-2"} ${
+						isPending && "mt-4"
+					}`}
+					key={index}>
+					{!isPending ? (
+						<>
+							<p className="text-[#727272]">{field.name}</p>
+							<div className="border border-[#D9D9D9] rounded-lg p-2 ">
+								<input
+									className={`outline-none text-[#434343] text-lg w-full bg-transparent `}
+									readOnly={true}
+									value={
+										contact
+											? field.id !== "phone" && field.id !== "email"
+												? capitalizeFirstLetters(contact[field.id])
+												: contact[field.id]
+											: ""
+									}
+								/>
+							</div>
+						</>
+					) : (
+						<div className="w-full h-10 skeleton "></div>
+					)}
+				</div>
+			))}
+		</section>
+	);
 };
+
+// contactDetailsQuery.data
+// 	? field.id !== "phoneNumber" && field.id !== "email"
+// 		? capitalizeFirstLetters(contactDetailsQuery.data[field.id])
+// 		: contactDetailsQuery.data[field.id]
+// 	: ""
 
 export default Status;
 
 const fields = [
-  { id: "membershipStatus", name: "Membership Status" },
-  { id: "maturity", name: "Maturity" },
-  { id: "phoneNumber", name: "Phone Number" },
-  { id: "email", name: "Email" },
-  { id: "dateOfBirth", name: "DOB" },
-  { id: "gender", name: "Gender" },
-  { id: "address", name: "Address" },
-
+	{ id: "memberStatus", name: "Membership Status" },
+	{ id: "maturityLevel", name: "Maturity" },
+	{ id: "phone", name: "Phone Number" },
+	{ id: "email", name: "Email" },
+	{ id: "dateOfBirth", name: "Date Of Birth" },
+	{ id: "gender", name: "Gender" },
+	{ id: "address", name: "Address" },
 ];

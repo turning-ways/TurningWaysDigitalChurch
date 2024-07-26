@@ -1,149 +1,174 @@
 import InformationInput from "../Edit Profile/InformationInput";
-import { useEditContactInformationStore } from "../../../../stores/Edit Member/contactinfo";
 import HeaderTwo from "../../../../ui/Heading/HeaderTwo";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
-import { useNavigate } from "react-router-dom";
-import useUpdateMember from "../../../../hooks/Member/member-service/useUpdateMember";
-import { useEditPersonalInformationStore } from "../../../../stores/Edit Member/personalinfo";
-import { useEditChurchInformationStore } from "../../../../stores/Edit Member/churchinfo";
-import { useUserAuth } from "../../../../stores/user";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useChurchIdStore } from "../../../../stores/churchId";
 import { ThreeDots } from "react-loader-spinner";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	updateMemberDetails,
+	updateTempMemberField,
+	selectTempMember,
+	selectMemberStatus,
+	selectMemberError,
+} from "../../../../slices/memberSlice";
+import { AppDispatch } from "../../../../store";
+import { notify, success } from "../../../../hooks/useAuthData";
+import { useEffect, useState } from "react";
 
 const UpdateContactInfo = () => {
-  const {
-    setContactEmail,
-    setContactAddress,
-    setContactPhone,
-    contact_address,
-    contact_email,
-    contact_phone,
-  } = useEditContactInformationStore();
+	const navigate = useNavigate();
+	const location = useLocation();
+	const dispatch = useDispatch<AppDispatch>();
+	const queryParams = new URLSearchParams(location.search);
+	const memberId = queryParams.get("id");
+	const { churchId } = useChurchIdStore();
 
-  const navigate = useNavigate();
+	const tempMember = useSelector(selectTempMember);
+	const status = useSelector(selectMemberStatus);
+	const error = useSelector(selectMemberError);
 
-  const information = [
-    { name: "Email", set: setContactEmail, value: contact_email },
-    { name: "Home Address", set: setContactAddress, value: contact_address },
-  ];
+	const [emailError, setEmailError] = useState<string | null>(null);
+	const [phoneError, setPhoneError] = useState<string | null>(null);
 
-  const queryParams = new URLSearchParams(location.search);
+	const handleInputChange = (field: string, value: string | number | boolean) => {
+		dispatch(updateTempMemberField({ field, value }));
+	};
 
-  const memberId = queryParams.get("id");
+	const validateEmail = (email: string) => {
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return emailRegex.test(email);
+	};
 
-  const { mutate, isPending } = useUpdateMember(memberId ? memberId : "");
-  const { first_name, last_name, middle_name, suffix, gender, employment_status, educational_level, health_status } =
-    useEditPersonalInformationStore();
-  const { member_status, work_type, service_unit } =
-    useEditChurchInformationStore();
+	const validatePhone = (phone: string) => {
+		return phone.length > 0; // Simplistic check, customize as needed
+	};
 
-  const { user } = useUserAuth();
+	const handleSave = () => {
+		let valid = true;
 
-  const handleAddingMember = () => {
-    mutate({
-      first_name,
-      last_name,
-      middle_name,
-      email: contact_email,
-      suffix,
-      address: { HomeAddress: contact_address },
-      phone: { MainPhone: contact_phone },
-      churchId: user?.churchId._id ? user?.churchId._id : "",
-      gender,
-      memberStatus: member_status,
-      workerType: work_type,
-      ServiceUnit: service_unit,
-      educationalLevel: educational_level.toLowerCase(),
-      employmentStatus: employment_status.toLowerCase(),
-      healthStatus: health_status.toLowerCase(),
-    });
-    // console.log(member_status, work_type, service_unit);
-  };
+		if (!validateEmail(tempMember?.profile?.email || "")) {
+			setEmailError("Invalid email format");
+			valid = false;
+		} else {
+			setEmailError(null);
+		}
 
-  return (
-    <div className="mt-5">
-      {information.map((item) => (
-        <InformationInput
-          text={item.name}
-          onChange={(e) => {
-            item.set(e.target.value);
-          }}
-          value={item.value ?? "undefined"}
-          notCompulsory=" "
-        />
-      ))}
-      <div className="mb-2">
-        <HeaderTwo>
-          Phone Number <span className="text-[#61BD74]">*</span>
-        </HeaderTwo>
+		if (!validatePhone(tempMember?.profile?.phone.mainPhone || "")) {
+			setPhoneError("Invalid phone number");
+			valid = false;
+		} else {
+			setPhoneError(null);
+		}
 
-        <PhoneInput
-          defaultCountry="ng"
-          value={contact_phone}
-          onChange={(phone) => setContactPhone(phone)}
-          inputStyle={{
-            width: "100%",
-            paddingLeft: "10px",
-            paddingTop: "24px",
-            paddingRight: "10px",
-            paddingBottom: "24px",
-            // backgroundColor: "#F7FAFC",
-            borderColor: "#EBEFF9",
-            borderStartEndRadius: "8px",
-            borderEndEndRadius: "8px",
-            fontSize: "18px",
-          }}
-          countrySelectorStyleProps={{
-            buttonStyle: {
-              height: "100%",
-              paddingLeft: "10px",
-              paddingRight: "10px",
-              // backgroundColor: "#F7FAFC",
-              borderColor: "#EBEFF9",
-              borderEndStartRadius: "8px",
-              borderStartStartRadius: "8px",
-            },
-          }}
-        />
-      </div>
+		if (!valid) return;
 
-      <div className="flex justify-between">
-        <div className="flex space-x-3">
-          <button
-            className=" flex mt-4 bg-[#17275B] text-white w-28 py-2  rounded-lg gap-2 justify-center "
-            onClick={() =>
-              navigate(
-                `/admin/directory/update-member/personal-information?id=${memberId}`
-              )
-            }
-          >
-            <p className="text-lg ">Previous</p>
-          </button>
-          <button
-            className=" flex mt-4 bg-[#17275B] text-white w-28 py-2  rounded-lg gap-2 justify-center "
-            onClick={() =>
-              navigate(
-                `/admin/directory/update-member/church-information?id=${memberId}`
-              )
-            }
-          >
-            {/* <RiAddCircleFill className="text-2xl" /> */}
-            <p className="text-lg ">Next</p>
-          </button>
-        </div>
-        <button
-          className=" flex mt-4 bg-[#17275B] text-white px-4 py-2  rounded-lg gap-2 justify-center "
-          onClick={handleAddingMember}
-        >
-          {!isPending ? (
-            <p className="text-lg ">Save</p>
-          ) : (
-            <ThreeDots height="25" width="50" color="#fff" />
-          )}
-        </button>
-      </div>
-    </div>
-  );
+		const memberData = { ...tempMember, churchId: churchId ?? "" };
+		dispatch(
+			updateMemberDetails({
+				navigate,
+				churchId: churchId ?? "",
+				memberId: memberId ?? "",
+				member: memberData,
+			})
+		).then(() => {
+			if (status !== "failed") {
+				success("Member details updated successfully");
+			}
+		});
+	};
+
+	useEffect(() => {
+		if (status === "failed") {
+			notify(error || "An error occurred");
+		}
+	}, [status, error]);
+
+	return (
+		<div className="mt-5">
+			<InformationInput
+				text="Email"
+				onChange={(e) => handleInputChange("profile.email", e.target.value)}
+				value={tempMember?.profile?.email}
+				notCompulsory=" "
+				error={emailError ?? undefined}
+			/>
+			<InformationInput
+				text="Home Address"
+				onChange={(e) => handleInputChange("profile.address.homeAddress", e.target.value)}
+				value={tempMember?.profile?.address ? tempMember?.profile?.address.homeAddress : " "}
+				notCompulsory=" "
+			/>
+			<InformationInput
+				text="Work Address"
+				onChange={(e) => handleInputChange("profile.address.workAddress", e.target.value)}
+				value={tempMember?.profile?.address ? tempMember?.profile?.address.workAddress : " "}
+				notCompulsory=" "
+			/>
+
+			<div className="mb-2">
+				<HeaderTwo>
+					Phone Number <span className="text-[#61BD74]">*</span>
+				</HeaderTwo>
+
+				<PhoneInput
+					defaultCountry="ng"
+					value={tempMember?.profile?.phone.mainPhone}
+					onChange={(phone) => handleInputChange("profile.phone.mainPhone", phone)}
+					inputStyle={{
+						width: "100%",
+						paddingLeft: "10px",
+						paddingTop: "24px",
+						paddingRight: "10px",
+						paddingBottom: "24px",
+						borderColor: "#EBEFF9",
+						borderRadius: "8px",
+						fontSize: "18px",
+					}}
+					countrySelectorStyleProps={{
+						buttonStyle: {
+							height: "100%",
+							paddingLeft: "10px",
+							paddingRight: "10px",
+							borderColor: "#EBEFF9",
+							borderRadius: "8px",
+						},
+					}}
+				/>
+				{phoneError && <p className="text-red-500 text-sm">{phoneError}</p>}
+			</div>
+
+			<div className="flex justify-between">
+				<div className="flex space-x-3">
+					<button
+						className="flex mt-4 bg-[#17275B] text-white w-28 py-2 rounded-lg gap-2 justify-center"
+						onClick={() =>
+							navigate(`/admin/directory/update-member/personal-information?id=${memberId}`)
+						}>
+						<p className="text-lg">Previous</p>
+					</button>
+					<button
+						className="flex mt-4 bg-[#17275B] text-white w-28 py-2 rounded-lg gap-2 justify-center"
+						onClick={() =>
+							navigate(`/admin/directory/update-member/church-information?id={memberId}`)
+						}>
+						<p className="text-lg">Next</p>
+					</button>
+				</div>
+				<button
+					className="flex mt-4 bg-[#17275B] text-white px-4 py-2 rounded-lg gap-2 justify-center"
+					onClick={handleSave}
+					disabled={status === "loading"}>
+					{status !== "loading" ? (
+						<p className="text-lg">Save</p>
+					) : (
+						<ThreeDots height="25" width="50" color="#fff" />
+					)}
+				</button>
+			</div>
+		</div>
+	);
 };
 
 export default UpdateContactInfo;

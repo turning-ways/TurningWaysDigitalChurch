@@ -1,135 +1,131 @@
-import { useState } from "react";
-import { PiDotsThreeCircleVertical } from "react-icons/pi";
-import ContactsModal from "./ContactsModal";
-
+/* eslint-disable no-mixed-spaces-and-tabs */
+import React from "react";
+import { selectContacts, selectContactsLoading, deleteContact } from "../../../slices/contactSlice";
 import { SlArrowRight } from "react-icons/sl";
-import { useGetAllContacts } from "../../../hooks/useContact";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { AppDispatch } from "../../../store";
+import { capitalize, formatContactsDate as formatDate } from "../../../utils/formatter";
+import TableShimmerSkeleton from "../../../ui/shimmers/tableShimmers";
+import { BiTrash } from "react-icons/bi";
+import { useChurchIdStore } from "../../../stores/churchId";
 import { ThreeDots } from "react-loader-spinner";
 
 const AllContactsList = () => {
-  const [show, setShow] = useState<string | null>(null);
-  const { data: contacts, isPending } = useGetAllContacts();
-  const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
+	const dispatch = useDispatch<AppDispatch>();
+	const contacts = useSelector(selectContacts);
+	const isPending = useSelector(selectContactsLoading);
+	const churchId = useChurchIdStore((state) => state.churchId);
+	const navigate = useNavigate();
 
-    const getOrdinalNum = (n: number) => {
-      return (
-        n +
-        (n > 0
-          ? ["th", "st", "nd", "rd"][
-              (n > 3 && n < 21) || n % 10 > 3 ? 0 : n % 10
-            ]
-          : "")
-      );
-    };
+	const handleDelete = (e: React.MouseEvent, contactId: string) => {
+		e.stopPropagation();
+		dispatch(
+			deleteContact({
+				churchId: churchId,
+				contactId: contactId,
+			})
+		);
+	};
 
-    const day = getOrdinalNum(date.getUTCDate());
-    const month = date.toLocaleString("default", { month: "long" });
-    const year = date.getUTCFullYear();
-
-    let hours = date.getUTCHours() + 1;
-    const minutes = date.getUTCMinutes().toString().padStart(2, "0");
-    const ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-
-    const formattedTime = `${hours}:${minutes} ${ampm}`;
-
-    return `${day} ${month} ${year} ${formattedTime}`;
-  };
-
-  const navigate = useNavigate();
-  return (
-    <>
-      <div className="flex flex-col">
-        {contacts && Array.isArray(contacts) && !isPending && (
-          <div className="xl:grid grid-cols-[120px,150px,150px,150px,100px,auto] gap-4 py-2  w-full bg-[#E8EDFF] rounded-t-md border border-[#E6E6E6] px-3 items-center hidden">
-            <div className="flex space-x-1 items-center ">Name</div>
-            <div className="">Phone Number</div>
-            <div className="">Assigned To</div>
-            <div className="">Label</div>
-            <div className="">Status</div>
-            <div className="">Modified</div>
-          </div>
-        )}
-
-        <div className="border-t xl:hidden border-[#BDBDBD]" />
-
-        {contacts &&
-          Array.isArray(contacts) &&
-          !isPending &&
-          contacts.map((contact) => (
-            <>
-              <div className="xl:flex flex-col relative hidden">
-                <div className="grid grid-cols-[120px,150px,150px,150px,100px,auto] gap-4 py-2 px-3  w-full border-b border-x text-[#636363]">
-                  <div className="flex space-x-2 items-center truncate">
-                    {/* <input type="checkbox" /> */}
-                    <p className="truncate max-w-full">
-                      {contact.firstName + " " + contact.lastName}
-                    </p>
-                  </div>
-                  <div className="">{contact.phoneNumber}</div>
-                  <div className="tuncate">
-                    <p className="max-w-full truncate">
-                      {contact.assignedTo && contact.assignedTo.length > 0
-                        ? `${contact.assignedTo[0].first_name} ${contact.assignedTo[0].last_name}`
-                        : "No assigned member"}
-                    </p>
-                  </div>
-                  <div className="">
-                    <p className="max-w-full truncate">
-                      {contact.labels && contact.labels.length > 0
-                        ? `${contact.labels[0].label} `
-                        : "NIL"}
-                    </p>
-                  </div>
-                  <div
-                    className={`text-[#61BD74] ${
-                      contact.status === "not started" && "text-[#555555]"
-                    } ${contact.status === "open" && "text-[#B061BD]"} ${
-                      contact.status === "won" && "text-[#61BD74]"
-                    } ${contact.status === "lost" && "text-[#BD6161]"}`}
-                  >
-                    {contact.status}
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <p>{formatDate(contact.modifiedDate)}</p>
-                    <PiDotsThreeCircleVertical
-                      className="text-[#727272] text-2xl cursor-pointer"
-                      onClick={() => setShow(contact._id ? contact._id : null)}
-                    />
-                  </div>
-                </div>
-                <ContactsModal
-                  show={show}
-                  id={contact._id}
-                  onClose={() => setShow(null)}
-                />
-              </div>
-              <div className="xl:hidden">
-                <div
-                  className="border-b border-[#BDBDBD]  flex py-2 text-[#555454] px-3 justify-between items-center cursor-pointer"
-                  onClick={() =>
-                    navigate(`/admin/contacts/${contact._id}`)
-                  }
-                >
-                  <div>
-                    <p>{contact.firstName + " " + contact.lastName}</p>
-                    <p>{formatDate(contact.modifiedDate)}</p>
-                  </div>
-                  <SlArrowRight />
-                </div>
-              </div>
-            </>
-          ))}
-        {!contacts && (
-          <p className="text-sm text-[#D9D9D9]">No contacts have been added</p>
-        )}
-      </div>
-      {isPending && <ThreeDots color="black" width={24} height={24} />}
-    </>
-  );
+	return (
+		<>
+			<div className="flex flex-col">
+				{isPending && <TableShimmerSkeleton rowsNum={10} colsNum={6} />}
+				{!isPending && contacts && Array.isArray(contacts) && (
+					<>
+						{contacts && Array.isArray(contacts) && (
+							<div className="overflow-x-auto hidden lg:block  border !rounded-t-md border-gray-400">
+								<table className="min-w-full bg-white table-auto">
+									<thead className="rounded-t-md">
+										<tr className="w-full bg-[#E8EDFF] text-left text-[#636363] rounded-t-md">
+											<th className="py-2 px-3 rounded-tl-md">Name</th>
+											<th className="py-2 px-3">Phone Number</th>
+											<th className="py-2 px-3">Assigned To</th>
+											<th className="py-2 px-3">Label</th>
+											<th className="py-2 px-3">Status</th>
+											<th className="py-2 px-3">Modified</th>
+										</tr>
+									</thead>
+									<tbody>
+										{contacts.map((contact) => (
+											<tr
+												key={contact.id}
+												className="border-b text-[#636363] hover:bg-gray-100 transition duration-200 relative "
+												onClick={() => navigate("/admin/contacts/" + contact.id)}>
+												<td className="py-2 px-3 truncate cursor-pointer">
+													{contact?.lastName === null
+														? capitalize(contact?.firstName)
+														: `${capitalize(contact?.firstName)} ${capitalize(contact?.lastName)}`}
+												</td>
+												<td className="py-2 px-3">{contact?.phone}</td>
+												<td className="py-2 px-3 truncate">
+													{contact?.assignedTo && contact.assignedTo.length > 0
+														? `${contact?.assignedTo[0]?.profile?.firstName} ${
+																contact?.assignedTo[0]?.profile?.lastName
+														  } ${contact?.assignedTo.length > 1 ? ", ..." : ""}`
+														: "No assigned member"}
+												</td>
+												<td className="py-2 px-3 truncate">
+													{contact.labels && contact.labels.length > 0
+														? `${contact.labels[0].label} ${contact.labels.length > 1 ? "..." : ""}`
+														: "NIL"}
+												</td>
+												<td
+													className={`py-2 px-3 ${
+														contact?.contactStatus === "new" && "text-primary"
+													} ${contact?.contactStatus === "contacted" && "text-[#B061BD]"} ${
+														contact?.contactStatus === "won" && "text-[#61BD74]"
+													} ${contact?.contactStatus === "lost" && "text-[#BD6161]"} `}>
+													{contact?.contactStatus}
+												</td>
+												<td className="py-2 px-3 flex items-center justify-between">
+													<p>{formatDate(contact?.updatedAt)}</p>
+													<BiTrash
+														className="text-red-400 cursor-pointer z-10"
+														onClick={(e) => handleDelete(e, contact.id)}
+													/>
+												</td>
+												{/* <ContactsModal show={show} id={contact.id} onClose={() => setShow(null)} /> */}
+											</tr>
+										))}
+									</tbody>
+								</table>
+							</div>
+						)}
+						{contacts &&
+							Array.isArray(contacts) &&
+							!isPending &&
+							contacts.map((contact) => (
+								<div key={contact.id} className="lg:hidden">
+									<div
+										className="border-b border-[#BDBDBD] flex py-2 text-[#555454] px-3 justify-between items-center cursor-pointer hover:bg-[#F1F1F1] transition duration-200"
+										onClick={() => navigate(`/admin/contacts/${contact.id}`)}>
+										<div>
+											<p className="text-xl font-medium">
+												{contact?.lastName === null
+													? capitalize(contact?.firstName)
+													: `${capitalize(contact?.firstName)} ${capitalize(contact?.lastName)}`}
+											</p>
+											<p>{formatDate(contact?.updatedAt)}</p>
+										</div>
+										<SlArrowRight />
+									</div>
+								</div>
+							))}
+						{isPending && (
+							<div className="flex justify-center items-center h-full">
+								<ThreeDots color="black" width={24} height={24} />
+							</div>
+						)}
+					</>
+				)}
+				{!contacts && !isPending && (
+					<p className="text-sm text-[#D9D9D9]">No contacts have been added</p>
+				)}
+			</div>
+		</>
+	);
 };
 
 export default AllContactsList;

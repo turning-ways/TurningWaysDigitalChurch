@@ -1,221 +1,192 @@
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
+import { AppDispatch } from "../../../../store";
+
 import InformationInput from "../Edit Profile/InformationInput";
 import { DropDownInput } from "../../../../ui/DropDownMenu/DropDownInput";
-import { useEditPersonalInformationStore } from "../../../../stores/Edit Member/personalinfo";
-import { useNavigate } from "react-router-dom";
-import useUpdateMember from "../../../../hooks/Member/member-service/useUpdateMember";
-import { useEditContactInformationStore } from "../../../../stores/Edit Member/contactinfo";
-import { useEditChurchInformationStore } from "../../../../stores/Edit Member/churchinfo";
-import { useUserAuth } from "../../../../stores/user";
-import { ThreeDots } from "react-loader-spinner";
+import {
+	updateMemberDetails,
+	updateTempMemberField,
+	selectTempMember,
+	selectMemberStatus,
+	selectMemberError,
+} from "../../../../slices/memberSlice";
+import { useChurchIdStore } from "../../../../stores/churchId";
+import { notify, success } from "../../../../hooks/useAuthData";
 
 const UpdatePersonalInfo = () => {
-  const {
-    setPrefix,
-    setFirstName,
-    setMiddleName,
-    setLastName,
-    setSuffix,
-    setGender,
-    first_name,
-    middle_name,
-    last_name,
-    suffix,
-    gender,
-    prefix,
-    dateOfBirth,
-    educational_level,
-    employment_status,
-    health_status,
-    setDateOfBirth,
-    setEducationalLevel,
-    setEmploymentStatus,
-    setHealthStatus,
-  } = useEditPersonalInformationStore();
+	const dispatch = useDispatch<AppDispatch>();
+	const navigate = useNavigate();
+	const location = useLocation();
+	const queryParams = new URLSearchParams(location.search);
+	const memberId = queryParams.get("id");
+	const { churchId } = useChurchIdStore();
 
-  const navigate = useNavigate();
+	const tempMember = useSelector(selectTempMember);
+	console.log(tempMember);
+	const status = useSelector(selectMemberStatus);
+	const error = useSelector(selectMemberError);
 
-  const information = [
-    {
-      name: "First Name",
-      set: setFirstName,
-      value: first_name,
-    },
-    {
-      name: "Middle Name",
-      set: setMiddleName,
-      value: middle_name,
-    },
-    {
-      name: "Last Name",
-      set: setLastName,
-      value: last_name,
-    },
-    {
-      name: "Suffix",
-      set: setSuffix,
-      value: suffix,
-    },
-  ];
+	// useEffect(() => {
+	// 	if (memberId) {
+	// 		dispatch(fetchMemberDetails({ churchId, memberId }));
+	// 	}
+	// 	return () => {
+	// 		// dispatch(clearMemberDetails());
+	// 	};
+	// }, []);
 
-  const handleSelectValue = (value: string) => {
-    setPrefix(value);
-  };
+	const handleInputChange = (field: string, value: string | number | boolean) => {
+		dispatch(updateTempMemberField({ field, value }));
+	};
 
-  const handleGender = (value: string) => {
-    setGender(value);
-  };
+	const handleSave = () => {
+		if (!memberId) {
+			console.error("Member ID is missing");
+			return;
+		}
 
-  const queryParams = new URLSearchParams(location.search);
+		const memberData = { ...tempMember, churchId: churchId ?? "" };
+		try {
+			dispatch(
+				updateMemberDetails({
+					navigate,
+					churchId: churchId ?? "",
+					memberId,
+					member: memberData,
+				})
+			);
+			success("Member details updated successfully");
+		} catch (error) {
+			notify("An error occurred");
+		}
+	};
 
-  const memberId = queryParams.get("id");
-
-  const { user } = useUserAuth();
-
-  const { contact_address, contact_phone, contact_email } =
-    useEditContactInformationStore();
-
-  const { member_status, work_type, service_unit } =
-    useEditChurchInformationStore();
-
-  const { mutate, isPending } = useUpdateMember(memberId ? memberId : "");
-
-  const handleAddingMember = () => {
-    mutate({
-      first_name,
-      last_name,
-      middle_name,
-      email: contact_email,
-      suffix,
-      address: { HomeAddress: contact_address },
-      phone: { MainPhone: contact_phone },
-      churchId: user?.churchId._id ? user?.churchId._id : "",
-      gender,
-      memberStatus: member_status,
-      workerType: work_type,
-      ServiceUnit: service_unit,
-      employmentStatus: employment_status.toLowerCase(),
-      educationalLevel: educational_level.toLowerCase(),
-      healthStatus: health_status.toLowerCase(),
-    });
-    // console.log(member_status, work_type, service_unit);
-  };
-
-  const handleEducationalLevel = (value: string) => {
-    setEducationalLevel(value.toLowerCase());
-  };
-
-  const handleEmploymentStatus = (value: string) => {
-    setEmploymentStatus(value.toLowerCase());
-  };
-
-  const handleHealthStatus = (value: string) => {
-    setHealthStatus(value.toLowerCase());
-  };
-
-  return (
-    <div className="mt-5 flex flex-col">
-      <DropDownInput
-        text="Prefix"
-        items={["Mr", "Mrs"]}
-        placeholder="Mr/Mrs"
-        value={prefix}
-        onSelect={handleSelectValue}
-      />
-      {information.map((item, index) => (
-        <div key={index}>
-          <InformationInput
-            text={item.name}
-            onChange={(e) => {
-              item.set(e.target.value);
-            }}
-            value={item.value}
-            notCompulsory={
-              item.name === "Suffix" || item.name === "Middle Name" ? " " : "*"
-            }
-          />
-        </div>
-      ))}
-      <DropDownInput
-        text="Gender"
-        items={["male", "female"]}
-        placeholder="Male"
-        compulsory="*"
-        onSelect={handleGender}
-        value={gender?.slice(0, 1).toUpperCase() + gender?.slice(1)}
-      />
-      <div className=" space-y-1 mb-4">
-        <p className="text-[#727272]">
-          D.O.B <span className="text-[#61BD74]"> *</span>
-        </p>
-        <div className="border rounded-lg p-2">
-          <input
-            className="outline-none text-[#434343] text-lg w-full"
-            type="date"
-            value={dateOfBirth?.split("T")[0]}
-            onChange={(e) => setDateOfBirth(e.target.value)}
-          />
-        </div>
-      </div>
-      <DropDownInput
-        text="Educational Level"
-        items={[
-          "Undefined",
-          "Primary",
-          "Secondary",
-          "Graduate",
-          "Post Graduate",
-          "Others",
-        ]}
-        placeholder="undefined"
-        compulsory=" "
-        onSelect={handleEducationalLevel}
-        value={educational_level}
-        onChange={(educational_level) => setEducationalLevel(educational_level)}
-      />
-      <DropDownInput
-        text="Employment Status"
-        items={["Undefined", "Self Employed", "Employed", "Unemployed"]}
-        placeholder="undefined"
-        compulsory=" "
-        onSelect={handleEmploymentStatus}
-        value={employment_status}
-        onChange={(employment_status) => setEmploymentStatus(employment_status)}
-      />
-      <DropDownInput
-        text="Health Status"
-        items={["Undefined", "Healthy", "Allergic", "Special Condition"]}
-        placeholder="undefined"
-        compulsory=" "
-        onSelect={handleHealthStatus}
-        value={health_status}
-        onChange={(health_status) => setHealthStatus(health_status)}
-      />
-      <div className="flex justify-between">
-        <button
-          className=" self-end mt-4 bg-[#17275B] text-white px-4
-        
-          py-2 rounded-lg gap-2 justify-center"
-          onClick={() =>
-            navigate(
-              `/admin/directory/update-member/contact-information?id=${memberId}`
-            )
-          }
-        >
-          <p className="text-lg ">Next</p>
-        </button>
-        <button
-          className=" flex mt-4 bg-[#17275B] text-white px-4 py-2  rounded-lg gap-2 justify-center "
-          onClick={handleAddingMember}
-        >
-          {!isPending ? (
-            <p className="text-lg ">Save</p>
-          ) : (
-            <ThreeDots height="25" width="50" color="#fff" />
-          )}
-        </button>
-      </div>
-    </div>
-  );
+	return (
+		<div className="mt-5 flex flex-col">
+			<DropDownInput
+				text="Prefix"
+				items={[
+					"Honorable",
+					"Mr",
+					"Mrs",
+					"Bro",
+					"Sis",
+					"Miss",
+					"Dr",
+					"Prof",
+					"Rev",
+					"Pastor",
+					"Elder",
+					"Deacon",
+					"Bishop",
+					"Deaconess",
+					"undefined",
+				]}
+				placeholder="Mr"
+				value={tempMember?.profile?.prefix}
+				onSelect={(value) => handleInputChange("profile.prefix", value)}
+			/>
+			<DropDownInput
+				text="Suffix"
+				items={["Jr", "Sr", "II", "III", "IV", "undefined"]}
+				placeholder="Jr"
+				value={tempMember?.profile?.suffix}
+				onSelect={(value) => handleInputChange("profile.suffix", value)}
+			/>
+			<InformationInput
+				text="First Name"
+				onChange={(e) => handleInputChange("profile.firstName", e.target.value)}
+				value={tempMember?.profile?.firstName}
+				notCompulsory="*"
+			/>
+			<InformationInput
+				text="Middle Name"
+				onChange={(e) => handleInputChange("profile.middleName", e.target.value)}
+				value={tempMember?.profile?.middleName}
+				notCompulsory=" "
+			/>
+			<InformationInput
+				text="Last Name"
+				onChange={(e) => handleInputChange("profile.lastName", e.target.value)}
+				value={tempMember?.profile?.lastName}
+				notCompulsory="*"
+			/>
+			<DropDownInput
+				text="Gender"
+				items={["male", "female"]}
+				placeholder="Male"
+				compulsory="*"
+				onSelect={(value) => handleInputChange("profile.gender", value)}
+				value={tempMember?.profile?.gender}
+			/>
+			<div className="space-y-1 mb-4">
+				<p className="text-[#727272]">
+					Date Of Birth <span className="text-[#61BD74]"> *</span>
+				</p>
+				<div className="border rounded-lg p-2">
+					<input
+						className="outline-none text-[#434343] text-lg w-full"
+						type="date"
+						value={tempMember?.profile?.dateOfBirth}
+						onChange={(e) => handleInputChange("profile.dateOfBirth", e.target.value)}
+					/>
+				</div>
+			</div>
+			<DropDownInput
+				text="Marital Status"
+				items={["single", "married", "divorced", "widowed", "undefined"]}
+				placeholder="Single"
+				compulsory=" "
+				onSelect={(value) => handleInputChange("profile.maritalStatus", value)}
+				value={tempMember?.profile?.maritalStatus}
+			/>
+			<DropDownInput
+				text="Educational Level"
+				items={["undefined", "primary", "secondary", "graduate", "post-graduate"]}
+				placeholder="undefined"
+				compulsory=" "
+				onSelect={(value) => handleInputChange("profile.educationalLevel", value)}
+				value={tempMember?.profile?.educationalLevel}
+			/>
+			<DropDownInput
+				text="Employment Status"
+				items={["undefined", "self-employed", "employed", "student", "retired", "unemployed"]}
+				placeholder="undefined"
+				compulsory=" "
+				onSelect={(value) => handleInputChange("profile.employmentStatus", value)}
+				value={tempMember?.profile?.employmentStatus}
+			/>
+			<DropDownInput
+				text="Health Status"
+				items={["undefined", "healthy", "allergic", "special condition"]}
+				placeholder="undefined"
+				compulsory=" "
+				onSelect={(value) => handleInputChange("profile.healthStatus", value)}
+				value={tempMember?.profile?.healthStatus}
+			/>
+			<div className="flex justify-between">
+				<button
+					className="self-end mt-4 bg-[#17275B] text-white px-4 py-2 rounded-lg gap-2 justify-center"
+					onClick={() =>
+						navigate(`/admin/directory/update-member/contact-information?id=${memberId}`)
+					}>
+					<p className="text-lg">Next</p>
+				</button>
+				<button
+					className="flex mt-4 bg-[#17275B] text-white px-4 py-2 rounded-lg gap-2 justify-center"
+					onClick={handleSave}>
+					{status !== "loading" ? (
+						<p className="text-lg">Save</p>
+					) : (
+						<ThreeDots height="25" width="50" color="#fff" />
+					)}
+				</button>
+			</div>
+			{status === "failed" && <div className="mt-2 text-red-500">{error}</div>}
+		</div>
+	);
 };
 
 export default UpdatePersonalInfo;

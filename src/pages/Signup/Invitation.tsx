@@ -66,11 +66,13 @@ const Invite: React.FC = () => {
 					throw new Error("Missing id or key");
 				}
 
-				await axios.get(`https://turningways.onrender.com/api/v1/users/invite?id=${id}&key=${key}`);
+				await axios.get(
+					`https://turningways-api-3hcn.onrender.com/api/v1/users/invite?id=${id}&key=${key}`
+				);
 			} catch (error) {
 				console.error("Error fetching data:", error);
 				navigate("/");
-				if (error.message === "Missing id or key") {
+				if ((error as Error).message === "Missing id or key") {
 					return notify(
 						"Error with your invite link. Please contact the admin for a new invite link"
 					);

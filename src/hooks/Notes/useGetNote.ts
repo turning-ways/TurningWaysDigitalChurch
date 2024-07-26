@@ -1,30 +1,34 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useUserAuth } from "../../stores/user";
+import axios from "../../axios";
+// import { useUserAuth } from "../../stores/user";
+import { useChurchIdStore } from "../../stores/churchId";
 
 interface NoteProps {
-  comment: string;
-  date: string;
-  id: string;
+	comment: string;
+	date: string;
+	id: string;
 }
 
 const useGetNote = (memberId: string) => {
-  const { user } = useUserAuth();
+	const { churchId } = useChurchIdStore();
 
-  return useQuery<NoteProps[]>({
-    queryKey: ["church", user?.churchId?._id, "member", memberId, "notes"],
-    queryFn: () =>
-      axios
-        .get(
-          `https://turningways.onrender.com/api/v1/members/${user?.churchId?._id}/member/${memberId}/notes`,
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => res.data)
-        .then((res) => res.data)
-        .then((res) => res.notes),
-  });
+	return useQuery<NoteProps[]>({
+		queryKey: ["church", churchId, "member", memberId, "notes"],
+		queryFn: () =>
+			axios
+				.get(
+					`https://turningways-api-3hcn.onrender.com/api/v1/members/${churchId}/member/${memberId}/note`,
+					{
+						withCredentials: true,
+					}
+				)
+				.then((res) => {
+					return res.data;
+				})
+				.then((res) => {
+					return res.data.notes;
+				}),
+	});
 };
 
 export default useGetNote;

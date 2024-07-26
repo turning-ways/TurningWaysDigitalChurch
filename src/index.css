@@ -3,16 +3,62 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: azosans;
-  src: url(public/assets/fonts/AzoSans-Regular.ttf);
+	font-family: azosans;
+	src: url(public/assets/fonts/AzoSans-Regular.ttf);
 }
 
 @font-face {
-  font-family: azosansBold;
-  src: url(/assets/fonts/AzoSans-Bold.ttf);
+	font-family: azosansBold;
+	src: url(/assets/fonts/AzoSans-Bold.ttf);
 }
 
 @font-face {
-  font-family: azosansSemiBold;
-  src: url(/assets/fonts/AzoSans-Medium.ttf);
+	font-family: azosansSemiBold;
+	src: url(/assets/fonts/AzoSans-Medium.ttf);
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: -1000px 0;
+	}
+	100% {
+		background-position: 1000px 0;
+	}
+}
+
+.shimmer {
+	background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+	background-size: 1000px 100%;
+	animation: shimmer 2s infinite;
+}
+
+@keyframes LoadingLogo {
+	0% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(1.5);
+	}
+}
+
+.loadingLogo {
+	animation: LoadingLogo 3s infinite;
+}
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+	width: 7px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #888;
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
 }

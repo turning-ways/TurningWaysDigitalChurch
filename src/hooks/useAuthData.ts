@@ -1,7 +1,7 @@
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import ApiClient from "../services/api-client";
 import { Bounce, toast } from "react-toastify";
-import { useChurchIdStore } from "../stores/churchId";
+import { useAuthStore, useChurchIdStore } from "../stores/churchId";
 import { useNavigate } from "react-router-dom";
 import service from "../services/api-v1-users-service";
 import { useUserDetailsStore, useUserIdStore } from "../stores/user";
@@ -15,23 +15,23 @@ import {
 	signInWithPhoneNumber,
 	updateProfile,
 } from "firebase/auth";
-import axios from "axios";
+import axios from "../axios";
 import auth from "../firebase.config";
 
-interface AuthResponse {
-	data: {
-		user: {
-			first_name: string;
-			last_name: string;
-			_id: string;
-			churchId: {
-				_id: string;
-				name: string;
-			};
-			photo: string;
-		};
-	};
-}
+// interface AuthResponse {
+// 	data: {
+// 		user: {
+// 			first_name: string;
+// 			last_name: string;
+// 			_id: string;
+// 			churchId: {
+// 				_id: string;
+// 				name: string;
+// 			};
+// 			photo: string;
+// 		};
+// 	};
+// }
 
 interface LoginDetails {
 	inputKey: string;
@@ -56,8 +56,8 @@ interface Password {
 interface User {
 	email?: string;
 	phoneNumber?: string;
-	first_name?: string;
-	last_name?: string;
+	firstName?: string;
+	lastName?: string;
 	password?: string;
 	passwordConfirm?: string;
 }
@@ -65,16 +65,14 @@ interface User {
 interface Church {
 	name: string;
 	phone: string;
-
 	postalCode: string;
 	country: string;
 	state: string;
 	city: string;
 	address: string;
-
 	website: string;
-
 	email: string;
+	hasParentChurch: boolean;
 }
 
 export const success = (success: string) => {
@@ -106,15 +104,13 @@ export const notify = (err: string) => {
 };
 
 export const useAuth = () => {
-	const apiClient = new ApiClient<AuthResponse>("/authorize");
-	return useQuery<AuthResponse>({
+	// configure a new api client to send a get request to the /members/me endpoint
+	const apiClient = new ApiClient("/api/v1/members/me");
+	// use the useQuery hook to send the get request
+	return useQuery({
 		queryKey: ["auth"],
-		queryFn: () => apiClient.get(),
+		queryFn: apiClient.get,
 	});
-};
-
-export const refetchAuth = (queryClient: QueryClient) => {
-	queryClient.invalidateQueries({ queryKey: ["auth"] });
 };
 
 export const useRegister = () => {
@@ -123,7 +119,7 @@ export const useRegister = () => {
 	const navigate = useNavigate();
 
 	return useMutation({
-		mutationFn: (user: User) => service("/signupAdmin").post(user),
+		mutationFn: (user: User) => service("/auth/admin/signup").post(user),
 		onSuccess: () => {
 			mutate({ email });
 			navigate("/register/otp-verification");
@@ -133,12 +129,12 @@ export const useRegister = () => {
 			const message = err.response.data.message;
 			if (message === "User validation failed: passwordConfirm: The passwords do not match!!") {
 				notify(`Passwords don't match`);
-			}
-			// } else if (message.includes("duplicate")) {
-			//   notify(`An account with this email already exists`);
-			// }
-			else {
+			} else if (message === "This email already exists..") {
 				notify("An account with this email already exists");
+			} else if (message === "User not found") {
+				notify("Invalid email or password");
+			} else {
+				notify("An error Occurred");
 			}
 		},
 	});
@@ -288,28 +284,41 @@ export const useLogin = () => {
 	// const { setChurchId } = useChurchIdStore();
 
 	const { setChurchId } = useChurchIdStore();
+	const { setToken } = useAuthStore();
+	const { mutate } = useVerifyEmail();
 
 	return useMutation({
-		mutationFn: (user: LoginDetails) => service("/login").post(user),
+		mutationFn: (user: LoginDetails) => service("/auth/login").post(user),
+
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
 		onSuccess: (res: any) => {
-			if (res.redirectType === "adminDashboard") {
-				setChurchId(res.churchId);
+			if (res.redirect === "admin dashboard") {
+				setChurchId(res.user.mainChurch);
+				setToken(res.accessToken);
 				success("Sign In was Successfull");
 				navigate("/admin/dashboard/today");
-				// console.log(res.churchId);
+				console.log(res.user.mainChurch);
 			}
-			if (res.redirectType === "churchSelection") {
-				setChurchId(res.churchId);
+			if (res.redirect === "church selection") {
+				setChurchId(res.user.mainChurch);
+				setToken(res.accessToken);
 				success("Sign In was Successfull, Please create your church");
 				navigate("/register/personalinfo");
+				console.log(res.user);
 			}
 		},
 		onError: (err: ErrorResponse) => {
-			// const url = new URL(err.response.data.redirectUrl);
-			// navigate(url.pathname);
-			// notify("Sign In was Successfull, Please create your church");
-			notify(err.response.data.message);
+			if (err.response.data.message.startsWith("Please verify your email")) {
+				notify("Please verify your email");
+				// use a split to get the email after the Please verify you email
+				const email = err.response.data.message.split("Please verify your email ")[1];
+				mutate({ email });
+				navigate("/register/otp-verification");
+				success("Please enter the otp that was sent");
+			}
+			if (err.response.data.message === "User not found") {
+				notify("Invalid email or password");
+			}
 		},
 	});
 };
@@ -326,7 +335,7 @@ export const useResetPassword = () => {
 	const navigate = useNavigate();
 
 	return useMutation({
-		mutationFn: (password: Password) => service("/update-password/" + userId).patch(password),
+		mutationFn: (password: Password) => service("/auth/rest-password/" + userId).patch(password),
 		onSuccess: () => {
 			success("Password has been changed");
 			navigate("/login/email");
@@ -337,7 +346,7 @@ export const useResetPassword = () => {
 
 export const useVerifyEmail = () => {
 	return useMutation({
-		mutationFn: (email: { email: string }) => service("/verify-email").post(email),
+		mutationFn: (email: { email: string }) => service("/auth/verify-email").post(email),
 		onSuccess: () => {
 			success("Otp has been sent to email");
 		},
@@ -348,7 +357,7 @@ export const useVerifyOtp = () => {
 	const { setUserId } = useUserIdStore();
 	const navigate = useNavigate();
 	return useMutation({
-		mutationFn: (token: { token: string }) => service("/verify-password-token").patch(token),
+		mutationFn: (token: { token: string }) => service("/auth/verify-password-token").patch(token),
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		onSuccess: (res: any) => {
 			setUserId(res.userId);
@@ -371,7 +380,7 @@ export const useVerifyPhoneSignUpOtp = () => {
 export const useVerifySignUpOtp = () => {
 	const navigate = useNavigate();
 	return useMutation({
-		mutationFn: (token: { token: string }) => service("/verify-email").patch(token),
+		mutationFn: (token: { token: string }) => service("/auth/verify").patch(token),
 		onSuccess: () => {
 			navigate("/login/email");
 			success("Account Created, Please Sign In");
@@ -384,26 +393,20 @@ export const useVerifySignUpOtp = () => {
 export const useAddChurch = () => {
 	const { mutate } = useAddMember();
 	const { role, howDidYouHear, phoneNumber, email, gender, dateOfBirth } = useMemberStore();
-	// const navigate = useNavigate();
-	// const { setUser } = useUserAuth();
-	// const { data: admin } = useAuth();
-	// const queryClient = useQueryClient();
-	// const handleRefresh = () => {
-	//   refetchAuth(queryClient);
-	// };
 	return useMutation({
-		mutationFn: (churchDetails: Church) => apiClient<Church>("").post(churchDetails),
+		mutationFn: (churchDetails: Church) =>
+			apiClient<Church>("/create-church-onboarding").post(churchDetails),
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		onSuccess: (res: any) => {
 			success("Church has been created successfully");
 
-			// console.log(res.data.church.id);
+			console.log(res.data.churchId);
 
 			mutate({
 				role: role.toLowerCase(),
 				howDidYouHear: howDidYouHear.toLowerCase(),
-				phone: phoneNumber,
-				churchId: res.data.church.id,
+				phone: phoneNumber.MainPhone,
+				churchId: res.data.churchId,
 				email,
 				gender: gender.toLowerCase(),
 				dateOfBirth,

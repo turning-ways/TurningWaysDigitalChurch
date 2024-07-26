@@ -1,10 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useUserAuth } from "./stores/user";
 
 const NonProtectedRoute = () => {
-  const { user } = useUserAuth();
+	const user = localStorage.getItem("user");
 
-  return user ? <Navigate to="/admin/dashboard" /> : <Outlet />;
+	return user ? <Navigate to="/admin/dashboard" /> : <Outlet />;
 };
 
 export default NonProtectedRoute;

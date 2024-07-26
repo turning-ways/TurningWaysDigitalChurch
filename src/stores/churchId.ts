@@ -22,7 +22,6 @@
 //   },
 // }));
 
-
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -45,6 +44,26 @@ export const useChurchIdStore = create<AdminStore, [["zustand/persist", AdminSto
 		}),
 		{
 			name: "church-id-storage",
+			getStorage: () => localStorage,
+		}
+	)
+);
+
+interface AuthStore {
+	token: string;
+	setToken: (token: string) => void;
+	reset: () => void;
+}
+
+export const useAuthStore = create<AuthStore, [["zustand/persist", AuthStore]]>(
+	persist(
+		(set) => ({
+			token: "",
+			setToken: (token) => set(() => ({ token })),
+			reset: () => set({ token: "" }),
+		}),
+		{
+			name: "auth-storage",
 			getStorage: () => localStorage,
 		}
 	)
