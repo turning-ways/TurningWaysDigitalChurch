@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { notify } from "./hooks/useAuthData";
 import { useAuth } from "./hooks/useAuthData"; // Import useAuth hook
+import { useChurchIdStore } from "./stores/churchId";
 
 interface userData {
 	data: {
@@ -11,12 +12,14 @@ interface userData {
 			lastName: string;
 			email: string;
 			role: string;
+			churchId: string;
 		};
 	};
 }
 
 const ProtectedRoutes = () => {
 	const { data: userData, isLoading, isError } = useAuth(); // Use the useAuth hook
+	const { setChurchId } = useChurchIdStore();
 
 	useEffect(() => {
 		if (!isLoading) {
@@ -26,6 +29,7 @@ const ProtectedRoutes = () => {
 			} else {
 				// If we have user data and no error, authentication is successful
 				localStorage.setItem("user", JSON.stringify((userData as userData).data.member)); // Save user data to local storage
+				setChurchId((userData as userData).data.member.churchId);
 			}
 		}
 	}, [isLoading, isError, userData]);

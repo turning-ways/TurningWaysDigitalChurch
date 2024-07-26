@@ -250,7 +250,7 @@ export const useVerifyPhoneAuthOtp = () => {
 			const userDetails = window.userDetails;
 			if (cred.user) {
 				const user = await axios.post(
-					"http://turningways.onrender.com/api/v1/users/phone-auth",
+					"https://turningways-api-3hcn.onrender.com/api/v1/auth/phone",
 					{
 						uid: cred.user.uid,
 						password: userDetails.password,
