@@ -127,7 +127,7 @@ const Recipients: React.FC<RecipientsProp> = ({ onOpen }) => {
         </button>
 
         {open && (
-          <Modal  onClose={() => setOpen(false)}>
+           <Modal  onClose={() => setOpen(false)} className="">
             <div className="bg-white px-[26px] py-[37px] rounded-2xl text-lg flex flex-col gap-6">
               <ul className="text-[#7F7F7F] flex flex-col gap-6 w-[334px]">
                 <li className="flex space-x-3 items-center cursor-pointer text-[#555555]">

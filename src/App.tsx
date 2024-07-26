@@ -1,8 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PersonalInfo from "./pages/Signup/ChurchAccountSetup/PersonalInfo";
 import OtpVerification from "./pages/Signup/OtpVerification";
 import Register from "./pages/Signup/Register";
@@ -34,87 +30,86 @@ import ContactDetails from "./pages/Overview/Contacts/ContactDetails";
 import Settings from "./pages/Overview/Settings/Settings";
 import Invite from "./pages/Signup/Invitation";
 
-
 function App() {
-  return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
+	return (
+		<>
+			<Router>
+				<Routes>
+					<Route path="/" element={<LandingPage />} />
 
-          {/* Login User  */}
-          <Route path="login">
-            <Route path="email" element={<LoginWithEmail />} />
-            <Route path="phone" element={<LoginWithNumber />} />
-          </Route>
-          {/* <Route path="/login-with-email" element={<LoginWithEmail />} /> */}
+					{/* Login User  */}
+					<Route path="login">
+						<Route path="email" element={<LoginWithEmail />} />
+						<Route path="phone" element={<LoginWithNumber />} />
+					</Route>
+					{/* <Route path="/login-with-email" element={<LoginWithEmail />} /> */}
 
-          {/* Register a New User  */}
-          <Route path="/register" element={<Register />} />
-          <Route path="/invite" element={<Invite />} />
-          {/* <Route path="/register/phone" element={<RegisterWithPhone />} /> */}
-          <Route path="register">
-            <Route path="otp-verification" element={<OtpVerification />} />
-            {/* <Route
+					{/* Register a New User  */}
+					<Route path="/register" element={<Register />} />
+					<Route path="/invite" element={<Invite />} />
+					{/* <Route path="/register/phone" element={<RegisterWithPhone />} /> */}
+					<Route path="register">
+						<Route path="otp-verification" element={<OtpVerification />} />
+						{/* <Route
               path="phone-otp-verification"
               element={<PhoneOtpVerification />}
             /> */}
-            <Route path="personalinfo" element={<PersonalInfo />} />
-            <Route path="organizationinfo" element={<OrganizationInfo />} />
-            <Route path="churchinfo" element={<ChurchInfo />} />
-          </Route>
+						<Route path="personalinfo" element={<PersonalInfo />} />
+						<Route path="organizationinfo" element={<OrganizationInfo />} />
+						<Route path="churchinfo" element={<ChurchInfo />} />
+					</Route>
 
-          {/* Forgot Password  */}
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="forgot-password">
-            <Route path="otp-verification" element={<ForgotPasswordOtp />} />
-            <Route path="reset-password" element={<ResetPassword />} />
-          </Route>
+					{/* Forgot Password  */}
+					<Route path="/forgot-password" element={<ForgotPassword />} />
+					<Route path="forgot-password">
+						<Route path="otp-verification" element={<ForgotPasswordOtp />} />
+						<Route path="reset-password" element={<ResetPassword />} />
+					</Route>
 
-          <Route element={<ProtectedRoutes />}>
-            <Route path="admin">
-              <Route path="dashboard/:date" element={<Dashboard />} />
-              <Route path="directory" element={<Membership />} />
-              <Route path="directory">
-                <Route path="member/:section" element={<MembershipProfile />}></Route>
-                <Route path="add-member/:section" element={<ProfileEdit />}></Route>
-                <Route path="update-member/:section" element={<UpdateProfile />}></Route>
-                <Route path="sms" element={<SmsMessage />} />
-              </Route>
-              <Route path="forms" element={<NotBuilt active="Forms" />} />
-              <Route path="contacts" element={<Contacts />} />
-              <Route path="contacts/:contact_id" element={<ContactDetails />}></Route>
-              <Route path="setting/:setting_header" element={<Settings />} />
-              <Route path="help" element={<NotBuilt active="Help" />} />
-              <Route path="logout" element={<NotBuilt active="Logout" />} />
-            </Route>
-          </Route>
+					<Route element={<ProtectedRoutes />}>
+						<Route path="admin">
+							<Route path="dashboard/:date" element={<Dashboard />} />
+							<Route path="directory" element={<Membership />} />
+							<Route path="directory">
+								<Route path="member/:section" element={<MembershipProfile />}></Route>
+								<Route path="add-member/:section" element={<ProfileEdit />}></Route>
+								<Route path="update-member/:section" element={<UpdateProfile />}></Route>
+								<Route path="sms" element={<SmsMessage />} />
+							</Route>
+							<Route path="forms" element={<NotBuilt active="Forms" />} />
+							<Route path="contacts" element={<Contacts />} />
+							<Route path="contacts/:contact_id" element={<ContactDetails />}></Route>
+							<Route path="setting/:setting_header" element={<Settings />} />
+							<Route path="help" element={<NotBuilt active="Help" />} />
+							<Route path="logout" element={<NotBuilt active="Logout" />} />
+						</Route>
+					</Route>
 
-          {/* Admin's Overview  */}
-          <Route path="/request" element={<Request />} />
-          <Route path="/member" element={<Members />} />
-          {/* <Route path={`/admin/church/${churchId}/members`} element={<Membership />} /> */}
+					{/* Admin's Overview  */}
+					<Route path="/request" element={<Request />} />
+					<Route path="/member" element={<Members />} />
+					{/* <Route path={`/admin/church/${churchId}/members`} element={<Membership />} /> */}
 
-          {/* Forms Route */}
+					{/* Forms Route */}
 
-          {/* Workflow Route */}
+					{/* Workflow Route */}
 
-          {/* Settings Route */}
+					{/* Settings Route */}
 
-          {/* Help Route */}
+					{/* Help Route */}
 
-          {/* Logout Route */}
+					{/* Logout Route */}
 
-          {/**UPDATE PROFILE */}
+					{/**UPDATE PROFILE */}
 
-          {/**MESSAGES */}
-        </Routes>
-        {/* <Route path="/checkout">
+					{/**MESSAGES */}
+				</Routes>
+				{/* <Route path="/checkout">
         </Route> */}
-      </Router>
-      <ToastContainer />
-    </>
-  );
+			</Router>
+			<ToastContainer />
+		</>
+	);
 }
 
 export default App;

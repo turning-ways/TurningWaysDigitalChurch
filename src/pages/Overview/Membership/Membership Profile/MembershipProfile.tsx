@@ -1,91 +1,87 @@
 import Header from "../../Header";
 import SubHeader from "../../SubHeader";
-// import AddMember from "../../AddMemberBtn";
 import InformationHeader from "../InformationHeader";
 import OverviewContainer from "../../OverviewContainer";
-import useGetMemberDetails from "../../../../hooks/Member/member-service/useGetMemberDetails";
 import { ThreeDots } from "react-loader-spinner";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import Notes from "./Notes";
 import PersonalInformation from "./PersonalInformation";
 import ContactInformation from "./ContactInformation";
 import ChurchInformation from "./ChurchInformation";
 import MembershipHistory from "./MembershipHistory";
 import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../store";
+import { fetchMemberDetails } from "../../../../slices/memberSlice";
+import { useChurchIdStore } from "../../../../stores/churchId";
 
 const MembershipProfile = () => {
-  const queryParams = new URLSearchParams(location.search);
+	const location = useLocation();
+	const queryParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
+	const memberId = useMemo(() => queryParams.get("id"), [queryParams]);
 
-  const memberId = queryParams.get("id");
+	const dispatch = useDispatch<AppDispatch>();
+	const status = useSelector((state: RootState) => state.members.status);
+	const { churchId } = useChurchIdStore();
 
-  const routes = {
-    personalInfo: `/admin/directory/member/personal-information?id=${memberId}`,
+	const routes = useMemo(
+		() => ({
+			personalInfo: `/admin/directory/member/personal-information?id=${memberId}`,
+			contactInfo: `/admin/directory/member/contact-information?id=${memberId}`,
+			churchInfo: `/admin/directory/member/church-information?id=${memberId}`,
+			membershipHistory: `/admin/directory/member/membership-history?id=${memberId}`,
+		}),
+		[memberId]
+	);
 
-    contactInfo: `/admin/directory/member/contact-information?id=${memberId}`,
+	const [openNote, setOpenNote] = useState<boolean>(false);
+	const notesRef = useRef<HTMLDivElement | null>(null);
 
-    churchInfo: `/admin/directory/member/church-information?id=${memberId}`,
+	useEffect(() => {
+		if (memberId) {
+			dispatch(fetchMemberDetails({ churchId, memberId }));
+		}
+	}, [dispatch, churchId, memberId]);
 
-    membershipHistory: `/admin/directory/member/membership-history?id=${memberId}`,
-  };
+	const handleClickOutside = useCallback((event: MouseEvent) => {
+		if (notesRef.current && !notesRef.current.contains(event.target as Node)) {
+			setOpenNote(false);
+		}
+	}, []);
 
-  const { isPending } = useGetMemberDetails();
+	useEffect(() => {
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, [handleClickOutside]);
 
-  const [openNote, setOpenNote] = useState<boolean>(false);
+	const locationPath = useMemo(() => location.pathname, [location.pathname]);
 
-  const notesRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        notesRef.current &&
-        !notesRef.current.contains(event.target as Node)
-      ) {
-        // Click occurred outside the Notes component
-        // Close the Notes component
-        setOpenNote(false);
-        console.log(!notesRef.current.contains(event.target as Node));
-      }
-    };
-
-    // Attach the event listener when the component mounts
-    document.addEventListener("mousedown", handleClickOutside);
-
-    // Detach the event listener when the component unmounts
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []); // Empty dependency array ensures this effect runs only once when the component mounts
-
-  const locationPath = useLocation();
-
-  return (
-    <OverviewContainer active="Directory">
-      {!isPending ? (
-        <>
-          <Header text="Profile" />
-          <SubHeader onNoteClick={() => setOpenNote(true)} />
-          <InformationHeader route={routes} />
-          {/* <Outlet /> */}
-          {locationPath.pathname ===
-            "/admin/directory/member/personal-information" && (
-            <PersonalInformation />
-          )}
-          {locationPath.pathname === "/admin/directory/member/contact-information" && <ContactInformation />}
-          {locationPath.pathname === "/admin/directory/member/church-information" && <ChurchInformation />}
-          {locationPath.pathname === "/admin/directory/member/membership-history" && <MembershipHistory />}
-          {/* <AddMember /> */}
-          <div ref={notesRef}>
-            <Notes openNote={openNote} onClose={() => setOpenNote(false)} />
-          </div>
-          {/* <Notes openNote={openNote} onClose={() => setOpenNote(false)} /> */}
-        </>
-      ) : (
-        <div>
-          <ThreeDots height="25" width="50" color="#000" />
-        </div>
-      )}
-    </OverviewContainer>
-  );
+	return (
+		<OverviewContainer active="Directory">
+			{status !== "loading" ? (
+				<>
+					<Header text="Profile" />
+					<SubHeader onNoteClick={() => setOpenNote(true)} />
+					<InformationHeader route={routes} />
+					{locationPath === "/admin/directory/member/personal-information" && (
+						<PersonalInformation />
+					)}
+					{locationPath === "/admin/directory/member/contact-information" && <ContactInformation />}
+					{locationPath === "/admin/directory/member/church-information" && <ChurchInformation />}
+					{locationPath === "/admin/directory/member/membership-history" && <MembershipHistory />}
+					<div ref={notesRef}>
+						<Notes openNote={openNote} onClose={() => setOpenNote(false)} />
+					</div>
+				</>
+			) : (
+				<div>
+					<ThreeDots height="25" width="50" color="#000" />
+				</div>
+			)}
+		</OverviewContainer>
+	);
 };
 
 export default MembershipProfile;

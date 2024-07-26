@@ -1,154 +1,158 @@
-// import { IoIosArrowForward } from "react-icons/io";
-import useGetMemberDetails from "../../../../hooks/Member/member-service/useGetMemberDetails";
-import { useNavigate } from "react-router-dom";
+/* eslint-disable no-mixed-spaces-and-tabs */
+import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store";
 
 export const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  const options: Intl.DateTimeFormatOptions = {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  };
-  const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(date);
-  return formattedDate;
+	const date = new Date(dateString);
+	const options: Intl.DateTimeFormatOptions = {
+		day: "numeric",
+		month: "long",
+		year: "numeric",
+	};
+	const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(date);
+	return formattedDate;
 };
+
 export const formatDateTime = (dateTimeString: string) => {
-  const dateTime = new Date(dateTimeString);
+	const dateTime = new Date(dateTimeString);
 
-  // Format options for date
-  const dateFormatOptions: Intl.DateTimeFormatOptions = {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  };
-  const formattedDate = new Intl.DateTimeFormat("en-GB", dateFormatOptions).format(dateTime);
+	const dateFormatOptions: Intl.DateTimeFormatOptions = {
+		day: "numeric",
+		month: "long",
+		year: "numeric",
+	};
+	const formattedDate = new Intl.DateTimeFormat("en-GB", dateFormatOptions).format(dateTime);
 
-  // Format options for time
-  const timeFormatOptions: Intl.DateTimeFormatOptions = {
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true, // Use 12-hour format (e.g., 9:40pm)
-  };
-  const formattedTime = new Intl.DateTimeFormat("en-US", timeFormatOptions).format(dateTime);
+	const timeFormatOptions: Intl.DateTimeFormatOptions = {
+		hour: "numeric",
+		minute: "numeric",
+		hour12: true,
+	};
+	const formattedTime = new Intl.DateTimeFormat("en-US", timeFormatOptions).format(dateTime);
 
-  // Combine date and time into desired format
-  const formattedDateTime = `${formattedDate} ${formattedTime}`;
+	const formattedDateTime = `${formattedDate} ${formattedTime}`;
 
-  return formattedDateTime;
+	return formattedDateTime;
 };
+
 const PersonalInformation = () => {
-  const { data } = useGetMemberDetails();
-  const queryParams = new URLSearchParams(location.search);
+	const { member } = useSelector((state: RootState) => state.members);
+	const location = useLocation();
+	const queryParams = new URLSearchParams(location.search);
 
-  const memberId = queryParams.get("id");
+	const memberId = queryParams.get("id");
 
-  const navigate = useNavigate();
-  return (
-    <div className="">
-      {data && (
-        <div className=" flex flex-col">
-          {/* <div className="flex p-5 bg-[#F3F1F1] justify-between items-center ">
-            <p className="font-medium text-[#414040]">Household</p>
-            <IoIosArrowForward className="text-[28px]" />
-          </div> */}
-          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
-            <p className="text-[#727272]">First Name</p>
-            <p className="outline-none text-[#434343] text-lg w-full">
-              {data?.member?.first_name?.slice(0, 1).toUpperCase() +
-                data?.member?.first_name?.slice(1)}
-            </p>
-          </div>
-          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
-            <p className="text-[#727272]">Last Name</p>
-            <p className="outline-none text-[#434343] text-lg w-full">
-              {data.member?.last_name?.slice(0, 1).toUpperCase() +
-                data.member?.last_name?.slice(1)}
-            </p>
-          </div>
-          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
-            <p className="text-[#727272]">Middle Name</p>
-            <p className="outline-none text-[#434343] text-lg w-full">
-              {data?.member?.middle_name
-                ? data?.member?.middle_name?.slice(0, 1).toUpperCase() +
-                  data?.member?.middle_name?.slice(1)
-                : "None"}
-            </p>
-          </div>
-          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
-            <p className="text-[#727272]">Prefix</p>
-            <p className="outline-none text-[#434343] text-lg w-full">
-              {data.member.prefix
-                ? data?.member?.prefix?.slice(0, 1).toUpperCase() +
-                  data.member?.prefix?.slice(1)
-                : "None"}
-            </p>
-          </div>
-          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
-            <p className="text-[#727272]">Suffix</p>
-            <p className="outline-none text-[#434343] text-lg w-full">
-              {data.member.suffix
-                ? data?.member?.suffix?.slice(0, 1).toUpperCase() +
-                  data?.member?.suffix?.slice(1)
-                : "None"}
-            </p>
-          </div>
-          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
-            <p className="text-[#727272]">Gender</p>
-            <p className="outline-none text-[#434343] text-lg w-full">
-              {data?.member?.gender?.slice(0, 1).toUpperCase() +
-                data?.member?.gender?.slice(1)}
-            </p>
-          </div>
-          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
-            <p className="text-[#727272]">Date of Birth</p>
-            <p className="outline-none text-[#434343] text-lg w-full">
-              {formatDate(data?.member?.dateOfBirth)}
-            </p>
-          </div>
-          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
-            <p className="text-[#727272]">Educational Level</p>
-            <p className="outline-none text-[#434343] text-lg w-full">
-              {data.member.educationalLevel
-                ? data?.member?.educationalLevel?.slice(0, 1).toUpperCase() +
-                  data?.member?.educationalLevel?.slice(1)
-                : "Undefined"}
-            </p>
-          </div>
-          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
-            <p className="text-[#727272]">Employment Status</p>
-            <p className="outline-none text-[#434343] text-lg w-full">
-              {data.member.employmentStatus
-                ? data?.member?.employmentStatus?.slice(0, 1).toUpperCase() +
-                  data?.member?.employmentStatus?.slice(1)
-                : "Undefined"}
-            </p>
-          </div>
-          <div className="px-5 pt-6 pb-2 border-b md:space-y-2">
-            <p className="text-[#727272]">Health Status</p>
-            <p className="outline-none text-[#434343] text-lg w-full">
-              {data.member.healthStatus
-                ? data?.member?.healthStatus?.slice(0, 1).toUpperCase() +
-                  data?.member?.healthStatus?.slice(1)
-                : "Undefined"}
-            </p>
-          </div>
-          <button
-            className=" self-end mt-4 bg-[#17275B] text-white px-4
-        
-        py-2 rounded-lg gap-2 justify-center"
-            onClick={() =>
-              navigate(
-                `/admin/directory/member/contact-information?id=${memberId}`
-              )
-            }
-          >
-            {/* <RiAddCircleFill className="text-2xl" /> */}
-            <p className="text-lg ">Next</p>
-          </button>
-        </div>
-      )}
-    </div>
-  );
+	const navigate = useNavigate();
+	return (
+		<div className="">
+			{member ? (
+				<div className="flex flex-col">
+					<div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+						<p className="text-[#727272]">First Name</p>
+						<p className="outline-none text-[#434343] text-lg w-full">
+							{member.profile?.firstName
+								? member?.profile?.firstName?.charAt(0).toUpperCase() +
+								  member?.profile?.firstName?.slice(1)
+								: "N/A"}
+						</p>
+					</div>
+					<div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+						<p className="text-[#727272]">Middle Name</p>
+						<p className="outline-none text-[#434343] text-lg w-full">
+							{member.profile?.middleName
+								? member?.profile?.middleName?.charAt(0).toUpperCase() +
+								  member?.profile?.middleName?.slice(1)
+								: "N/A"}
+						</p>
+					</div>
+					<div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+						<p className="text-[#727272]">Last Name</p>
+						<p className="outline-none text-[#434343] text-lg w-full">
+							{member.profile?.lastName
+								? member?.profile?.lastName?.charAt(0).toUpperCase() +
+								  member?.profile?.lastName?.slice(1)
+								: "N/A"}
+						</p>
+					</div>
+					<div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+						<p className="text-[#727272]">Prefix</p>
+						<p className="outline-none text-[#434343] text-lg w-full">
+							{member.profile?.prefix
+								? member?.profile?.prefix?.charAt(0).toUpperCase() +
+								  member?.profile?.prefix?.slice(1)
+								: "None"}
+						</p>
+					</div>
+					<div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+						<p className="text-[#727272]">Suffix</p>
+						<p className="outline-none text-[#434343] text-lg w-full">
+							{member?.profile?.suffix
+								? member?.profile?.suffix?.charAt(0).toUpperCase() +
+								  member?.profile?.suffix?.slice(1)
+								: "None"}
+						</p>
+					</div>
+					<div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+						<p className="text-[#727272]">Gender</p>
+						<p className="outline-none text-[#434343] text-lg w-full">
+							{member.profile?.gender
+								? member?.profile?.gender?.charAt(0).toUpperCase() +
+								  member?.profile?.gender?.slice(1)
+								: "N/A"}
+						</p>
+					</div>
+					<div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+						<p className="text-[#727272]">Date of Birth</p>
+						<p className="outline-none text-[#434343] text-lg w-full">
+							{member?.profile?.dateOfBirth ? formatDate(member.profile.dateOfBirth) : "N/A"}
+						</p>
+					</div>
+					<div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+						<p className="text-[#727272]">Marital Status</p>
+						<p className="outline-none text-[#434343] text-lg w-full">
+							{member?.profile?.maritalStatus ? member?.profile?.maritalStatus : "N/A"}
+						</p>
+					</div>
+
+					<div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+						<p className="text-[#727272]">Educational Level</p>
+						<p className="outline-none text-[#434343] text-lg w-full">
+							{member?.profile?.educationalLevel
+								? member?.profile?.educationalLevel?.charAt(0).toUpperCase() +
+								  member?.profile?.educationalLevel?.slice(1)
+								: "Undefined"}
+						</p>
+					</div>
+					<div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+						<p className="text-[#727272]">Employment Status</p>
+						<p className="outline-none text-[#434343] text-lg w-full">
+							{member.profile?.employmentStatus
+								? member?.profile?.employmentStatus?.charAt(0).toUpperCase() +
+								  member?.profile?.employmentStatus?.slice(1)
+								: "Undefined"}
+						</p>
+					</div>
+					<div className="px-5 pt-6 pb-2 border-b md:space-y-2">
+						<p className="text-[#727272]">Health Status</p>
+						<p className="outline-none text-[#434343] text-lg w-full">
+							{member.profile?.healthStatus
+								? member?.profile?.healthStatus?.charAt(0).toUpperCase() +
+								  member?.profile?.healthStatus?.slice(1)
+								: "Undefined"}
+						</p>
+					</div>
+					<button
+						className="self-end mt-4 bg-[#17275B] text-white px-4 py-2 rounded-lg gap-2 justify-center"
+						onClick={() => navigate(`/admin/directory/member/contact-information?id=${memberId}`)}>
+						<p className="text-lg">Next</p>
+					</button>
+				</div>
+			) : (
+				<p>Loading member data...</p>
+			)}
+		</div>
+	);
 };
 
 export default PersonalInformation;

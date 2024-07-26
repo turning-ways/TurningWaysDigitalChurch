@@ -1,30 +1,52 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-
 import { notify } from "./hooks/useAuthData";
-import { useUserAuth } from "./stores/user";
-import { useAuth } from "./hooks/useAuthData";
+import { useAuth } from "./hooks/useAuthData"; // Import useAuth hook
+
+interface userData {
+	data: {
+		member: {
+			_id: string;
+			firstName: string;
+			lastName: string;
+			email: string;
+			role: string;
+		};
+	};
+}
 
 const ProtectedRoutes = () => {
-  const { isError, isPending, data: admin } = useAuth();
+	const { data: userData, isLoading, isError } = useAuth(); // Use the useAuth hook
 
-  const [authChecked, setAuthChecked] = useState(false);
+	useEffect(() => {
+		if (!isLoading) {
+			if (isError || !userData) {
+				// If an error occurred or no user data, consider the user not authenticated
+				notify("Please login to access this page");
+			} else {
+				// If we have user data and no error, authentication is successful
+				localStorage.setItem("user", JSON.stringify((userData as userData).data.member)); // Save user data to local storage
+			}
+		}
+	}, [isLoading, isError, userData]);
 
-  const { setUser, user } = useUserAuth();
+	if (isLoading) {
+		return (
+			<div className="flex items-center justify-center h-screen">
+				<img
+					src="/assets/images/turningwayslogo.svg"
+					alt="TurningWays Logo"
+					className="antialiased transition-all duration-700 ease-in-out loadingLogo"
+				/>
+			</div>
+		); // Or any other loading indicator
+	}
 
-  useEffect(() => {
-    if (!isPending) {
-      setAuthChecked(true);
-      if (isError) notify("Sorry, you've not been signed in");
-    }
-    admin ? setUser(admin.data.user) : setUser(null);
-    console.log(admin);
-  }, [isPending, isError, admin, setUser]);
+	if (isError || !userData) {
+		return <Navigate to="/" />; // Redirect to login if not authenticated
+	}
 
-  // Render nothing until the authentication check is complete
-  if (!authChecked) return null;
-
-  return user ? <Outlet /> : <Navigate to={"/"} />;
+	return <Outlet />; // Render children routes if authenticated
 };
 
 export default ProtectedRoutes;
