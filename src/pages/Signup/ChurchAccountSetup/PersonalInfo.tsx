@@ -48,10 +48,16 @@ const PersonalInfo = () => {
 	useEffect(() => {
 		const refreshAuthToken = async () => {
 			try {
+				// getting the token from the url with name t
+				const urlParams = new URLSearchParams();
+				const token = urlParams.get("t");
+
 				localStorage.clear();
 				const response = await axios.post(
 					"https://turningways-api-3hcn.onrender.com/api/v1/auth/refresh",
-					{},
+					{
+						rc: token,
+					},
 					{
 						withCredentials: true,
 					}
