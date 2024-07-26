@@ -18,16 +18,17 @@ const ChurchInfo = () => {
 	const [city, setCity] = useState<string>("");
 	const [address, setAddress] = useState<string>("");
 	const [website, setWebsite] = useState<string>("");
-	const [email, setEmail] = useState<string>("");
+	const [Cemail, setEmail] = useState<string>("");
 	const [phone, setPhone] = useState<string>("");
 	const [parentChurch, setParentChurch] = useState<string>("");
 	const [showParentChurch, setShowParentChurch] = useState<boolean>(false);
 	const [churchLevel, setChurchLevel] = useState<string>("");
 	const [showChurchLevels, setShowChurchLevels] = useState<boolean>(false);
+	const { role, howDidYouHear, phoneNumber, email, gender, dateOfBirth } = useMemberStore();
 
 	const [showCountry, setShowCountry] = useState<boolean>(false);
 
-	const { churchName, isParentChurch, gender, phoneNumber } = useMemberStore();
+	const { churchName, isParentChurch } = useMemberStore();
 
 	const { mutate, isPending } = useAddChurch();
 
@@ -85,16 +86,26 @@ const ChurchInfo = () => {
 							isParentChurch !== ""
 						) {
 							mutate({
-								phone,
-								name: churchName,
-								country,
-								state,
-								address,
-								postalCode,
-								city,
-								website,
-								email,
-								hasParentChurch: isParentChurch === "Yes" ? false : true,
+								churchData: {
+									phone,
+									name: churchName,
+									country,
+									state,
+									address,
+									postalCode,
+									city,
+									website,
+									email: Cemail,
+									hasParentChurch: isParentChurch === "Yes" ? false : true,
+								},
+								memberData: {
+									role: role.toLowerCase(),
+									howDidYouHear: howDidYouHear.toLowerCase(),
+									phone: phoneNumber.MainPhone,
+									email,
+									gender: gender.toLowerCase(),
+									dateOfBirth,
+								},
 							});
 						} else {
 							notify("Fill in all the required fields");

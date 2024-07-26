@@ -129,8 +129,8 @@ const PersonalInfo = () => {
 							// hear !== "" &&
 							// roleValue !== "" &&
 							// emailValue !== "" &&
-							genderValue !== ""
-							// dateOfBirthValue !== ""
+							genderValue !== "" &&
+							dateOfBirthValue !== ""
 						) {
 							// if (isNumeric(phone)) {
 							navigate("/register/organizationinfo");
