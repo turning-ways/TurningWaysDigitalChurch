@@ -50,7 +50,7 @@ const PersonalInfo = () => {
 			try {
 				localStorage.clear();
 				const response = await axios.post(
-					"/api/v1/auth/refresh",
+					"https://turningways-api-3hcn.onrender.com/api/v1/auth/refresh",
 					{},
 					{
 						withCredentials: true,
