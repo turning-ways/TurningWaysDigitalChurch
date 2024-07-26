@@ -5,8 +5,8 @@ import { useAuthStore, useChurchIdStore } from "../stores/churchId";
 import { useNavigate } from "react-router-dom";
 import service from "../services/api-v1-users-service";
 import { useUserDetailsStore, useUserIdStore } from "../stores/user";
-import useAddMember from "./Member/useAddMember";
-import { useMemberStore } from "../stores/member";
+// import useAddMember from "./Member/useAddMember";
+// import { useMemberStore } from "../stores/member";
 import apiClient from "../services/api-v1-churches-service";
 import {
 	PhoneAuthProvider,
@@ -63,16 +63,26 @@ interface User {
 }
 
 interface Church {
-	name: string;
-	phone: string;
-	postalCode: string;
-	country: string;
-	state: string;
-	city: string;
-	address: string;
-	website: string;
-	email: string;
-	hasParentChurch: boolean;
+	churchData: {
+		name: string;
+		phone: string;
+		postalCode: string;
+		country: string;
+		state: string;
+		city: string;
+		address: string;
+		website: string;
+		email: string;
+		hasParentChurch: boolean;
+	};
+	memberData: {
+		role: string;
+		howDidYouHear: string;
+		phone: string;
+		email: string;
+		gender: string;
+		dateOfBirth: string;
+	};
 }
 
 export const success = (success: string) => {
@@ -391,8 +401,8 @@ export const useVerifySignUpOtp = () => {
 };
 
 export const useAddChurch = () => {
-	const { mutate } = useAddMember();
-	const { role, howDidYouHear, phoneNumber, email, gender, dateOfBirth } = useMemberStore();
+	// const { mutate } = useAddMember();
+	// const { role, howDidYouHear, phoneNumber, email, gender, dateOfBirth } = useMemberStore();
 	return useMutation({
 		mutationFn: (churchDetails: Church) =>
 			apiClient<Church>("/create-church-onboarding").post(churchDetails),
@@ -402,15 +412,15 @@ export const useAddChurch = () => {
 
 			console.log(res.data.churchId);
 
-			mutate({
-				role: role.toLowerCase(),
-				howDidYouHear: howDidYouHear.toLowerCase(),
-				phone: phoneNumber.MainPhone,
-				churchId: res.data.churchId,
-				email,
-				gender: gender.toLowerCase(),
-				dateOfBirth,
-			});
+			// mutate({
+			// 	role: role.toLowerCase(),
+			// 	howDidYouHear: howDidYouHear.toLowerCase(),
+			// 	phone: phoneNumber.MainPhone,
+			// 	churchId: res.data.churchId,
+			// 	email,
+			// 	gender: gender.toLowerCase(),
+			// 	dateOfBirth,
+			// });
 
 			// handleRefresh();
 
