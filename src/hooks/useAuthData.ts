@@ -425,7 +425,7 @@ export const useAddChurch = () => {
 
 			// handleRefresh();
 
-			navigate("/admin/dashboard");
+			navigate("/admin/dashboard/today");
 		},
 		onError: (err: ErrorResponse) => {
 			notify(err.response.data.message);
