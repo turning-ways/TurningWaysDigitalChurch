@@ -15,7 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { notify } from "../../../hooks/useAuthData";
-import axios from "axios";
+import axios from "../../../axios";
 import { useAuthStore } from "../../../stores/churchId";
 
 const PersonalInfo = () => {

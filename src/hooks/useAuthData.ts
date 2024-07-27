@@ -401,6 +401,7 @@ export const useVerifySignUpOtp = () => {
 };
 
 export const useAddChurch = () => {
+	const navigate = useNavigate();
 	// const { mutate } = useAddMember();
 	// const { role, howDidYouHear, phoneNumber, email, gender, dateOfBirth } = useMemberStore();
 	return useMutation({
@@ -424,7 +425,7 @@ export const useAddChurch = () => {
 
 			// handleRefresh();
 
-			// navigate("/admin/dashboard");
+			navigate("/admin/dashboard");
 		},
 		onError: (err: ErrorResponse) => {
 			notify(err.response.data.message);
