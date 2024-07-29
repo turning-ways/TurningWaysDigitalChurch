@@ -144,6 +144,7 @@ const initialState = {
   member: {} as Member,
   tempMember: {} as Member, // Temporary state to store multi-step form data
   status: "idle",
+  memberAddStatus: "idle",
   memberUpdateStatus: "idle",
   memebrLoadingStatus: "idle",
   loading: false,
@@ -232,15 +233,15 @@ const memberSlice = createSlice({
         console.log(action.error);
       })
       .addCase(addMember.pending, (state) => {
-        state.status = "loading";
+        state.memberAddStatus = "loading";
       })
       .addCase(addMember.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.memberAddStatus = "succeeded";
         state.member = action.payload;
         success("Member added successfully");
       })
       .addCase(addMember.rejected, (state, action) => {
-        state.status = "failed";
+        state.memberAddStatus = "failed";
         state.error = action.error.message ?? null;
         notify("Failed to add member");
       })
@@ -285,6 +286,10 @@ export const selectMemberError = createSelector(
 export const selectMemberUpdateStatus = createSelector(
   [selectMemberState],
   (memberState) => memberState.memberUpdateStatus
+);
+export const selectMemberAddStatus = createSelector(
+  [selectMemberState],
+  (memberState) => memberState.memberAddStatus
 );
 
 export const selectLoading = (state: RootState) => state.members.loading;

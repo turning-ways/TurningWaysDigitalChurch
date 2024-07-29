@@ -7,7 +7,7 @@ import {
   selectTempMember,
   updateTempMemberField,
   addMember,
-  selectMemberStatus,
+  selectMemberAddStatus,
 } from "../../../../slices/memberSlice";
 import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
@@ -17,14 +17,14 @@ const EditProfileChurchInfo: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const tempMember = useSelector(selectTempMember);
-  const status = useSelector(selectMemberStatus);
+  const status = useSelector(selectMemberAddStatus);
   const { churchId } = useChurchIdStore();
 
   const handleInputChange = useCallback(
     (field: string, value: string | number | boolean) => {
       dispatch(updateTempMemberField({ field, value }));
     },
-    []
+    [dispatch]
   );
 
   const dropDown = useMemo(
