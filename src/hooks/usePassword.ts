@@ -10,7 +10,7 @@ interface InputKey {
 
 export const useForgotPassword = () => {
   const navigate = useNavigate();
-  const apiClient = new ApiClient("/api/v1/users" + "/forgot-password");
+  const apiClient = new ApiClient("/api/v1/auth" + "/forgot-password");
   return useMutation({
     mutationFn: (inputKey: InputKey) => apiClient.patch(inputKey),
     onSuccess: () => {
@@ -25,17 +25,17 @@ export const useForgotPassword = () => {
 
 //VERIFY THE OTP THE USER TYPES TO CHANGE PASSWORD
 export const useVerifyOtp = () => {
-    const { setUserId } = useUserIdStore();
-    const navigate = useNavigate();
-    const apiClient = new ApiClient('/api/v1/users' + '/verify-password-token' )
-    return useMutation({
-      mutationFn: (token: {token: string}) => apiClient.patch(token),
-      onSuccess: (res: any) => {
-        setUserId(res.userId);
-        navigate("/forgot-password/reset-password");
-      },
-      onError: () => {
-        notify("Invalid OTP");
-      },
-    });
-  };
+  const { setUserId } = useUserIdStore();
+  const navigate = useNavigate();
+  const apiClient = new ApiClient("/api/v1/auth" + "/verify-password-token");
+  return useMutation({
+    mutationFn: (token: { token: string }) => apiClient.patch(token),
+    onSuccess: (res: any) => {
+      setUserId(res.userId);
+      navigate("/forgot-password/reset-password");
+    },
+    onError: () => {
+      notify("Invalid OTP");
+    },
+  });
+};
