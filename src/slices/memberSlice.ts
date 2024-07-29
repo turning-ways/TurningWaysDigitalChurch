@@ -60,8 +60,8 @@ export const updateMemberDetails = createAsyncThunk(
         gender: member.profile.gender,
         dateOfBirth: member.profile.dateOfBirth || "",
         maritalStatus: member.profile.maritalStatus || "",
-        homeAddress: member.profile.address.homeAddress || "",
-        workAddress: member.profile.address.workAddress || "",
+        homeAddress: member?.profile?.address?.homeAddress || "",
+        workAddress: member?.profile?.address?.workAddress || "",
         mainPhone: member.profile.phone.mainPhone || "",
         email: member.profile.email || "",
         worker: member.profile.worker || "",
@@ -144,6 +144,7 @@ const initialState = {
   member: {} as Member,
   tempMember: {} as Member, // Temporary state to store multi-step form data
   status: "idle",
+  memberUpdateStatus: "idle",
   memebrLoadingStatus: "idle",
   loading: false,
   error: null as string | null,
@@ -199,6 +200,7 @@ const memberSlice = createSlice({
       }>
     ) {
       const { field, value } = action.payload;
+      // change all undefined values to empty string
       setNestedField(state.tempMember, field as string, value);
     },
   },
@@ -222,10 +224,12 @@ const memberSlice = createSlice({
       .addCase(updateMemberDetails.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.member = action.payload;
+        console.log(action.payload);
       })
       .addCase(updateMemberDetails.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message ?? null;
+        console.log(action.error);
       })
       .addCase(addMember.pending, (state) => {
         state.status = "loading";
@@ -277,6 +281,10 @@ export const selectMemberLoading = (state: RootState) => state.members.loading;
 export const selectMemberError = createSelector(
   [selectMemberState],
   (memberState) => memberState.error
+);
+export const selectMemberUpdateStatus = createSelector(
+  [selectMemberState],
+  (memberState) => memberState.memberUpdateStatus
 );
 
 export const selectLoading = (state: RootState) => state.members.loading;
