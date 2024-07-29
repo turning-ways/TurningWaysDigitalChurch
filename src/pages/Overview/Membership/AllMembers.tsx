@@ -136,8 +136,7 @@ const AllMembers = () => {
                       )}
                     </div>
                     <div className="truncate ">
-                      {item.firstName && item.firstName}
-                      {item?.lastName && item.lastName}
+                      {`${item?.firstName ?? ""} ${item?.lastName ?? ""}`}
                     </div>
                     <div className="truncate">{item.email}</div>
                     <div className="truncate">{item.phone}</div>
@@ -172,7 +171,7 @@ const AllMembers = () => {
                         )}
                         <div>
                           <p className="font-azoSemiBold">
-                            {item.firstName} {item.lastName}
+                            {`${item?.firstName ?? ""} ${item?.lastName ?? ""}`}
                           </p>
                           <p>{item.phone}</p>
                         </div>
