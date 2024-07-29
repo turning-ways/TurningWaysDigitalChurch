@@ -129,7 +129,10 @@ const AllMembers = () => {
 												<RxAvatar className="w-10 h-10" />
 											)}
 										</div>
-										<div className="truncate ">{item.fullName}</div>
+										<div className="truncate ">
+											{item.firstName && item.firstName}
+											{item?.lastName && item.lastName}
+										</div>
 										<div className="truncate">{item.email}</div>
 										<div className="truncate">{item.phone}</div>
 										<div>{item.gender}</div>

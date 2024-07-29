@@ -119,8 +119,8 @@ const Header: React.FC<HeaderProps> = ({ text }) => {
 						<img src={user.photo} className="w-10 h-10 rounded-full" />
 					) : (
 						<div className="border-black bg-primary font-semibold text-white border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer z-50">
-							{first_name &&
-								first_name?.charAt(0).toUpperCase() + last_name?.charAt(0).toUpperCase()}
+							{first_name && first_name?.charAt(0).toUpperCase()}
+							{last_name && last_name?.charAt(0).toUpperCase()}
 						</div>
 					)}
 					<div>
