@@ -2,6 +2,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store";
+import { useEffect } from "react";
 
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -49,9 +50,14 @@ const PersonalInformation = () => {
 
   const memberId = queryParams.get("id");
 
+  // useEffect to make my page scroll to the top when the component mounts
+  useEffect(() => {
+    // scroll to the top of the screen when the component mounts
+    window.scrollY = 0;
+  }, []);
   const navigate = useNavigate();
   return (
-    <div className="">
+    <div className="block">
       {member ? (
         <div className="flex flex-col">
           <div className="px-5 pt-6 pb-2 border-b md:space-y-2">

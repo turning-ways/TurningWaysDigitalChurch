@@ -1,4 +1,5 @@
 import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
 
 interface PhoneNumberProps {
   value: string;
@@ -23,7 +24,7 @@ const PhoneNumber: React.FC<PhoneNumberProps> = ({ value, setValue }) => {
           paddingRight: "10px",
           paddingBottom: "24px",
           // backgroundColor: "#F7FAFC",
-          borderColor: "#EBEFF9",
+          borderColor: "rgb(209 213 219,1)",
           borderStartEndRadius: "8px",
           borderEndEndRadius: "8px",
           fontSize: "18px",
@@ -34,7 +35,7 @@ const PhoneNumber: React.FC<PhoneNumberProps> = ({ value, setValue }) => {
             paddingLeft: "10px",
             paddingRight: "10px",
             // backgroundColor: "#F7FAFC",
-            borderColor: "#EBEFF9",
+            borderColor: "rgb(209 213 219,1)",
             borderEndStartRadius: "8px",
             borderStartStartRadius: "8px",
           },

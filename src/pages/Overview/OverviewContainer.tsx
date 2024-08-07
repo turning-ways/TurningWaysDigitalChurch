@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import Navbar from "../../ui/Navbar/Navbar";
 
 interface OverviewContainerProps {
@@ -10,12 +10,16 @@ const OverviewContainer: React.FC<OverviewContainerProps> = ({
   children,
   active,
 }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="lg:flex relative lg:mx-auto">
       <Navbar active={active} />
-      <div className=" p-5 pt-[58px] sm:p-10 sm:pt-20 md:pt-16 flex-grow font-azo h-screen overflow-y-scroll bg-[#FFFDFD] flex flex-col ">
+      <main className="p-5 pt-[58px] sm:p-10 sm:pt-20 md:pt-16 flex-grow font-azo h-screen overflow-y-auto bg-[#FFFDFD] flex flex-col">
         {children}
-      </div>
+      </main>
     </div>
   );
 };

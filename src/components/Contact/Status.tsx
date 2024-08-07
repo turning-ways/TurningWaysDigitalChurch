@@ -63,7 +63,7 @@ const Status = () => {
 export default Status;
 
 const fields = [
-  { id: "memberStatus", name: "Membership Status" },
+  { id: "contactType", name: "Contact Type" },
   { id: "maturityLevel", name: "Maturity" },
   { id: "phone", name: "Phone Number" },
   { id: "email", name: "Email" },
