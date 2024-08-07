@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "../axios";
 import { Member } from "../types/member";
-import { createSelector } from "reselect";
+// import { createSelector } from "reselect";
 import { RootState } from "../store";
 import { useNavigate } from "react-router-dom";
 import { notify, success } from "../hooks/useAuthData";
@@ -264,34 +264,16 @@ const memberSlice = createSlice({
 });
 
 export const selectMemberState = (state: RootState) => state.members;
-export const selectMembers = (state: RootState): Member[] =>
-  state.members.members;
-export const selectMember = createSelector(
-  [selectMemberState],
-  (memberState) => memberState.member
-);
-export const selectTempMember = createSelector(
-  [selectMemberState],
-  (memberState) => memberState.tempMember
-);
-export const selectMemberStatus = createSelector(
-  [selectMemberState],
-  (memberState) => memberState.status
-);
+export const selectMembers = (state: RootState) => state.members.members;
+export const selectMember = (state: RootState) => state.members.member;
+export const selectTempMember = (state: RootState) => state.members.tempMember;
+export const selectMemberStatus = (state: RootState) => state.members.status;
 export const selectMemberLoading = (state: RootState) => state.members.loading;
-export const selectMemberError = createSelector(
-  [selectMemberState],
-  (memberState) => memberState.error
-);
-export const selectMemberUpdateStatus = createSelector(
-  [selectMemberState],
-  (memberState) => memberState.memberUpdateStatus
-);
-export const selectMemberAddStatus = createSelector(
-  [selectMemberState],
-  (memberState) => memberState.memberAddStatus
-);
-
+export const selectMemberError = (state: RootState) => state.members.error;
+export const selectMemberUpdateStatus = (state: RootState) =>
+  state.members.status;
+export const selectMemberAddStatus = (state: RootState) =>
+  state.members.memberAddStatus;
 export const selectLoading = (state: RootState) => state.members.loading;
 
 export const {

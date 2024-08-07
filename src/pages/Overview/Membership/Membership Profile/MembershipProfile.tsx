@@ -1,19 +1,28 @@
+import React, {
+  lazy,
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+} from "react";
 import Header from "../../Header";
 import SubHeader from "../../SubHeader";
 import InformationHeader from "../InformationHeader";
 import OverviewContainer from "../../OverviewContainer";
-// import { ThreeDots } from "react-loader-spinner";
-import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import Notes from "./Notes";
-import PersonalInformation from "./PersonalInformation";
-import ContactInformation from "./ContactInformation";
-import ChurchInformation from "./ChurchInformation";
-import MembershipHistory from "./MembershipHistory";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../store";
 import { fetchMemberDetails } from "../../../../slices/memberSlice";
 import { useChurchIdStore } from "../../../../stores/churchId";
+
+// Lazy load components
+const PersonalInformation = lazy(() => import("./PersonalInformation"));
+const ContactInformation = lazy(() => import("./ContactInformation"));
+const ChurchInformation = lazy(() => import("./ChurchInformation"));
+const MembershipHistory = lazy(() => import("./MembershipHistory"));
+const Notes = lazy(() => import("./NotesList"));
 
 const MembershipProfile = () => {
   const location = useLocation();
@@ -43,6 +52,10 @@ const MembershipProfile = () => {
   const notesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (memberId) {
       dispatch(fetchMemberDetails({ churchId, memberId }));
     }
@@ -70,21 +83,24 @@ const MembershipProfile = () => {
           <Header text="Profile" />
           <SubHeader onNoteClick={() => setOpenNote(true)} />
           <InformationHeader route={routes} />
-          {locationPath === "/admin/directory/member/personal-information" && (
-            <PersonalInformation />
-          )}
-          {locationPath === "/admin/directory/member/contact-information" && (
-            <ContactInformation />
-          )}
-          {locationPath === "/admin/directory/member/church-information" && (
-            <ChurchInformation />
-          )}
-          {locationPath === "/admin/directory/member/membership-history" && (
-            <MembershipHistory />
-          )}
-          <div ref={notesRef}>
-            <Notes openNote={openNote} onClose={() => setOpenNote(false)} />
-          </div>
+          <Suspense fallback={<div>Loading...</div>}>
+            {locationPath ===
+              "/admin/directory/member/personal-information" && (
+              <PersonalInformation />
+            )}
+            {locationPath === "/admin/directory/member/contact-information" && (
+              <ContactInformation />
+            )}
+            {locationPath === "/admin/directory/member/church-information" && (
+              <ChurchInformation />
+            )}
+            {locationPath === "/admin/directory/member/membership-history" && (
+              <MembershipHistory />
+            )}
+            <div ref={notesRef}>
+              <Notes openNote={openNote} onClose={() => setOpenNote(false)} />
+            </div>
+          </Suspense>
         </>
       ) : (
         <div>

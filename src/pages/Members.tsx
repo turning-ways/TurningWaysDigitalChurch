@@ -1,28 +1,28 @@
-import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
-import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
-import { useCallback, useMemo, useRef, useState } from "react";
-
+import { useCallback, useMemo, useRef } from "react";
 import { ModuleRegistry } from "@ag-grid-community/core";
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 import useGetAllMembers from "../hooks/Member/useGetAllMembers";
 import { useNavigate } from "react-router-dom";
+
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
-
 const Members = () => {
-  const { data: members } = useGetAllMembers({page:1, pageSize:100000});
+  const { data: members } = useGetAllMembers({ page: 1, pageSize: 100 }); // Adjust pageSize as needed
 
-  const [rowData] = useState(
-    members &&
-      members.map(
+  const rowData = useMemo(
+    () =>
+      members?.map(
         (member: {
-          first_name: string;
-          phone: { MainPhone: string };
-          gender: string;
-          email: string;
-          dateOfBirth: string;
-          id: string;
+          first_name: any;
+          gender: any;
+          phone: { MainPhone: any };
+          email: any;
+          dateOfBirth: any;
+          id: any;
         }) => ({
           Name: member.first_name,
           Gender: member.gender,
@@ -30,63 +30,55 @@ const Members = () => {
           Email: member.email,
           DOB: member.dateOfBirth,
           _id: member.id,
-          "": "",
         })
-      )
+      ),
+    [members]
   );
-
-  //   const defaultColDef = {
-  //     flex: 1,
-  //   };
 
   const navigate = useNavigate();
 
-  const viewMoreButtonRenderer = (params: { data: { _id: string } }) => (
-    <button
-      onClick={() =>
-        navigate(
-          `/admin/directory/member/personal-information?id=${params.data._id}`
-        )
-      }
-    >
-      View More
-    </button>
+  const viewMoreButtonRenderer = useCallback(
+    (params: { data: { _id: any } }) => (
+      <button
+        onClick={() =>
+          navigate(
+            `/admin/directory/member/personal-information?id=${params.data._id}`
+          )
+        }>
+        View More
+      </button>
+    ),
+    [navigate]
   );
 
   const gridRef = useRef<AgGridReact>(null);
 
-  const popupParent = useMemo<HTMLElement | null>(() => {
-    return document.body;
-  }, []);
-
   const onBtnExport = useCallback(() => {
-    gridRef.current!.api.exportDataAsCsv();
+    gridRef.current?.api.exportDataAsCsv();
   }, []);
 
+  const columnDefs = useMemo(
+    () => [
+      { field: "Name", filter: true },
+      { field: "Gender" },
+      { field: "Phone Number" },
+      { field: "Email" },
+      { field: "DOB" },
+      { field: "", cellRenderer: viewMoreButtonRenderer, flex: 1 },
+    ],
+    [viewMoreButtonRenderer]
+  );
 
   return (
-    <div
-      className="ag-theme-quartz" // applying the grid theme
-      style={{ height: 400 }} // the grid will fill the size of the parent container
-    >
-        <button onClick={onBtnExport}>Download CSV export file</button>
+    <div className="ag-theme-quartz" style={{ height: "400px" }}>
+      <button onClick={onBtnExport}>Download CSV export file</button>
       <AgGridReact
-      ref={gridRef}
-      suppressExcelExport={true}
-                popupParent={popupParent}
+        ref={gridRef}
+        suppressExcelExport={true}
         rowData={rowData}
-        columnDefs={[
-          { field: "Name", filter: true},
-          { field: "Gender" },
-          { field: "Phone Number" },
-          { field: "Email" },
-          { field: "DOB" },
-          { field: "", cellRenderer: viewMoreButtonRenderer, flex: 1 },
-        ]}
+        columnDefs={columnDefs}
         pagination={true}
-        paginationPageSize={1}
-        paginationPageSizeSelector={[1,2,3]}
-        // defaultColDef={defaultColDef}
+        paginationPageSize={10} // Adjust pageSize as needed
       />
     </div>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TiArrowSortedDown } from "react-icons/ti";
 import DropDownMenu from "./DropDownMenu";
 import { useEffect, useRef, useState } from "react";
@@ -8,6 +9,7 @@ interface DropDownInputProps {
   placeholder?: string;
   compulsory?: string;
   value?: string;
+  itemsArray?: any;
   onChange?: (e: string) => void;
   onSelect: (selectedItem: string) => void;
 }
@@ -20,6 +22,7 @@ export const DropDownInput: React.FC<DropDownInputProps> = ({
   value,
   onChange,
   onSelect,
+  ...props
 }) => {
   const [showDropDownList, setShowDropDownList] = useState<boolean>(false);
 
@@ -60,8 +63,7 @@ export const DropDownInput: React.FC<DropDownInputProps> = ({
       <div className="py-1" ref={dropdownRef}>
         <div
           className="border border-[#D9D9D9] rounded-lg w-full px-3 py-1 flex items-center"
-          onClick={() => setShowDropDownList(!showDropDownList)}
-        >
+          onClick={() => setShowDropDownList(!showDropDownList)}>
           <input
             className="outline-none w-full h-auto bg-transparent"
             placeholder={placeholder}
@@ -71,8 +73,15 @@ export const DropDownInput: React.FC<DropDownInputProps> = ({
           <div className="border-l border-l-[#D9D9D9] h-10 mx-3" />
           <TiArrowSortedDown className="cursor-pointer text-3xl" />
         </div>
-        {showDropDownList && (
+        {showDropDownList && props.itemsArray.length < 1 && (
           <DropDownMenu onSelect={handleSelectList} dropdownItems={items} />
+        )}
+
+        {showDropDownList && props.itemsArray.length > 0 && (
+          <DropDownMenu
+            onSelect={handleSelectList}
+            itemsArray={props.itemsArray}
+          />
         )}
       </div>
     </div>
