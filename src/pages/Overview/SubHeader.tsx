@@ -56,7 +56,7 @@ const SubHeader: React.FC<SubHeaderProps> = ({ onNoteClick }) => {
               alt="profile picture"
             />
           ) : (
-            <div className="bg-red-100 w-24 h-full rounded-full justify-center flex items-center">
+            <div className="bg-red-100 lg:w-24 h-full rounded-full justify-center flex items-center">
               <p className="text-[#F24E1E] text-4xl font-azoBold text-center pt-4">
                 {member?.profile?.firstName?.charAt(0).toUpperCase() +
                   member?.profile?.lastName?.charAt(0).toUpperCase()}
