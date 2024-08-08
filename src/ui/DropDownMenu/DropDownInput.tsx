@@ -73,11 +73,11 @@ export const DropDownInput: React.FC<DropDownInputProps> = ({
           <div className="border-l border-l-[#D9D9D9] h-10 mx-3" />
           <TiArrowSortedDown className="cursor-pointer text-3xl" />
         </div>
-        {showDropDownList && props.itemsArray.length < 1 && (
+        {showDropDownList && !props?.itemsArray && (
           <DropDownMenu onSelect={handleSelectList} dropdownItems={items} />
         )}
 
-        {showDropDownList && props.itemsArray.length > 0 && (
+        {showDropDownList && props?.itemsArray?.length > 0 && (
           <DropDownMenu
             onSelect={handleSelectList}
             itemsArray={props.itemsArray}
