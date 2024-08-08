@@ -111,6 +111,11 @@ const MembershipDataBar: React.FC<TimeLine> = ({
               getMembersJoinedInMonth(5),
               getMembersJoinedInMonth(6),
               getMembersJoinedInMonth(7),
+              getMembersJoinedInMonth(8),
+              getMembersJoinedInMonth(9),
+              getMembersJoinedInMonth(10),
+              getMembersJoinedInMonth(11),
+              getMembersJoinedInMonth(12),
             ],
             backgroundColor: (context) => {
               const chart = context.chart;

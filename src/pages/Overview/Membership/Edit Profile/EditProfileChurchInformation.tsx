@@ -12,6 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import { useChurchIdStore } from "../../../../stores/churchId";
+import axiosInstance from "@/axios";
 
 const EditProfileChurchInfo: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,6 +20,9 @@ const EditProfileChurchInfo: React.FC = () => {
   const tempMember = useSelector(selectTempMember);
   const status = useSelector(selectMemberAddStatus);
   const { churchId } = useChurchIdStore();
+  const [roles, setRoles] = React.useState<
+    { _id: string; name: string; description: string }[]
+  >([]);
 
   const handleInputChange = useCallback(
     (field: string, value: string | number | boolean) => {
@@ -26,6 +30,26 @@ const EditProfileChurchInfo: React.FC = () => {
     },
     [dispatch]
   );
+
+  useEffect(() => {
+    async function getRoles() {
+      const role = await axiosInstance.get(
+        `/api/v1/churches/${churchId}/roles`
+      );
+      const roles = role.data.data.roles;
+      const rolesArray = roles.map(
+        (role: { _id: string; name: string; description: string }) => {
+          return {
+            _id: role._id,
+            name: role.name,
+            description: role.description,
+          };
+        }
+      );
+      setRoles(rolesArray);
+    }
+    getRoles();
+  }, [churchId]);
 
   const dropDown = useMemo(
     () => [
@@ -76,12 +100,34 @@ const EditProfileChurchInfo: React.FC = () => {
           handleInputChange("profile.serviceUnit", value),
         value: tempMember?.profile?.serviceUnit,
       },
+      {
+        text: "Church Role",
+        items: roles.map((role: { name: string }) => role.name),
+        onSelect: (value: string) => {
+          const role = roles.find((role) => {
+            console.log(role.name === value);
+            return role.name === value;
+          });
+          handleInputChange("orgRole", role ? role?._id : "");
+        },
+        value:
+          roles.find(
+            (role) => role?._id === (tempMember?.orgRole as unknown as string)
+          )?.name || "",
+      },
     ],
-    [handleInputChange, tempMember?.profile]
+    [
+      handleInputChange,
+      roles,
+      tempMember?.orgRole,
+      tempMember?.profile?.active,
+      tempMember?.profile?.serviceUnit,
+      tempMember?.profile?.worker,
+    ]
   );
 
   const handleSave = useCallback(() => {
-    if (!tempMember?.profile?.firstName || !tempMember.profile.lastName) {
+    if (!tempMember?.profile?.firstName || !tempMember?.profile?.lastName) {
       notify("First Name and Last Name are compulsory");
       return;
     }
@@ -128,6 +174,7 @@ const EditProfileChurchInfo: React.FC = () => {
           key={item.text}
           text={item.text}
           items={item.items}
+          onChange={item.onSelect}
           onSelect={item.onSelect}
           value={item.value}
         />

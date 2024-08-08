@@ -13,8 +13,13 @@ import {
 } from "../../../../slices/memberSlice";
 import { useChurchIdStore } from "../../../../stores/churchId";
 import { notify, success } from "../../../../hooks/useAuthData";
+import React, { useEffect } from "react";
+import axiosInstance from "@/axios";
 
 const UpdateChurchInfo = () => {
+  const [roles, setRoles] = React.useState<
+    { _id: string; name: string; description: string }[]
+  >([]);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
@@ -33,6 +38,26 @@ const UpdateChurchInfo = () => {
     dispatch(updateTempMemberField({ field, value }));
   };
 
+  useEffect(() => {
+    async function getRoles() {
+      const role = await axiosInstance.get(
+        `/api/v1/churches/${churchId}/roles`
+      );
+      const roles = role.data.data.roles;
+      const rolesArray = roles.map(
+        (role: { _id: string; name: string; description: string }) => {
+          return {
+            _id: role._id,
+            name: role.name,
+            description: role.description,
+          };
+        }
+      );
+      setRoles(rolesArray);
+    }
+    getRoles();
+  }, [churchId]);
+
   const handleSave = () => {
     if (!memberId) {
       console.error("Member ID is missing");
@@ -49,11 +74,12 @@ const UpdateChurchInfo = () => {
           member: memberData,
         })
       ).then(() => {
-        if (status !== "failed") {
+        if (status !== "failed" && status !== "loading") {
           success("Member details updated successfully");
+        } else {
+          notify("An error occurred");
         }
       });
-      success("Member details updated successfully");
     } catch (error) {
       notify("An error occurred");
     }
@@ -104,6 +130,21 @@ const UpdateChurchInfo = () => {
       },
       placeholder: "Select Service Unit",
       value: tempMember?.profile?.serviceUnit || "undefined",
+    },
+    {
+      text: "Church Role",
+      items: roles.map((role) => role.name),
+      onSelect: (value: string) => {
+        const role = roles.find((role) => role.name === value);
+        handleInputChange("orgRole", role ? role._id : "");
+      },
+      value: roles.find(
+        (role) =>
+          role._id ===
+          (tempMember?.orgRole?._id
+            ? tempMember?.orgRole?._id
+            : tempMember?.orgRole)
+      )?.name,
     },
   ];
 
