@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { notify } from "./hooks/useAuthData";
 import { useAuth } from "./hooks/useAuthData"; // Import useAuth hook
 import { useChurchIdStore } from "./stores/churchId";
@@ -18,10 +18,15 @@ interface UserData {
 }
 
 const ProtectedRoutes = () => {
-  const { data: userData, isLoading, isError } = useAuth(); // Use the useAuth hook
+  const { data: userData, isLoading, isError, failureCount } = useAuth(); // Use the useAuth hook
   const { setChurchId } = useChurchIdStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (isError || failureCount > 0) {
+      return notify("Please login to access this page");
+    }
+
     if (!isLoading) {
       if (isError || !userData) {
         // If an error occurred or no user data, consider the user not authenticated
@@ -29,11 +34,16 @@ const ProtectedRoutes = () => {
         // Redirect to home or login page as needed
       } else {
         // If we have user data and no error, authentication is successful
-        localStorage.setItem(
-          "user",
-          JSON.stringify((userData as UserData).data.member)
-        ); // Save user data to local storage
-        setChurchId((userData as UserData).data.member.churchId);
+        try {
+          localStorage.setItem(
+            "user",
+            JSON.stringify((userData as UserData).data.member)
+          ); // Save user data to local storage
+          setChurchId((userData as UserData).data.member.churchId);
+        } catch (error) {
+          navigate("/");
+          notify("Please login to access this page");
+        }
       }
     }
   }, [isLoading, isError, userData, setChurchId]);

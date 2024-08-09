@@ -121,6 +121,14 @@ export const useAuth = () => {
   return useQuery({
     queryKey: ["auth"],
     queryFn: apiClient.get,
+    retry(failureCount, error) {
+      if (error.status === 401) {
+        // if the error status is 401, return true to retry the request
+        return true;
+      }
+      // if the error status is not 401, return false to not retry the request
+      return false;
+    },
   });
 };
 
@@ -329,7 +337,6 @@ export const useLogin = () => {
         setToken(res.accessToken);
         success("Sign In was Successfull");
         navigate("/admin/dashboard/today");
-        console.log(res.user.mainChurch);
       }
       if (res.redirect === "church selection") {
         setChurchId(res.user.mainChurch);
