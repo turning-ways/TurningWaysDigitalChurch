@@ -329,7 +329,6 @@ export const useLogin = () => {
         setToken(res.accessToken);
         success("Sign In was Successfull");
         navigate("/admin/dashboard/today");
-        console.log(res.user.mainChurch);
       }
       if (res.redirect === "church selection") {
         setChurchId(res.user.mainChurch);

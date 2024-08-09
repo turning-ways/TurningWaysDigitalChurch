@@ -23,12 +23,6 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config;
     // check if the error is 401 and if the original request is the login request
     console.log(originalRequest.url);
-    if (
-      error.response.status === 401 &&
-      originalRequest.url === "/api/v1/auth/login"
-    ) {
-      return Promise.reject(error);
-    }
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const response = await axiosInstance.post(
