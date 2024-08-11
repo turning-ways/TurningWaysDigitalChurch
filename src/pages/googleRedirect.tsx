@@ -18,7 +18,10 @@ const GoogleRedirect = () => {
     // send the token to the server
     axios
       .get(
-        `https://turningways-api-3hcn.onrender.com/api/v1/auth/google/verify?token=${token}&churchId=${churchId}&redirectUrl=${redirectUrl}&userId=${id}`
+        `https://turningways-api-3hcn.onrender.com/api/v1/auth/google/verify?token=${token}&churchId=${churchId}&redirectUrl=${redirectUrl}&userId=${id}`,
+        {
+          withCredentials: true,
+        }
       )
       .then((res) => {
         console.log(res.data);
