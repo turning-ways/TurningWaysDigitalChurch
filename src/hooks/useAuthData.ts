@@ -121,7 +121,7 @@ export const useAuth = () => {
   return useQuery({
     queryKey: ["auth"],
     queryFn: apiClient.get,
-    retry(failureCount, error) {
+    retry(failureCount, error: { status: number }) {
       if (error.status === 401) {
         // if the error status is 401, return true to retry the request
         return true;

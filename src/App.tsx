@@ -57,6 +57,7 @@ const ContactDetails = lazy(
 );
 const Settings = lazy(() => import("./pages/Overview/Settings/Settings"));
 const Invite = lazy(() => import("./pages/Signup/Invitation"));
+const GoogleVerify = lazy(() => import("./pages/googleRedirect"));
 
 function App() {
   return (
@@ -72,6 +73,7 @@ function App() {
           }>
           <Routes>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/auth/google/verify" element={<GoogleVerify />} />
 
             {/* Login User  */}
             <Route path="login">
