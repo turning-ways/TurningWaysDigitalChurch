@@ -103,6 +103,7 @@ const EditProfileChurchInfo: React.FC = () => {
       {
         text: "Church Role",
         items: roles.map((role: { name: string }) => role.name),
+        compulsory: true,
         onSelect: (value: string) => {
           const role = roles.find((role) => {
             console.log(role.name === value);
@@ -142,6 +143,11 @@ const EditProfileChurchInfo: React.FC = () => {
       return;
     }
 
+    if (!tempMember?.orgRole) {
+      notify("Church Role is compulsory");
+      return;
+    }
+
     if (
       tempMember?.profile?.phone?.mainPhone === "+234" ||
       !tempMember?.profile?.phone?.mainPhone
@@ -174,6 +180,7 @@ const EditProfileChurchInfo: React.FC = () => {
           key={item.text}
           text={item.text}
           items={item.items}
+          compulsory={item?.compulsory ? "*" : ""}
           onChange={item.onSelect}
           onSelect={item.onSelect}
           value={item.value}
