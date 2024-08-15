@@ -441,6 +441,7 @@ export const useVerifySignUpOtp = () => {
 
 export const useAddChurch = () => {
   const navigate = useNavigate();
+  const setChurchId = useChurchIdStore().setChurchId;
   // const { mutate } = useAddMember();
   // const { role, howDidYouHear, phoneNumber, email, gender, dateOfBirth } = useMemberStore();
   return useMutation({
@@ -449,8 +450,7 @@ export const useAddChurch = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: (res: any) => {
       success("Church has been created successfully");
-
-      console.log(res.data.churchId);
+      setChurchId(res.data.churchId);
 
       // mutate({
       // 	role: role.toLowerCase(),

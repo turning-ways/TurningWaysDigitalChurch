@@ -23,7 +23,7 @@ const firstNameCapitalizer = (name: string) => {
 
 export const ProfileNameFormatter = (firstName: string, lastName: string) => {
   if (firstName && lastName) {
-    return `${firstNameCapitalizer(firstName)} ${firstNameCapitalizer(
+    return `${firstNameCapitalizer(firstName)}${firstNameCapitalizer(
       lastName
     )}`;
   } else if (firstName && !lastName) {

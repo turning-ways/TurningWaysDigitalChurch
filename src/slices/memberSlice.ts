@@ -227,6 +227,7 @@ const memberSlice = createSlice({
       .addCase(updateMemberDetails.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.member = action.payload;
+        success("Member details updated successfully");
         console.log(action.payload);
       })
       .addCase(updateMemberDetails.rejected, (state, action) => {
