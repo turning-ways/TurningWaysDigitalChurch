@@ -12,6 +12,7 @@ import { useState } from "react";
 import Modal from "../../ui/Modal/Modal";
 import { useSmsRecepientStore } from "../../stores/smsRecepient";
 import CallDropdown from "./Membership/CallDropdown";
+import { NameFormatter, ProfileNameFormatter } from "@/utils/name_formatter";
 
 interface SubHeaderProps {
   onNoteClick: () => void;
@@ -36,10 +37,6 @@ const SubHeader: React.FC<SubHeaderProps> = ({ onNoteClick }) => {
 
   const { addRecepients } = useSmsRecepientStore();
 
-  function capitalizeFirstLetter(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-  }
-
   return (
     <div className="flex justify-between mt-10 md:items-center relative flex-col md:flex-row">
       <div
@@ -58,8 +55,10 @@ const SubHeader: React.FC<SubHeaderProps> = ({ onNoteClick }) => {
           ) : (
             <div className="bg-red-100 lg:w-24 h-full rounded-full justify-center flex items-center">
               <p className="text-[#F24E1E] text-4xl font-azoBold text-center pt-4">
-                {member?.profile?.firstName?.charAt(0).toUpperCase() +
-                  member?.profile?.lastName?.charAt(0).toUpperCase()}
+                {ProfileNameFormatter(
+                  member?.profile?.firstName,
+                  member?.profile?.lastName
+                )}
               </p>
             </div>
           )}
@@ -75,9 +74,10 @@ const SubHeader: React.FC<SubHeaderProps> = ({ onNoteClick }) => {
             <div className="flex space-x-3 items-center justify-between">
               <p className="font-azoSemiBold text-[24px] sm:text-[32px] text-[#5B5A5A] ">
                 {member?.profile &&
-                  capitalizeFirstLetter(member?.profile?.firstName) +
-                    " " +
-                    capitalizeFirstLetter(member?.profile?.lastName)}
+                  NameFormatter(
+                    member.profile.firstName,
+                    member.profile.lastName
+                  )}
               </p>
               <div className="bg-[#E7E6E6] p-2 rounded-[8px] text-[12px] md:text-base text-[#505050]">
                 {member?.orgRole?.name}

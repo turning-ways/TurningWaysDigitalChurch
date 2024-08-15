@@ -1,7 +1,4 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
-/* eslint-disable no-unsafe-optional-chaining */
 import { useEffect, useRef, useState } from "react";
-// import { formatTheDate } from "../../pages/Overview/Contacts/formatDate";
 import { BsTrash } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import {
@@ -28,7 +25,6 @@ const Comments = () => {
   }>({});
 
   const handleEditComment = (noteId: string, comment: string) => {
-    // Update the edited comment for the specific note id
     setEditedComments((prevComments) => ({
       ...prevComments,
       [noteId]: comment,
@@ -48,7 +44,6 @@ const Comments = () => {
 
   const handleEditClick = (index: number) => {
     if (updateComment === index) {
-      // Reset and focus again
       setUpdateComment(null);
       setTimeout(() => setUpdateComment(index), 0);
     } else {
@@ -119,18 +114,17 @@ const Comments = () => {
                 </p>
               </div>
               <div className="flex justify-between items-center space-x-5">
-                <input
+                <textarea
                   ref={(el) => (inputRefs.current[index] = el)}
-                  type="text"
                   readOnly={index !== updateComment}
                   className={`text-[#434343] w-full lg:w-full ${
                     index === updateComment &&
                     "border border-slate-400 rounded-md px-3"
-                  } outline-none  py-2`}
+                  } outline-none py-2 resize-none`}
                   value={editedComments[item?._id] ?? item.comment}
                   onChange={(e) => handleEditComment(item?._id, e.target.value)}
-                  onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                    if (e.key === "Enter") {
+                  onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
                       handleUpdateComment(
                         item?._id,
                         editedComments[item?._id] ?? item.comment

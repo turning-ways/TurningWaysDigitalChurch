@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { NameFormatter } from "@/utils/name_formatter";
 import { useState } from "react";
 import MemberTable from "../../../ui/Table/DashboardTable";
 // import { DataType } from "../../../hooks/Member/useMemberStats";
@@ -133,7 +134,10 @@ const MemberList: React.FC<TimeLine> = ({ data, isLoading, isRefetching }) => {
                   <MemberTable
                     length={members.length}
                     index={index}
-                    first_name={`${member.firstName} ${member.lastName}`}
+                    first_name={NameFormatter(
+                      member.firstName,
+                      member.lastName
+                    )}
                     dateOfBirth={member.dateOfBirth?.slice(0, 10)}
                     gender={member.gender}
                     email={member.email}
@@ -149,7 +153,7 @@ const MemberList: React.FC<TimeLine> = ({ data, isLoading, isRefetching }) => {
                 <MemberTable
                   length={firstTimers.length}
                   index={index}
-                  first_name={`${item.firstName} ${item.lastName}`}
+                  first_name={NameFormatter(item.firstName, item.lastName)}
                   dateOfBirth={item.dateOfBirth?.slice(0, 10)}
                   gender={item.gender}
                   email={item.email}
@@ -171,7 +175,7 @@ const MemberList: React.FC<TimeLine> = ({ data, isLoading, isRefetching }) => {
                 <MemberTable
                   length={birthdayCelebrants.length}
                   index={index}
-                  first_name={`${item.firstName} ${item.lastName}`}
+                  first_name={NameFormatter(item.firstName, item.lastName)}
                   dateOfBirth={item.dateOfBirth?.slice(0, 10)}
                   gender={item.gender}
                   email={item.email}

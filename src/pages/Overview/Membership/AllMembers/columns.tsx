@@ -4,6 +4,7 @@ import { Member } from "./members";
 import { Avatar, AvatarFallback, AvatarImage } from "@/ui/Avatar";
 import { RxAvatar } from "react-icons/rx";
 import ViewMore from "./Viewmore";
+import { NameFormatter } from "@/utils/name_formatter";
 
 export const columns: ColumnDef<Member>[] = [
   {
@@ -28,9 +29,7 @@ export const columns: ColumnDef<Member>[] = [
     accessorKey: "fullName",
     cell: ({ row }) => (
       <div className="capitalize flex items-center gap-x-2">
-        <p>
-          {row.original?.firstName} {row.original?.lastName ?? ""}
-        </p>
+        <p>{NameFormatter(row.original.firstName, row.original.lastName)}</p>
       </div>
     ),
   },
