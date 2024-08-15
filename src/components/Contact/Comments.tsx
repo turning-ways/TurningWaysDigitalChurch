@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { useChurchIdStore } from "../../stores/churchId";
 import { BiPencil } from "react-icons/bi";
-import { formatTime } from "@/pages/Overview/Membership/Membership Profile/NotesList";
+import { formatTime } from "@/utils/dateTimeFormatter";
 
 const Comments = () => {
   const { contact_id } = useParams();

@@ -49,7 +49,8 @@ const useMemberStats = (timeLine: string | undefined) => {
   // const { user } = useUserAuth();
   const { churchId } = useChurchIdStore();
   return useQuery({
-    queryKey: ["data", churchId],
+    queryKey: ["analytics", churchId],
+    refetchOnWindowFocus: false,
     queryFn: () =>
       axios
         .get<DataType>(

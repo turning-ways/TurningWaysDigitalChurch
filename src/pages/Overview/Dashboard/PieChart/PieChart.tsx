@@ -27,8 +27,8 @@ const PieChart: React.FC<PieProps> = ({ sdata, isRefetching }) => {
     labels: ["Male", "Female"],
     datasets: [
       {
-        label: "Percent",
-        data: [getGenderPercentage("male"), getGenderPercentage("female")],
+        label: "Total",
+        data: [noOfMale, noOfFemale],
         backgroundColor: ["#758CD7", "#A0D7AB"],
         borderWidth: 1,
         hoverOffset: 4,

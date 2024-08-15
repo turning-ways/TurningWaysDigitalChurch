@@ -58,6 +58,11 @@ const EditableDiv: React.FC<EditableDivProps> = ({
     }
   };
 
+  const closeDialog = () => {
+    // close dialog
+    return false;
+  };
+
   // Handle Update Note
   const handleUpdateNote = () => {
     if (editableRef.current) {
@@ -141,7 +146,7 @@ const EditableDiv: React.FC<EditableDivProps> = ({
         spellCheck={false}
         suppressContentEditableWarning={true}
         className={cn(
-          `border-0 px-2 pb-2 pt-3 rounded-md text-base relative text-wrap break-all ${
+          `border-0 px-2 pb-2 pt-3 rounded-md text-base relative text-wrap break-before-auto ${
             !readOnly
               ? "focus:ring-1 focus:ring-blue-500 caret-primary focus:outline-none focus-within:outline-none focus-visible:!outline-none"
               : "bg-gray-100"
@@ -170,7 +175,7 @@ const EditableDiv: React.FC<EditableDivProps> = ({
             aria-disabled={isPending}
           />
         </button>
-        <Dialog>
+        <Dialog onOpenChange={(open) => !open && closeDialog()}>
           <DialogTrigger asChild>
             <button disabled={isDeleting}>
               <MdOutlineDelete
@@ -189,7 +194,7 @@ const EditableDiv: React.FC<EditableDivProps> = ({
             <DialogFooter>
               <button
                 onClick={handleDeleteNote}
-                className="text-white font-semibold bg-red-500 py-1 rounded-md flex w-full justify-center">
+                className="text-white font-semibold bg-red-500 py-3 rounded-md flex w-full justify-center">
                 {isDeleting ? (
                   <ThreeDots color="white" height={15} />
                 ) : (

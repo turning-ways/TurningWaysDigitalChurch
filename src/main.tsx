@@ -7,14 +7,14 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<React.StrictMode>
-		<QueryClientProvider client={queryClient}>
-			<Provider store={store}>
-				<App />
-				{/* <ReactQueryDevtools /> */}
-			</Provider>
-		</QueryClientProvider>
-	</React.StrictMode>
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <App />
+        {/* <ReactQueryDevtools /> */}
+      </Provider>
+    </QueryClientProvider>
+  </React.StrictMode>
 );

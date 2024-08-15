@@ -13,7 +13,7 @@ import {
   selectMemberError,
 } from "../../../../slices/memberSlice";
 import { useChurchIdStore } from "../../../../stores/churchId";
-import { notify, success } from "../../../../hooks/useAuthData";
+import { notify } from "../../../../hooks/useAuthData";
 
 const UpdatePersonalInfo = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -59,11 +59,7 @@ const UpdatePersonalInfo = () => {
           memberId,
           member: memberData,
         })
-      ).then(() => {
-        if (status !== "failed") {
-          success("Member details updated successfully");
-        }
-      });
+      );
     } catch (error) {
       notify("An error occurred");
     }
